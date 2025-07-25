@@ -78,15 +78,70 @@ export class CategoryDetailComponent implements OnInit {
             rating: 4.0,
             size: ['1 KG', '5 KG', '25 KG']
           },
-          {
-            id: 'gel-w-100',
-            name: 'GEL-W 100',
-            description: 'GEL-W 100 is primarily used for external cladding all types of tiles, ceramics, marble, and natural stones on external and internal surfaces.',
-            image: 'assets/images/wilber_product/Cementitious_tile_adevisa/GEL-W 100.jpg',
-            link: '/product/gel-w-100',
-            rating: 4.7,
-            size: ['1 L', '5 L']
-          }
+                  {
+          id: 'gel-w-100',
+          name: 'GEL-W 100',
+          description: 'GEL-W 100 is primarily used for external cladding all types of tiles, ceramics, marble, and natural stones on external and internal surfaces.',
+          image: 'assets/images/wilber_product/Cementitious_tile_adevisa/GEL-W 100.jpg',
+          link: '/product/gel-w-100',
+          rating: 4.7,
+          size: ['1 L', '5 L']
+        },
+        {
+          id: 'transparent-110-111',
+          name: 'Transparent - 110/111',
+          description: 'Transparent - 110/111 is a transparent tile adhesive for special applications.',
+          image: 'assets/images/wilber_product/Cementitious_tile_adevisa/REG-999.jpg',
+          link: '/product/transparent-110-111',
+          rating: 4.3,
+          size: ['1 KG', '5 KG']
+        },
+        {
+          id: 'white-120-130',
+          name: 'White - 120/130',
+          description: 'White - 120/130 is a white tile adhesive for light-colored tiles.',
+          image: 'assets/images/wilber_product/Cementitious_tile_adevisa/REG-999.jpg',
+          link: '/product/white-120-130',
+          rating: 4.4,
+          size: ['1 KG', '5 KG']
+        },
+        {
+          id: 'cream-121-131',
+          name: 'Cream - 121/131',
+          description: 'Cream - 121/131 is a cream-colored tile adhesive for warm-toned tiles.',
+          image: 'assets/images/wilber_product/Cementitious_tile_adevisa/REG-999.jpg',
+          link: '/product/cream-121-131',
+          rating: 4.2,
+          size: ['1 KG', '5 KG']
+        },
+        {
+          id: 'dark-122-132',
+          name: 'Dark - 122/132',
+          description: 'Dark - 122/132 is a dark-colored tile adhesive for dark tiles.',
+          image: 'assets/images/wilber_product/Cementitious_tile_adevisa/REG-999.jpg',
+          link: '/product/dark-122-132',
+          rating: 4.1,
+          size: ['1 KG', '5 KG']
+        },
+        {
+          id: 'black-123-133',
+          name: 'Black - 123/133',
+          description: 'Black - 123/133 is a black tile adhesive for black tiles.',
+          image: 'assets/images/wilber_product/Cementitious_tile_adevisa/REG-999.jpg',
+          link: '/product/black-123-133',
+          rating: 4.0,
+          size: ['1 KG', '5 KG']
+        },
+        {
+          id: 'pu-adhesive',
+          name: 'PU Adhesive',
+          description: 'PU Adhesive is a polyurethane-based adhesive for specialized bonding applications.',
+          image: 'assets/images/wilber_product/Cementitious_tile_adevisa/REG-999.jpg',
+          link: '/product/pu-adhesive',
+          rating: 4.5,
+          badge: 'Specialty',
+          size: ['1 KG', '5 KG']
+        }
         ]
       },
       {
@@ -124,15 +179,34 @@ export class CategoryDetailComponent implements OnInit {
             rating: 4.0,
             size: ['1 KG', '5 KG', '25 KG']
           },
-          {
-            id: 'shiner-2000',
-            name: 'SHINER-2000',
-            description: 'Wilber SHINER-2000 is primarily used for external cladding all types of tiles, ceramics, marble, and natural stones on external and internal surfaces.',
-            image: 'assets/images/wilber_product/ager_polish/SHINER-2000.jpg',
-            link: '/product/shiner-2000',
-            rating: 4.7,
-            size: ['1 L', '5 L']
-          }
+                  {
+          id: 'shiner-2000',
+          name: 'SHINER-2000',
+          description: 'Wilber SHINER-2000 is primarily used for external cladding all types of tiles, ceramics, marble, and natural stones on external and internal surfaces.',
+          image: 'assets/images/wilber_product/ager_polish/SHINER-2000.jpg',
+          link: '/product/shiner-2000',
+          rating: 4.7,
+          size: ['1 L', '5 L']
+        },
+        {
+          id: 'jet-nero-black-460',
+          name: 'JET NERO BLACK-460',
+          description: 'JET NERO BLACK-460 is a high-performance black color enhancer for natural stones and tiles.',
+          image: 'assets/images/wilber_product/ager_polish/JET_NERO_BLACK-460.jpg',
+          link: '/product/jet-nero-black-460',
+          rating: 4.8,
+          badge: 'Popular',
+          size: ['1 KG', '5 KG']
+        },
+        {
+          id: 'granito-colour-enhancer-402-black',
+          name: 'Granito Colour Enhancer - 402(Black)',
+          description: 'Granito Colour Enhancer - 402(Black) is a specialized black color enhancer for granite surfaces.',
+          image: 'assets/images/wilber_product/ager_polish/GRANITO_COLOUR_ENHANCER-400.jpg',
+          link: '/product/granito-colour-enhancer-402-black',
+          rating: 4.5,
+          size: ['1 KG', '5 KG']
+        }
         ]
       },
       {
@@ -151,16 +225,25 @@ export class CategoryDetailComponent implements OnInit {
             badge: 'New',
             size: ['1 KG Set', '2 KG Set', '4 KG Set']
           },
-          {
-            id: 'epoxy-grout-set-without-gloves',
-            name: 'EPOXY GROUT SET(without gloves)',
-            description: 'EPOXY GROUT SET(without gloves) is suitable for fixing natural stones, clay, terracotta, and vitrified tiles of regular size on floor and wall.',
-            image: 'assets/images/wilber_product/epoxy_grout/EPOXY_GROUT_SET_WITHOUT_GLOVES.jpg',
-            link: '/product/epoxy-grout-set-without-gloves',
-            rating: 5.0,
-            badge: 'Bestseller',
-            size: ['1 KG Set', '2 KG Set', '4 KG Set']
-          }
+                  {
+          id: 'epoxy-grout-set-without-gloves',
+          name: 'EPOXY GROUT SET(without gloves)',
+          description: 'EPOXY GROUT SET(without gloves) is suitable for fixing natural stones, clay, terracotta, and vitrified tiles of regular size on floor and wall.',
+          image: 'assets/images/wilber_product/epoxy_grout/EPOXY_GROUT_SET_WITHOUT_GLOVES.jpg',
+          link: '/product/epoxy-grout-set-without-gloves',
+          rating: 5.0,
+          badge: 'Bestseller',
+          size: ['1 KG Set', '2 KG Set', '4 KG Set']
+        },
+        {
+          id: 'epoxy-grout-metalic-shade',
+          name: 'EPOXY GROUT Metalic Shade',
+          description: 'EPOXY GROUT Metalic Shade provides a metallic finish for tile joints with excellent durability.',
+          image: 'assets/images/wilber_product/epoxy_grout/EPOXY_GROUT_SET_WITH_GLOVES.jpg',
+          link: '/product/epoxy-grout-metalic-shade',
+          rating: 4.7,
+          size: ['1 KG Set', '2 KG Set']
+        }
         ]
       },
       {
@@ -207,15 +290,33 @@ export class CategoryDetailComponent implements OnInit {
             rating: 4.7,
             size: ['1 L', '5 L']
           },
-          {
-            id: 'water-repellent-310',
-            name: 'WATER REPELLENT-310',
-            description: 'WATER REPELLENT-310 is a polymer-modified, grey cement-based tile adhesive for fixing ceramic tiles such as ceramic and new floor tiles.',
-            image: 'assets/images/wilber_product/sealers/WATER REPELLENT-310.jpg',
-            link: '/product/water-repellent-310',
-            rating: 4.5,
-            size: ['1 L', '5 L']
-          }
+                  {
+          id: 'water-repellent-310',
+          name: 'WATER REPELLENT-310',
+          description: 'WATER REPELLENT-310 is a polymer-modified, grey cement-based tile adhesive for fixing ceramic tiles such as ceramic and new floor tiles.',
+          image: 'assets/images/wilber_product/sealers/WATER REPELLENT-310.jpg',
+          link: '/product/water-repellent-310',
+          rating: 4.5,
+          size: ['1 L', '5 L']
+        },
+        {
+          id: 'surface-protective-coating-315',
+          name: 'Surface Protective Coating - 315',
+          description: 'Surface Protective Coating - 315 provides long-lasting protection for stone and tile surfaces.',
+          image: 'assets/images/wilber_product/sealers/OIL & WATER REPELLENT-320.jpg',
+          link: '/product/surface-protective-coating-315',
+          rating: 4.4,
+          size: ['1 L', '5 L']
+        },
+        {
+          id: 'gloss-coat-990-w',
+          name: 'Gloss Coat - 990 (W)',
+          description: 'Gloss Coat - 990 (W) provides a high-gloss finish for stone and tile surfaces.',
+          image: 'assets/images/wilber_product/sealers/STAIN PROTECTOR-330 NANO.jpg',
+          link: '/product/gloss-coat-990-w',
+          rating: 4.6,
+          size: ['1 L', '5 L']
+        }
         ]
       },
       {
@@ -289,15 +390,24 @@ export class CategoryDetailComponent implements OnInit {
             rating: 5.0,
             size: ['1 L', '5 L']
           },
-          {
-            id: 'universal-cleaner-248',
-            name: 'UNIVERSAL CLEANER-248',
-            description: 'UNIVERSAL CLEANER-248 is perfect for all kinds of ceramic, vitrified and natural stone tiles of all sizes for internal application – floor and wall.',
-            image: 'assets/images/wilber_product/cleaners/UNIVERSAL CLEANER-248.jpg',
-            link: '/product/universal-cleaner-248',
-            rating: 4.0,
-            size: ['1 L', '5 L']
-          }
+                  {
+          id: 'universal-cleaner-248',
+          name: 'UNIVERSAL CLEANER-248',
+          description: 'UNIVERSAL CLEANER-248 is perfect for all kinds of ceramic, vitrified and natural stone tiles of all sizes for internal application – floor and wall.',
+          image: 'assets/images/wilber_product/cleaners/UNIVERSAL CLEANER-248.jpg',
+          link: '/product/universal-cleaner-248',
+          rating: 4.0,
+          size: ['1 L', '5 L']
+        },
+        {
+          id: 'granite-tiles-cleaner-201',
+          name: 'Granites & Tiles Cleaner - 201',
+          description: 'Granites & Tiles Cleaner - 201 is a specialized cleaner for granite and tile surfaces.',
+          image: 'assets/images/wilber_product/cleaners/CEMENT CLEANER-208.jpg',
+          link: '/product/granite-tiles-cleaner-201',
+          rating: 4.3,
+          size: ['1 L', '5 L']
+        }
         ]
       },
       {
@@ -353,16 +463,44 @@ export class CategoryDetailComponent implements OnInit {
             badge: 'New',
             size: ['1 KG', '5 KG']
           },
-          {
-            id: 'epoxy-adhesive-152-part-b',
-            name: 'EPOXY ADHESIVE-152(PART-B)',
-            description: 'EPOXY ADHESIVE-152(PART-B) is suitable for fixing natural stones, clay, terracotta, and vitrified tiles of regular size on floor and wall.',
-            image: 'assets/images/wilber_product/epoxy_products/EPOXY_ADHESIVE-152_PART-B.jpg',
-            link: '/product/epoxy-adhesive-152-part-b',
-            rating: 5.0,
-            badge: 'Bestseller',
-            size: ['1 KG', '5 KG']
-          }
+                  {
+          id: 'epoxy-adhesive-152-part-b',
+          name: 'EPOXY ADHESIVE-152(PART-B)',
+          description: 'EPOXY ADHESIVE-152(PART-B) is suitable for fixing natural stones, clay, terracotta, and vitrified tiles of regular size on floor and wall.',
+          image: 'assets/images/wilber_product/epoxy_products/EPOXY_ADHESIVE-152_PART-B.jpg',
+          link: '/product/epoxy-adhesive-152-part-b',
+          rating: 5.0,
+          badge: 'Bestseller',
+          size: ['1 KG', '5 KG']
+        },
+        {
+          id: 'marble-epoxy-999',
+          name: 'Marble Epoxy - 999',
+          description: 'Marble Epoxy - 999 is a high-performance epoxy adhesive for marble and natural stone applications.',
+          image: 'assets/images/wilber_product/epoxy_products/EPOXY_ADHESIVE-152_PART-A.jpg',
+          link: '/product/marble-epoxy-999',
+          rating: 4.8,
+          badge: 'Premium',
+          size: ['1 KG', '5 KG']
+        },
+        {
+          id: 'marble-epoxy-995',
+          name: 'Marble Epoxy - 995',
+          description: 'Marble Epoxy - 995 is a specialized epoxy adhesive for marble and natural stone bonding.',
+          image: 'assets/images/wilber_product/epoxy_products/EPOXY_ADHESIVE-152_PART-A.jpg',
+          link: '/product/marble-epoxy-995',
+          rating: 4.7,
+          size: ['1 KG', '5 KG']
+        },
+        {
+          id: 'crystal-epoxy-666',
+          name: 'Crystal Epoxy - 666',
+          description: 'Crystal Epoxy - 666 is a crystal-clear epoxy adhesive for transparent applications.',
+          image: 'assets/images/wilber_product/epoxy_products/EPOXY_ADHESIVE-152_PART-A.jpg',
+          link: '/product/crystal-epoxy-666',
+          rating: 4.6,
+          size: ['1 KG', '5 KG']
+        }
         ]
       },
       {
@@ -426,6 +564,44 @@ export class CategoryDetailComponent implements OnInit {
             rating: 5.0,
             badge: 'Bestseller',
             size: ['1 L', '5 L']
+          },
+          {
+            id: 'marble-densifier-pro',
+            name: 'MARBLE DENSIFIER - PRO',
+            description: 'MARBLE DENSIFIER - PRO is a high-performance densifier for marble and natural stone surfaces.',
+            image: 'assets/images/wilber_product/marble_densifier/MARBLE DENSIFIER - PRO.jpg',
+            link: '/product/marble-densifier-pro',
+            rating: 4.9,
+            badge: 'Premium',
+            size: ['1 L', '5 L']
+          }
+        ]
+      },
+      {
+        id: 'crystalizer',
+        name: 'Crystalizer',
+        link: '/stone-solution/crystalizer',
+        active: false,
+        products: [
+          {
+            id: 'marble-polish-powder-500g',
+            name: 'MARBLE POLISH POWDER 500g',
+            description: 'MARBLE POLISH POWDER 500g is a fine polishing powder for marble and natural stone surfaces.',
+            image: 'assets/images/wilber_product/crystalizer/MARBLE_POLISH_POWDER.jpg',
+            link: '/product/marble-polish-powder-500g',
+            rating: 4.6,
+            badge: 'New',
+            size: ['500g']
+          },
+          {
+            id: 'marble-polish-powder-1000g',
+            name: 'MARBLE POLISH POWDER 1000g',
+            description: 'MARBLE POLISH POWDER 1000g is a fine polishing powder for marble and natural stone surfaces.',
+            image: 'assets/images/wilber_product/crystalizer/MARBLE_POLISH_POWDER.jpg',
+            link: '/product/marble-polish-powder-1000g',
+            rating: 4.6,
+            badge: 'Popular',
+            size: ['1000g']
           }
         ]
       }
