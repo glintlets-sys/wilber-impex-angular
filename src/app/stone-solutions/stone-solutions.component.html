@@ -1,0 +1,29 @@
+<!-- Header Component -->
+<app-header></app-header>
+
+<!-- Products Section -->
+<section class="citydealer-location py-5">
+    <div class="container">
+        <div class="section-title text-center mb-5 ">
+            <h2>Stone Solutions </h2>
+        </div>
+        <ul class="promo-list has-flexbar find_dealerscrol">
+            <li class="promo-item" *ngFor="let product of stoneProducts">
+                <a [routerLink]="product.link">
+                    <div class="promo-card"> 
+                        <h3 class="h3 card-title">{{ product.title }}</h3>
+                        <img [src]="product.image" loading="lazy" [alt]="product.title" class="w-100 card-banner">
+                    </div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</section>
+
+<!-- Footer Component -->
+<app-footer></app-footer>
+
+<!-- Back to Top Button -->
+<div class="back-to-top">
+    <i class="fas fa-chevron-up"></i>
+</div> 

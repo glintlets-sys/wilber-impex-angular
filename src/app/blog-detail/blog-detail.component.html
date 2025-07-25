@@ -1,0 +1,116 @@
+<!-- Header Component -->
+<app-header></app-header>
+
+<!-- Blog Post Content -->
+<section class="blog-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8">
+                <article class="blog-content fade-in" *ngIf="blogPost">
+                    <div class="blog-image">
+                        <img [src]="blogPost.image" [alt]="blogPost.title">
+                    </div>
+                    <div class="blog-meta">
+                        <span><i class="far fa-calendar-alt"></i> {{ blogPost.date | date:'MMM dd, yyyy' }}</span>
+                        <span><i class="far fa-user"></i> By {{ blogPost.author }}</span>
+                        <span><i class="far fa-folder-open"></i> {{ blogPost.category }}</span>
+                        <span><i class="far fa-comments"></i> 5 Comments</span>
+                    </div>
+                    <div class="blog-body">
+                        <h1>{{ blogPost.title }}</h1>
+                        <div [innerHTML]="blogPost.content"></div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="col-lg-4">
+                <aside class="sidebar fade-in">
+                    <div class="sidebar-widget">
+                        <form action="#" method="get">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Categories</h3>
+                        <ul class="categories-list">
+                            <li><a href="#">Industrial Solutions <span>15</span></a></li>
+                            <li><a href="#">Stone Care <span>8</span></a></li>
+                            <li><a href="#">Flooring <span>12</span></a></li>
+                            <li><a href="#">Cleaning <span>10</span></a></li>
+                            <li><a href="#">Maintenance <span>7</span></a></li>
+                        </ul>
+                    </div>
+
+                    <div class="sidebar-widget">
+                        <h3>Recent Posts</h3>
+                        <div class="recent-post" *ngFor="let post of relatedPosts">
+                            <div class="recent-post-image">
+                                <img [src]="post.image" [alt]="post.title">
+                            </div>
+                            <div class="recent-post-info">
+                                <h4><a [routerLink]="['/blog', post.slug]">{{ post.title }}</a></h4>
+                                <span><i class="far fa-calendar-alt"></i> {{ post.date | date:'MMM dd, yyyy' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Related Posts Section -->
+<section class="related-posts">
+    <div class="container">
+        <div class="section-title">
+            <span><img src="assets/images/faviconlogo.png" alt=""> Our Blog</span>
+            <h2>Related Articles</h2>
+        </div>
+        <!-- Blog Grid -->
+        <div class="blog-grid">
+            <div class="swiper blog-slider">
+                <!-- Additional required wrapper -->
+                <div class="swiper-wrapper">
+                    <!-- Slides -->
+                    <div class="swiper-slide" *ngFor="let post of relatedPosts">
+                        <div class="blog-card">
+                            <div class="blog-card-image">
+                                <span class="blog-category">{{ post.category }}</span>
+                                <img [src]="post.image" [alt]="post.title">
+                            </div>
+                            <div class="blog-card-content">
+                                <div class="blog-card-meta">
+                                    <div class="blog-card-meta-item">
+                                        <i class="far fa-calendar-alt"></i>
+                                        <span>{{ post.date | date:'MMM dd, yyyy' }}</span>
+                                    </div>
+                                    <div class="blog-card-meta-item">
+                                        <i class="far fa-clock"></i>
+                                        <span>{{ post.readTime }}</span>
+                                    </div>
+                                </div>
+                                <h3 class="blog-card-title"><a [routerLink]="['/blog', post.slug]">{{ post.title }}</a></h3>
+                                <p class="blog-card-description">{{ post.excerpt }}</p>
+                                <a [routerLink]="['/blog', post.slug]" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- If we need pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer Component -->
+<app-footer></app-footer>
+
+<!-- Back to Top -->
+<a href="#" class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+</a> 

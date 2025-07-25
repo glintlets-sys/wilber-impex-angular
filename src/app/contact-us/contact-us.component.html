@@ -1,0 +1,102 @@
+<!-- Header Component -->
+<app-header></app-header>
+
+<!-- Page Banner -->
+<section class="page-banner" style="background-image: url(./assets/images/bnr3.jpg);">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-banner-content text-center">
+                    <h1>Contact Us</h1>
+                    <nav aria-label="breadcrumb"> 
+                        <ol class="breadcrumb justify-content-center bg-transparent mb-0">
+                            <li class="breadcrumb-item"><a routerLink="/" class="text-white">Home</a></li> 
+                            <li class="breadcrumb-item active text-white" aria-current="page">Contact</li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section class="contact-section py-5">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="contact-info-wrapper">
+                    <h2 class="heading">Get In Touch With Us</h2>
+                    
+                    <div class="info-item">
+                        <p><span class="info-label">Address:</span> Plot No- 111, Sy No.27 & 32, Banndenallasandra Industrial Layout, Bommasandra – Jigani Link Road, Jigani Hobli, Bengaluru – 560 105, Karnataka, India.</p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <p><span class="info-label">Mobile:</span> <a href="tel:+917624911800">+91 76249 11800</a></p>
+                    </div>
+                    
+                    <div class="info-item">
+                        <p><span class="info-label">E-mail:</span> <a href="mailto:support&#64;wilber.co.in">support&#64;wilber.co.in</a></p>
+                    </div>
+                    
+                    <div class="map-container">
+                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44662.4723411257!2d77.61869682346759!3d12.795264286432783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae6c12cfc65fdd%3A0xf83941bb9990705f!2sSGS%20Tekniks%20Manufacturing%20Pvt.%20Ltd.%20(A%20Syrma%20SGS%20Group%20Company)!5e1!3m2!1sen!2sin!4v1742494675974!5m2!1sen!2sin" allowfullscreen=""></iframe>
+                    </div>
+                    
+                    <div class="social-follow">
+                        <h3 class="title">Follow Us</h3>
+                        <div class="social-icons">
+                            <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                            <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-lg-6">
+                <div class="contact-form-wrapper">
+                    <h3 class="text-he">Send Us a Message</h3>
+                    <form (ngSubmit)="onSubmit()" #contactFormRef="ngForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inputName">Name</label>
+                                    <input type="text" id="inputName" name="name" class="form-control" [(ngModel)]="contactForm.name" required>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="inputNumber">Phone No</label>
+                                    <input type="tel" id="inputNumber" name="phone" class="form-control" [(ngModel)]="contactForm.phone" maxlength="10" required>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="inputEmail">Email Address</label>
+                            <input type="email" id="inputEmail" name="email" class="form-control" [(ngModel)]="contactForm.email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="inputMessage">Message</label>
+                            <textarea id="inputMessage" name="message" class="form-control" rows="5" placeholder="Message here..." [(ngModel)]="contactForm.message" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer Component -->
+<app-footer></app-footer>
+
+<!-- Back to Top -->
+<a href="#" class="back-to-top" id="backToTop">
+    <i class="fas fa-arrow-up"></i>
+</a>

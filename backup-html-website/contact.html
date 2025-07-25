@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>Contact | Wilber Impex | Premium Tile & Stone Solutions</title>
+    
+     <!-- Favicon -->
+     <link rel="icon" href="assets/images/faviconlogo.png" type="image/x-icon">
+    
+     <!-- Fonts -->
+     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+     
+     <!-- CSS Libraries -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+     <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+     <link rel="stylesheet" href="assets/css/swiper.min.css">
+     <link rel="stylesheet" href="assets/css/swiper-bundle.css">
+     
+     <!-- Custom CSS -->
+     <link rel="stylesheet" href="wilber-styles.css">
+    <style>
+    /* Contact Page Specific Styles */
+    .contact-form-wrapper {
+        border-radius: 10px;
+        box-shadow: 0 0 25px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        background: #fff;
+        /* height: 100%; */
+    }
+    
+    .contact-form-wrapper .text-he {
+        font-size: 24px;
+        margin-bottom: 30px;
+        font-weight: 600;
+        color: var(--gradient-primary);
+    }
+    
+    .contact-form-wrapper .form-group {
+        position: relative;
+        margin-bottom: 25px;
+    }
+    
+    .contact-form-wrapper .form-group label {
+        position: absolute;
+        top: -12px;
+        left: 15px;
+        background: white;
+        font-size: 14px;
+        padding: 0 8px;
+        color: #333;
+        font-weight: 500;
+    }
+    
+    .contact-form-wrapper .form-control {
+        height: 50px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        box-shadow: 0 3px 8px rgba(0, 0, 0, 0.05);
+        transition: all 0.3s ease;
+    }
+    
+    .contact-form-wrapper textarea.form-control {
+        height: auto;
+        padding-top: 15px;
+    }
+    
+    .contact-form-wrapper .form-control:focus {
+        border-color: var(--gradient-primary);
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+    }
+    
+    .contact-form-wrapper .submit-btn {
+        width: 100%;
+        padding: 12px;
+        background: var(--gradient-primary);
+        color: white;
+        border: 2px solid var(--gradient-primary);
+        border-radius: 5px;
+        font-weight: 600;
+        font-size: 16px;
+        transition: all 0.3s ease;
+    }
+    
+    .contact-form-wrapper .submit-btn:hover {
+        background: transparent;
+        color: var(--gradient-primary);
+    }
+    
+    .contact-info-wrapper {
+        padding: 40px 20px 20px;
+    }
+    
+    .contact-info-wrapper .heading {
+        font-size: 28px;
+        font-weight: 700;
+        color: var(--gradient-primary);
+        margin-bottom: 25px;
+    }
+    
+    .contact-info-wrapper .info-item {
+        margin-bottom: 20px;
+    }
+    
+    .contact-info-wrapper .info-label {
+        font-weight: 600;
+        color: var(--gradient-primary);
+        margin-right: 5px;
+    }
+    
+    .contact-info-wrapper a {
+        color: #333;
+        transition: color 0.3s ease;
+    }
+    
+    .contact-info-wrapper a:hover {
+        color: var(--gradient-primary);
+    }
+    
+    .map-container {
+        margin: 30px 0;
+        height: 300px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .map-container iframe {
+        width: 100%;
+        height: 100%;
+        border: 0;
+    }
+    
+    .social-follow {
+        margin-top: 25px;
+    }
+    
+    .social-follow .title {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 15px;
+    }
+    
+    .social-follow .social-icons {
+        display: flex;
+        gap: 10px;
+    }
+    
+   .social-follow  .social-icons a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background: var(--gradient-primary);
+        color: white;
+        border-radius: 50%;
+        transition: all 0.3s ease;
+        margin-right: 0px;
+    }
+    
+   .social-follow .social-icons a:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    @media only screen and (max-width: 767px) {
+        .contact-info-wrapper {
+    padding: 0px 0px 00px;
+}
+.contact-info-wrapper .heading {
+    font-size: 21px; 
+    margin-bottom: 15px;
+}
+.contact-form-wrapper{
+    padding: 20px 10px;
+}
+.contact-form-wrapper .text-he {
+    font-size: 20px;
+}
+}
+    </style>
+</head>
+
+<body>
+    <!-- Top Header -->
+    <div class="top-header d-none d-md-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="mailto:support@wilber.co.in" class="me-3"><i class="far fa-envelope me-2"></i>support@wilber.co.in</a>
+                    <span><i class="far fa-clock me-2"></i>Mon - Sat 9.00 - 18.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/images/logo.png" alt="Wilber Impex">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav  ">
+                        <li class="nav-item">
+                            <a class="nav-link " href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="aboutus.html">About Us</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Products
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="categoriesstone.html">Industrial Solutions</a></li>
+                                <li><a class="dropdown-item" href="categoriesstone.html">Stone Solutions</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog-listing.html">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="contact.html">Contact</a>
+                        </li>
+                        <a href="categoriesstone.html" class="product-btn">Industrial Solutions</a>
+                        <a href="categoriesstone.html" class="product-btn">Stone Solutions</a>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <a href="#" class="me-3 position-relative">
+                            <i class="fa-solid fa-cart-shopping fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">3</span>
+                        </a>
+                        <a href="userprofile.html" class="me-3">
+                            <i class="fa-solid fa-user fs-5"></i>
+                        </a>
+                        <a href="#" class="btn btn-primary">Get a Quote</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Banner -->
+    <section class="page-banner" style="background-image: url(./assets/images/bnr3.jpg);">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="page-banner-content text-center">
+                        <h1>Contact Us</h1>
+                        <nav aria-label="breadcrumb"> 
+                            <ol class="breadcrumb justify-content-center bg-transparent mb-0">
+                                <li class="breadcrumb-item"><a href="index.html" class="text-white">Home</a></li> 
+                                <li class="breadcrumb-item active text-white" aria-current="page">Contact</li>
+                            </ol>
+                        </nav>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="contact-info-wrapper">
+                        <h2 class="heading">Get In Touch With Us</h2>
+                        
+                        <div class="info-item">
+                            <p><span class="info-label">Address:</span> Plot No- 111, Sy No.27 & 32, Banndenallasandra Industrial Layout, Bommasandra – Jigani Link Road, Jigani Hobli, Bengaluru – 560 105, Karnataka, India.</p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <p><span class="info-label">Mobile:</span> <a href="tel:+917624911800">+91 76249 11800</a></p>
+                        </div>
+                        
+                        <div class="info-item">
+                            <p><span class="info-label">E-mail:</span> <a href="mailto:support@wilber.co.in">support@wilber.co.in</a></p>
+                        </div>
+                        
+                        <div class="map-container">
+                             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d44662.4723411257!2d77.61869682346759!3d12.795264286432783!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae6c12cfc65fdd%3A0xf83941bb9990705f!2sSGS%20Tekniks%20Manufacturing%20Pvt.%20Ltd.%20(A%20Syrma%20SGS%20Group%20Company)!5e1!3m2!1sen!2sin!4v1742494675974!5m2!1sen!2sin"  allowfullscreen=""></iframe>
+                        </div>
+                        
+                        <div class="social-follow">
+                            <h3 class="title">Follow Us</h3>
+                            <div class="social-icons">
+                                <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-youtube"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+                                <a href="#" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="contact-form-wrapper">
+                        <h3 class="text-he">Send Us a Message</h3>
+                        <form id="contactForm">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputName">Name</label>
+                                        <input type="text" id="inputName" class="form-control" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="inputNumber">Phone No</label>
+                                        <input type="tel" id="inputNumber" class="form-control" maxlength="10" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="inputEmail">Email Address</label>
+                                <input type="email" id="inputEmail" class="form-control" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="inputMessage">Message</label>
+                                <textarea id="inputMessage" class="form-control" rows="5" placeholder="Message here..." required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-about">
+                        <div class="footer-logo">
+                            <img src="assets/images/logo.png" alt="Wilber Impex">
+                        </div>
+                        <p>Wilber, we prioritize flexibility, enabling ongoing adaption and innovation in our products and services to align with our customers' changing needs, while also promoting a culture of creativity and excellence.</p>
+
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="aboutus.html">About</a></li>
+                            <li><a href="stone-solution.html">Products</a></li>
+                            <li><a href="blog-listing.html">Blog</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Our Products</h5>
+                        <ul class="footer-links">
+                            <li><a href="single-product.html">Industrial Solutions</a></li>
+                            <li><a href="single-product.html">Stone Solutions</a></li>
+                            <li><a href="single-product.html">Tile Adhesives</a></li>
+                            <li><a href="single-product.html">Tile Joint Fillers</a></li>
+                            <li><a href="single-product.html">Stone Care Range</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Newsletter</h5>
+                        <p>Subscribe to our newsletter to receive updates on new products and promotions.</p>
+                        <div class="footer-newsletter">
+                            <input type="email" placeholder="Your Email Address">
+                            <button class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2025 Wilber Impex Pvt Ltd. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <p class="mb-0">Designed with by <a href="https://www.glintcloudshops.com/" style="color: white;"> Glintcloudshops.com </a>Team</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- JavaScript Libraries -->
+  <!-- JavaScript -->
+     <!-- JavaScript Libraries -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    <script src="assets/css/bootstrap.bundle.js"></script>
+    <script src="wilber-scripts.js"></script>
+    <script src="assets/js/swiper.min.js"></script>
+    <script src="assets/js/swiper-bundle.js"></script>
+</body>
+</html>

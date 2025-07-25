@@ -1,0 +1,99 @@
+.has-flexbar {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+    overflow: hidden;
+    padding-left: 0px;
+}
+
+.simalar-product .cust_heading1{
+    color: #282F39;
+    font-size: 35px;
+    font-weight: 600;
+    text-transform: capitalize;
+    line-height: 45px;
+    margin: 0 0 35px;
+    text-align: center;
+}
+.simalar-product{
+    padding: 40px 0px 40px 0px;
+}
+.promo-item {
+    min-width: 100%;
+    scroll-snap-align: start;
+    cursor: pointer;
+}
+
+.promo-card {
+    position: relative;
+    background-color: white;
+    text-align: center;
+    /* padding: 40px 30px; */
+    box-shadow: 0 1px 2px hsla(0, 0%, 0%, 0.2);
+    z-index: 1;
+    border: 1px solid #035ba8;
+    transition: all 0.3s;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.promo-card:hover{
+    transform: scale(0.94); 
+}
+
+.promo-card::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: var(--gradient-primary);
+    clip-path: polygon(0 40%, 100% 0%, 100% 100%, 0 100%);
+    transform: scaleY(0.3);
+    transform-origin: bottom;
+    z-index: -1;
+    transition: .45s ease;
+}
+
+/* .promo-card:hover::after {
+    clip-path: polygon(0 0%, 100% 0%, 100% 100%, 0 100%);
+    transform: scaleY(1);
+} */
+
+.promo-card .card-title {
+    margin-bottom: 20px;
+    transition: 0.25s ease;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 20px;
+    display: none;
+}
+.promo-card:hover .card-title{
+    color: white;
+}
+
+.promo-card .card-banner { 
+    width: 100%;
+    aspect-ratio: 1;
+    /* object-fit: contain;  */
+    transition: .6s;
+}
+.find_dealerscrol .promo-card:hover .card-banner{
+    transform: scale(1);
+}
+
+@media (min-width: 550px) {
+    .has-scrollbar > li {
+        min-width: calc(50% - 5px);
+    }
+}
+@media (min-width: 992px) {
+    .has-scrollbar > li {
+        min-width: calc(33.33% - 6.66px);
+    }
+}
+@media (max-width: 767px) {
+    .promo-card .card-banner{
+        aspect-ratio: 1;
+    }
+} 

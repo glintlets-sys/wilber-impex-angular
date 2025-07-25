@@ -1,0 +1,3054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <title>User Profile | Wilber Impex</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/faviconlogo.png" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="wilber-styles.css">
+    
+    <!-- Custom CSS -->
+
+     
+    <style>
+       
+        
+        
+        
+        
+        
+        /* Profile Section */
+       
+        
+       
+        
+       
+        
+        
+        
+        
+        
+       
+        
+        
+        
+       
+        
+        /* Orders & Returns Page */
+        .order-tabs {
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 20px;
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .order-tab-item {
+            padding: 10px 20px;
+            margin-right: 5px;
+            font-weight: 500;
+            color: var(--gray);
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .order-tab-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 3px;
+            bottom: -10px;
+            left: 0;
+            background-color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .order-tab-item.active {
+            color: var(--primary);
+        }
+        
+        .order-tab-item.active::after {
+            width: 100%;
+        }
+        
+        .time-filter {
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 30px;
+            display: flex;
+            overflow-x: auto;
+            padding-bottom: 10px;
+        }
+        
+        .time-filter-item {
+            padding: 8px 16px;
+            margin-right: 5px;
+            font-size: 0.9rem;
+            color: var(--gray);
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .time-filter-item::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -10px;
+            left: 0;
+            background-color: var(--accent);
+            transition: all 0.3s;
+        }
+        
+        .time-filter-item.active {
+            color: var(--accent);
+            font-weight: 500;
+        }
+        
+        .time-filter-item.active::after {
+            width: 100%;
+        }
+        
+        .order-card {
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+            background-color: var(--white);
+        }
+        
+        .order-card:hover {
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+            transform: translateY(-5px);
+        }
+        
+        .order-product {
+            display: flex;
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .product-image {
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            border-radius: 8px;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-details {
+            flex-grow: 1;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        
+        .product-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+        
+        .product-meta {
+            font-size: 0.85rem;
+            color: var(--gray);
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 3px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+        
+        .status-pending {
+            background-color: rgba(243, 156, 18, 0.1);
+            color: var(--warning);
+        }
+        
+        .status-shipped {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--info);
+        }
+        
+        .status-delivered {
+            background-color: rgba(46, 204, 113, 0.1);
+            color: var(--success);
+        }
+        
+        .status-cancelled {
+            background-color: rgba(231, 76, 60, 0.1);
+            color: var(--danger);
+        }
+        
+        .order-actions {
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--light);
+        }
+        
+        .btn-order {
+            padding: 8px 16px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            color:var(--white) ;
+        }
+        
+        .btn-cancel {
+            background-color: var(--white);
+            border: 1px solid var(--danger);
+            color: var(--danger);
+        }
+        
+        .btn-cancel:hover {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+        
+        .btn-invoice {
+            background-color: var(--white);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-invoice:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        .btn-return {
+            background-color: var(--white);
+            border: 1px solid var(--warning);
+            color: var(--warning);
+        }
+        
+        .btn-return:hover {
+            background-color: var(--warning);
+            color: var(--white);
+        }
+        
+        /* Return Modal */
+        .modal-content {
+            border-radius: 16px;
+            border: none;
+            overflow: hidden;
+        }
+        
+        .return-modal-body {
+            padding: 30px;
+        }
+        
+        .modal-product {
+            display: flex;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 20px;
+        }
+        
+        .modal-product-info {
+            flex-grow: 1;
+        }
+        
+        .modal-product-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+        
+        .modal-product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 5px;
+        }
+        
+        .modal-product-image {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .modal-product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .return-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--dark);
+            margin-bottom: 20px;
+        }
+        
+        .return-options-label {
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .option-group {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .option-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        
+        .reasons-list {
+            margin-bottom: 20px;
+        }
+        
+        .reason-title {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .reason-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 12px;
+            cursor: pointer;
+        }
+        
+        .reason-item p {
+            margin-bottom: 0;
+            font-size: 0.95rem;
+        }
+        
+        .note-textarea {
+            width: 100%;
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            padding: 15px;
+            font-size: 0.95rem;
+            resize: none;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .note-textarea:focus {
+            border-color: var(--primary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(30, 115, 190, 0.1);
+        }
+        
+        .btn-continue {
+            display: block;
+            width: 180px;
+            padding: 12px;
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            margin: 0 auto;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+        
+        .btn-continue:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-text {
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        /* Pagination */
+        .pagination-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 30px;
+        }
+        
+        .pagination-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 16px;
+            background-color: var(--white);
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            font-weight: 500;
+            color: var(--dark);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        
+        .pagination-button:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .pagination-button.disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+       
+        
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        @media (max-width: 991px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -300px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1100;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s;
+                overflow-y: auto;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .mobile-close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                cursor: pointer;
+                font-size: 1.2rem;
+            }
+            
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1050;
+                display: none;
+            }
+            
+            .overlay.active {
+                display: block;
+            }
+            
+            .content-area {
+                padding: 20px;
+            }
+            
+            .product-image {
+                width: 80px;
+                height: 80px;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            
+            
+            .order-product {
+                flex-direction: column;
+            }
+            
+            .product-image {
+                margin-bottom: 15px;
+                margin-right: 0;
+            }
+            
+            .order-actions {
+                flex-direction: column;
+                gap: 10px;
+                align-items: flex-start;
+            }
+            
+            .action-buttons {
+                display: flex;
+                gap: 10px;
+                width: 100%;
+            }
+            
+            .btn-order {
+                flex: 1;
+                text-align: center;
+            }
+        }
+    </style>
+    <style>
+       
+        
+        
+        
+        
+        /* Profile Section */
+       
+        
+       
+        
+       
+        
+        
+        
+        
+        
+       
+        
+        
+        
+       
+        
+        .stats-cards {
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            height: 140px;
+            color: var(--white);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .card-blue {
+            background: linear-gradient(135deg, #1e73be 0%, #4a90e2 100%);
+        }
+        
+        .card-orange {
+            background: linear-gradient(135deg, #ff6b35 0%, #ff9259 100%);
+        }
+        
+        .stat-card h3 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+        
+        .stat-card p {
+            opacity: 0.8;
+            margin-bottom: 0;
+        }
+        
+        .svg-bg {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            opacity: 0.3;
+        }
+        
+        .content-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .content-card-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .content-card-body {
+            padding: 30px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 12px 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            box-shadow: none;
+            border-color: var(--primary);
+        }
+        
+        .gender-options {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .gender-option {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .gender-option input {
+            margin-right: 10px;
+        }
+        
+        
+        
+        .btn-outline {
+            border: 1px solid var(--light-gray);
+            background-color: transparent;
+            color: var(--dark);
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--light-gray);
+        }
+        
+        .tab-nav {
+            display: flex;
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 20px;
+        }
+        
+        .tab-nav-item {
+            padding: 12px 25px;
+            cursor: pointer;
+            position: relative;
+            font-weight: 500;
+        }
+        
+        .tab-nav-item::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .tab-nav-item.active {
+            color: var(--primary);
+        }
+        
+        .tab-nav-item.active::after {
+            width: 100%;
+        }
+        
+        .tab-content {
+            padding: 20px 0;
+        }
+        
+        .address-card {
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s;
+        }
+        
+        .address-card:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .address-type {
+            display: inline-block;
+            padding: 3px 12px;
+            background-color: rgba(30, 115, 190, 0.1);
+            color: var(--primary);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        
+        .address-name {
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+        
+        .address-phone {
+            color: var(--gray);
+            margin-bottom: 10px;
+        }
+        
+        .address-full {
+            margin-bottom: 15px;
+        }
+        
+        .address-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .address-edit, .address-delete {
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .address-edit:hover {
+            color: var(--primary);
+        }
+        
+        .address-delete:hover {
+            color: var(--danger);
+        }
+        
+        .default-check {
+            display: flex;
+            align-items: center;
+        }
+        
+        .default-check input {
+            margin-right: 10px;
+        }
+        
+        .live-location {
+            display: flex;
+            align-items: center;
+            background-color: var(--light-gray);
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .live-location:hover {
+            background-color: rgba(30, 115, 190, 0.1);
+        }
+        
+        .live-location i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        /* Modal styles */
+        .modal-content {
+            border-radius: 12px;
+            overflow: hidden;
+            border: none;
+        }
+        
+        .modal-header {
+            background-color: var(--primary);
+            color: var(--white);
+            padding: 15px 20px;
+        }
+        
+        .modal-body {
+            padding: 30px;
+        }
+        
+        .upload-area {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .upload-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            overflow: hidden;
+            border: 4px solid var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .upload-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .upload-input {
+            display: none;
+        }
+        
+        .upload-button {
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .upload-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Mobile menu */
+        .mobile-menu-toggle {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        
+        @media (max-width: 991px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -300px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1100;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s;
+                overflow-y: auto;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .mobile-close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                cursor: pointer;
+                font-size: 1.2rem;
+            }
+            
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1050;
+                display: none;
+            }
+            
+            .overlay.active {
+                display: block;
+            }
+            
+            .content-area {
+                padding: 20px;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            
+            
+            .content-card-body {
+                padding: 20px;
+            }
+            
+            .stat-card {
+                height: 120px;
+            }
+        }
+    </style>
+    <style>
+       
+        
+        
+        
+        
+        
+        /* Profile Section */
+        .profile-section {
+            padding: 30px 0;
+        }
+        
+        .profile-container {
+            background-color: var(--white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+        
+        .sidebar {
+            background-color: var(--white);
+            height: 100%;
+            padding: 30px 0;
+            border-right: 1px solid var(--light-gray);
+        }
+        
+        .profile-image {
+            text-align: center;
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .profile-image img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upload-icon {
+            position: absolute;
+            bottom: 20px;
+            right: 50%;
+            margin-right: -60px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            color: var(--white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .upload-icon:hover {
+            transform: scale(1.1);
+        }
+        
+        .user-info {
+            text-align: center;
+            padding: 10px 0;
+        }
+        
+        .user-info h4 {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .user-info p {
+            color: var(--gray);
+            margin-bottom: 0;
+        }
+        
+        .sidebar-menu {
+            padding: 20px 0;
+        }
+        
+        .menu-item {
+            padding: 12px 25px;
+            transition: all 0.3s;
+            margin-bottom: 5px;
+            border-left: 3px solid transparent;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .menu-item i {
+            margin-right: 12px;
+            font-size: 1.1rem;
+            width: 20px;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .menu-item.active {
+            background-color: rgba(30, 115, 190, 0.1);
+            border-left-color: var(--primary);
+        }
+        
+        .menu-item.active h5, .menu-item.active i {
+            color: var(--primary);
+        }
+        
+        .menu-item:hover {
+            background-color: rgba(30, 115, 190, 0.05);
+        }
+        
+        .menu-item h5 {
+            margin-bottom: 0;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+        
+        .submenu {
+            padding-left: 32px;
+        }
+        
+        .submenu-item {
+            padding: 8px 12px;
+            display: block;
+            color: var(--dark);
+            text-decoration: none;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+        
+        .submenu-item:hover, .submenu-item.active {
+            background-color: rgba(30, 115, 190, 0.1);
+            color: var(--primary);
+        }
+        
+        .content-area {
+            padding: 30px;
+        }
+        
+        .content-card {
+            background-color: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            margin-bottom: 30px;
+        }
+        
+        .content-card-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--light-gray);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .content-card-body {
+            padding: 30px;
+        }
+        
+        /* Wishlist Styles */
+        .wishlist-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .wishlist-item {
+            border: 1px solid var(--light-gray);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+            height: 100%;
+            background-color: var(--white);
+        }
+        
+        .wishlist-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        .wishlist-image {
+            position: relative;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .wishlist-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+        
+        .wishlist-item:hover .wishlist-image img {
+            transform: scale(1.05);
+        }
+        
+        .remove-wishlist {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 30px;
+            height: 30px;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 1;
+        }
+        
+        .remove-wishlist:hover {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+        
+        .wishlist-content {
+            padding: 15px;
+        }
+        
+        .wishlist-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+        }
+        
+        .wishlist-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .wishlist-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .add-to-cart {
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            font-weight: 500;
+            flex-grow: 1;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .add-to-cart:hover {
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .compare {
+            width: 36px;
+            height: 36px;
+            border-radius: 6px;
+            background-color: var(--light-gray);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .compare:hover {
+            background-color: var(--gray);
+            color: var(--white);
+        }
+        
+        .empty-wishlist {
+            text-align: center;
+            padding: 50px 0;
+        }
+        
+        .empty-wishlist i {
+            font-size: 3rem;
+            color: var(--light-gray);
+            margin-bottom: 20px;
+        }
+        
+        .empty-wishlist h4 {
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .empty-wishlist p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .shop-now-btn {
+            background: var(--gradient-primary);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .shop-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+            color: var(--white);
+        }
+        
+        /* Settings Styles */
+        .settings-tabs {
+            border-bottom: 1px solid var(--light-gray);
+            margin-bottom: 20px;
+            display: flex;
+        }
+        
+        .settings-tab {
+            padding: 12px 20px;
+            font-weight: 500;
+            cursor: pointer;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .settings-tab::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .settings-tab.active {
+            color: var(--primary);
+        }
+        
+        .settings-tab.active::after {
+            width: 100%;
+        }
+        
+        .settings-content {
+            display: none;
+        }
+        
+        .settings-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: var(--dark);
+        }
+        
+        .form-control {
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 10px 15px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(30, 115, 190, 0.25);
+        }
+        
+        .password-tips {
+            background-color: var(--light-gray);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .password-tips h6 {
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .password-tips ul {
+            padding-left: 20px;
+            margin-bottom: 0;
+        }
+        
+        .password-tips li {
+            margin-bottom: 8px;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .notification-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .notification-info h6 {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .notification-info p {
+            margin-bottom: 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .form-check-input {
+            width: 1.25rem;
+            height: 1.25rem;
+            margin-top: 0;
+            vertical-align: middle;
+            border: 1px solid var(--light-gray);
+            cursor: pointer;
+        }
+        
+        .form-check-input:checked {
+            background-color: var(--primary);
+            border-color: var(--primary);
+        }
+        
+        .privacy-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--light-gray);
+        }
+        
+        .privacy-info h6 {
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        .privacy-info p {
+            margin-bottom: 0;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        .form-select {
+            width: auto;
+            min-width: 150px;
+            border: 1px solid var(--light-gray);
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 0.95rem;
+            cursor: pointer;
+        }
+        
+        .form-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 0.2rem rgba(30, 115, 190, 0.25);
+        }
+        
+        /* Logout Styles */
+        .logout-container {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        
+        .logout-icon {
+            width: 100px;
+            height: 100px;
+            background-color: var(--light-gray);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto 30px;
+        }
+        
+        .logout-icon i {
+            font-size: 3rem;
+            color: var(--primary);
+        }
+        
+        .logout-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .logout-text {
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .logout-actions {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .btn-outline-danger {
+            background-color: transparent;
+            border: 1px solid var(--danger);
+            color: var(--danger);
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-danger:hover {
+            background-color: var(--danger);
+            color: var(--white);
+        }
+        
+        .btn-outline-secondary {
+            background-color: transparent;
+            border: 1px solid var(--gray);
+            color: var(--gray);
+            padding: 12px 25px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: var(--gray);
+            color: var(--white);
+        }
+        
+       
+        
+        /* Mobile Menu */
+        .mobile-menu-toggle {
+            display: none;
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: var(--dark);
+        }
+        .user-iconpage{
+            color: white;
+            height: 30px;
+    width: 30px;
+    background: var(--primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    font-size: 16px !important;
+        }
+        @media (max-width: 991px) {
+            .sidebar {
+                position: fixed;
+                top: 0;
+                left: -300px;
+                width: 280px;
+                height: 100vh;
+                z-index: 1100;
+                box-shadow: 5px 0 15px rgba(0, 0, 0, 0.1);
+                transition: all 0.3s;
+                overflow-y: auto;
+            }
+            
+            .sidebar.active {
+                left: 0;
+            }
+            
+            .mobile-menu-toggle {
+                display: block;
+            }
+            
+            .mobile-close {
+                position: absolute;
+                top: 15px;
+                right: 15px;
+                cursor: pointer;
+                font-size: 1.2rem;
+            }
+            
+            .overlay {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.5);
+                z-index: 1050;
+                display: none;
+            }
+            
+            .overlay.active {
+                display: block;
+            }
+            
+            .content-area {
+                padding: 20px 0px;
+            }
+            
+            .wishlist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .profile-section {
+                padding: 40px 0;
+            }
+            
+            .content-card-body {
+                padding: 20px;
+            }
+            
+            .wishlist-grid {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+            
+            .settings-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .settings-tab {
+                flex-grow: 1;
+                text-align: center;
+                padding: 10px;
+            }
+            
+            .logout-actions {
+                flex-direction: column;
+            }
+            
+            .btn-outline-danger, .btn-outline-secondary {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+     <!-- Top Header -->
+    <div class="top-header d-none d-md-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="mailto:support@wilber.co.in" class="me-3"><i class="far fa-envelope me-2"></i>support@wilber.co.in</a>
+                    <span><i class="far fa-clock me-2"></i>Mon - Sat 9.00 - 18.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Header -->
+    <header class="main-header">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/images/logo.png" alt="Wilber Impex">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav  ">
+                        <li class="nav-item">
+                            <a class="nav-link  " href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="aboutus.html">About Us</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Products
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="categoriesstone.html">Industrial Solutions</a></li>
+                                <li><a class="dropdown-item" href="categoriesstone.html">Stone Solutions</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog-listing.html">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                        <a href="categoriesstone.html" class="product-btn">Industrial Solutions</a>
+                        <a href="categoriesstone.html" class="product-btn">Stone Solutions</a>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <a href="#" class="me-3 position-relative">
+                            <i class="fa-solid fa-cart-shopping fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">3</span>
+                        </a>
+                        <a href="userprofile.html" class="me-3">
+                            <i class="fa-solid fa-user fs-5 user-iconpage"></i>
+                        </a>
+                        <a href="#" class="btn btn-primary">Get a Quote</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <section class="profile-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <button class="mobile-menu-toggle mb-3 d-lg-none" id="mobileMenuToggle">
+                        <i class="fas fa-bars"></i> Menu
+                    </button>
+                </div>
+            </div>
+            
+            <div class="profile-container">
+                <div class="row g-0">
+                    <!-- Sidebar -->
+                    <div class="col-lg-3 sidebar" id="sidebar">
+                        <div class="d-lg-none">
+                            <div class="mobile-close" id="mobileClose">
+                                <i class="fas fa-times"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="profile-image">
+                            <img src="assets/images/Artboard 108 copy.png" alt="User Profile">
+                            <div class="upload-icon" data-bs-toggle="modal" data-bs-target="#uploadPhotoModal">
+                                <i class="fa-solid fa-camera"></i>
+                            </div>
+                        </div>
+                        
+                        <div class="user-info">
+                            <h4>Harimohan Verma</h4>
+                            <p>+91 86566 56507</p>
+                        </div>
+                        
+                        <div class="sidebar-menu">
+                            <div class="menu-item active" data-target="dashboard" id="dashboardMenuItem">
+                                <i class="fas fa-th-large"></i>
+                                <h5>Dashboard</h5>
+                            </div>
+                            
+                             
+                            
+                            <div class="menu-item" data-target="orders" id="ordersMenuItem">
+                                <i class="fas fa-shopping-bag"></i>
+                                <h5>Orders & Returns</h5>
+                            </div>
+                            
+                            <div class="menu-item " data-target="wishlist" id="wishlistMenuItem">
+                                <i class="fas fa-heart"></i>
+                                <h5>Wishlist</h5>
+                            </div>
+                            
+                            <div class="menu-item" data-target="settings" id="settingsMenuItem">
+                                <i class="fas fa-cog"></i>
+                                <h5>Settings</h5>
+                            </div>
+                            
+                            <div class="menu-item" data-target="logout" id="logoutMenuItem">
+                                <i class="fas fa-sign-out-alt"></i>
+                                <h5>Logout</h5>
+                            </div>
+                        </div>
+                    </div>
+                    
+                     <!-- Content Area -->
+                     <div class="col-lg-9 content-area" id="dashboard-section">
+                        <!-- Dashboard Stats -->
+                        <div class="stats-cards">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="stat-card card-blue">
+                                        <h3>1 Product</h3>
+                                        <p>in your cart</p>
+                                        <svg class="svg-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                                            <path fill="rgba(255,255,255,0.3)" fill-opacity="1" d="M0,192L30,208C60,224,120,256,180,245.3C240,235,300,181,360,144C420,107,480,85,540,96C600,107,660,149,720,154.7C780,160,840,128,900,117.3C960,107,1020,117,1080,112C1140,107,1200,85,1260,74.7C1320,64,1380,64,1410,64L1440,64L1440,320L1410,320C1380,320,1320,320,1260,320C1200,320,1140,320,1080,320C1020,320,960,320,900,320C840,320,780,320,720,320C660,320,600,320,540,320C480,320,420,320,360,320C300,320,240,320,180,320C120,320,60,320,30,320L0,320Z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="stat-card card-orange">
+                                        <h3>5 Products</h3>
+                                        <p>in your orders</p>
+                                        <svg class="svg-bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                                            <path fill="rgba(255,255,255,0.3)" fill-opacity="1" d="M0,128L34.3,112C68.6,96,137,64,206,96C274.3,128,343,224,411,250.7C480,277,549,235,617,213.3C685.7,192,754,192,823,181.3C891.4,171,960,149,1029,117.3C1097.1,85,1166,43,1234,58.7C1302.9,75,1371,149,1406,186.7L1440,224L1440,320L1405.7,320C1371.4,320,1303,320,1234,320C1165.7,320,1097,320,1029,320C960,320,891,320,823,320C754.3,320,686,320,617,320C548.6,320,480,320,411,320C342.9,320,274,320,206,320C137.1,320,69,320,34,320L0,320Z"></path>
+                                        </svg>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Profile Information -->
+                        <div class="content-card" id="profile-section">
+                            <div class="content-card-header">
+                                <h4>Profile Information</h4>
+                            </div>
+                            <div class="content-card-body">
+                                <form>
+                                    <div class="row">
+                                        <div class="col-md-12 mb-4">
+                                            <label class="form-label">Profile Photo</label>
+                                            <div class="d-flex align-items-center">
+                                                <img src="assets/images/Artboard 108 copy.png" alt="Profile" class="rounded-circle me-3" style="width: 60px; height: 60px; object-fit: cover;">
+                                                <button type="button" class="btn btn-outline" data-bs-toggle="modal" data-bs-target="#uploadPhotoModal">Change Photo</button>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6 form-group">
+                                            <label class="form-label">Full Name</label>
+                                            <input type="text" class="form-control" value="Harimohan Verma">
+                                        </div>
+                                        
+                                        <div class="col-md-6 form-group">
+                                            <label class="form-label">Mobile Number</label>
+                                            <input type="tel" class="form-control" value="86566 56507">
+                                        </div>
+                                        
+                                        <div class="col-md-6 form-group">
+                                            <label class="form-label">Email Address</label>
+                                            <input type="email" class="form-control" value="Harimohanv23xxxxxxxxx">
+                                        </div>
+                                        
+                                        <div class="col-md-6 form-group">
+                                            <label class="form-label">Gender</label>
+                                            <div class="gender-options">
+                                                <label class="gender-option">
+                                                    <input type="radio" name="gender" checked> Male
+                                                </label>
+                                                <label class="gender-option">
+                                                    <input type="radio" name="gender"> Female
+                                                </label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-12">
+                                            <button type="submit" class="btn btn-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        
+                        <!-- Address Management -->
+                        <div class="content-card" id="address-section">
+                            <div class="content-card-header">
+                                <h4>Address Management</h4>
+                            </div>
+                            <div class="content-card-body">
+                                <div class="tab-nav">
+                                    <div class="tab-nav-item active" id="addressTabBtn">My Addresses</div>
+                                    <div class="tab-nav-item" id="addAddressTabBtn">Add New Address</div>
+                                </div>
+                                
+                                <!-- My Addresses Tab -->
+                                <div class="tab-content active" id="addressTab">
+                                    <div class="address-card">
+                                        <div class="row">
+                                            <div class="col-md-9">
+                                                <span class="address-type">Home</span>
+                                                <h5 class="address-name">Harimohan Verma</h5>
+                                                <p class="address-phone">+91 86566 56507</p>
+                                                <p class="address-full">1/546 EWF Sector - H Aliganj, Lucknow, Uttar Pradesh 226021</p>
+                                                <div class="default-check">
+                                                    <input type="checkbox" id="defaultAddress" checked>
+                                                    <label for="defaultAddress">Default Address</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="address-actions">
+                                                    <div class="address-edit" id="editAddressBtn">
+                                                        <i class="fas fa-edit me-1"></i> Edit
+                                                    </div>
+                                                    <div class="address-delete">
+                                                        <i class="fas fa-trash-alt me-1"></i> Delete
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Add Address Tab -->
+                                <div class="tab-content" id="addAddressTab" style="display: none;">
+                                    <form>
+                                        <div class="live-location">
+                                            <i class="fas fa-location-crosshairs"></i>
+                                            <p class="mb-0">Use My Current Location</p>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <div class="col-12 mb-3">
+                                                <label class="form-label">Address Type</label>
+                                                <div class="gender-options">
+                                                    <label class="gender-option">
+                                                        <input type="radio" name="addressType" checked> Home
+                                                    </label>
+                                                    <label class="gender-option">
+                                                        <input type="radio" name="addressType"> Office
+                                                    </label>
+                                                    <label class="gender-option">
+                                                        <input type="radio" name="addressType"> Other
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-md-6 form-group">
+                                                <label class="form-label">Full Name</label>
+                                                <input type="text" class="form-control" placeholder="Enter your full name">
+                                            </div>
+                                            
+                                            <div class="col-md-6 form-group">
+                                                <label class="form-label">Mobile Number</label>
+                                                <input type="tel" class="form-control" placeholder="Enter your mobile number">
+                                            </div>
+                                            
+                                            <div class="col-md-6 form-group">
+                                                <label class="form-label">Country/Region</label>
+                                                <input type="text" class="form-control" value="India" placeholder="Enter country/region">
+                                            </div>
+                                            
+                                            <div class="col-md-6 form-group">
+                                                <label class="form-label">Pincode</label>
+                                                <input type="text" class="form-control" placeholder="Enter pincode">
+                                            </div>
+                                            
+                                            <div class="col-md-12 form-group">
+                                                <label class="form-label">Flat, House No., Building</label>
+                                                <input type="text" class="form-control" placeholder="Enter your flat/house number">
+                                            </div>
+                                            
+                                            <div class="col-md-12 form-group">
+                                                <label class="form-label">Area, Street, Sector, Village</label>
+                                                <input type="text" class="form-control" placeholder="Enter your area/street">
+                                            </div>
+                                            
+                                            <div class="col-md-12 form-group">
+                                                <label class="form-label">Landmark (Optional)</label>
+                                                <input type="text" class="form-control" placeholder="Enter a nearby landmark">
+                                            </div>
+                                            
+                                            <div class="col-md-6 form-group">
+                                                <label class="form-label">State</label>
+                                                <select class="form-select">
+                                                    <option selected disabled>Select State</option>
+                                                    <option value="Delhi">Delhi</option>
+                                                    <option value="Uttar Pradesh">Uttar Pradesh</option>
+                                                    <option value="Haryana">Haryana</option>
+                                                    <option value="Maharashtra">Maharashtra</option>
+                                                </select>
+                                            </div>
+                                            
+                                            <div class="col-md-6 form-group">
+                                                <label class="form-label">City</label>
+                                                <input type="text" class="form-control" placeholder="Enter city">
+                                            </div>
+                                            
+                                            <div class="col-md-12 form-group">
+                                                <div class="default-check">
+                                                    <input type="checkbox" id="newDefaultAddress">
+                                                    <label for="newDefaultAddress">Make this my default address</label>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="col-12">
+                                                <button type="submit" class="btn btn-primary">Save Address</button>
+                                                <button type="button" class="btn btn-outline ms-2" id="cancelAddressBtn">Cancel</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Content Area -->
+                     <div class="col-lg-9 content-area d-none" id="orders-section">
+                        <div class="order-tabs">
+                            <div class="order-tab-item active" data-tab="orders">Orders</div>
+                            <div class="order-tab-item" data-tab="ontheway">On the way</div>
+                            <div class="order-tab-item" data-tab="delivered">Delivered</div>
+                            <div class="order-tab-item" data-tab="cancelled">Cancelled</div>
+                            <div class="order-tab-item" data-tab="returned">Returned</div>
+                            <div class="order-tab-item" data-tab="replacement">Replacement</div>
+                        </div>
+                        
+                        <div class="tab-content" id="orders-tab">
+                            <div class="time-filter">
+                                <div class="time-filter-item active" data-period="month">Last 30 days</div>
+                                <div class="time-filter-item" data-period="6month">6 Months</div>
+                                <div class="time-filter-item" data-period="2025">2025</div>
+                                <div class="time-filter-item" data-period="2024">2024</div>
+                                <div class="time-filter-item" data-period="2023">2023</div>
+                                <div class="time-filter-item" data-period="2022">2022</div>
+                            </div>
+                            
+                            <div class="orders-container">
+                                <!-- Order Card 1 -->
+                                <div class="order-card">
+                                    <div class="order-product">
+                                        <div class="product-image">
+                                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Marble Densifier Regular">
+                                        </div>
+                                        <div class="product-details">
+                                            <h4 class="product-title">MARBLE DENSIFIER REGULAR</h4>
+                                            <div class="product-price">₹2,200</div>
+                                            <div class="product-meta">Inclusive of all taxes</div>
+                                            <div class="delivery-info">
+                                                <span class="status-badge status-pending">Delivery on March 17</span>
+                                            </div>
+                                            <p class="mt-2 mb-0">Your order has been placed</p>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <div class="order-note">You can cancel your order before delivery</div>
+                                        <div class="action-buttons">
+                                            <button class="btn-order btn-cancel" data-bs-toggle="modal" data-bs-target="#cancelOrderModal">Cancel Order</button>
+                                            <button class="btn-order btn-invoice"><i class="fa-solid fa-download me-1"></i> Invoice</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Order Card 2 -->
+                                <div class="order-card">
+                                    <div class="order-product">
+                                        <div class="product-image">
+                                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Marble Densifier Regular">
+                                        </div>
+                                        <div class="product-details">
+                                            <h4 class="product-title">TILE JOINTFILLER SILVER</h4>
+                                            <div class="product-price">₹1,850</div>
+                                            <div class="product-meta">Inclusive of all taxes</div>
+                                            <div class="delivery-info">
+                                                <span class="status-badge status-shipped">Shipped on March 14</span>
+                                            </div>
+                                            <p class="mt-2 mb-0">Your order is on the way</p>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <div class="order-note">Track your order for real-time updates</div>
+                                        <div class="action-buttons">
+                                            <button class="btn-order btn-primary">Track Order</button>
+                                            <button class="btn-order btn-invoice"><i class="fa-solid fa-download me-1"></i> Invoice</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="pagination-wrapper">
+                                <div class="pagination-button disabled">
+                                    <i class="fas fa-angle-left"></i> Previous
+                                </div>
+                                <div class="pagination-button">
+                                    Next <i class="fas fa-angle-right"></i>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content d-none" id="ontheway-tab">
+                            <div class="time-filter">
+                                <div class="time-filter-item active" data-period="month">Last 30 days</div>
+                                <div class="time-filter-item" data-period="6month">6 Months</div>
+                                <div class="time-filter-item" data-period="2025">2025</div>
+                                <div class="time-filter-item" data-period="2024">2024</div>
+                                <div class="time-filter-item" data-period="2023">2023</div>
+                                <div class="time-filter-item" data-period="2022">2022</div>
+                            </div>
+                            
+                            <div class="orders-container">
+                                <!-- Order Card 1 -->
+                                <div class="order-card">
+                                    <div class="order-product">
+                                        <div class="product-image">
+                                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Marble Densifier Regular">
+                                        </div>
+                                        <div class="product-details">
+                                            <h4 class="product-title">TILE JOINTFILLER SILVER</h4>
+                                            <div class="product-price">₹1,850</div>
+                                            <div class="product-meta">Inclusive of all taxes</div>
+                                            <div class="delivery-info">
+                                                <span class="status-badge status-shipped">Shipped on March 14</span>
+                                            </div>
+                                            <p class="mt-2 mb-0">Your order is on the way</p>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <div class="order-note">Track your order for real-time updates</div>
+                                        <div class="action-buttons">
+                                            <button class="btn-order btn-primary">Track Order</button>
+                                            <button class="btn-order btn-invoice"><i class="fa-solid fa-download me-1"></i> Invoice</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content d-none" id="delivered-tab">
+                            <div class="time-filter">
+                                <div class="time-filter-item active" data-period="month">Last 30 days</div>
+                                <div class="time-filter-item" data-period="6month">6 Months</div>
+                                <div class="time-filter-item" data-period="2025">2025</div>
+                                <div class="time-filter-item" data-period="2024">2024</div>
+                                <div class="time-filter-item" data-period="2023">2023</div>
+                                <div class="time-filter-item" data-period="2022">2022</div>
+                            </div>
+                            
+                            <div class="orders-container">
+                                <!-- Order Card 1 -->
+                                <div class="order-card">
+                                    <div class="order-product">
+                                        <div class="product-image">
+                                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Marble Densifier Regular">
+                                        </div>
+                                        <div class="product-details">
+                                            <h4 class="product-title">STONE SEALER PREMIUM</h4>
+                                            <div class="product-price">₹2,450</div>
+                                            <div class="product-meta">Inclusive of all taxes</div>
+                                            <div class="delivery-info">
+                                                <span class="status-badge status-delivered">Delivered on March 10</span>
+                                            </div>
+                                            <p class="mt-2 mb-0">Your order has been delivered</p>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <div class="order-note">Return window closes in 5 days</div>
+                                        <div class="action-buttons">
+                                            <button class="btn-order btn-return" data-bs-toggle="modal" data-bs-target="#returnOrderModal">Return/Replace</button>
+                                            <button class="btn-order btn-invoice"><i class="fa-solid fa-download me-1"></i> Invoice</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Order Card 2 -->
+                                <div class="order-card">
+                                    <div class="order-product">
+                                        <div class="product-image">
+                                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Marble Densifier Regular">
+                                        </div>
+                                        <div class="product-details">
+                                            <h4 class="product-title">GROUT CLEANER PRO</h4>
+                                            <div class="product-price">₹950</div>
+                                            <div class="product-meta">Inclusive of all taxes</div>
+                                            <div class="delivery-info">
+                                                <span class="status-badge status-delivered">Delivered on March 5</span>
+                                            </div>
+                                            <p class="mt-2 mb-0">Your order has been delivered</p>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <div class="order-note">Return window closes in 2 days</div>
+                                        <div class="action-buttons">
+                                            <button class="btn-order btn-return" data-bs-toggle="modal" data-bs-target="#returnOrderModal">Return/Replace</button>
+                                            <button class="btn-order btn-invoice"><i class="fa-solid fa-download me-1"></i> Invoice</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content d-none" id="cancelled-tab">
+                            <div class="time-filter">
+                                <div class="time-filter-item active" data-period="month">Last 30 days</div>
+                                <div class="time-filter-item" data-period="6month">6 Months</div>
+                                <div class="time-filter-item" data-period="2025">2025</div>
+                                <div class="time-filter-item" data-period="2024">2024</div>
+                                <div class="time-filter-item" data-period="2023">2023</div>
+                                <div class="time-filter-item" data-period="2022">2022</div>
+                            </div>
+                            
+                            <div class="orders-container">
+                                <!-- Order Card 1 -->
+                                <div class="order-card">
+                                    <div class="order-product">
+                                        <div class="product-image">
+                                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Marble Densifier Regular">
+                                        </div>
+                                        <div class="product-details">
+                                            <h4 class="product-title">MARBLE DENSIFIER REGULAR</h4>
+                                            <div class="product-price">₹2,200</div>
+                                            <div class="product-meta">Inclusive of all taxes</div>
+                                            <div class="delivery-info">
+                                                <span class="status-badge status-cancelled">Cancelled on March 8</span>
+                                            </div>
+                                            <p class="mt-2 mb-0 fw-bold">Your online payment will be credited soon to your account</p>
+                                        </div>
+                                    </div>
+                                    <div class="order-actions">
+                                        <div class="order-note">Refund initiated to original payment method</div>
+                                        <div class="action-buttons">
+                                            <button class="btn-order btn-invoice"><i class="fa-solid fa-download me-1"></i> Invoice</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content d-none" id="returned-tab">
+                            <div class="time-filter">
+                                <div class="time-filter-item active" data-period="month">Last 30 days</div>
+                                <div class="time-filter-item" data-period="6month">6 Months</div>
+                                <div class="time-filter-item" data-period="2025">2025</div>
+                                <div class="time-filter-item" data-period="2024">2024</div>
+                                <div class="time-filter-item" data-period="2023">2023</div>
+                                <div class="time-filter-item" data-period="2022">2022</div>
+                            </div>
+                            
+                            <div class="orders-container">
+                                <!-- No Returns Message -->
+                                <div class="text-center py-5">
+                                    <i class="fas fa-box-open fa-3x mb-3 text-secondary"></i>
+                                    <h4>No Returned Orders</h4>
+                                    <p class="text-muted">You don't have any returned orders in this time period.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tab-content d-none" id="replacement-tab">
+                            <div class="time-filter">
+                                <div class="time-filter-item active" data-period="month">Last 30 days</div>
+                                <div class="time-filter-item" data-period="6month">6 Months</div>
+                                <div class="time-filter-item" data-period="2025">2025</div>
+                                <div class="time-filter-item" data-period="2024">2024</div>
+                                <div class="time-filter-item" data-period="2023">2023</div>
+                                <div class="time-filter-item" data-period="2022">2022</div>
+                            </div>
+                            
+                            <div class="orders-container">
+                                <!-- No Replacements Message -->
+                                <div class="text-center py-5">
+                                    <i class="fas fa-exchange-alt fa-3x mb-3 text-secondary"></i>
+                                    <h4>No Replacement Orders</h4>
+                                    <p class="text-muted">You don't have any replacement orders in this time period.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Content Area - Wishlist Section -->
+                    <div class="col-lg-9 content-area d-none" id="wishlist-section">
+                        <div class="content-card">
+                            <div class="content-card-header">
+                                <h4>My Wishlist</h4>
+                                <div class="wishlist-count">3 Items</div>
+                            </div>
+                            <div class="content-card-body">
+                                <div class="wishlist-grid">
+                                    <!-- Wishlist Item 1 -->
+                                    <div class="wishlist-item">
+                                        <div class="wishlist-image">
+                                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Marble Densifier Regular">
+                                            <div class="remove-wishlist">
+                                                <i class="fas fa-times"></i>
+                                            </div>
+                                        </div>
+                                        <div class="wishlist-content">
+                                            <h5 class="wishlist-title">MARBLE DENSIFIER REGULAR</h5>
+                                            <div class="wishlist-price">₹2,200</div>
+                                            <div class="wishlist-actions">
+                                                <button class="add-to-cart">Add to Cart</button>
+                                                <div class="compare">
+                                                    <i class="fas fa-exchange-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Wishlist Item 2 -->
+                                    <div class="wishlist-item">
+                                        <div class="wishlist-image">
+                                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Stone Sealer Premium">
+                                            <div class="remove-wishlist">
+                                                <i class="fas fa-times"></i>
+                                            </div>
+                                        </div>
+                                        <div class="wishlist-content">
+                                            <h5 class="wishlist-title">STONE SEALER PREMIUM</h5>
+                                            <div class="wishlist-price">₹2,450</div>
+                                            <div class="wishlist-actions">
+                                                <button class="add-to-cart">Add to Cart</button>
+                                                <div class="compare">
+                                                    <i class="fas fa-exchange-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Wishlist Item 3 -->
+                                    <div class="wishlist-item">
+                                        <div class="wishlist-image">
+                                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Grout Cleaner Pro">
+                                            <div class="remove-wishlist">
+                                                <i class="fas fa-times"></i>
+                                            </div>
+                                        </div>
+                                        <div class="wishlist-content">
+                                            <h5 class="wishlist-title">GROUT CLEANER PRO</h5>
+                                            <div class="wishlist-price">₹950</div>
+                                            <div class="wishlist-actions">
+                                                <button class="add-to-cart">Add to Cart</button>
+                                                <div class="compare">
+                                                    <i class="fas fa-exchange-alt"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Area - Settings Section -->
+                    <div class="col-lg-9 content-area d-none" id="settings-section">
+                        <div class="content-card">
+                            <div class="content-card-header">
+                                <h4>Account Settings</h4>
+                            </div>
+                            <div class="content-card-body">
+                                <div class="settings-tabs">
+                                    <div class="settings-tab active" data-tab="password">Change Password</div>
+                                    <div class="settings-tab" data-tab="notifications">Notifications</div>
+                                    <div class="settings-tab" data-tab="privacy">Privacy</div>
+                                </div>
+                                
+                                <!-- Password Tab -->
+                                <div class="settings-content active" id="password-tab">
+                                    <div class="row">
+                                        <div class="col-md-8">
+                                            <form>
+                                                <div class="form-group">
+                                                    <label class="form-label">Current Password</label>
+                                                    <input type="password" class="form-control" placeholder="Enter current password">
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label class="form-label">New Password</label>
+                                                    <input type="password" class="form-control" placeholder="Enter new password">
+                                                </div>
+                                                
+                                                <div class="form-group">
+                                                    <label class="form-label">Confirm New Password</label>
+                                                    <input type="password" class="form-control" placeholder="Confirm new password">
+                                                </div>
+                                                
+                                                <button type="submit" class="btn btn-primary">Update Password</button>
+                                            </form>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="password-tips">
+                                                <h6>Password Tips</h6>
+                                                <ul>
+                                                    <li>Use at least 8 characters</li>
+                                                    <li>Include uppercase and lowercase letters</li>
+                                                    <li>Include at least one number</li>
+                                                    <li>Include at least one special character</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <!-- Notifications Tab -->
+                                <div class="settings-content" id="notifications-tab">
+                                    <div class="notification-settings">
+                                        <div class="notification-item">
+                                            <div class="notification-info">
+                                                <h6>Order Updates</h6>
+                                                <p>Receive notifications about your order status</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="orderUpdates" checked>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="notification-item">
+                                            <div class="notification-info">
+                                                <h6>Promotional Emails</h6>
+                                                <p>Receive emails about promotions and special offers</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="promoEmails" checked>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="notification-item">
+                                            <div class="notification-info">
+                                                <h6>Product Updates</h6>
+                                                <p>Get notified about new products and updates</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="productUpdates">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="notification-item">
+                                            <div class="notification-info">
+                                                <h6>SMS Notifications</h6>
+                                                <p>Receive text messages for important updates</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="smsNotifications" checked>
+                                            </div>
+                                        </div>
+                                        
+                                        <button class="btn btn-primary mt-3">Save Preferences</button>
+                                    </div>
+                                </div>
+                                
+                                <!-- Privacy Tab -->
+                                <div class="settings-content" id="privacy-tab">
+                                    <div class="privacy-settings">
+                                        <div class="privacy-item">
+                                            <div class="privacy-info">
+                                                <h6>Profile Visibility</h6>
+                                                <p>Control who can see your profile information</p>
+                                            </div>
+                                            <select class="form-select">
+                                                <option value="public">Public</option>
+                                                <option value="private" selected>Private</option>
+                                            </select>
+                                        </div>
+                                        
+                                        <div class="privacy-item">
+                                            <div class="privacy-info">
+                                                <h6>Data Usage Consent</h6>
+                                                <p>Allow us to use your data for personalized recommendations</p>
+                                            </div>
+                                            <div class="form-check form-switch">
+                                                <input class="form-check-input" type="checkbox" id="dataConsent" checked>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="mt-4">
+                                            <button class="btn btn-primary">Save Privacy Settings</button>
+                                            <button class="btn btn-outline-secondary ms-2">Download My Data</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Content Area - Logout Section -->
+                    <div class="col-lg-9 content-area d-none" id="logout-section">
+                        <div class="content-card">
+                            <div class="content-card-body">
+                                <div class="logout-container">
+                                    <div class="logout-icon">
+                                        <i class="fas fa-sign-out-alt"></i>
+                                    </div>
+                                    <h3 class="logout-title">Are you sure you want to logout?</h3>
+                                    <p class="logout-text">You will be logged out of your account and will need to sign in again to access your account information.</p>
+                                    <div class="logout-actions">
+                                        <a href="#" class="btn-outline-danger">Yes, Logout</a>
+                                        <button class="btn-outline-secondary" id="cancelLogout">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Photo Upload Modal -->
+    <div class="modal fade" id="uploadPhotoModal" tabindex="-1" aria-labelledby="uploadPhotoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPhotoModalLabel">Upload Profile Photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="upload-area">
+                        <div class="upload-preview">
+                            <img id="previewImage" src="assets/images/Artboard 108 copy.png" alt="Profile Preview">
+                        </div>
+                        <input type="file" id="uploadInput" class="upload-input" accept="image/*">
+                        <label for="uploadInput" class="upload-button">
+                            <i class="fas fa-upload me-2"></i> Choose Image
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save Photo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cancel Order Modal -->
+    <div class="modal fade" id="cancelOrderModal" tabindex="-1" aria-labelledby="cancelOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="cancelOrderModalLabel">Cancel Order</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="return-modal-body">
+                    <div class="modal-product">
+                        <div class="modal-product-info">
+                            <div class="modal-product-title">MARBLE DENSIFIER REGULAR</div>
+                            <div class="modal-product-price">₹2,200</div>
+                        </div>
+                        <div class="modal-product-image">
+                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Marble Densifier Regular">
+                        </div>
+                    </div>
+                    
+                    <div class="reasons-list">
+                        <div class="reason-title">Reason for cancellation</div>
+                        <div class="reason-item">
+                            <input class="form-check-input" type="radio" name="cancelReason" id="reason1" checked>
+                            <p>Don't want product anymore</p>
+                        </div>
+                        <div class="reason-item">
+                            <input class="form-check-input" type="radio" name="cancelReason" id="reason2">
+                            <p>Found a better price elsewhere</p>
+                        </div>
+                        <div class="reason-item">
+                            <input class="form-check-input" type="radio" name="cancelReason" id="reason3">
+                            <p>Purchased by mistake</p>
+                        </div>
+                        <div class="reason-item">
+                            <input class="form-check-input" type="radio" name="cancelReason" id="reason4">
+                            <p>Delivery time is too long</p>
+                        </div>
+                        <div class="reason-item">
+                            <input class="form-check-input" type="radio" name="cancelReason" id="reason5">
+                            <p>Other reason</p>
+                        </div>
+                    </div>
+                    
+                    <textarea class="note-textarea" rows="4" placeholder="Add additional comments (optional)"></textarea>
+                    
+                    <div class="info-text text-center mb-4">
+                        Your payment will be refunded to the original payment method within 5-7 business days.
+                    </div>
+                    
+                    <button class="btn-continue">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Return Order Modal -->
+    <div class="modal fade" id="returnOrderModal" tabindex="-1" aria-labelledby="returnOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="returnOrderModalLabel">Return or Replace</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="return-modal-body">
+                    <div class="modal-product">
+                        <div class="modal-product-info">
+                            <div class="modal-product-title">STONE SEALER PREMIUM</div>
+                            <div class="modal-product-price">₹2,450</div>
+                        </div>
+                        <div class="modal-product-image">
+                            <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="Stone Sealer Premium">
+                        </div>
+                    </div>
+                    
+                    <div class="return-options">
+                        <div class="return-options-label">What do you want?</div>
+                        <div class="option-group">
+                            <div class="option-item">
+                                <input class="form-check-input" type="radio" name="returnOption" id="returnOption1" checked>
+                                <p>Return</p>
+                            </div>
+                            <div class="option-item">
+                                <input class="form-check-input" type="radio" name="returnOption" id="returnOption2">
+                                <p>Replace</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="reasons-list">
+                                <div class="reason-title">Reason for return</div>
+                                <div class="reason-item">
+                                    <input class="form-check-input" type="radio" name="returnReason" id="returnReason1" checked>
+                                    <p>Don't want product anymore</p>
+                                </div>
+                                <div class="reason-item">
+                                    <input class="form-check-input" type="radio" name="returnReason" id="returnReason2">
+                                    <p>Quality of the product not as expected</p>
+                                </div>
+                                <div class="reason-item">
+                                    <input class="form-check-input" type="radio" name="returnReason" id="returnReason3">
+                                    <p>Don't like the design not as expected</p>
+                                </div>
+                                <div class="reason-item">
+                                    <input class="form-check-input" type="radio" name="returnReason" id="returnReason4">
+                                    <p>Received wrong item</p>
+                                </div>
+                                <div class="reason-item">
+                                    <input class="form-check-input" type="radio" name="returnReason" id="returnReason5">
+                                    <p>Damaged product</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="info-text">
+                                Our return policy allows you to return products within 7 days of delivery for a full refund. The product must be in its original condition and packaging. Once we receive and inspect the returned item, we'll process your refund.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <textarea class="note-textarea" rows="4" placeholder="Write a note about your return"></textarea>
+                    
+                    <button class="btn-continue">Continue</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Photo Upload Modal -->
+    <div class="modal fade" id="uploadPhotoModal" tabindex="-1" aria-labelledby="uploadPhotoModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="uploadPhotoModalLabel">Upload Profile Photo</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="upload-area">
+                        <div class="upload-preview">
+                            <img id="previewImage" src="assets/images/Artboard 108 copy.png" alt="Profile Preview">
+                        </div>
+                        <input type="file" id="uploadInput" class="upload-input" accept="image/*">
+                        <label for="uploadInput" class="upload-button">
+                            <i class="fas fa-upload me-2"></i> Choose Image
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save Photo</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    <!-- Mobile Menu Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-about">
+                        <div class="footer-logo">
+                            <img src="assets/images/logo.png" alt="Wilber Impex">
+                        </div>
+                        <p>Wilber, we prioritize flexibility, enabling ongoing adaption and innovation in our products and services to align with our customers' changing needs, while also promoting a culture of creativity and excellence.</p>
+
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="aboutus.html">About</a></li>
+                            <li><a href="stone-solution.html">Products</a></li>
+                            <li><a href="blog-listing.html">Blog</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Our Products</h5>
+                        <ul class="footer-links">
+                            <li><a href="single-product.html">Industrial Solutions</a></li>
+                            <li><a href="single-product.html">Stone Solutions</a></li>
+                            <li><a href="single-product.html">Tile Adhesives</a></li>
+                            <li><a href="single-product.html">Tile Joint Fillers</a></li>
+                            <li><a href="single-product.html">Stone Care Range</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Newsletter</h5>
+                        <p>Subscribe to our newsletter to receive updates on new products and promotions.</p>
+                        <div class="footer-newsletter">
+                            <input type="email" placeholder="Your Email Address">
+                            <button class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2025 Wilber Impex Pvt Ltd. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <p class="mb-0">Designed with by <a href="https://www.glintcloudshops.com/" style="color: white;"> Glintcloudshops.com </a>Team</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- JavaScript -->
+     <!-- JavaScript Libraries -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    <script src="assets/css/bootstrap.bundle.js"></script>
+    <script src="wilber-scripts.js"></script>
+    <script src="assets/js/swiper.min.js"></script>
+    <script src="assets/js/swiper-bundle.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Mobile menu toggle
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileClose = document.getElementById('mobileClose');
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.getElementById('overlay');
+            
+            if (mobileMenuToggle && mobileClose && sidebar && overlay) {
+                mobileMenuToggle.addEventListener('click', function() {
+                    sidebar.classList.add('active');
+                    overlay.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+                
+                mobileClose.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+                
+                overlay.addEventListener('click', function() {
+                    sidebar.classList.remove('active');
+                    overlay.classList.remove('active');
+                    document.body.style.overflow = '';
+                });
+            }
+            
+            // Settings tabs
+            const settingsTabs = document.querySelectorAll('.settings-tab');
+            const settingsContents = document.querySelectorAll('.settings-content');
+            
+            if (settingsTabs.length > 0 && settingsContents.length > 0) {
+                settingsTabs.forEach(function(tab) {
+                    tab.addEventListener('click', function() {
+                        // Remove active class from all tabs
+                        settingsTabs.forEach(function(t) {
+                            t.classList.remove('active');
+                        });
+                        
+                        // Add active class to clicked tab
+                        this.classList.add('active');
+                        
+                        // Hide all content
+                        settingsContents.forEach(function(content) {
+                            content.classList.remove('active');
+                            content.style.display = 'none';
+                        });
+                        
+                        // Show selected content
+                        const tabId = this.getAttribute('data-tab') + '-tab';
+                        const selectedContent = document.getElementById(tabId);
+                        if (selectedContent) {
+                            selectedContent.classList.add('active');
+                            selectedContent.style.display = 'block';
+                        }
+                    });
+                });
+            }
+            
+            // Menu item clicks
+            const menuItems = document.querySelectorAll('.menu-item');
+            const contentSections = document.querySelectorAll('.content-area');
+            
+            menuItems.forEach(function(item) {
+                item.addEventListener('click', function() {
+                    const target = this.getAttribute('data-target');
+                    
+                    // Remove active class from all menu items
+                    menuItems.forEach(function(mi) {
+                        mi.classList.remove('active');
+                    });
+                    
+                    // Add active class to clicked menu item
+                    this.classList.add('active');
+                    
+                    // Hide all content sections
+                    contentSections.forEach(function(section) {
+                        section.classList.add('d-none');
+                    });
+                    
+                    // Show selected content section
+                    const selectedSection = document.getElementById(target + '-section');
+                    if (selectedSection) {
+                        selectedSection.classList.remove('d-none');
+                    }
+                });
+            });
+            
+            // Cancel logout
+            const cancelLogout = document.getElementById('cancelLogout');
+            if (cancelLogout) {
+                cancelLogout.addEventListener('click', function() {
+                    // Click the dashboard menu item to go back
+                    const dashboardMenuItem = document.querySelector('.menu-item[data-target="dashboard"]');
+                    if (dashboardMenuItem) {
+                        dashboardMenuItem.click();
+                    }
+                });
+            }
+            
+            // Profile image preview
+            const uploadInput = document.getElementById('uploadInput');
+            const previewImage = document.getElementById('previewImage');
+            
+            if (uploadInput && previewImage) {
+                uploadInput.addEventListener('change', function() {
+                    const file = this.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            previewImage.src = e.target.result;
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+            
+            // Back to top button
+            const backToTop = document.getElementById('backToTop');
+            
+            if (backToTop) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        backToTop.classList.add('show');
+                    } else {
+                        backToTop.classList.remove('show');
+                    }
+                });
+                
+                backToTop.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileClose = document.getElementById('mobileClose');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        
+        mobileMenuToggle.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileClose.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Address tab switching
+        const addressTabBtn = document.getElementById('addressTabBtn');
+        const addAddressTabBtn = document.getElementById('addAddressTabBtn');
+        const addressTab = document.getElementById('addressTab');
+        const addAddressTab = document.getElementById('addAddressTab');
+        const editAddressBtn = document.getElementById('editAddressBtn');
+        const cancelAddressBtn = document.getElementById('cancelAddressBtn');
+        
+        addressTabBtn.addEventListener('click', function() {
+            addressTabBtn.classList.add('active');
+            addAddressTabBtn.classList.remove('active');
+            addressTab.style.display = 'block';
+            addAddressTab.style.display = 'none';
+        });
+        
+        addAddressTabBtn.addEventListener('click', function() {
+            addressTabBtn.classList.remove('active');
+            addAddressTabBtn.classList.add('active');
+            addressTab.style.display = 'none';
+            addAddressTab.style.display = 'block';
+        });
+        
+        editAddressBtn.addEventListener('click', function() {
+            addressTabBtn.classList.remove('active');
+            addAddressTabBtn.classList.add('active');
+            addressTab.style.display = 'none';
+            addAddressTab.style.display = 'block';
+            
+            // Scroll to the add address form
+            document.getElementById('address-section').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+        
+        cancelAddressBtn.addEventListener('click', function() {
+            addressTabBtn.classList.add('active');
+            addAddressTabBtn.classList.remove('active');
+            addressTab.style.display = 'block';
+            addAddressTab.style.display = 'none';
+        });
+        
+        // Profile image preview
+        const uploadInput = document.getElementById('uploadInput');
+        const previewImage = document.getElementById('previewImage');
+        
+        uploadInput.addEventListener('change', function() {
+            const file = this.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    previewImage.src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+        
+        // Smooth scroll for sidebar links
+        const submenuItems = document.querySelectorAll('.submenu-item');
+        
+        submenuItems.forEach(function(item) {
+            item.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                submenuItems.forEach(function(el) {
+                    el.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Get the target section
+                const target = this.getAttribute('data-target');
+                const section = document.getElementById(target + '-section');
+                
+                if (section) {
+                    // Scroll to the section
+                    section.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (window.innerWidth < 992) {
+                        sidebar.classList.remove('active');
+                        overlay.classList.remove('active');
+                        document.body.style.overflow = '';
+                    }
+                }
+            });
+        });
+    });
+</script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Mobile menu toggle
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const mobileClose = document.getElementById('mobileClose');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        
+        mobileMenuToggle.addEventListener('click', function() {
+            sidebar.classList.add('active');
+            overlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        mobileClose.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        overlay.addEventListener('click', function() {
+            sidebar.classList.remove('active');
+            overlay.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        
+        // Order tabs
+        const orderTabItems = document.querySelectorAll('.order-tab-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        orderTabItems.forEach(function(tab) {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                orderTabItems.forEach(function(item) {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab contents
+                tabContents.forEach(function(content) {
+                    content.classList.add('d-none');
+                });
+                
+                // Show the selected tab content
+                const tabId = this.getAttribute('data-tab') + '-tab';
+                document.getElementById(tabId).classList.remove('d-none');
+            });
+        });
+        
+        // Time filter
+        const timeFilterItems = document.querySelectorAll('.time-filter-item');
+        
+        timeFilterItems.forEach(function(item) {
+            item.addEventListener('click', function() {
+                // Remove active class from all items
+                timeFilterItems.forEach(function(filterItem) {
+                    filterItem.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // You would typically load different data here based on the time period
+                // For demo purposes, we're just changing the active state
+            });
+        });
+        
+        // Profile image preview
+        const uploadInput = document.getElementById('uploadInput');
+        const previewImage = document.getElementById('previewImage');
+        
+        if (uploadInput && previewImage) {
+            uploadInput.addEventListener('change', function() {
+                const file = this.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        previewImage.src = e.target.result;
+                    }
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+        
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        
+        if (backToTop) {
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('show');
+                } else {
+                    backToTop.classList.remove('show');
+                }
+            });
+            
+            backToTop.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+    });
+</script>
+</body>
+</html>

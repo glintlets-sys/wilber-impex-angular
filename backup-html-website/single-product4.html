@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
+    <meta name="description" content="Wilber MARBLE DENSIFIER REGULAR - A premium polymer-modified, cement-based tile adhesive for fixing ceramic tiles and natural stone.">
+    
+    <title>Wilber - MARBLE DENSIFIER REGULAR</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="assets/images/faviconlogo.png" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.css">
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="wilber-styles.css">
+    
+    <style>
+        
+        
+         
+        /* Product Section Styles */
+        .product-section {
+            padding: 10px 0 40px;
+        }
+        
+        .product-image-gallery {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        
+        .main-image {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            margin-bottom: 20px;
+            height: 280px;
+        }
+        
+        .main-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .thumbnail-container {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .thumbnail {
+            width: 80px;
+            height: 80px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: var(--transition);
+        }
+        
+        .thumbnail.active, .thumbnail:hover {
+            border-color: var(--primary);
+        }
+        
+        .thumbnail img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .product-details {
+            padding: 10px 30px;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        .product-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 0px;
+            padding-bottom: 0px;
+            color: var(--dark);
+        }
+        .product-title::after{
+            display: none;
+        }
+        .product-rating i{
+            font-size: 12px;
+        }
+        .product-rating span{
+            font-size: 13px;
+        }
+        .product-description {
+            margin-bottom: 0px;
+            color: var(--gray);
+        }
+        .product-description p{
+            font-size: 13px;
+            margin-bottom: 2px;
+            display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+        }
+        .product-description #read-more-btn{
+            font-size: 13px;
+        }
+        .product-meta {
+            margin-bottom: 5px;
+        }
+        
+        .product-meta p {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0px;
+            padding-bottom: 5px;
+            /* border-bottom: 1px solid var(--light-gray); */
+            align-items: center;
+        }
+        .product-meta .quantity-selector {
+            display: flex;
+            align-items: center;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            background: white;
+            border: 1px solid #f0f0f0;
+            width: 120px;
+        }
+        .product-meta .quantity-selector input {
+            width: 40px;
+            border: none;
+            text-align: center;
+            font-weight: 500;
+            padding: 8px 0;
+            background: transparent;
+            color: #28353d;
+            -moz-appearance: textfield;
+        }
+        .product-meta .quantity-selector input::-webkit-outer-spin-button,
+        .product-meta .quantity-selector input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        .product-meta .qty-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #28353d;
+        }
+        .product-meta .qty-btn:hover {
+            background: #f7f7f7;
+        }
+        .product-meta span {
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 14px;
+        }
+        
+        .product-meta select {
+            width: fit-content;
+            padding: 6px 35px 6px 15px ;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 11px;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        .product-price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 0px;
+        }
+        
+        .product-actions {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 10px;
+        }
+        
+        .product-actions .btn {
+            flex: 1;
+            padding: 8px 20px;
+            font-size: 14px;
+        }
+        
+        .video-button {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--dark);
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .video-button i {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        
+        .video-button:hover {
+            color: var(--primary);
+        }
+        
+        .video-button:hover i {
+            transform: scale(1.1);
+        }
+        
+        /* Product Action Buttons */
+        .product-action-buttons {
+            margin-top: 40px;
+        }
+        
+        .action-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: var(--white);
+            border: none;
+            padding: 10px 10px;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            color: var(--dark);
+            box-shadow: var(--shadow);
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-dark);
+            color: var(--primary);
+        }
+        
+        /* Product Sections */
+        .product-info-section {
+            padding: 60px 0;
+            background-color: var(--white);
+        }
+        
+        .product-info-content {
+            display: none;
+        }
+        
+        .product-info-content.active {
+            display: block;
+        }
+        
+        .section-heading {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--dark);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary);
+        }
+        
+        .download-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--white);
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            padding: 8px 20px;
+            border-radius: 4px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .download-btn:hover {
+            background-color: var(--primary);
+            color: var(--white);
+        }
+        
+        /* How to Apply Section */
+        .how-to-apply {
+            padding: 60px 0;
+            background-color: var(--light);
+        }
+        
+        .heading-sectionmain {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .text-pp {
+            color: var(--gray);
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .step-box {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 25px;
+            height: 100%;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            text-align: center;
+        }
+        
+        .step-box:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-dark);
+        }
+        
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+        }
+        
+        .step-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .step-description {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 0;
+        }
+        
+        /* Features and Advantages Section */
+        .features-section {
+            padding: 60px 0px 0px 0px;
+            background-color: var(--white);
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        
+        .feature-list li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .feature-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 8px;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            border: 2px solid var(--primary);
+            background-color: var(--white);
+        }
+        
+        .video-card {
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+        
+        .video-card img {
+            width: 100%;
+            height: auto;
+        }
+        
+        /* YouTube Video Section */
+        .youtube-video {
+            padding: 60px 0;
+            background-color: var(--light);
+        }
+        
+        .youtube-video iframe {
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+        }
+        
+        /* Related Products */
+        .related-products {
+            padding: 60px 0;
+            background-color: var(--white);
+        }
+        
+        .related-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+            color: var(--dark);
+        }
+        
+       
+        
+        
+        
+        .product-card-image {
+            height: 200px;
+            overflow: hidden;
+            margin: 20px;
+        }
+        
+        .product-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-card-image img {
+            transform: scale(1.05);
+        }
+        
+        .product-card-content {
+            padding: 20px;
+        }
+        
+        .product-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--dark);
+            display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+        }
+        .countaty-value{
+            display: flex; 
+            align-items: center;
+    justify-content: space-between;
+        }
+        
+        
+        
+        
+        
+        /* Responsive Adjustments */
+        @media (max-width: 991px) {
+            
+            
+            .main-image {
+                height: 300px;
+            }
+            
+            .product-title {
+                font-size: 24px;
+            }
+            
+            .related-title {
+                font-size: 24px;
+            }
+        }
+        
+        @media (max-width: 767px) {
+            .product-details{
+                padding: 10px 5px;
+            }
+            .features-section {
+                padding: 30px 0px 0px 0px;
+            }
+            .youtube-video iframe{
+                height: 350px;
+            }
+            
+            .product-section {
+                padding: 40px 0;
+            }
+            
+            .main-image {
+                height: 250px;
+            }
+            
+            .product-actions {
+                flex-direction: column;
+            }
+            
+            .product-title {
+                font-size: 22px;
+            }
+            
+            .section-heading {
+                font-size: 20px;
+            }
+            
+            .heading-sectionmain {
+                font-size: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    <!-- Top Header -->
+    <div class="top-header d-none d-md-block">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="mailto:support@wilber.co.in" class="me-3"><i class="far fa-envelope me-2"></i>support@wilber.co.in</a>
+                    <span><i class="far fa-clock me-2"></i>Mon - Sat 9.00 - 18.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <!-- Main Header -->
+     <header class="main-header">
+        <div class="container-fluid">
+            <nav class="navbar navbar-expand-lg">
+                <a class="navbar-brand" href="index.html">
+                    <img src="assets/images/adesivawilber.png" alt="Wilber Impex">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav  ">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="aboutus.html">About Us</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                Products
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="categoriesstone.html">Industrial Solutions</a></li>
+                                <li><a class="dropdown-item" href="categoriesstone.html">Stone Solutions</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="blog-listing.html">Blog</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="contact.html">Contact</a>
+                        </li>
+                        <a href="categoriesstone.html" class="product-btn">Industrial Solutions</a>
+                        <a href="categoriesstone.html" class="product-btn">Stone Solutions</a>
+                    </ul>
+                    <div class="d-flex align-items-center">
+                        <a href="#" class="me-3 position-relative">
+                            <i class="fa-solid fa-cart-shopping fs-5"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-primary">3</span>
+                        </a>
+                        <a href="userprofile.html" class="me-3">
+                            <i class="fa-solid fa-user fs-5"></i>
+                        </a>
+                        <a href="#" class="btn btn-primary">Get a Quote</a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Product Details Section -->
+    <section class="product-section">
+        <div class="container">
+            <div class="row">
+                <!-- Product Image Gallery -->
+                <div class="col-lg-5">
+                    <div class="product-image-gallery">
+                        <div class="main-image">
+                            <img src="wilber product/Cementitious tile adevisa/GEN-666.jpg" alt="MARBLE DENSIFIER REGULAR" id="mainProductImage">
+                        </div>
+                        <div class="thumbnail-container">
+                            <div class="thumbnail active" data-src="wilber product/Cementitious tile adevisa/GEN-666.jpg">
+                                <img src="wilber product/Cementitious tile adevisa/GEN-666.jpg" alt="Thumbnail 1">
+                            </div>
+                            <!-- <div class="thumbnail" data-src="assets/images/wilber product/MARBLE EPOXY SET - 999.jpg">
+                                <img src="assets/images/wilber product/MARBLE EPOXY SET - 999.jpg" alt="Thumbnail 2">
+                            </div>
+                            <div class="thumbnail" data-src="assets/images/wilber product/MARBLE POLISH POWDER.jpg">
+                                <img src="assets/images/wilber product/MARBLE POLISH POWDER.jpg" alt="Thumbnail 3">
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product Details -->
+                <div class="col-lg-7">
+                    <div class="product-details">
+                        <h1 class="product-title">ADESIVA GEN-666</h1>
+                        <div class="product-rating mb-1">
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star text-warning"></i>
+                            <i class="fas fa-star-half-alt text-warning"></i>
+                            <span class="ms-2">(4.5 - 32 reviews)</span>
+                        </div>
+                        
+                         
+
+                        <div class="product-description">
+                            <p>ADESIVA GEN-666 is a modified with high polymer strength adhesive.</p>
+                            <p id="more-description" style="display: none;">GEN-666 comes in fine powder form and has enhanced adhesion properties. Suitable for indoor application fixing vitrified and natural stone tiles for floor & wall for size of the tile upto 4ft × 4ft.</p>
+                            <a href="#" id="read-more-btn">Read more</a>
+                        </div>
+                        
+                        <div class="product-meta">
+                            <p>
+                                <span>Packaging Units:</span>
+                                <select class="form-select form-select-sm">
+                                    <option value="20">20 KG</option> 
+                                </select>
+                            </p>
+                            <p>
+                                <span>Colors:</span>
+                                <select class="form-select form-select-sm" id="color-select"> 
+                                    <option value="grey">Grey</option>
+                                    <option value="white">White</option>
+                                </select>
+                            </p>
+                             <p>
+                                <span>Packaging Type:</span>
+                                <span>Polythene Bag</span>
+                            </p>
+                            <p>
+                                <span>Price:</span>
+                                <span class="product-price" id="product-price">₹1,140</span>
+                            </p>
+                            <div class="countaty-value">
+                                <span>Quantity:</span>
+                                <div class="quantity-selector">
+                                    <button class="qty-btn" id="decrease-qty">
+                                        <i class="fas fa-minus"></i>
+                                    </button>
+                                    <input type="number" id="quantity" value="1" min="1" readonly>
+                                    <button class="qty-btn" id="increase-qty">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="product-actions">
+                            <a href="bag.html" class="btn btn-primary">Buy Now</a>
+                            <a href="#" class="btn btn-outline-primary">Add to Cart</a>
+                        </div>
+                        
+                        <a href="#videoproplay" class="video-button">
+                            <i class="fas fa-play"></i>
+                            <span>Watch Video</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <script>
+                document.getElementById('increase-qty').addEventListener('click', function() {
+                    const quantityInput = document.getElementById('quantity');
+                    quantityInput.value = parseInt(quantityInput.value) + 1;
+                });
+                
+                document.getElementById('decrease-qty').addEventListener('click', function() {
+                    const quantityInput = document.getElementById('quantity');
+                    const currentValue = parseInt(quantityInput.value);
+                    if (currentValue > 1) {
+                        quantityInput.value = currentValue - 1;
+                    }
+                });
+                
+                // Ensure quantity input accepts only valid numbers
+                document.getElementById('quantity').addEventListener('change', function() {
+                    if (this.value < 1 || isNaN(this.value)) {
+                        this.value = 1;
+                    } else {
+                        this.value = parseInt(this.value);
+                    }
+                });
+
+                document.addEventListener('DOMContentLoaded', function() {
+            // Price settings for different colors
+            const prices = {
+                'grey': 1140,
+                'white': 1545
+            };
+            
+            // Elements
+            const colorSelect = document.getElementById('color-select');
+            const priceElement = document.getElementById('product-price'); 
+            
+            // Update price when color changes
+            colorSelect.addEventListener('change', function() {
+                const selectedColor = this.value;
+                const price = prices[selectedColor];
+                priceElement.textContent = '₹' + price;
+            });
+            
+             
+        });
+            </script>
+            <!-- Product Action Buttons -->
+            <div class="row mt-1">
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <a href="state-wise-tabs.html" class="action-button">
+                        <i class="fas fa-store"></i>
+                        Find A Dealer
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <a href="#" class="action-button">
+                        <i class="fas fa-headset"></i>
+                        Connect With Wilber Expert
+                    </a>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <button class="action-button" onclick="toggleProductInfo('tds')">
+                        <i class="fas fa-file-alt"></i>
+                        TDS
+                    </button>
+                </div>
+                <div class="col-lg-3 col-md-6 mb-3">
+                    <button class="action-button" onclick="toggleProductInfo('drawing')">
+                        <i class="fas fa-cube"></i>
+                        3D Drawing
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Product Info Content -->
+            <div class="row mt-4">
+                <div class="col-12">
+                    <div id="product-info-tds" class="product-info-content">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h2 class="section-heading mb-0">Wilber New Construction Adhesive (NCA) - TDS</h2>
+                                    <a href="#" class="download-btn">
+                                        <i class="fas fa-file-download"></i> Download
+                                    </a>
+                                </div>
+                                <div class="table-responsive">
+                                    <table class="table table-striped">
+                                        <tbody>
+                                            <tr>
+                                                <th width="30%">Product Type</th>
+                                                <td>Cement-based tile adhesive</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Appearance</th>
+                                                <td>Grey/White Powder</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Application</th>
+                                                <td>Internal</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Water Demand</th>
+                                                <td>5.0 - 5.5 liters per 20 kg bag</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Open Time</th>
+                                                <td>Approx. 20 minutes</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Pot Life</th>
+                                                <td>2-3 hours</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Adjustment Time</th>
+                                                <td>15-20 minutes</td>
+                                            </tr>
+                                            <tr>
+                                                <th>Set Time</th>
+                                                <td>24 hours</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div id="product-info-drawing" class="product-info-content">
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex justify-content-between align-items-center mb-4">
+                                    <h2 class="section-heading mb-0">Wilber New Construction Adhesive (NCA) 3D Image</h2>
+                                    <a href="#" class="download-btn">
+                                        <i class="fas fa-file-download"></i> Download
+                                    </a>
+                                </div>
+                                <div class="text-center">
+                                    <img src="assets/images/wilber product/MARBLE DESNIFIER REGULAR.jpg" alt="3D Drawing" class="img-fluid" style="max-height: 400px;">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How to Apply Section -->
+    <section class="how-to-apply">
+        <div class="container">
+            <h2 class="heading-sectionmain text-center">How to Apply</h2>
+            <p class="text-center text-pp">Follow our step-by-step guide to apply Marble Densifier Regular for the best results.</p>
+            
+            <div class="row g-4 mt-4">
+                <div class="col-lg-4 col-md-6">
+                    <div class="step-box">
+                        <img src="assets/images/icon1.png" alt="Modified Adhesive with Polymer" class="step-icon">
+                        <h4 class="step-title">Step 1 - Modified Adhesive with Polymer</h4>
+                        <!-- <p class="step-description">Before applying tile adhesive, make sure to thoroughly clean the surface. Remove any oil, dirt, dust, or solvents.</p> -->
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="step-box">
+                        <img src="assets/images/icon2.png" alt="Crack Bridging" class="step-icon">
+                        <h4 class="step-title">Step 2 - Crack Bridging</h4>
+                        <!-- <p class="step-description">It's best to mix the adhesive with a mechanical stirrer to get a smooth, lump-free paste. Slowly mix until you have a smooth paste. Let it sit for 5 minutes before applying.</p> -->
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6">
+                    <div class="step-box">
+                        <img src="assets/images/icon3.png" alt="Suitable for all type of tiles" class="step-icon">
+                        <h4 class="step-title">Step 3 - Suitable for all type of tiles</h4>
+                        <!-- <p class="step-description">Before applying tile adhesive, dampen the wall to get rid of any loose dust particles.</p> -->
+                    </div>
+                </div>
+                
+                  
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Features and Advantages Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h2 class="section-heading">Features and Advantages</h2>
+                </div>
+                <div class="col-lg-12">
+                    <ul class="feature-list">
+                        <li>Ready-to-use formula - Just apply water to the site and it is ready to use.</li>
+                        <li>Suitable for Internal Areas - Wilber New Construction Adhesive can be used on indoor flooring and walls with high porosity tiles like ceramic, clay tiles, terracotta, and quarry tiles of regular size.</li>
+                        <li>Water Resistant - It can be used in wet areas.</li>
+                        <li>Strong binding - This cement-based adhesive offers a strong bond to different cement-based substrates.</li>
+                        <li>Self-drying - Wilber New Construction Tile Adhesive has self-curing technology that enables an easy application.</li>
+                        <li>Low VOC - This cement-based adhesive is low VOC which means it does not harm the environment or any living being.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Application Area Section -->
+    <section class="features-section" style="background-color: var(--light);">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 mb-4 mb-lg-0">
+                    <div class="video-card">
+                        <img src="assets/images/Tile-Adhesive-Application-1.webp" alt="Application Area" class="img-fluid">
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <h2 class="section-heading">Application Area</h2>
+                    <ul class="feature-list">
+                        <li>Ready-to-use formula - Just apply water to the site and it is ready to use.</li>
+                        <li>Suitable for Internal Areas - Wilber New Construction Adhesive can be used on indoor flooring and walls with high porosity tiles like ceramic, clay tiles, terracotta, and quarry tiles of regular size.</li>
+                        <li>Water Resistant - It can be used in wet areas.</li>
+                        <li>Strong binding - This cement-based adhesive offers a strong bond to different cement-based substrates.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Things to Consider Section -->
+    <section class="features-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 ">
+                    <h2 class="section-heading">Things to Consider</h2>
+                </div>
+                <div class="col-lg-12">
+                    <ul class="feature-list">
+                        <li>You cannot apply Wilber New Construction Adhesive to fiber cement boards, plywood, decorative laminates, metal, plastic, etc.</li>
+                        <li>Adhesive cannot be used as a waterproofing solution.</li>
+                        <li>You cannot fix metal tiles, engineered stone, or artificial stone tiles with Wilber New Construction Adhesive.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- YouTube Video Section -->
+    <section class="youtube-video" id="videoproplay">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <iframe width="100%" height="450" src="https://www.youtube.com/embed/Qe8YH1Pg4Mw" title="Product Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Related Products Section -->
+    <section class="related-products">
+        <div class="container">
+            <h2 class="related-title">Related Products</h2>
+            <!-- Slider main container -->
+<div class="swiper related-PRoduct">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      <div class="swiper-slide">
+        <div class="product-card">
+            <div class="product-card-image">
+                <img src="assets/images/wilber product/CEMENT CLEANER-208.jpg" alt="CEMENT CLEANER-208">
+            </div>
+            <div class="product-card-content">
+                <h3 class="product-card-title">CEMENT CLEANER-208</h3>
+            </div>
+        </div>
+      </div> 
+      <div class="swiper-slide">
+        <div class="product-card">
+            <div class="product-card-image">
+                <img src="assets/images/wilber product/EPOXY ADHESIVE-152(PART-A).jpg" alt="EPOXY ADHESIVE-152">
+            </div>
+            <div class="product-card-content">
+                <h3 class="product-card-title">EPOXY ADHESIVE-152</h3>
+            </div>
+        </div>
+      </div> 
+      <div class="swiper-slide">
+        <div class="product-card">
+            <div class="product-card-image">
+                <img src="assets/images/wilber product/GRANITO COLOUR ENHANCER-400.jpg" alt="GRANITO COLOUR ENHANCER-400">
+            </div>
+            <div class="product-card-content">
+                <h3 class="product-card-title">GRANITO COLOUR ENHANCER-400</h3>
+            </div>
+        </div>
+      </div> 
+      <div class="swiper-slide">
+        <div class="product-card">
+            <div class="product-card-image">
+                <img src="assets/images/wilber product/MARBLE EPOXY-999 (PART-A).jpg" alt="MARBLE EPOXY-999">
+            </div>
+            <div class="product-card-content">
+                <h3 class="product-card-title">MARBLE EPOXY-999</h3>
+            </div>
+        </div>
+      </div> 
+    </div> 
+    <div class="swiper-pagination"></div> 
+  </div> 
+        </div>
+    </section>
+
+     <!-- Footer -->
+     <footer class="footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="footer-about">
+                        <div class="footer-logo">
+                            <img src="assets/images/logo.png" alt="Wilber Impex">
+                        </div>
+                        <p>Wilber, we prioritize flexibility, enabling ongoing adaption and innovation in our products and services to align with our customers' changing needs, while also promoting a culture of creativity and excellence.</p>
+
+                        <div class="footer-social">
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-youtube"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Quick Links</h5>
+                        <ul class="footer-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="aboutus.html">About</a></li>
+                            <li><a href="stone-solution.html">Products</a></li>
+                            <li><a href="blog-listing.html">Blog</a></li>
+                            <li><a href="contact.html">Contact</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Our Products</h5>
+                        <ul class="footer-links">
+                            <li><a href="single-product.html">Industrial Solutions</a></li>
+                            <li><a href="single-product.html">Stone Solutions</a></li>
+                            <li><a href="single-product.html">Tile Adhesives</a></li>
+                            <li><a href="single-product.html">Tile Joint Fillers</a></li>
+                            <li><a href="single-product.html">Stone Care Range</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-widget">
+                        <h5>Newsletter</h5>
+                        <p>Subscribe to our newsletter to receive updates on new products and promotions.</p>
+                        <div class="footer-newsletter">
+                            <input type="email" placeholder="Your Email Address">
+                            <button class="btn btn-primary">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0">&copy; 2025 Wilber Impex Pvt Ltd. All Rights Reserved.</p>
+                    </div>
+                    <div class="col-md-6 text-end">
+                        <p class="mb-0">Designed with by <a href="https://www.glintcloudshops.com/" style="color: white;"> Glintcloudshops.com </a>Team</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+     <!-- JavaScript -->
+     <!-- JavaScript Libraries -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
+    <script src="assets/css/bootstrap.bundle.js"></script>
+    <script src="wilber-scripts.js"></script>
+    <script src="assets/js/swiper.min.js"></script>
+    <script src="assets/js/swiper-bundle.js"></script>
+    <!-- <script>
+        document.getElementById('read-more-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            var moreText = document.getElementById('more-description');
+            var btnText = document.getElementById('read-more-btn');
+            
+            if (moreText.style.display === 'none') {
+                moreText.style.display = 'block';
+                btnText.innerHTML = 'Read less';
+            } else {
+                moreText.style.display = 'none';
+                btnText.innerHTML = 'Read more';
+            }
+        });
+    </script> -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Thumbnail click functionality
+            const thumbnails = document.querySelectorAll('.thumbnail');
+            const mainImage = document.getElementById('mainProductImage');
+            
+            thumbnails.forEach(thumbnail => {
+                thumbnail.addEventListener('click', function() {
+                    // Update active thumbnail
+                    thumbnails.forEach(thumb => thumb.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // Update main image
+                    const imageSrc = this.getAttribute('data-src');
+                    mainImage.src = imageSrc;
+                });
+            });
+            
+            // Read more functionality
+            const readMoreBtn = document.getElementById('read-more-btn');
+            const moreDescription = document.getElementById('more-description');
+            
+            if (readMoreBtn && moreDescription) {
+                readMoreBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    if (moreDescription.style.display === 'none') {
+                        moreDescription.style.display = 'block';
+                        this.textContent = 'Read less';
+                    } else {
+                        moreDescription.style.display = 'none';
+                        this.textContent = 'Read more';
+                    }
+                });
+            }
+            
+            // Product info toggle functionality
+            const productInfoContents = document.querySelectorAll('.product-info-content');
+            
+            // Hide all product info sections by default
+            productInfoContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Back to top functionality
+            const backToTop = document.querySelector('.back-to-top');
+            
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    backToTop.classList.add('active');
+                } else {
+                    backToTop.classList.remove('active');
+                }
+            });
+            
+            backToTop.addEventListener('click', function(e) {
+                e.preventDefault();
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Function to toggle product info sections
+        function toggleProductInfo(sectionId) {
+            const productInfoContents = document.querySelectorAll('.product-info-content');
+            const targetSection = document.getElementById('product-info-' + sectionId);
+            
+            // Hide all sections
+            productInfoContents.forEach(content => {
+                content.style.display = 'none';
+            });
+            
+            // Show the selected section if it exists
+            if (targetSection) {
+                if (targetSection.style.display === 'block') {
+                    targetSection.style.display = 'none';
+                } else {
+                    targetSection.style.display = 'block';
+                }
+            }
+        }
+    </script>
+ 
+
+<script>
+    const blogSlider = new Swiper('.related-PRoduct', {
+       slidesPerView: 1,
+       spaceBetween: 20,
+       grabCursor: true,
+       autoplay: {
+           delay: 2500,
+           disableOnInteraction: true,
+           pauseOnMouseEnter: true,
+       },
+       pagination: {
+           el: '.swiper-pagination',
+           clickable: true,
+       },
+       navigation: {
+           nextEl: '.swiper-button-next',
+           prevEl: '.swiper-button-prev',
+       },
+       breakpoints: {
+           640: {
+               slidesPerView: 1,
+               spaceBetween: 20,
+           },
+           768: {
+               slidesPerView: 2,
+               spaceBetween: 20,
+           },
+           1024: {
+               slidesPerView: 3,
+               spaceBetween: 20,
+           },
+       }
+   });
+</script>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
