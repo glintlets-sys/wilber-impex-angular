@@ -1,0 +1,387 @@
+<app-header></app-header>
+
+<div class="account-container">
+  <div class="container py-5">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-lg-3 mb-4">
+        <div class="card shadow-sm">
+          <div class="card-header" style="background: var(--gradient-primary); color: white;">
+            <h6 class="mb-0">
+              <i class="fas fa-user-circle me-2"></i>
+              My Account
+            </h6>
+          </div>
+          <div class="card-body p-0">
+            <div class="nav flex-column nav-pills">
+              <button 
+                class="nav-link" 
+                [class.active]="activeTab === 'profile'"
+                (click)="setActiveTab('profile')">
+                <i class="fas fa-user me-2"></i>
+                Profile
+              </button>
+              <button 
+                class="nav-link" 
+                [class.active]="activeTab === 'addresses'"
+                (click)="setActiveTab('addresses')">
+                <i class="fas fa-map-marker-alt me-2"></i>
+                Addresses
+              </button>
+              <button 
+                class="nav-link" 
+                [class.active]="activeTab === 'orders'"
+                (click)="setActiveTab('orders')">
+                <i class="fas fa-shopping-bag me-2"></i>
+                Orders
+              </button>
+              <button 
+                class="nav-link text-danger" 
+                (click)="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i>
+                Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <div class="col-lg-9">
+        <!-- Error Message -->
+        <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+          <i class="fas fa-exclamation-triangle me-2"></i>
+          {{ errorMessage }}
+          <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+        </div>
+
+        <!-- Success Message -->
+        <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+          <i class="fas fa-check-circle me-2"></i>
+          {{ successMessage }}
+          <button type="button" class="btn-close" (click)="successMessage = ''"></button>
+        </div>
+
+        <!-- Profile Tab -->
+        <div *ngIf="activeTab === 'profile'" class="card shadow-sm">
+          <div class="card-header" style="background: var(--gradient-primary); color: white;">
+            <h6 class="mb-0">
+              <i class="fas fa-user me-2"></i>
+              Profile Information
+            </h6>
+          </div>
+          <div class="card-body">
+            <form (ngSubmit)="updateProfile()">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="firstName" class="form-label">First Name *</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="firstName"
+                    [(ngModel)]="profileForm.firstName"
+                    name="firstName"
+                    required
+                  >
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="lastName" class="form-label">Last Name *</label>
+                  <input 
+                    type="text" 
+                    class="form-control" 
+                    id="lastName"
+                    [(ngModel)]="profileForm.lastName"
+                    name="lastName"
+                    required
+                  >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="email" class="form-label">Email</label>
+                  <input 
+                    type="email" 
+                    class="form-control" 
+                    id="email"
+                    [(ngModel)]="profileForm.email"
+                    name="email"
+                  >
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="mobile" class="form-label">Mobile Number</label>
+                  <input 
+                    type="tel" 
+                    class="form-control" 
+                    id="mobile"
+                    [(ngModel)]="profileForm.mobile"
+                    name="mobile"
+                    readonly
+                  >
+                  <small class="text-muted">Mobile number cannot be changed</small>
+                </div>
+              </div>
+              <button 
+                type="submit" 
+                class="btn"
+                [disabled]="loading"
+                style="background: var(--gradient-primary); color: white; border: none;">
+                <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                <i *ngIf="!loading" class="fas fa-save me-2"></i>
+                {{ loading ? 'Updating...' : 'Update Profile' }}
+              </button>
+            </form>
+          </div>
+        </div>
+
+        <!-- Addresses Tab -->
+        <div *ngIf="activeTab === 'addresses'" class="card shadow-sm">
+          <div class="card-header" style="background: var(--gradient-primary); color: white;">
+            <h6 class="mb-0">
+              <i class="fas fa-map-marker-alt me-2"></i>
+              My Addresses
+            </h6>
+          </div>
+          <div class="card-body">
+            <!-- Add New Address Form -->
+            <div class="mb-4">
+              <h6 class="mb-3">Add New Address</h6>
+              <form (ngSubmit)="addAddress()">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="addressLabel" class="form-label">Address Label</label>
+                    <select 
+                      class="form-select" 
+                      id="addressLabel"
+                      [(ngModel)]="addressForm.label"
+                      name="label">
+                      <option value="home">Home</option>
+                      <option value="office">Office</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="fullName" class="form-label">Full Name *</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="fullName"
+                      [(ngModel)]="addressForm.fullName"
+                      name="fullName"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="addressMobile" class="form-label">Mobile Number</label>
+                    <input 
+                      type="tel" 
+                      class="form-control" 
+                      id="addressMobile"
+                      [(ngModel)]="addressForm.mobile"
+                      name="mobile"
+                    >
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="addressLine1" class="form-label">Address Line 1 *</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="addressLine1"
+                      [(ngModel)]="addressForm.addressLine1"
+                      name="addressLine1"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="addressLine2" class="form-label">Address Line 2</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="addressLine2"
+                      [(ngModel)]="addressForm.addressLine2"
+                      name="addressLine2"
+                    >
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="city" class="form-label">City *</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="city"
+                      [(ngModel)]="addressForm.city"
+                      name="city"
+                      required
+                    >
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label for="state" class="form-label">State *</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="state"
+                      [(ngModel)]="addressForm.state"
+                      name="state"
+                      required
+                    >
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label for="pincode" class="form-label">Pincode *</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="pincode"
+                      [(ngModel)]="addressForm.pincode"
+                      name="pincode"
+                      required
+                    >
+                  </div>
+                  <div class="col-md-4 mb-3 d-flex align-items-end">
+                    <div class="form-check">
+                      <input 
+                        class="form-check-input" 
+                        type="checkbox" 
+                        id="isDefault"
+                        [(ngModel)]="addressForm.isDefault"
+                        name="isDefault">
+                      <label class="form-check-label" for="isDefault">
+                        Set as default address
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <button 
+                  type="submit" 
+                  class="btn"
+                  [disabled]="loading"
+                  style="background: var(--gradient-primary); color: white; border: none;">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  <i *ngIf="!loading" class="fas fa-plus me-2"></i>
+                  {{ loading ? 'Adding...' : 'Add Address' }}
+                </button>
+              </form>
+            </div>
+
+            <!-- Existing Addresses -->
+            <div>
+              <h6 class="mb-3">Saved Addresses</h6>
+              <div *ngIf="addresses.length === 0" class="text-center py-4">
+                <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
+                <p class="text-muted">No addresses saved yet</p>
+              </div>
+              <div *ngFor="let address of addresses" class="address-card mb-3">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-start">
+                      <div>
+                        <div class="d-flex align-items-center mb-2">
+                          <span class="badge me-2" [class]="address.label === 'home' ? 'bg-primary' : address.label === 'office' ? 'bg-success' : 'bg-secondary'">
+                            {{ address.label | titlecase }}
+                          </span>
+                          <span *ngIf="address.isDefault" class="badge bg-warning">Default</span>
+                        </div>
+                        <h6 class="mb-1">{{ address.fullName }}</h6>
+                        <p class="mb-1">{{ address.addressLine1 }}</p>
+                        <p *ngIf="address.addressLine2" class="mb-1">{{ address.addressLine2 }}</p>
+                        <p class="mb-1">{{ address.city }}, {{ address.state }} - {{ address.pincode }}</p>
+                        <p *ngIf="address.mobile" class="mb-0 text-muted">{{ address.mobile }}</p>
+                      </div>
+                      <button 
+                        class="btn btn-sm btn-outline-danger"
+                        (click)="deleteAddress(address.id)">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Orders Tab -->
+        <div *ngIf="activeTab === 'orders'" class="card shadow-sm">
+          <div class="card-header" style="background: var(--gradient-primary); color: white;">
+            <h6 class="mb-0">
+              <i class="fas fa-shopping-bag me-2"></i>
+              My Orders
+            </h6>
+          </div>
+          <div class="card-body">
+            <div *ngIf="orders.length === 0" class="text-center py-4">
+              <i class="fas fa-shopping-bag fa-3x text-muted mb-3"></i>
+              <p class="text-muted">No orders found</p>
+            </div>
+            <div *ngFor="let order of orders" class="order-card mb-4">
+              <div class="card">
+                <div class="card-header bg-light">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h6 class="mb-1">Order #{{ order.orderNumber }}</h6>
+                      <small class="text-muted">{{ order.orderDate | date:'mediumDate' }}</small>
+                    </div>
+                    <div>
+                      <span [class]="getOrderStatusClass(order.status)">
+                        {{ getOrderStatusText(order.status) }}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-8">
+                      <h6 class="mb-3">Order Items</h6>
+                      <div *ngFor="let item of order.items" class="order-item mb-2">
+                        <div class="d-flex justify-content-between">
+                          <div>
+                            <strong>{{ item.productName }}</strong>
+                            <div class="text-muted small">
+                              Qty: {{ item.quantity }}
+                              <span *ngIf="item.size"> | Size: {{ item.size }}</span>
+                              <span *ngIf="item.packagingType"> | Pack: {{ item.packagingType }}</span>
+                            </div>
+                          </div>
+                          <div class="text-end">
+                            <strong>₹{{ item.price.toFixed(2) }}</strong>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-4">
+                      <h6 class="mb-3">Shipping Address</h6>
+                      <div class="small">
+                        <strong>{{ order.shippingAddress.fullName }}</strong><br>
+                        {{ order.shippingAddress.addressLine1 }}<br>
+                        <span *ngIf="order.shippingAddress.addressLine2">{{ order.shippingAddress.addressLine2 }}<br></span>
+                        {{ order.shippingAddress.city }}, {{ order.shippingAddress.state }} - {{ order.shippingAddress.pincode }}
+                      </div>
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                      <h5 class="mb-0">Total: ₹{{ order.totalAmount.toFixed(2) }}</h5>
+                    </div>
+                    <div>
+                      <button 
+                        *ngIf="order.invoiceUrl"
+                        class="btn btn-sm btn-outline-primary me-2"
+                        (click)="downloadInvoice(order.id)">
+                        <i class="fas fa-download me-1"></i>
+                        Download Invoice
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

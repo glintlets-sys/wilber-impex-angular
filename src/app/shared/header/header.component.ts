@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { CartService } from '../../services/cart.service';
+import { AuthService, User } from '../../services/auth.service';
 import { Subscription } from 'rxjs';
 import { HoverCartComponent } from '../hover-cart/hover-cart.component';
 
@@ -14,12 +15,23 @@ import { HoverCartComponent } from '../hover-cart/hover-cart.component';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
   isDropdownOpen = false;
+  isUserDropdownOpen = false;
   totalItems = 0;
+  currentUser: User | null = null;
   private cartSubscription: Subscription;
+  private userSubscription: Subscription;
 
-  constructor(private cartService: CartService) {
+  constructor(
+    private cartService: CartService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     this.cartSubscription = this.cartService.getCart().subscribe(cart => {
       this.totalItems = cart.totalItems;
+    });
+    
+    this.userSubscription = this.authService.currentUser$.subscribe(user => {
+      this.currentUser = user;
     });
   }
 
@@ -35,10 +47,30 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.isDropdownOpen = false;
   }
 
+  toggleUserDropdown() {
+    this.isUserDropdownOpen = !this.isUserDropdownOpen;
+  }
+
+  closeUserDropdown() {
+    this.isUserDropdownOpen = false;
+  }
+
   ngOnDestroy(): void {
     if (this.cartSubscription) {
       this.cartSubscription.unsubscribe();
     }
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
+  logout(): void {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
+
+  navigateToAccount(): void {
+    this.router.navigate(['/account']);
   }
 
   private initializeHeaderEffects() {

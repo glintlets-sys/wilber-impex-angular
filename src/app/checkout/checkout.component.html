@@ -122,7 +122,7 @@
               
               <button class="btn w-100 mb-3" 
                       (click)="proceedToPayment()"
-                      [disabled]="cartItems.length === 0"
+                      [disabled]="cartItems.length === 0 || !selectedAddress"
                       style="background: var(--gradient-primary); color: white; border: none;">
                 <i class="fas fa-credit-card me-2"></i>
                 Proceed to Payment
@@ -138,6 +138,73 @@
             
             <div *ngIf="cartItems.length === 0" class="text-center py-4">
               <p class="text-muted">No items in cart</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Address Selection Section -->
+    <div class="row mt-4" *ngIf="cartItems.length > 0">
+      <div class="col-12">
+        <div class="card shadow-sm">
+          <div class="card-header" style="background: var(--gradient-primary); color: white;">
+            <h6 class="mb-0">
+              <i class="fas fa-map-marker-alt me-2"></i>
+              Delivery Address
+            </h6>
+          </div>
+          <div class="card-body">
+            <div *ngIf="addresses.length === 0" class="text-center py-4">
+              <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
+              <h6 class="text-muted">No addresses found</h6>
+              <p class="text-muted">Please add an address to your account to continue</p>
+              <a routerLink="/account" class="btn" style="background: var(--gradient-primary); color: white; border: none;">
+                <i class="fas fa-plus me-2"></i>
+                Add Address
+              </a>
+            </div>
+            
+            <div *ngIf="addresses.length > 0">
+              <div class="row">
+                <div class="col-md-6 mb-3" *ngFor="let address of addresses">
+                  <div class="address-option card" 
+                       [class.selected]="selectedAddress?.id === address.id"
+                       (click)="selectAddress(address)">
+                    <div class="card-body">
+                      <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                          <div class="d-flex align-items-center mb-2">
+                            <span class="badge me-2" [class]="address.label === 'home' ? 'bg-primary' : address.label === 'office' ? 'bg-success' : 'bg-secondary'">
+                              {{ address.label | titlecase }}
+                            </span>
+                            <span *ngIf="address.isDefault" class="badge bg-warning">Default</span>
+                          </div>
+                          <h6 class="mb-1">{{ address.fullName }}</h6>
+                          <p class="mb-1">{{ address.addressLine1 }}</p>
+                          <p *ngIf="address.addressLine2" class="mb-1">{{ address.addressLine2 }}</p>
+                          <p class="mb-1">{{ address.city }}, {{ address.state }} - {{ address.pincode }}</p>
+                          <p *ngIf="address.mobile" class="mb-0 text-muted">{{ address.mobile }}</p>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" 
+                                 type="radio" 
+                                 [id]="'address-' + address.id"
+                                 [checked]="selectedAddress?.id === address.id"
+                                 (change)="selectAddress(address)">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="text-center mt-3">
+                <a routerLink="/account" class="btn btn-outline-primary">
+                  <i class="fas fa-plus me-2"></i>
+                  Add New Address
+                </a>
+              </div>
             </div>
           </div>
         </div>

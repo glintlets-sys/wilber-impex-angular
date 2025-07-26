@@ -1,0 +1,193 @@
+<app-header></app-header>
+
+<div class="login-container">
+  <div class="container py-5">
+    <div class="row justify-content-center">
+      <div class="col-md-6 col-lg-5">
+        <div class="card shadow-lg border-0">
+                     <div class="card-header text-center py-4" style="background: var(--gradient-primary); color: white;">
+             <h4 class="mb-0">
+               <i class="fas fa-user-circle me-2"></i>
+               Login / Register
+             </h4>
+             <small class="d-block mt-2 opacity-75">Welcome to Wilber - Your Trusted Partner in Industrial Solutions</small>
+           </div>
+          
+          <div class="card-body p-4">
+            <!-- Error Message -->
+            <div *ngIf="errorMessage" class="alert alert-danger alert-dismissible fade show" role="alert">
+              <i class="fas fa-exclamation-triangle me-2"></i>
+              {{ errorMessage }}
+              <button type="button" class="btn-close" (click)="errorMessage = ''"></button>
+            </div>
+
+            <!-- Success Message -->
+            <div *ngIf="successMessage" class="alert alert-success alert-dismissible fade show" role="alert">
+              <i class="fas fa-check-circle me-2"></i>
+              {{ successMessage }}
+              <button type="button" class="btn-close" (click)="successMessage = ''"></button>
+            </div>
+
+                         <!-- Step 1: Mobile Number Input -->
+             <div *ngIf="step === 'mobile'">
+               <div class="text-center mb-4">
+                 <p class="text-muted mb-0">Quick and secure access to premium industrial solutions</p>
+               </div>
+               <form (ngSubmit)="sendOTP()">
+                <div class="mb-3">
+                  <label for="mobile" class="form-label">Mobile Number</label>
+                  <div class="input-group">
+                    <span class="input-group-text">+91</span>
+                    <input 
+                      type="tel" 
+                      class="form-control" 
+                      id="mobile"
+                      [(ngModel)]="mobile"
+                      name="mobile"
+                      placeholder="Enter mobile number"
+                      maxlength="10"
+                      pattern="[0-9]{10}"
+                      required
+                      [class.is-invalid]="mobile && !isValidMobile()"
+                    >
+                  </div>
+                  <div *ngIf="mobile && !isValidMobile()" class="invalid-feedback">
+                    Please enter a valid mobile number
+                  </div>
+                </div>
+
+                <button 
+                  type="submit" 
+                  class="btn w-100 mb-3"
+                  [disabled]="!isValidMobile() || loading"
+                  style="background: var(--gradient-primary); color: white; border: none;">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  <i *ngIf="!loading" class="fas fa-paper-plane me-2"></i>
+                  {{ loading ? 'Sending...' : 'Continue' }}
+                </button>
+              </form>
+            </div>
+
+            <!-- Step 2: OTP Verification -->
+            <div *ngIf="step === 'otp'">
+              <div class="text-center mb-3">
+                <small class="text-muted">OTP sent to +91 {{ mobile }}</small>
+                <button type="button" class="btn btn-link text-decoration-none d-block mx-auto" (click)="goBackToMobile()">
+                  <i class="fas fa-arrow-left me-1"></i>
+                  Change Number
+                </button>
+              </div>
+
+              <form (ngSubmit)="verifyOTP()">
+                                 <div class="mb-4">
+                   <label class="form-label">Enter OTP</label>
+                   <input 
+                     type="text" 
+                     class="form-control text-center"
+                     [(ngModel)]="otp"
+                     (input)="onOtpInput($event)"
+                     name="otp"
+                     placeholder="Enter 6-digit OTP"
+                     maxlength="6"
+                     pattern="[0-9]{6}"
+                     inputmode="numeric"
+                     autocomplete="one-time-code"
+                     style="font-size: 1.2rem; letter-spacing: 0.5rem; font-weight: 600;"
+                   >
+                 </div>
+
+                <button 
+                  type="submit" 
+                  class="btn w-100 mb-3"
+                  [disabled]="otp.length !== 6 || loading"
+                  style="background: var(--gradient-primary); color: white; border: none;">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  <i *ngIf="!loading" class="fas fa-check me-2"></i>
+                  {{ loading ? 'Verifying...' : 'Verify' }}
+                </button>
+
+                <div class="text-center">
+                  <button 
+                    type="button" 
+                    class="btn btn-link text-decoration-none"
+                    (click)="resendOTP()"
+                    [disabled]="loading">
+                    <i class="fas fa-redo me-1"></i>
+                    Resend OTP
+                  </button>
+                </div>
+              </form>
+            </div>
+
+                         <!-- Step 3: Registration for New Users -->
+             <div *ngIf="step === 'register'">
+               <div class="text-center mb-4">
+                 <p class="text-muted mb-0">Join thousands of satisfied customers using Wilber products</p>
+               </div>
+               <form (ngSubmit)="register()">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="firstName" class="form-label">First Name</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="firstName"
+                      [(ngModel)]="firstName"
+                      name="firstName"
+                      placeholder="First name"
+                      required
+                    >
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="lastName" class="form-label">Last Name</label>
+                    <input 
+                      type="text" 
+                      class="form-control" 
+                      id="lastName"
+                      [(ngModel)]="lastName"
+                      name="lastName"
+                      placeholder="Last name"
+                      required
+                    >
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="email" class="form-label">Email (Optional)</label>
+                  <input 
+                    type="email" 
+                    class="form-control" 
+                    id="email"
+                    [(ngModel)]="email"
+                    name="email"
+                    placeholder="Email address"
+                  >
+                </div>
+
+                <button 
+                  type="submit" 
+                  class="btn w-100 mb-3"
+                  [disabled]="!firstName.trim() || !lastName.trim() || loading"
+                  style="background: var(--gradient-primary); color: white; border: none;">
+                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
+                  <i *ngIf="!loading" class="fas fa-user-check me-2"></i>
+                  {{ loading ? 'Creating...' : 'Complete' }}
+                </button>
+
+                <div class="text-center">
+                  <button 
+                    type="button" 
+                    class="btn btn-link text-decoration-none"
+                    (click)="goBackToOtp()">
+                    <i class="fas fa-arrow-left me-1"></i>
+                    Back
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

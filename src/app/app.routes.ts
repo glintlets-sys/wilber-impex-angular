@@ -8,6 +8,8 @@ import { StoneSolutionsComponent } from './stone-solutions/stone-solutions.compo
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
 import { ProductComponent } from './product/product.component';
 import { CheckoutComponent } from './checkout/checkout.component';
+import { LoginComponent } from './login/login.component';
+import { AccountComponent } from './account/account.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -20,5 +22,7 @@ export const routes: Routes = [
   { path: 'stone-solution/:category', component: CategoryDetailComponent },
   { path: 'product/:id', component: ProductComponent },
   { path: 'checkout', component: CheckoutComponent },
+  { path: 'login', component: LoginComponent },
+  { path: 'account', component: AccountComponent },
   { path: '**', redirectTo: '' }
 ];

@@ -144,4 +144,35 @@ export class CartService {
   isCartEmpty(): boolean {
     return this.cartSubject.value.items.length === 0;
   }
+
+  // Get cart items for merging with backend
+  getCartItems(): CartItem[] {
+    return this.cartSubject.value.items;
+  }
+
+  // Merge cart with backend data (called after login)
+  mergeWithBackendCart(backendItems: CartItem[]): void {
+    const currentCart = this.cartSubject.value;
+    
+    // Merge items from backend with local cart
+    backendItems.forEach(backendItem => {
+      const existingItemIndex = currentCart.items.findIndex(
+        item => item.product.id === backendItem.product.id && 
+                item.size === backendItem.size && 
+                item.color === backendItem.color &&
+                item.packagingType === backendItem.packagingType
+      );
+
+      if (existingItemIndex >= 0) {
+        // Add quantities if same item exists
+        currentCart.items[existingItemIndex].quantity += backendItem.quantity;
+      } else {
+        // Add new item from backend
+        currentCart.items.push(backendItem);
+      }
+    });
+
+    this.calculateCartTotals(currentCart);
+    this.updateCart(currentCart);
+  }
 } 
