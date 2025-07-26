@@ -1,0 +1,341 @@
+<app-header></app-header>
+
+<!-- Product Details Section -->
+<section class="product-section" *ngIf="!loading && !error">
+  <div class="container">
+    <div class="row">
+      <!-- Product Image Gallery -->
+      <div class="col-lg-5">
+        <div class="product-image-gallery">
+          <div class="main-image">
+            <img [src]="product?.image" [alt]="product?.name" id="mainProductImage">
+          </div>
+          <div class="thumbnail-container">
+            <div class="thumbnail active" [attr.data-src]="product?.image">
+              <img [src]="product?.image" [alt]="product?.name">
+            </div>
+            <!-- Additional thumbnails can be added here if needed -->
+          </div>
+        </div>
+      </div>
+      
+      <!-- Product Details -->
+      <div class="col-lg-7">
+        <div class="product-details">
+          <h1 class="product-title">{{ product?.name }}</h1>
+          <div class="product-rating mb-1">
+            <i *ngFor="let star of getStars(product?.rating || 0)" 
+               class="fas fa-star text-warning"></i>
+            <span class="ms-2">({{ product?.rating }} - 32 reviews)</span>
+          </div>
+          
+          <div class="product-description">
+            <p>{{ product?.description }}</p>
+            <p id="more-description" style="display: none;">{{ product?.description }}</p>
+            <a href="#" id="read-more-btn">Read more</a>
+          </div>
+          
+          <div class="product-meta">
+            <p>
+              <span>Packaging Units:</span>
+              <select class="form-select form-select-sm">
+                <option *ngFor="let size of product?.size" [value]="size">{{ size }}</option>
+              </select>
+            </p>
+            <p>
+              <span>Colors:</span>
+              <select class="form-select form-select-sm"> 
+                <option value="grey">Grey</option> 
+              </select>
+            </p>
+            <p>
+              <span>Packaging Type:</span>
+              <span>Polythene Bag</span>
+            </p>
+            <p>
+              <span>Price:</span>
+              <span class="product-price">₹945</span>
+            </p>
+            <div class="countaty-value">
+              <span>Quantity:</span>
+              <div class="quantity-selector">
+                <button class="qty-btn" id="decrease-qty">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <input type="number" id="quantity" value="1" min="1" readonly>
+                <button class="qty-btn" id="increase-qty">
+                  <i class="fas fa-plus"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="product-actions">
+            <a href="#" class="btn btn-primary">Buy Now</a>
+            <a href="#" class="btn btn-outline-primary">Add to Cart</a>
+          </div>
+          
+          <a href="#videoproplay" class="video-button">
+            <i class="fas fa-play"></i>
+            <span>Watch Video</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Action Buttons -->
+    <div class="row mt-1">
+      <div class="col-lg-3 col-md-6 mb-3">
+        <a routerLink="/state-wise-tabs" class="action-button">
+          <i class="fas fa-store"></i>
+          Find A Dealer
+        </a>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-3">
+        <a href="#" class="action-button">
+          <i class="fas fa-headset"></i>
+          Connect With Wilber Expert
+        </a>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-3">
+        <button class="action-button" (click)="toggleProductInfo('tds')">
+          <i class="fas fa-file-alt"></i>
+          TDS
+        </button>
+      </div>
+      <div class="col-lg-3 col-md-6 mb-3">
+        <button class="action-button" (click)="toggleProductInfo('drawing')">
+          <i class="fas fa-cube"></i>
+          3D Drawing
+        </button>
+      </div>
+    </div>
+    
+    <!-- Product Info Content -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div id="product-info-tds" class="product-info-content">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-heading mb-0">Wilber New Construction Adhesive (NCA) - TDS</h2>
+                <a href="#" class="download-btn">
+                  <i class="fas fa-file-download"></i> Download
+                </a>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-striped">
+                  <tbody>
+                    <tr>
+                      <th width="30%">Product Type</th>
+                      <td>Cement-based tile adhesive</td>
+                    </tr>
+                    <tr>
+                      <th>Appearance</th>
+                      <td>Grey/White Powder</td>
+                    </tr>
+                    <tr>
+                      <th>Application</th>
+                      <td>Internal</td>
+                    </tr>
+                    <tr>
+                      <th>Water Demand</th>
+                      <td>5.0 - 5.5 liters per 20 kg bag</td>
+                    </tr>
+                    <tr>
+                      <th>Open Time</th>
+                      <td>Approx. 20 minutes</td>
+                    </tr>
+                    <tr>
+                      <th>Pot Life</th>
+                      <td>2-3 hours</td>
+                    </tr>
+                    <tr>
+                      <th>Adjustment Time</th>
+                      <td>15-20 minutes</td>
+                    </tr>
+                    <tr>
+                      <th>Set Time</th>
+                      <td>24 hours</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div id="product-info-drawing" class="product-info-content">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2 class="section-heading mb-0">Wilber New Construction Adhesive (NCA) 3D Image</h2>
+                <a href="#" class="download-btn">
+                  <i class="fas fa-file-download"></i> Download
+                </a>
+              </div>
+              <div class="text-center">
+                <img [src]="product?.image" alt="3D Drawing" class="img-fluid" style="max-height: 400px;">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How to Apply Section -->
+<section class="how-to-apply">
+  <div class="container">
+    <h2 class="heading-sectionmain text-center">How to Apply</h2>
+    <p class="text-center text-pp">Follow our step-by-step guide to apply {{ product?.name }} for the best results.</p>
+    
+    <div class="row g-4 mt-4">
+      <div class="col-lg-4 col-md-6">
+        <div class="step-box">
+          <img src="assets/images/icon1.png" alt="Modified Adhesive with Polymer" class="step-icon">
+          <h4 class="step-title">Step 1 - Modified Adhesive with Polymer</h4>
+        </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6">
+        <div class="step-box">
+          <img src="assets/images/icon2.png" alt="Crack Bridging" class="step-icon">
+          <h4 class="step-title">Step 2 - Crack Bridging</h4>
+        </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6">
+        <div class="step-box">
+          <img src="assets/images/icon3.png" alt="Suitable for all type of tiles" class="step-icon">
+          <h4 class="step-title">Step 3 - Suitable for all type of tiles</h4>
+        </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6">
+        <div class="step-box">
+          <img src="assets/images/icon4.png" alt="Floor Tiles Adhesive" class="step-icon">
+          <h4 class="step-title">Step 4 - Floor Tiles Adhesive</h4>
+        </div>
+      </div>
+      
+      <div class="col-lg-4 col-md-6">
+        <div class="step-box">
+          <img src="assets/images/icon5.png" alt="Indoor Application" class="step-icon">
+          <h4 class="step-title">Step 5 - Indoor Application</h4>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Features and Advantages Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 mb-4">
+        <h2 class="section-heading">Features and Advantages</h2>
+      </div>
+      <div class="col-lg-12">
+        <ul class="feature-list">
+          <li *ngFor="let feature of product?.features">{{ feature }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Application Area Section -->
+<section class="features-section" style="background-color: var(--light);">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-6 mb-4 mb-lg-0">
+        <div class="video-card">
+          <img src="assets/images/Tile-Adhesive-Application-1.webp" alt="Application Area" class="img-fluid">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <h2 class="section-heading">Application Area</h2>
+        <ul class="feature-list">
+          <li *ngFor="let application of product?.applications">{{ application }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Things to Consider Section -->
+<section class="features-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <h2 class="section-heading">Things to Consider</h2>
+      </div>
+      <div class="col-lg-12">
+        <ul class="feature-list">
+          <li>You cannot apply {{ product?.name }} to fiber cement boards, plywood, decorative laminates, metal, plastic, etc.</li>
+          <li>Adhesive cannot be used as a waterproofing solution.</li>
+          <li>You cannot fix metal tiles, engineered stone, or artificial stone tiles with {{ product?.name }}.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YouTube Video Section -->
+<section class="youtube-video" id="videoproplay">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <iframe width="100%" height="450" src="https://www.youtube.com/embed/Qe8YH1Pg4Mw" title="Product Demo Video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Related Products Section -->
+<section class="related-products" *ngIf="relatedProducts.length > 0">
+  <div class="container">
+    <h2 class="related-title">Related Products</h2>
+    <!-- Slider main container -->
+    <div class="swiper related-PRoduct">
+      <!-- Additional required wrapper -->
+      <div class="swiper-wrapper">
+        <!-- Slides -->
+        <div class="swiper-slide" *ngFor="let relatedProduct of relatedProducts">
+          <div class="product-card" (click)="navigateToProduct(relatedProduct.id)">
+            <div class="product-card-image">
+              <img [src]="relatedProduct.image" [alt]="relatedProduct.name">
+            </div>
+            <div class="product-card-content">
+              <h3 class="product-card-title">{{ relatedProduct.name }}</h3>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<!-- Loading State -->
+<div class="loading-container" *ngIf="loading">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<!-- Error State -->
+<div class="error-container" *ngIf="error">
+  <div class="alert alert-danger" role="alert">
+    <h4 class="alert-heading">Product Not Found!</h4>
+    <p>The product you're looking for doesn't exist.</p>
+    <hr>
+    <p class="mb-0">
+      <a routerLink="/stone-solutions" class="btn btn-primary">Back to Products</a>
+    </p>
+  </div>
+</div>
+
+<app-footer></app-footer> 
