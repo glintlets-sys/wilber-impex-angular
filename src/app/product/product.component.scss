@@ -263,6 +263,12 @@
   color: #ffffff;
 }
 
+.product-actions .btn-outline-primary:hover {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: #ffffff;
+}
+
 .video-button {
   display: flex;
   align-items: center;

@@ -7,6 +7,7 @@ import { ContactUsComponent } from './contact-us/contact-us.component';
 import { StoneSolutionsComponent } from './stone-solutions/stone-solutions.component';
 import { CategoryDetailComponent } from './category-detail/category-detail.component';
 import { ProductComponent } from './product/product.component';
+import { CheckoutComponent } from './checkout/checkout.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -18,5 +19,6 @@ export const routes: Routes = [
   { path: 'stone-solutions', component: StoneSolutionsComponent },
   { path: 'stone-solution/:category', component: CategoryDetailComponent },
   { path: 'product/:id', component: ProductComponent },
+  { path: 'checkout', component: CheckoutComponent },
   { path: '**', redirectTo: '' }
 ];

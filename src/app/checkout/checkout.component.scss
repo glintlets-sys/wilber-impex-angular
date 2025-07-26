@@ -1,0 +1,145 @@
+.checkout-container {
+  background-color: #f8f9fa;
+  min-height: 100vh;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.cart-item {
+  padding: 1rem 0;
+  
+  img {
+    max-width: 100px;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .quantity-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    .btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+    }
+    
+    span {
+      min-width: 40px;
+      text-align: center;
+      font-weight: 500;
+    }
+  }
+  
+  .price-info {
+    .item-price {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--dark);
+    }
+    
+    .unit-price {
+      font-size: 0.85rem;
+    }
+  }
+  
+  .product-variants {
+    .badge {
+      font-size: 0.75rem;
+      padding: 0.25rem 0.5rem;
+    }
+  }
+}
+
+.summary-item {
+  font-size: 0.9rem;
+  
+  span:first-child {
+    max-width: 70%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+.summary-total {
+  font-size: 1rem;
+}
+
+.card {
+  border: none;
+  border-radius: 12px;
+  
+  .card-header {
+    border-radius: 12px 12px 0 0 !important;
+    border-bottom: none;
+  }
+}
+
+.sticky-top {
+  z-index: 999;
+}
+
+@media (max-width: 768px) {
+  .cart-item {
+    .row {
+      text-align: center;
+    }
+    
+    .quantity-controls {
+      margin: 1rem 0;
+    }
+    
+    .price-info {
+      text-align: center !important;
+      margin-bottom: 1rem;
+    }
+  }
+  
+  .summary-item {
+    span:first-child {
+      max-width: 60%;
+    }
+  }
+}
+
+.btn {
+  border-radius: 8px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  }
+}
+
+.btn-primary {
+  background: var(--gradient-primary);
+  border: none;
+  
+  &:hover {
+    background: var(--gradient-primary);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.btn-outline-danger {
+  &:hover {
+    background-color: #dc3545;
+    border-color: #dc3545;
+    color: white;
+  }
+}
+
+.text-primary {
+  color: var(--primary) !important;
+}
+
+.bg-primary {
+  background: var(--gradient-primary) !important;
+} 

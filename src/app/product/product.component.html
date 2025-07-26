@@ -58,34 +58,36 @@
           </div>
           
           <div class="product-meta">
-            <p>
+            <p *ngIf="product && product.size && product.size.length > 0">
               <span>Packaging Units:</span>
-              <select class="form-select form-select-sm">
-                <option *ngFor="let size of product?.size" [value]="size">{{ size }}</option>
+              <select class="form-select form-select-sm" [(ngModel)]="selectedSize">
+                <option value="">Select Size</option>
+                <option *ngFor="let size of product.size" [value]="size">{{ size }}</option>
               </select>
             </p>
-            <p>
+            <p *ngIf="product && product.colors && product.colors.length > 0">
               <span>Colors:</span>
-              <select class="form-select form-select-sm"> 
-                <option value="grey">Grey</option> 
+              <select class="form-select form-select-sm" [(ngModel)]="selectedColor"> 
+                <option value="">Select Color</option>
+                <option *ngFor="let color of product.colors" [value]="color">{{ color }}</option>
               </select>
             </p>
             <p>
               <span>Packaging Type:</span>
-              <span>Polythene Bag</span>
+              <span>{{ product?.packagingType || 'Polythene Bag' }}</span>
             </p>
             <p>
               <span>Price:</span>
-              <span class="product-price">₹945</span>
+              <span class="product-price">{{ product?.price }}</span>
             </p>
             <div class="countaty-value">
               <span>Quantity:</span>
               <div class="quantity-selector">
-                <button class="qty-btn" id="decrease-qty">
+                <button class="qty-btn" (click)="updateQuantity(-1)">
                   <i class="fas fa-minus"></i>
                 </button>
-                <input type="number" id="quantity" value="1" min="1" readonly>
-                <button class="qty-btn" id="increase-qty">
+                <input type="number" [(ngModel)]="quantity" min="1" readonly>
+                <button class="qty-btn" (click)="updateQuantity(1)">
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
@@ -93,9 +95,17 @@
           </div>
           
           <div class="product-actions">
-            <a href="#" class="btn btn-primary">Buy Now</a>
-            <a href="#" class="btn btn-outline-primary">Add to Cart</a>
-            
+            <a href="#" class="btn" style="background: var(--gradient-primary); color: white; border: none;">Buy Now</a>
+            <button class="btn" 
+                    (click)="addToCart()" 
+                    [class.btn-success]="isAddedToCart"
+                    [class.btn-outline-primary]="!isAddedToCart"
+                    [style.color]="!isAddedToCart ? 'var(--primary)' : 'white'"
+                    [style.border-color]="!isAddedToCart ? 'var(--primary)' : 'transparent'"
+                    [style.background]="isAddedToCart ? 'var(--success)' : 'transparent'">
+              <i [class]="isAddedToCart ? 'fas fa-check me-2' : 'fas fa-cart-plus me-2'"></i>
+              {{ isAddedToCart ? 'Added to Cart' : 'Add to Cart' }}
+            </button>
           </div>
           
           <a href="#videoproplay" class="video-button">

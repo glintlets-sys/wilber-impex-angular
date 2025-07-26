@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, ActivatedRoute, Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { ProductService, Product } from '../services/product.service';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-product',
   standalone: true,
-  imports: [CommonModule, RouterModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, RouterModule, FormsModule, HeaderComponent, FooterComponent],
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
@@ -17,11 +19,17 @@ export class ProductComponent implements OnInit {
   relatedProducts: Product[] = [];
   loading = true;
   error = false;
+  selectedSize: string = '';
+  selectedColor: string = '';
+  selectedPackaging: string = '';
+  quantity: number = 1;
+  isAddedToCart = false;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -101,6 +109,48 @@ export class ProductComponent implements OnInit {
 
   navigateToCategory(category: string) {
     this.router.navigate(['/stone-solution', category]);
+  }
+
+  addToCart(): void {
+    if (!this.product) return;
+
+    // Get selected variations
+    const size = this.selectedSize || (this.product.size.length > 0 ? this.product.size[0] : undefined);
+    const color = this.selectedColor || (this.product.colors.length > 0 ? this.product.colors[0] : undefined);
+    const packaging = this.selectedPackaging || this.product.packagingType || 'Polythene Bag';
+
+    // Get selected price based on size if available
+    let selectedPrice = this.product.price;
+    if (this.product.sizePrices && size) {
+      selectedPrice = this.product.sizePrices[size] || this.product.price;
+    }
+
+    this.cartService.addToCart(
+      this.product,
+      this.quantity,
+      size,
+      color,
+      packaging,
+      selectedPrice
+    );
+
+    // Set added to cart state
+    this.isAddedToCart = true;
+    
+    // Reset after 3 seconds
+    setTimeout(() => {
+      this.isAddedToCart = false;
+    }, 3000);
+
+    // Show success message (you can implement a toast notification here)
+    console.log('Product added to cart successfully!');
+  }
+
+  updateQuantity(change: number): void {
+    const newQuantity = this.quantity + change;
+    if (newQuantity >= 1) {
+      this.quantity = newQuantity;
+    }
   }
 
   toggleProductInfo(sectionId: string) {

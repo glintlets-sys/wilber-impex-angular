@@ -1,0 +1,84 @@
+<div class="hover-cart-container position-relative">
+  <!-- Cart Icon with Badge -->
+  <div class="cart-icon-wrapper" (click)="toggleCart()">
+    <i class="fa-solid fa-cart-shopping fs-5"></i>
+    <span *ngIf="totalItems > 0" class="cart-badge position-absolute top-0 start-100 translate-middle badge rounded-pill" style="background: var(--primary);">
+      {{ totalItems > 99 ? '99+' : totalItems }}
+    </span>
+  </div>
+
+  <!-- Hover Cart Dropdown -->
+  <div class="hover-cart-dropdown" [class.show]="isOpen">
+    <div class="dropdown-header">
+      <h6 class="mb-0">
+        <i class="fas fa-shopping-cart me-2"></i>
+        Shopping Cart ({{ totalItems }} items)
+      </h6>
+    </div>
+
+    <div class="dropdown-body">
+      <div *ngIf="cartItems.length === 0" class="empty-cart text-center py-4">
+        <i class="fas fa-shopping-cart fa-2x text-muted mb-2"></i>
+        <p class="text-muted mb-0">Your cart is empty</p>
+      </div>
+
+      <div *ngIf="cartItems.length > 0">
+        <!-- Cart Items List -->
+        <div class="cart-items-list">
+          <div class="cart-item" *ngFor="let item of getDisplayItems(); let i = index">
+            <div class="item-image">
+              <img [src]="item.product.image" [alt]="item.product.name">
+            </div>
+            <div class="item-details">
+              <h6 class="item-name">{{ item.product.name }}</h6>
+              <div class="item-variants">
+                <span *ngIf="item.size" class="variant-badge">Size: {{ item.size }}</span>
+                <span *ngIf="item.color" class="variant-badge">Color: {{ item.color }}</span>
+                <span *ngIf="item.packagingType" class="variant-badge">Pack: {{ item.packagingType }}</span>
+              </div>
+              <div class="item-quantity-price">
+                <span class="quantity">Qty: {{ item.quantity }}</span>
+                <span class="price">₹{{ getItemTotal(item).toFixed(2) }}</span>
+              </div>
+            </div>
+            <button class="remove-btn" 
+                    (click)="removeItem(i)"
+                    title="Remove item">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+
+          <!-- Show remaining items count -->
+          <div *ngIf="getRemainingItemsCount() > 0" class="remaining-items">
+            <p class="text-muted text-center mb-0">
+              +{{ getRemainingItemsCount() }} more item{{ getRemainingItemsCount() > 1 ? 's' : '' }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="cart-summary">
+          <div class="summary-row">
+            <span>Subtotal:</span>
+            <span class="total-price">₹{{ totalPrice.toFixed(2) }}</span>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="cart-actions">
+          <a routerLink="/checkout" 
+             class="btn btn-sm w-100 mb-2"
+             (click)="isOpen = false"
+             style="background: var(--gradient-primary); color: white; border: none;">
+            <i class="fas fa-shopping-cart me-2"></i>
+            View Cart & Checkout
+          </a>
+          <button class="btn btn-outline-secondary btn-sm w-100"
+                  (click)="isOpen = false">
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

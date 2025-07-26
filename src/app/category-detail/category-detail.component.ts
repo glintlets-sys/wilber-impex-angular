@@ -4,6 +4,7 @@ import { RouterModule, ActivatedRoute, Router } from '@angular/router';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { ProductService, Product } from '../services/product.service';
+import { CartService } from '../services/cart.service';
 
 interface Category {
   id: string;
@@ -25,11 +26,13 @@ export class CategoryDetailComponent implements OnInit {
   currentCategory: string = 'cementitious-tile-adhesive';
   currentCategoryName: string = 'Cementitious Tile Adhesive';
   loading = true;
+  addedToCartItems: Set<string> = new Set();
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private productService: ProductService
+    private productService: ProductService,
+    private cartService: CartService
   ) {}
 
   ngOnInit() {
@@ -180,6 +183,18 @@ export class CategoryDetailComponent implements OnInit {
     }
     
     return stars;
+  }
+
+  addToCart(product: Product) {
+    this.cartService.addToCart(product, 1, '', '', product.packagingType || 'Polythene Bag');
+    
+    // Mark as added to cart
+    this.addedToCartItems.add(product.id);
+    
+    // Reset after 3 seconds
+    setTimeout(() => {
+      this.addedToCartItems.delete(product.id);
+    }, 3000);
   }
 
   navigateToProduct(productId: string) {

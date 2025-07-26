@@ -1,16 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { CartService } from '../../services/cart.service';
+import { Subscription } from 'rxjs';
+import { HoverCartComponent } from '../hover-cart/hover-cart.component';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, HoverCartComponent],
   templateUrl: './header.component.html',
   styleUrl: './header.component.scss'
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, OnDestroy {
   isDropdownOpen = false;
+  totalItems = 0;
+  private cartSubscription: Subscription;
+
+  constructor(private cartService: CartService) {
+    this.cartSubscription = this.cartService.getCart().subscribe(cart => {
+      this.totalItems = cart.totalItems;
+    });
+  }
 
   ngOnInit() {
     this.initializeHeaderEffects();
@@ -22,6 +33,12 @@ export class HeaderComponent implements OnInit {
 
   closeDropdown() {
     this.isDropdownOpen = false;
+  }
+
+  ngOnDestroy(): void {
+    if (this.cartSubscription) {
+      this.cartSubscription.unsubscribe();
+    }
   }
 
   private initializeHeaderEffects() {
