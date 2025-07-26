@@ -5,9 +5,9 @@
 
 /* Breadcrumb Styles */
 .breadcrumb-section {
-  background-color: #f8f9fa;
-  padding: 15px 0;
-  border-bottom: 1px solid #e9ecef;
+    background-color: #f8f9fa;
+    padding: 15px 0;
+    border-bottom: 1px solid #e9ecef;
 }
 
 .breadcrumb {
@@ -18,29 +18,29 @@
 }
 
 .breadcrumb-item {
-  color: #6c757d;
+    color: #6c757d;
 }
 
 .breadcrumb-item a {
-  color: #007bff;
-  text-decoration: none;
-  transition: color 0.3s ease;
+    color: #065baa;
+    text-decoration: none;
+    transition: color 0.3s ease;
 }
 
 .breadcrumb-item a:hover {
-  color: #0056b3;
-  text-decoration: underline;
+    color: #054a8a;
+    text-decoration: underline;
 }
 
 .breadcrumb-item.active {
-  color: #495057;
-  font-weight: 500;
+    color: #495057;
+    font-weight: 500;
 }
 
 .breadcrumb-item + .breadcrumb-item::before {
-  content: ">";
-  color: #6c757d;
-  margin: 0 8px;
+    content: ">";
+    color: #6c757d;
+    margin: 0 8px;
 }
 
 /* Mobile Responsive Breadcrumb */

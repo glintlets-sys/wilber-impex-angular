@@ -95,11 +95,7 @@
           <div class="product-actions">
             <a href="#" class="btn btn-primary">Buy Now</a>
             <a href="#" class="btn btn-outline-primary">Add to Cart</a>
-            <a *ngIf="product?.category" 
-               [routerLink]="['/stone-solution', product?.category]" 
-               class="btn btn-outline-secondary">
-              <i class="fas fa-arrow-left me-2"></i>Back to {{ product?.categoryName }}
-            </a>
+            
           </div>
           
           <a href="#videoproplay" class="video-button">
