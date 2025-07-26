@@ -1,5 +1,27 @@
 <app-header></app-header>
 
+<!-- Breadcrumb Navigation -->
+<div class="breadcrumb-section">
+  <div class="container">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a routerLink="/home">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a routerLink="/stone-solutions">Stone Solutions</a>
+        </li>
+        <li class="breadcrumb-item" *ngIf="product?.categoryName">
+          <a [routerLink]="['/stone-solution', product?.category]">{{ product?.categoryName }}</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page" *ngIf="product?.name">
+          {{ product?.name }}
+        </li>
+      </ol>
+    </nav>
+  </div>
+</div>
+
 <!-- Product Details Section -->
 <section class="product-section" *ngIf="!loading && !error">
   <div class="container">
@@ -73,6 +95,11 @@
           <div class="product-actions">
             <a href="#" class="btn btn-primary">Buy Now</a>
             <a href="#" class="btn btn-outline-primary">Add to Cart</a>
+            <a *ngIf="product?.category" 
+               [routerLink]="['/stone-solution', product?.category]" 
+               class="btn btn-outline-secondary">
+              <i class="fas fa-arrow-left me-2"></i>Back to {{ product?.categoryName }}
+            </a>
           </div>
           
           <a href="#videoproplay" class="video-button">
@@ -297,7 +324,7 @@
 <!-- Related Products Section -->
 <section class="related-products" *ngIf="relatedProducts.length > 0">
   <div class="container">
-    <h2 class="related-title">Related Products</h2>
+    <h2 class="related-title">Related Products from {{ product?.categoryName }}</h2>
     <!-- Slider main container -->
     <div class="swiper related-PRoduct">
       <!-- Additional required wrapper -->
@@ -307,14 +334,38 @@
           <div class="product-card" (click)="navigateToProduct(relatedProduct.id)">
             <div class="product-card-image">
               <img [src]="relatedProduct.image" [alt]="relatedProduct.name">
+              <div class="product-badge" *ngIf="relatedProduct.badge" 
+                   [style.background-color]="relatedProduct.badge === 'Bestseller' ? 'var(--success)' : 'var(--primary)'">
+                {{ relatedProduct.badge }}
+              </div>
             </div>
             <div class="product-card-content">
               <h3 class="product-card-title">{{ relatedProduct.name }}</h3>
+              <p class="product-card-description">{{ relatedProduct.description }}</p>
+              <div class="product-card-rating">
+                <i *ngFor="let star of getStars(relatedProduct.rating)" 
+                   [class]="star === 1 ? 'fas fa-star text-warning' : star === 0.5 ? 'fas fa-star-half-alt text-warning' : 'far fa-star text-warning'"></i>
+                <span class="ms-1">({{ relatedProduct.rating }})</span>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div class="swiper-pagination"></div>
+    </div>
+  </div>
+</section>
+
+<!-- No Related Products Message -->
+<section class="related-products" *ngIf="!loading && !error && relatedProducts.length === 0">
+  <div class="container">
+    <div class="text-center py-5">
+      <i class="fas fa-box-open fa-3x text-muted mb-3"></i>
+      <h3>No Related Products</h3>
+      <p class="text-muted">No other products found in the {{ product?.categoryName }} category.</p>
+      <a [routerLink]="['/stone-solution', product?.category]" class="btn btn-primary">
+        View All {{ product?.categoryName }} Products
+      </a>
     </div>
   </div>
 </section>

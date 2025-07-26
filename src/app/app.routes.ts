@@ -16,15 +16,7 @@ export const routes: Routes = [
   { path: 'blog/:slug', component: BlogDetailComponent },
   { path: 'contact', component: ContactUsComponent },
   { path: 'stone-solutions', component: StoneSolutionsComponent },
-  { path: 'stone-solution/cementitious-tile-adhesive', component: CategoryDetailComponent },
-  { path: 'stone-solution/epoxy-grout', component: CategoryDetailComponent },
-  { path: 'stone-solution/sealers', component: CategoryDetailComponent },
-  { path: 'stone-solution/cleaners', component: CategoryDetailComponent },
-  { path: 'stone-solution/mastic', component: CategoryDetailComponent },
-  { path: 'stone-solution/epoxy-products', component: CategoryDetailComponent },
-  { path: 'stone-solution/ager-polish', component: CategoryDetailComponent },
-  { path: 'stone-solution/lapizo-bond', component: CategoryDetailComponent },
-  { path: 'stone-solution/marble-densifier', component: CategoryDetailComponent },
+  { path: 'stone-solution/:category', component: CategoryDetailComponent },
   { path: 'product/:id', component: ProductComponent },
   { path: '**', redirectTo: '' }
 ];

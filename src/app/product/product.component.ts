@@ -61,8 +61,10 @@ export class ProductComponent implements OnInit {
   }
 
   loadRelatedProducts(category: string, excludeProductId?: string) {
+    console.log('Loading related products for category:', category, 'excluding:', excludeProductId);
     this.productService.getRelatedProducts(category, excludeProductId).subscribe({
       next: (products) => {
+        console.log('Related products loaded:', products);
         this.relatedProducts = products;
       },
       error: (error) => {
