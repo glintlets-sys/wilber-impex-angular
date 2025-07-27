@@ -3,13 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService, User, Address, Order } from '../services/auth.service';
+import { AuthService, User, Order } from '../services/auth.service';
+import { AddressService, Address } from '../services/address.service';
 import { HeaderComponent } from '../shared/header/header.component';
+import { AddressFormComponent } from '../shared/address-form/address-form.component';
+import { AddressListComponent } from '../shared/address-list/address-list.component';
 
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent, AddressFormComponent, AddressListComponent],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
@@ -27,18 +30,9 @@ export class AccountComponent implements OnInit, OnDestroy {
     mobile: ''
   };
   
-  // Address form
-  addressForm = {
-    label: 'home',
-    fullName: '',
-    mobile: '',
-    addressLine1: '',
-    addressLine2: '',
-    city: '',
-    state: '',
-    pincode: '',
-    isDefault: false
-  };
+  // Address management
+  showAddressForm = false;
+  editingAddress: Address | null = null;
   
   loading = false;
   errorMessage = '';
@@ -48,6 +42,7 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   constructor(
     private authService: AuthService,
+    private addressService: AddressService,
     private router: Router
   ) {}
 
@@ -63,9 +58,13 @@ export class AccountComponent implements OnInit, OnDestroy {
       this.currentUser = user;
       if (user) {
         this.loadProfileData();
-        this.loadAddresses();
         this.loadOrders();
       }
+    });
+
+    // Subscribe to address changes
+    this.addressService.addresses$.subscribe(addresses => {
+      this.addresses = addresses;
     });
   }
 
@@ -86,17 +85,63 @@ export class AccountComponent implements OnInit, OnDestroy {
     }
   }
 
-  private loadAddresses(): void {
-    this.loading = true;
-    this.authService.getUserAddresses().subscribe({
-      next: (addresses) => {
-        this.addresses = addresses;
-        this.loading = false;
+  // Address management methods
+  showAddAddressForm(): void {
+    this.editingAddress = null;
+    this.showAddressForm = true;
+  }
+
+  showEditAddressForm(address: Address): void {
+    this.editingAddress = address;
+    this.showAddressForm = true;
+  }
+
+  onAddressSaved(address: Address): void {
+    this.showAddressForm = false;
+    this.editingAddress = null;
+    this.successMessage = 'Address saved successfully!';
+    setTimeout(() => {
+      this.successMessage = '';
+    }, 3000);
+  }
+
+  onAddressFormCancelled(): void {
+    this.showAddressForm = false;
+    this.editingAddress = null;
+  }
+
+  onAddressDeleted(addressId: string): void {
+    this.addressService.deleteAddress(addressId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.successMessage = response.message;
+          setTimeout(() => {
+            this.successMessage = '';
+          }, 3000);
+        } else {
+          this.errorMessage = response.message;
+        }
       },
       error: (error) => {
-        console.error('Error loading addresses:', error);
-        this.loading = false;
-        this.errorMessage = 'Failed to load addresses';
+        this.errorMessage = 'Failed to delete address';
+      }
+    });
+  }
+
+  onAddressSetDefault(addressId: string): void {
+    this.addressService.setDefaultAddress(addressId).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.successMessage = response.message;
+          setTimeout(() => {
+            this.successMessage = '';
+          }, 3000);
+        } else {
+          this.errorMessage = response.message;
+        }
+      },
+      error: (error) => {
+        this.errorMessage = 'Failed to set default address';
       }
     });
   }
@@ -150,70 +195,7 @@ export class AccountComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  // Address management
-  addAddress(): void {
-    if (!this.addressForm.fullName.trim() || !this.addressForm.addressLine1.trim() || 
-        !this.addressForm.city.trim() || !this.addressForm.state.trim() || !this.addressForm.pincode.trim()) {
-      this.errorMessage = 'Please fill in all required fields';
-      return;
-    }
 
-    this.loading = true;
-    this.errorMessage = '';
-    this.successMessage = '';
-
-    const newAddress: Omit<Address, 'id'> = {
-      label: this.addressForm.label,
-      fullName: this.addressForm.fullName.trim(),
-      mobile: this.addressForm.mobile.trim(),
-      addressLine1: this.addressForm.addressLine1.trim(),
-      addressLine2: this.addressForm.addressLine2.trim(),
-      city: this.addressForm.city.trim(),
-      state: this.addressForm.state.trim(),
-      pincode: this.addressForm.pincode.trim(),
-      isDefault: this.addressForm.isDefault
-    };
-
-    this.authService.saveAddress(newAddress).subscribe({
-      next: (response) => {
-        if (response.success && response.address) {
-          this.addresses.push(response.address);
-          this.resetAddressForm();
-          this.successMessage = 'Address added successfully!';
-        } else {
-          this.errorMessage = response.message || 'Failed to add address';
-        }
-        this.loading = false;
-      },
-      error: (error) => {
-        console.error('Error adding address:', error);
-        this.errorMessage = 'Failed to add address';
-        this.loading = false;
-      }
-    });
-  }
-
-  private resetAddressForm(): void {
-    this.addressForm = {
-      label: 'home',
-      fullName: '',
-      mobile: '',
-      addressLine1: '',
-      addressLine2: '',
-      city: '',
-      state: '',
-      pincode: '',
-      isDefault: false
-    };
-  }
-
-  deleteAddress(addressId: string): void {
-    if (confirm('Are you sure you want to delete this address?')) {
-      // Simulate address deletion (in real app, this would call an API)
-      this.addresses = this.addresses.filter(addr => addr.id !== addressId);
-      this.successMessage = 'Address deleted successfully!';
-    }
-  }
 
   // Order management
   downloadInvoice(orderId: string): void {

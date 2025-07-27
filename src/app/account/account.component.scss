@@ -42,7 +42,7 @@
     }
     
     &.active {
-      background: var(--gradient-primary);
+      background: linear-gradient(135deg, #5ba3f5, #4a90e2);
       color: white;
       font-weight: 600;
     }

@@ -3,14 +3,17 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService, CartItem } from '../services/cart.service';
-import { AuthService, User, Address } from '../services/auth.service';
+import { AuthService, User } from '../services/auth.service';
+import { AddressService, Address } from '../services/address.service';
 import { Subscription } from 'rxjs';
 import { HeaderComponent } from '../shared/header/header.component';
+import { AddressListComponent } from '../shared/address-list/address-list.component';
+import { AddressFormComponent } from '../shared/address-form/address-form.component';
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, HeaderComponent],
+  imports: [CommonModule, RouterModule, FormsModule, HeaderComponent, AddressListComponent, AddressFormComponent],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
@@ -27,6 +30,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   constructor(
     private cartService: CartService,
     private authService: AuthService,
+    private addressService: AddressService,
     private router: Router
   ) {
     this.cartSubscription = this.cartService.getCart().subscribe(cart => {
@@ -37,9 +41,6 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     
     this.userSubscription = this.authService.currentUser$.subscribe(user => {
       this.currentUser = user;
-      if (user) {
-        this.loadUserAddresses();
-      }
     });
   }
 
@@ -49,6 +50,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
+
+    // Subscribe to address changes
+    this.addressService.addresses$.subscribe(addresses => {
+      this.addresses = addresses;
+      // Set default address if available
+      const defaultAddress = addresses.find(addr => addr.isDefault);
+      this.selectedAddress = defaultAddress || (addresses.length > 0 ? addresses[0] : null);
+    });
+
+    // Subscribe to selected address changes
+    this.addressService.selectedAddress$.subscribe(selectedAddress => {
+      this.selectedAddress = selectedAddress;
+    });
   }
 
   ngOnDestroy(): void {
@@ -60,22 +74,12 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
-  private loadUserAddresses(): void {
-    this.authService.getUserAddresses().subscribe({
-      next: (addresses) => {
-        this.addresses = addresses;
-        // Set default address if available
-        const defaultAddress = addresses.find(addr => addr.isDefault);
-        this.selectedAddress = defaultAddress || (addresses.length > 0 ? addresses[0] : null);
-      },
-      error: (error) => {
-        console.error('Error loading addresses:', error);
-      }
-    });
+  selectAddress(address: Address): void {
+    this.addressService.setSelectedAddress(address);
   }
 
-  selectAddress(address: Address): void {
-    this.selectedAddress = address;
+  navigateToAccount(): void {
+    this.router.navigate(['/account']);
   }
 
   updateQuantity(itemIndex: number, quantity: number): void {

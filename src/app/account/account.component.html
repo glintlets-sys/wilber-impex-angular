@@ -142,163 +142,29 @@
             </h6>
           </div>
           <div class="card-body">
-            <!-- Add New Address Form -->
-            <div class="mb-4">
-              <h6 class="mb-3">Add New Address</h6>
-              <form (ngSubmit)="addAddress()">
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label for="addressLabel" class="form-label">Address Label</label>
-                    <select 
-                      class="form-select" 
-                      id="addressLabel"
-                      [(ngModel)]="addressForm.label"
-                      name="label">
-                      <option value="home">Home</option>
-                      <option value="office">Office</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label for="fullName" class="form-label">Full Name *</label>
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="fullName"
-                      [(ngModel)]="addressForm.fullName"
-                      name="fullName"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label for="addressMobile" class="form-label">Mobile Number</label>
-                    <input 
-                      type="tel" 
-                      class="form-control" 
-                      id="addressMobile"
-                      [(ngModel)]="addressForm.mobile"
-                      name="mobile"
-                    >
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label for="addressLine1" class="form-label">Address Line 1 *</label>
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="addressLine1"
-                      [(ngModel)]="addressForm.addressLine1"
-                      name="addressLine1"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-6 mb-3">
-                    <label for="addressLine2" class="form-label">Address Line 2</label>
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="addressLine2"
-                      [(ngModel)]="addressForm.addressLine2"
-                      name="addressLine2"
-                    >
-                  </div>
-                  <div class="col-md-6 mb-3">
-                    <label for="city" class="form-label">City *</label>
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="city"
-                      [(ngModel)]="addressForm.city"
-                      name="city"
-                      required
-                    >
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-md-4 mb-3">
-                    <label for="state" class="form-label">State *</label>
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="state"
-                      [(ngModel)]="addressForm.state"
-                      name="state"
-                      required
-                    >
-                  </div>
-                  <div class="col-md-4 mb-3">
-                    <label for="pincode" class="form-label">Pincode *</label>
-                    <input 
-                      type="text" 
-                      class="form-control" 
-                      id="pincode"
-                      [(ngModel)]="addressForm.pincode"
-                      name="pincode"
-                      required
-                    >
-                  </div>
-                  <div class="col-md-4 mb-3 d-flex align-items-end">
-                    <div class="form-check">
-                      <input 
-                        class="form-check-input" 
-                        type="checkbox" 
-                        id="isDefault"
-                        [(ngModel)]="addressForm.isDefault"
-                        name="isDefault">
-                      <label class="form-check-label" for="isDefault">
-                        Set as default address
-                      </label>
-                    </div>
-                  </div>
-                </div>
-                <button 
-                  type="submit" 
-                  class="btn"
-                  [disabled]="loading"
-                  style="background: var(--gradient-primary); color: white; border: none;">
-                  <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
-                  <i *ngIf="!loading" class="fas fa-plus me-2"></i>
-                  {{ loading ? 'Adding...' : 'Add Address' }}
-                </button>
-              </form>
+            <!-- Address Form (shown when adding/editing) -->
+            <div *ngIf="showAddressForm" class="mb-4">
+              <app-address-form
+                [address]="editingAddress"
+                [showTitle]="true"
+                (addressSaved)="onAddressSaved($event)"
+                (cancelled)="onAddressFormCancelled()">
+              </app-address-form>
             </div>
 
-            <!-- Existing Addresses -->
-            <div>
-              <h6 class="mb-3">Saved Addresses</h6>
-              <div *ngIf="addresses.length === 0" class="text-center py-4">
-                <i class="fas fa-map-marker-alt fa-3x text-muted mb-3"></i>
-                <p class="text-muted">No addresses saved yet</p>
-              </div>
-              <div *ngFor="let address of addresses" class="address-card mb-3">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                      <div>
-                        <div class="d-flex align-items-center mb-2">
-                          <span class="badge me-2" [class]="address.label === 'home' ? 'bg-primary' : address.label === 'office' ? 'bg-success' : 'bg-secondary'">
-                            {{ address.label | titlecase }}
-                          </span>
-                          <span *ngIf="address.isDefault" class="badge bg-warning">Default</span>
-                        </div>
-                        <h6 class="mb-1">{{ address.fullName }}</h6>
-                        <p class="mb-1">{{ address.addressLine1 }}</p>
-                        <p *ngIf="address.addressLine2" class="mb-1">{{ address.addressLine2 }}</p>
-                        <p class="mb-1">{{ address.city }}, {{ address.state }} - {{ address.pincode }}</p>
-                        <p *ngIf="address.mobile" class="mb-0 text-muted">{{ address.mobile }}</p>
-                      </div>
-                      <button 
-                        class="btn btn-sm btn-outline-danger"
-                        (click)="deleteAddress(address.id)">
-                        <i class="fas fa-trash"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <!-- Address List -->
+            <div *ngIf="!showAddressForm">
+              <app-address-list
+                [addresses]="addresses"
+                [showActions]="true"
+                [showSelection]="false"
+                [emptyMessage]="'No addresses saved yet'"
+                [emptySubMessage]="'Add your first address to get started'"
+                (addressEdited)="showEditAddressForm($event)"
+                (addressDeleted)="onAddressDeleted($event)"
+                (addressSetDefault)="onAddressSetDefault($event)"
+                (addNewAddress)="showAddAddressForm()">
+              </app-address-list>
             </div>
           </div>
         </div>

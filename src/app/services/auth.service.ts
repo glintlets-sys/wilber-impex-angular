@@ -1,6 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { delay } from 'rxjs/operators';
+import { AddressService, Address } from './address.service';
 
 export interface User {
   id: string;
@@ -28,18 +29,7 @@ export interface RegisterRequest {
   email?: string;
 }
 
-export interface Address {
-  id: string;
-  label: string; // 'home', 'office', 'other'
-  fullName: string;
-  mobile: string;
-  addressLine1: string;
-  addressLine2?: string;
-  city: string;
-  state: string;
-  pincode: string;
-  isDefault: boolean;
-}
+
 
 export interface Order {
   id: string;
@@ -72,7 +62,7 @@ export class AuthService {
   private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
   public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
 
-  constructor() {
+  constructor(private injector: Injector) {
     this.loadUserFromStorage();
   }
 
@@ -167,53 +157,7 @@ export class AuthService {
     }).pipe(delay(1000));
   }
 
-  // Stub API: Get user addresses
-  getUserAddresses(): Observable<Address[]> {
-    const addresses: Address[] = [
-      {
-        id: 'addr_1',
-        label: 'home',
-        fullName: 'John Doe',
-        mobile: '9876543210',
-        addressLine1: '123 Main Street',
-        addressLine2: 'Apartment 4B',
-        city: 'Mumbai',
-        state: 'Maharashtra',
-        pincode: '400001',
-        isDefault: true
-      },
-      {
-        id: 'addr_2',
-        label: 'office',
-        fullName: 'John Doe',
-        mobile: '9876543210',
-        addressLine1: '456 Business Park',
-        addressLine2: 'Floor 3, Suite 301',
-        city: 'Mumbai',
-        state: 'Maharashtra',
-        pincode: '400002',
-        isDefault: false
-      }
-    ];
 
-    return of(addresses).pipe(delay(500));
-  }
-
-  // Stub API: Save address
-  saveAddress(address: Omit<Address, 'id'>): Observable<{ success: boolean; address?: Address; message: string }> {
-    console.log('Saving address:', address);
-    
-    const newAddress: Address = {
-      ...address,
-      id: 'addr_' + Date.now()
-    };
-
-    return of({ 
-      success: true, 
-      address: newAddress,
-      message: 'Address saved successfully'
-    }).pipe(delay(800));
-  }
 
   // Stub API: Get user orders
   getUserOrders(): Observable<Order[]> {
@@ -243,7 +187,10 @@ export class AuthService {
           city: 'Mumbai',
           state: 'Maharashtra',
           pincode: '400001',
-          isDefault: true
+          isDefault: true,
+          userId: 'user_1',
+          createdAt: new Date(),
+          updatedAt: new Date()
         },
         invoiceUrl: '/invoices/ORD-2024-001.pdf'
       },
@@ -272,7 +219,10 @@ export class AuthService {
           city: 'Mumbai',
           state: 'Maharashtra',
           pincode: '400002',
-          isDefault: false
+          isDefault: false,
+          userId: 'user_1',
+          createdAt: new Date(),
+          updatedAt: new Date()
         }
       }
     ];
@@ -309,5 +259,8 @@ export class AuthService {
 
   logout(): void {
     this.clearUser();
+    // Clear addresses on logout
+    const addressService = this.injector.get(AddressService);
+    addressService.clearAddresses();
   }
 } 
