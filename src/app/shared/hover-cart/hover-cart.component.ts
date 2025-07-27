@@ -13,8 +13,11 @@ import { Subscription } from 'rxjs';
 })
 export class HoverCartComponent implements OnInit, OnDestroy {
   cartItems: CartItem[] = [];
+  displayItems: CartItem[] = [];
+  displayItemTotals: { [key: number]: number } = {};
   totalItems = 0;
   totalPrice = 0;
+  remainingItemsCount = 0;
   isOpen = false;
   private cartSubscription: Subscription;
 
@@ -23,6 +26,16 @@ export class HoverCartComponent implements OnInit, OnDestroy {
       this.cartItems = cart.items;
       this.totalItems = cart.totalItems;
       this.totalPrice = cart.totalPrice;
+      
+      // Calculate display items (first 3) and remaining count
+      this.displayItems = this.cartItems.slice(0, 3);
+      this.remainingItemsCount = Math.max(0, this.cartItems.length - 3);
+      
+      // Pre-calculate item totals for display items
+      this.displayItemTotals = {};
+      this.displayItems.forEach((item, index) => {
+        this.displayItemTotals[index] = this.extractPrice(item.product.price) * item.quantity;
+      });
     });
   }
 
@@ -52,21 +65,7 @@ export class HoverCartComponent implements OnInit, OnDestroy {
     this.cartService.removeFromCart(itemIndex);
   }
 
-  getItemTotal(item: CartItem): number {
-    const price = this.extractPrice(item.product.price);
-    return price * item.quantity;
-  }
-
   extractPrice(priceString: string): number {
     return parseFloat(priceString.replace(/[₹,]/g, '')) || 0;
-  }
-
-  getDisplayItems(): CartItem[] {
-    // Show only first 3 items in hover cart
-    return this.cartItems.slice(0, 3);
-  }
-
-  getRemainingItemsCount(): number {
-    return Math.max(0, this.cartItems.length - 3);
   }
 } 
