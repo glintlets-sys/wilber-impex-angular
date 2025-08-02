@@ -31,9 +31,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
       this.totalItems = cart.totalItems;
     });
     
+    // Subscribe to user details changes
     this.userSubscription = this.authService.userDetails.subscribe(userDetails => {
+      console.log('🔍 [HEADER] User details changed:', userDetails);
       if (userDetails && userDetails !== '') {
         this.currentUser = userDetails;
+        console.log('✅ [HEADER] Current user updated:', this.currentUser);
+      } else {
+        this.currentUser = null;
+        console.log('✅ [HEADER] User cleared');
       }
     });
   }

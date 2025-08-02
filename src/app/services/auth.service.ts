@@ -49,13 +49,17 @@ export class AuthService {
   }
 
   private handleAuthenticationResponse(data: any) {
+    console.log('🔍 [AUTH] Authentication response received:', data);
     if (data && data.authStatus === 'SUCCESS') {
+      console.log('✅ [AUTH] Authentication successful, updating user state');
       this.updateUserLoggedIn(true);
       const userDetails = this.getUserDetailsFromAPI(data);
+      console.log('✅ [AUTH] User details from API:', userDetails);
       this.updateUserDetails(userDetails);
       this.updateUserDetailsInLocalStorage(userDetails);
       this.successSubject.next('true'); // Update success BehaviorSubject
     } else {
+      console.log('❌ [AUTH] Authentication failed');
       this.successSubject.next('false');
     }
   }
@@ -95,6 +99,7 @@ export class AuthService {
   }
 
   public updateUserDetails(userDetails: any) {
+    console.log('🔍 [AUTH] Updating user details:', userDetails);
     this.userDetailsBehavior.next(userDetails);
   }
 
@@ -115,11 +120,25 @@ export class AuthService {
   }
 
   private initializeUserLogin() {
+    console.log('🔍 [AUTH] Initializing user login from localStorage');
     const userDetails = this.getDataFromLocal(USER_DETAILS);
+    console.log('🔍 [AUTH] User details from localStorage:', userDetails);
 
-    if (userDetails) {
-      this.updateUserLoggedIn(true);
-      this.updateUserDetails(JSON.parse(userDetails));
+    if (userDetails && userDetails !== '') {
+      try {
+        const parsedUserDetails = JSON.parse(userDetails);
+        console.log('✅ [AUTH] Parsed user details:', parsedUserDetails);
+        this.updateUserLoggedIn(true);
+        this.updateUserDetails(parsedUserDetails);
+      } catch (error) {
+        console.error('❌ [AUTH] Error parsing user details from localStorage:', error);
+        this.updateUserLoggedIn(false);
+        this.updateUserDetails('');
+      }
+    } else {
+      console.log('✅ [AUTH] No user details found in localStorage, user not logged in');
+      this.updateUserLoggedIn(false);
+      this.updateUserDetails('');
     }
   }
 
