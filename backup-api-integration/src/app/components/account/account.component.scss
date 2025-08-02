@@ -1,0 +1,142 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* The switch container */
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide the default checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 34px;
+}
+
+/* Create the circle/knob inside the switch */
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+.toggleOn {
+  margin-right: 20px;
+}
+
+/* When checked, change the background color */
+input:checked + .slider {
+  background-color: #d41872;
+}
+
+/* Move the knob to the right when checked */
+input:checked + .slider:before {
+  transform: translateX(26px);
+}
+
+
+.section {
+  flex-grow: 1;
+}
+
+/* styles.css */
+.custom-float-right {
+  margin-left: auto !important;
+}
+
+.container-fluid {
+  min-height: 100vh;
+}
+
+.card-header:hover {
+  background-color: #5e72e4 !important;
+}
+
+.card-header {
+  color: #fff !important;
+  background-color: #d41872 !important;
+  border: 1px solid #ddd;
+}
+
+.card-header-dark {
+  font-weight: 500;
+  background-color: #e3e3e3 !important;
+  border: 1px solid #ddd;
+}
+
+.card-header:focus {
+  color: #5e72e4;
+
+
+  box-shadow: 0 0 0 0.25rem rgba(56, 253, 49, 0.5);
+}
+
+button {
+  cursor: pointer;
+  user-select: none;
+}
+
+.save-btn{
+  color: #fff;
+  background: #e9327a;
+}
+
+.save-btn:hover{
+    background: transparent;
+    border: 1px solid #e9327a;
+    color: #000;
+}
+
+.add_new_address {
+  color: #D41872 !important;
+}
+
+
+nav.sidebar{
+  margin-bottom: 15px;
+}
+tbody, td, tfoot, th, thead, tr{
+  font-size: 14px;
+}
+.panel-title{
+  font-size: 20px;
+}
+table tr th{
+  font-weight: 500;
+}
+table img{
+  object-fit: contain;
+}
+.pull-right{
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px 2px;
+}

@@ -1,0 +1,53 @@
+<div class="container">
+    <div class="row bg-white mt-0 mb-0">
+        <app-bread-crumb [items]="breadcrumbItems"></app-bread-crumb>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4 col-lg-4 col-xl-4 col-12 pr-3 pl-0 pt-3 m-0">
+            <app-filter [filterElements]="filterElements" (onFilter)="onFilterChange($event)"></app-filter>
+        </div>
+        <div class="col-md-8 col-lg-8 col-xl-8 col-sm-12 pt-3 m-0">
+            <div class="row bg-white p-3 ">
+                <h5 class="text-center">Child Age: {{ageCategoryString}} years</h5>
+            </div>
+            <div class="row pt-3">
+                <div class="col-md-12 col-lg-12 col-xl-12 col-12 m-0 p-0">
+                    <div class="card rounded mb-1" style="max-width: 100%; overflow: hidden;">
+                        <!--<div class="card-header">
+                            <h5 class="mb-0 text-center"><strong>Child Age: {{ageCategoryString}} years</strong></h5>
+                        </div>-->
+                        <div class="row m-0 horizontal-scroll">
+                            <div class="col-4">
+                                <div class="custom-image-container" *ngFor="let item of categories" (click)="navigateToMore(item)">
+                                    <img src="{{ item.image }}" alt="Circle image" class="custom-img">
+                                    <small class="d-block text-container">{{ item.title }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 pt-3 pr-0 pl-0">
+                    <div class="card">
+                        <div *ngIf="categorySelected !== undefined" class="card-header">
+                            <h5 class="card-title mb-0"><strong>{{ categorySelected?.title }}</strong></h5>
+                        </div>
+                        <div *ngIf="filteredToys.length == 0" class="row m-0">
+                            <div class="col-6 col-lg-4 col-md-4 p-1" *ngFor="let itemToy of toys">
+                                <app-catalog-item [item]="itemToy" [ageCategory]="ageCategory"></app-catalog-item>
+                            </div>
+                        </div>
+                        <div *ngIf="filteredToys.length > 0" class="row m-0">
+                            <div class="col-6 col-lg-4 col-md-4 p-1" *ngFor="let itemToy of filteredToys">
+                                <app-catalog-item [item]="itemToy" [ageCategory]="ageCategory"></app-catalog-item>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+   
+</div>

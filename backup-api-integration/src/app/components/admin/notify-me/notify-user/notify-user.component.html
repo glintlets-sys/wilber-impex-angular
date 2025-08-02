@@ -1,0 +1,23 @@
+<div class="modal-header">
+    <h3 class="panel-title mb-0 p-0">
+        <span> Notify User List
+        </span>
+    </h3>
+
+    <button type="button" class="btn-close btn btn-primary " (click)="modal.close()">
+    </button>
+</div>
+<div class="modal-body">
+    <table class="table">
+        <thead class="table-light">
+            <tr>
+                <th>User Id</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let userId of notifyUser; let i = index">
+                <td>{{ userId }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

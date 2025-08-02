@@ -1,0 +1,146 @@
+<div class="modal-header">
+    <h3 class="panel-title mb-0 p-0">
+        <span> Import Item</span>
+    </h3> &nbsp;
+    <button type="button" class="btn-close btn btn-primary btn-with-icon save-profile" (click)="modal.dismiss()">
+    </button>
+</div>
+<section>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12">
+                <div class="col-md-12">
+                    <div class="form-group  row">
+                        <div class="col-md-6">
+                            <input #excelUpload type="file" (change)="SelectFile($event)" />
+                        </div>
+                        <div class="col-md-6" *ngIf="resetFileforImport">
+                            <button type="button" class="btn btn-primary" [disabled]="SelectedFileImport"
+                                (click)="importFile()">
+                                <i class="fa fa-upload" style="margin-right: 4px;"></i>
+                                Import
+                            </button>
+                        </div>
+
+                        <div class="col-md-6" *ngIf="importFileforReset">
+                            <button type="button" class="btn btn-primary btn-with-icon save-profile"
+                                (click)="resetFile()">
+                                <i class="fa fa-upload" style="margin-right: 4px;"></i>
+                                Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <form *ngIf="openAccordion">
+            <div class="col-md-12">
+                <div class="accordion-button-new">
+                    <button class="btn btn-primary btn-with-icon mb-2" *ngIf="NewExcelRows.length > 0 &&  (importing == false)" type="button"
+                        (click)="submitItemImport()">
+                        <span class="bold">Upload Items</span>
+                    </button>
+
+                    <div *ngIf="importing">
+                        <p>Importing .....</p>
+                    </div>
+                    <div class="table-responsive table-striped itemMaster table-bordered">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Sno</th>
+                                    <th>Name</th>
+                                    <th>Code</th>
+                                    <th>HSN Code</th>
+                                    <th>Brand</th>
+                                    <th>Tax</th>
+                                    <th>Price</th>
+                                   
+                                    <th>Discount Percent</th>
+                                    <th>Summary</th>
+                                    <th>Pics URL</th>
+                                    <th>Video Url</th>
+                                    <th>Variations</th>
+                                    <th>Description</th>
+                                    <th *ngIf="display_status">Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let item of NewExcelRows; let i = index">
+                                    <td>{{ i }}</td>
+                                    <td>{{ item?.name }}</td>
+                                    <td>{{ item?.code }}</td>
+                                    <td>{{ item?.hsn }}</td>
+                                    <td>{{ item?.brand}}</td>
+                                    <td>{{ item?.tax }}</td>
+                                    <td>{{ item?.price.amount }}</td>
+                                    <td>{{item?.discount.discountPercent}}</td>
+                                    <td>{{item?.summary}}</td>
+                                    <td>{{item?.tableData | json}}</td>
+                                    <td>
+                                        <div *ngFor="let photoLink of item?.photoLinks;let indexPhoto=index">
+                                            <p><span class="text-muted">{{indexPhoto+1}}</span>:{{ ' '+photoLink }}</p>
+                                        </div>
+                                    </td>
+                                    <td>{{ item?.videoLinks }}</td>
+                                    <td class="w-25">
+                                        <span>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <th></th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let variation of item?.variations">
+                                                        <td>
+                                                            <p>{{ variation?.color }}</p>
+                                                        </td>
+                                                        <td>
+                                                          <p>  {{
+                                                            variation?.size
+                                                           }}</p>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </span>
+                                    </td>
+                                    <td class="w-25">
+                                        <span>
+                                            <table class="table table-bordered">
+                                                <thead>
+                                                    <th></th>
+                                                    <th></th>
+                                                </thead>
+                                                <tbody>
+                                                    <tr *ngFor="let desc of item?.productDescription">
+                                                        <td>
+                                                            <p>{{ desc?.heading + ':' }}</p>
+                                                        </td>
+                                                        <td>
+                                                            {{
+                                                            desc?.text?.length > 40
+                                                            ? (' ' + (desc?.text | slice: 0:50) + '...')
+                                                            : ' ' + desc?.text
+                                                            }}
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </span>
+                                    </td>
+                                   
+                                    <td *ngIf="display_status"
+                                        [ngStyle]="{ 'color': item?.status === 'success' ? 'green' : 'red' }">
+                                        {{ item?.status }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

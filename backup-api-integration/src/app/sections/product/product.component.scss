@@ -1,0 +1,215 @@
+.btn-custom {
+    color: #fff;
+    width: 200px;
+    padding: 7px 15px;
+    background: #2dce89;
+    font-size: 16px;
+}
+
+.btn-custom:hover {
+    background: transparent;
+    border: 1px solid #2dce89;
+    color: white;
+}
+
+.selected {
+    border: 5px solid #d41872 !important; /* Example styling for selected button */
+}
+
+strong {
+    color: #d41872 !important;
+}
+
+.colorPink {
+    color: #d41872 !important;
+}
+
+/* Ensure table takes full width */
+table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+ 
+  /* Adjust column widths based on content */
+  th, td {
+    padding: 8px;
+    text-align: left;
+    border: 1px solid #ddd;
+  }
+  
+  /* Optional: Adjust column width to fit content */
+  td {
+    white-space: pre-wrap; /* Prevent text wrapping */
+    overflow: hidden;    /* Hide overflow */
+    text-overflow: ellipsis; /* Show ellipsis for overflowed text */
+  }
+  
+  th {
+    background-color: #f2f2f2;
+  }
+
+  .boldP {
+    font-weight: 600;
+  }
+  
+  /* Ensure the table is responsive and fits the container */
+  .table-container {
+    overflow-x: auto; /* Add horizontal scrollbar if necessary */
+  }
+
+
+
+//   p, .p {
+//     font-size: 14px;
+//     letter-spacing: 1px;
+//   }
+
+// .title{  
+//   color: #161616;
+//   font-family: Lato;
+//   font-size: 32px;
+//   font-style: normal;
+//   font-weight: 600;
+//   line-height: 30px; /* 93.75% */
+//   letter-spacing: 0.2px;
+// }
+
+// .tab-content > .tab-pane {
+//   width: 100%;
+//   padding: 0;
+//   margin: 0;
+//   box-sizing: border-box; /* Ensures padding and border are included in the total width/height */
+// }
+
+
+// .custom-borderless-table td, 
+// .custom-borderless-table th {
+//   border: none !important; /* use !important to override any existing styles, if necessary */
+// }
+
+// /* Bold first column */
+// .table-custom td:first-child {
+//   font-weight: bold;
+// }
+
+// /* Reduce space between rows */
+// .table-custom td {
+//   padding: 5px 8px; /* Adjust as needed; default Bootstrap value is usually 8px */
+// }
+
+// .customh2 {
+//   font-family: 'Pacifico', cursive;
+//   margin-top: 50px;
+//   margin-bottom: 30px;
+//   letter-spacing: 2px;
+//   font-size: 25px;
+//   text-transform: capitalize;
+// }
+
+// .btn-buy{
+//   border-radius: 5px;
+//   background: #F40000;
+//   border: 2px solid #F40000;
+//   color: white;
+//   text-align: center;
+//   font-family: Lato;
+//   padding: 8px 16px 8px 16px;
+
+// }
+// .btn-cart{
+//   border-radius: 5px;
+//   border: 2px solid #F00;
+//   color: #F00;
+//   text-align: center;
+//   font-family: Lato;
+//   background: none;
+//   padding: 8px 16px 8px 16px;
+
+// }
+// .info-title{
+//   font-family: Fredoka;
+//   font-size: 34px;
+//   font-style: normal;
+//   font-weight: 500;
+//   line-height: 24px; /* 70.588% */
+//   letter-spacing: 0.2px;
+// }
+// .rating{
+//   color: #000;
+//   font-family: Montserrat Alternates;
+//   font-size: 96px;
+//   font-style: normal;
+//   font-weight: 600;
+//   line-height: 24px; /* 25% */
+//   letter-spacing: 0.2px;
+// }
+// .rating-header{
+//   color: #000;
+//   font-weight: 600;
+//   font-size: 16px;
+// }
+// .input-group{
+//   border-radius: 3px;
+//   border: 1px solid #AA04C6;
+//   height: 40px;
+// }
+// .suggest-header{
+//   color: #000;
+//   font-family: Fredoka;
+//   font-size: 27px;
+//   font-style: normal;
+//   font-weight: 600;
+//   line-height: 24px; /* 88.889% */
+//   letter-spacing: 0.2px;
+// }
+// strong{
+//   color: #AA04C6;
+// }
+// .cust-strong{
+//   color: #CB0061;
+//   font-size: 24px;
+// }
+// .custom-btn{
+//   border-radius: 34px;
+//   background: #F40000;
+//   color: #fff;
+//   width: 80%;
+//   border: #F40000;
+//   font-weight: 600;
+// }
+
+// .bar-container {
+//   width: 100%;
+//   height: 8px;
+//   background-color: #f1f1f1;
+//   text-align: center;
+//   color: white;
+//   border-radius: 27px;
+// }
+
+// /* Individual bars */
+// .bar-5 {width: 60%; height: 8px; background-color: #04AA6D; border-radius: 27px;
+// }
+// .bar-4 {width: 30%; height: 8px; background-color: #2196F3; border-radius: 27px;
+// }
+// .bar-3 {width: 10%; height: 8px; background-color: #00bcd4; border-radius: 27px;
+// }
+// .bar-2 {width: 4%; height: 8px; background-color: #ff9800; border-radius: 27px;
+// }
+// .bar-1 {width: 15%; height: 8px; background-color: #f44336; border-radius: 27px;
+// }
+.video-container {
+    position: relative;
+    width: 100%;
+}
+
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+

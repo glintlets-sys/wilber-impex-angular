@@ -1,0 +1,51 @@
+.text-center {
+  text-align: center;
+}
+
+.fixed-bottom {
+  position: fixed;
+  bottom: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fixed-top {
+  position: fixed;
+  top: 5%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast {
+  width: 100%;
+  max-width: none;
+}
+
+.alert {
+  position: relative;
+  width: 80%;
+  margin-bottom: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.alert .toast-body {
+  padding: 0.75rem;
+}
+
+.btn-close {
+  position: absolute;
+  top: 0.25rem;
+  right: 0.5rem;
+}

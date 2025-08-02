@@ -1,0 +1,23 @@
+.btn-scroll-top {
+  position: fixed;
+  bottom: 80px;
+  right: 30px;
+  z-index: 999;
+  opacity: 0.9;
+  transition: opacity 0.3s;
+}
+
+.btn-scroll-top:hover {
+  opacity: 1;
+}
+
+.btn-whatsapp {
+  position: fixed;
+  bottom: 120px;
+  max-width: 20px;
+  max-height: 20px;
+  right: 30px;
+  z-index: 999;
+  opacity: 0.9;
+  transition: opacity 0.3s;
+}

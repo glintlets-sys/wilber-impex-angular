@@ -1,0 +1,121 @@
+<div class="container">
+    <div class="product-reviesection">
+        <div class="box-row">
+            <div class="row">
+
+                <div class="col-xl-12 col-md-12 col-12">
+                    <div class="top-producting-section">
+                        <h5 class="h5555">Rate this product</h5>
+                        <div class="div-pro">
+                            <div class="div-tex">
+                                <p>{{item?.name}}</p>
+                                <div class="revie-ratting"><i class="fa-solid fa-star"></i><span>
+                                        {{itemRatings?.averageRating}}</span><span>({{itemRatings?.totalRatings}})</span>
+                                </div>
+                            </div>
+                            <div class="imgfg">
+                                <img [src]="item?.thumbnail" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-3 col-md-4 col-12">
+                    <div class="What-good-review">
+                        <div class="hedad">
+                            <h5>What makes a good review</h5>
+                        </div>
+                        <div class="div-space-section">
+                            <div class="div-tr">
+                                <h4>Have you used this product?</h4>
+                                <p>Your review should be about your experience with the product.</p>
+                            </div>
+                            <div class="div-spacex5"></div>
+                            <div class="div-tr">
+                                <h4>Why review a product?</h4>
+                                <p>Your valuable feedback will help fellow shoppers decide!</p>
+                            </div>
+                            <div class="div-spacex5"></div>
+                            <div class="div-tr">
+                                <h4>How to review a product?</h4>
+                                <p>Your review should include facts. An honest opinion is always appreciated. If you
+                                    have an
+                                    issue with the product or service please contact us from the help centre.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-9 col-md-8 col-12">
+                    <div class="full-descriptin-section-review">
+                        <div class="box-contain">
+                            <div class="ratting-option">
+                                <h3>Rate this product</h3>
+                                <div class="ratting-five">
+                                    <i class="fa-star"
+                                        [ngClass]="{'far': selectedRating < 1, 'fas': selectedRating >= 1}"
+                                        (click)="selectRating(1)"></i>
+                                    <i class="fa-star"
+                                        [ngClass]="{'far': selectedRating < 2, 'fas': selectedRating >= 2}"
+                                        (click)="selectRating(2)"></i>
+                                    <i class="fa-star"
+                                        [ngClass]="{'far': selectedRating < 3, 'fas': selectedRating >= 3}"
+                                        (click)="selectRating(3)"></i>
+                                    <i class="fa-star"
+                                        [ngClass]="{'far': selectedRating < 4, 'fas': selectedRating >= 4}"
+                                        (click)="selectRating(4)"></i>
+                                    <i class="fa-star"
+                                        [ngClass]="{'far': selectedRating < 5, 'fas': selectedRating >= 5}"
+                                        (click)="selectRating(5)"></i>
+                                </div>
+                            </div>
+                            <div class="ratting-des-option">
+                                <h3>Review this product</h3>
+                                <div class="box-in-description">
+                                    <div class="head-text">
+                                        <span class="des">Description</span>
+                                        <textarea id="reviewDescription" class="form-control borderNone" rows="6"
+                                            cols="50" [(ngModel)]="review.comment"></textarea>
+                                    </div>
+                                    <div class="Footer-text">
+                                        <span class="des">Title (optional)</span>
+                                        <input type="text" id="reviewTitle" [(ngModel)]="review.title"
+                                            class="form-control borderNone">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="select-prod-img-section">
+                                <div class="div-img-choose">
+                                    <div class="image">
+                                        <ng-container *ngIf="imgList?.length > 0">
+                                            <div *ngFor="let img of imgList" class="image-preview">
+                                                <img [src]="img?.src" width="50px" alt="">
+                                                <i class="fa-solid fa-circle-xmark cursor_pointer"
+                                                    (click)="removeImage(img)"></i>
+                                            </div>
+                                        </ng-container>
+                                        <ng-container *ngIf="imgList?.length < 5">
+                                            <div class="image-choose">
+                                                <img src="assets/img/image/cameraver.png" alt="" class="cursor_pointer"
+                                                    (change)="onFileChange($event)"
+                                                    (click)="triggerSelectFile(fileInput)" alt="">
+                                                <input type="file" id="imageUrls" #fileInput (click)="fileInput.click()"
+                                                    [hidden]="true" (change)="onFileChange($event)" />
+                                            </div>
+                                        </ng-container>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="reviesubit">
+                                <div class="bt-review cursor_pointer" (click)="submitRatingAndComment()">
+                                    Submit
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

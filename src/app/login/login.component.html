@@ -63,7 +63,7 @@
                   style="background: var(--gradient-primary); color: white; border: none;">
                   <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
                   <i *ngIf="!loading" class="fas fa-paper-plane me-2"></i>
-                  {{ loading ? 'Sending...' : 'Continue' }}
+                  {{ loading ? 'Checking...' : 'Continue' }}
                 </button>
               </form>
             </div>
@@ -87,9 +87,9 @@
                      [(ngModel)]="otp"
                      (input)="onOtpInput($event)"
                      name="otp"
-                     placeholder="Enter 6-digit OTP"
-                     maxlength="6"
-                     pattern="[0-9]{6}"
+                     placeholder="Enter 4-digit OTP"
+                     maxlength="4"
+                     pattern="[0-9]{4}"
                      inputmode="numeric"
                      autocomplete="one-time-code"
                      style="font-size: 1.2rem; letter-spacing: 0.5rem; font-weight: 600;"
@@ -99,7 +99,7 @@
                 <button 
                   type="submit" 
                   class="btn w-100 mb-3"
-                  [disabled]="otp.length !== 6 || loading"
+                  [disabled]="otp.length !== 4 || loading"
                   style="background: var(--gradient-primary); color: white; border: none;">
                   <span *ngIf="loading" class="spinner-border spinner-border-sm me-2"></span>
                   <i *ngIf="!loading" class="fas fa-check me-2"></i>

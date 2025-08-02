@@ -1,0 +1,90 @@
+.button-count-custom {
+    width: 20px;
+    height: 20px;
+    background-color: #ffffff;
+    color: black;
+    font-size: 24px;
+    text-align: center;
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button-count-custom:active {
+    background-color: #D41872;
+    color: white;
+}
+
+
+.number-product-custom {
+    display: inline-block;
+    width: 46px;
+    height: 20px;
+    font-size: 16px;
+    border: none;
+    border: none;
+    text-align: center;
+}
+
+a {
+    cursor: pointer;
+}
+
+
+
+
+.sticky {
+    position: sticky;
+    top: 10px;
+}
+
+.wishlist {
+    color: #ffffff;
+}
+
+.wishCard {
+    background-color: #D41872;
+}
+
+.div-color {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adds space between text and button */
+}
+
+.color-circle {
+    width: 20px; /* Diameter of the circle */
+    height: 20px; /* Diameter of the circle */
+    border-radius: 50%; /* Makes the button circular */
+    border: none; /* Removes default button border */
+    cursor: default; /* Disables the pointer cursor to indicate no action */
+}
+
+.color-circle#red {
+    background: red;
+}
+
+.color-circle#green {
+    background: green;
+}
+
+.color-circle#yellow {
+    background: yellow;
+}
+
+.color-circle#blue {
+    background: blue;
+}
+
+.color-circle#black {
+   background: black;
+}
+
+.color-circle#white {
+   background: white;
+}

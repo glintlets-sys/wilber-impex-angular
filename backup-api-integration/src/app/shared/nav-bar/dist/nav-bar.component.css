@@ -1,0 +1,34 @@
+.custom-bg-color {
+  background-color: #a44c7c;
+}
+
+.custom-img {
+  min-height: 56px;
+  width: auto;
+}
+
+.custom-cart-icon {
+  font-size: 24px;
+  /* Adjust the size as needed */
+}
+
+.custom-image-icon {
+  font-size: 24px;
+}
+
+.navbar-brand {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-brand-icons {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.nav-link {
+  padding-left: 0.25rem;
+  padding-right: 0.25rem;
+}

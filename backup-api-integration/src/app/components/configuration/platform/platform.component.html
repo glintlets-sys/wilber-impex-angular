@@ -1,0 +1,54 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+                        <h3 class="panel-title mb-0">
+                            <span class="align-text-top">Platform Setting</span>
+                        </h3>
+                    </div>
+                    <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-4">
+                                    <label for="url">Service Url:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="url" class="form-control form-control-alternative"
+                                        placeholder="Enter Service Url" [(ngModel)]="platform!.serviceURL" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-4">
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" (click)="savePlatform()"
+                                        class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                        <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                            <defs>
+                                                <style>
+                                                    .cls-1 {
+                                                        fill: #fff;
+                                                    }
+                                                </style>
+                                            </defs>
+                                            <path class="cls-1"
+                                                d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                        </svg>Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,120 @@
+<!-- Modal dialog -->
+<div id="secretModal" class="modal" [ngClass]="{'show-modal': isModalOpen}">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    
+    <p class="m-2 model-text">Confirm Delete All</p>
+    
+    <!-- Input for secret -->
+    <input class="m-2" type="password" [(ngModel)]="secret" placeholder="Enter secret" />
+
+    <!-- Confirm and cancel buttons -->
+    <span class="pull-right">
+      <button type="button" class="btn btn-primary m-2" (click)="confirmDelete()">Confirm</button>
+      <button type="button" class="btn btn-primary m-2" (click)="closeModal()">Cancel</button>
+    </span>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+          <h3 class="panel-title mb-0">
+            <!-- <span class="head_img"></span> -->
+            <span class="align-text-top">Toys List</span>
+          </h3>
+          <span class="pull-right">
+            <button type="button" class="btn btn-primary" (click)="openModal()">Delete All Toys</button>&nbsp;
+            <button type="button" class="btn btn-primary" (click)="loadImagesToCMS()">LoadImagesToCMS</button>&nbsp;
+            <button type="button" class="btn btn-primary" (click)="importExcelItme()">Import</button>&nbsp;
+            <button type="button" class="btn btn-primary" (click)="exportExcelItems()">Export Items</button>&nbsp;
+            <button type="button" class="btn btn-primary" (click)="generateThumb()">Generate Thumbnail</button>&nbsp;
+            <button type="button" class="btn btn-primary" [ngClass]="{ 'disableddiv':editToyPop  == false }"
+              (click)="openAddPopupForToys('editCat')">Edit Category</button>&nbsp;
+            <button type="button" class="btn btn-primary" [ngClass]="{ 'disableddiv':editToyPop  == false }"
+              (click)="openAddPopupForToys('editToy')">Edit Toy</button>
+            &nbsp;
+            <button type="button" (click)="openAddPopupForToys('add')"
+              class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+              <svg style="width: 13px" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 100 100">
+                <defs>
+                  <style>
+                    .cls-1 {
+                      fill: #fff;
+                    }
+                  </style>
+                </defs>
+                <path class="cls-1"
+                  d="M96.09,46.09H53.91V3.91a3.91,3.91,0,1,0-7.82,0V46.09H3.91a3.91,3.91,0,1,0,0,7.82H46.09V96.09a3.91,3.91,0,0,0,7.82,0V53.91H96.09a3.91,3.91,0,0,0,0-7.82Z" />
+              </svg>&nbsp;Add Toys
+            </button>
+
+          </span>
+        </div>
+
+        <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+          <div class="col-4">
+            <input type="text" class="form-control " placeholder="Search toys" [(ngModel)]="searchToy"
+              (keyup)="filterData()">
+          </div>
+        </div>
+
+        <table class="table">
+          <thead class="table-light">
+            <tr>
+              <th></th>
+              <th>Images</th>
+              <th>Name</th>
+              <th>Code</th>
+              <th>Brand</th>
+              <th>Price</th>
+              <th>Categories</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let toy of toysPaginated| paginate
+            : {
+                itemsPerPage: tableSize,
+                currentPage: page,
+                totalItems: count
+              };">
+              <td>
+                <input type="radio" name="toy" [value]="toy" [(ngModel)]="selectedToy" (click)="doTrueForEdit()">
+              </td>
+              <td>
+                <img src="{{toy.thumbnail}}" width="60" height="60">
+              </td>
+              <td>{{ toy.name }}</td>
+              <td>{{ toy.code }}</td>
+              <td>{{ toy.brand }}</td>
+              <td>{{ toy.price.amount }}</td>
+              <td class="w-25">
+                <ng-container *ngFor="let category of toy.categoryDetails; let last = last">
+                  <span>{{ category.name }}</span>
+                  <span *ngIf="!last">, </span>
+                </ng-container>
+              </td>
+              <td>
+                <button class="btn btn-sm btn-delete" type="button" (click)="deleteToy(toy.id)">
+                  <i class="fa fa-trash"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        <div *ngIf="toysPaginated?.length==0">
+          <h3 class="no-record-found">No Record Found.</h3>
+        </div>
+        <div *ngIf="toysPaginated?.length>0" class="d-flex justify-content-center" style="padding: 15px">
+          <div class="item_count">
+            Total Items: {{ count }}
+          </div>
+          <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

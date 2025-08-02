@@ -1,0 +1,44 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+
+.section {
+  flex-grow: 1;
+}
+
+.container-fluid {
+  min-height: 100vh;
+}
+
+.card-header:hover {
+  background-color: #1454dda1 !important;
+}
+.card-header {
+color: #000000 !important;
+background-color: #ffffff !important;
+border: 1px solid #ddd;
+}
+.card-heade:focus {
+color: #00000000;
+
+ 
+box-shadow: 0 0 0 0.25rem rgba(56, 253, 49, 0.5);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: start; /* Adjust this as needed */
+  background-color: #4074FF;
+}
+
+.image-headlog img {
+  /* Adjust styles for the image, if necessary */
+}
+
+.header h2 {
+  margin-left: 10px; /* Adjust spacing as needed */
+}

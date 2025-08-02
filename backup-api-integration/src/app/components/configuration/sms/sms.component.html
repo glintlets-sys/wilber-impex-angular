@@ -1,0 +1,125 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+                        <h3 class="panel-title mb-0">
+                            <span class="align-text-top">SMS Configuration</span>
+                        </h3>
+                    </div>
+
+                    <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-2">
+                                    <label for="payment">Sms Provider:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="payment" id="paymentF" [(ngModel)]="selectedSmsProvider"
+                                        (change)="changeSmsProvider($event)">
+                                        <option *ngFor="let type of sms_providers" [value]="type">{{ type }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <span *ngIf="selectedSmsProvider == 'Msg91'">
+                       
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-2">
+                                    <label for="sender">Sms sender:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="sender" class="form-control form-control-alternative"
+                                        placeholder="Enter sms sender" [(ngModel)]="msg91SmsConfiguration!.sender" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-2">
+                                    <label for="authKey">Sms authKey:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="authKey" class="form-control form-control-alternative"
+                                        placeholder="Enter sms authKey" [(ngModel)]="msg91SmsConfiguration!.authKey" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-2">
+                                    <label for="apiUrl">Sms apiUrl:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="apiUrl" class="form-control form-control-alternative"
+                                        placeholder="Enter sms apiUrl" [(ngModel)]="msg91SmsConfiguration!.apiUrl" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-2">
+                                    <label for="shortUrl">Sms shortUrl:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="shortUrl" class="form-control form-control-alternative"
+                                        placeholder="Enter sms shortUrl" [(ngModel)]="msg91SmsConfiguration!.shortUrl" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-2">
+                                    <label for="number">Sms number:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="number" class="form-control form-control-alternative"
+                                        placeholder="Enter sms number" [(ngModel)]="msg91SmsConfiguration!.number" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-2">
+                                    <label for="templateId">Sms templateId:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="text" name="templateId" class="form-control form-control-alternative"
+                                        placeholder="Enter sms templateId" [(ngModel)]="msg91SmsConfiguration!.templateId" />
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                    </div>
+                    <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-2">
+                                </div>
+                                <div class="col-md-6">
+                                    <button type="button" (click)="saveSmsConfiguration()"
+                                        class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                        <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                            <defs>
+                                                <style>
+                                                    .cls-1 {
+                                                        fill: #fff;
+                                                    }
+                                                </style>
+                                            </defs>
+                                            <path class="cls-1"
+                                                d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                        </svg> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

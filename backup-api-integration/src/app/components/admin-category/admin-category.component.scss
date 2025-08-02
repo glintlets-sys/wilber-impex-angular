@@ -1,0 +1,91 @@
+@import "nouislider/distribute/nouislider.min.css";
+// @import "~nouislider/distribute/nouislider.min.css";
+
+// start nouislider
+:host {
+  padding: 50px;
+}
+
+body {
+  padding: 100px;
+
+}
+
+code {
+  font-size: 1.5rem;
+}
+
+pre,
+[nouislider] {
+  margin: 15px 0;
+}
+
+.jumbotron {
+  background: #f5f5f5;
+  border-bottom: 1px solid #eee;
+  color: #333;
+  margin-bottom: 0px;
+  padding-top: 0px;
+  padding-bottom: 15px;
+}
+
+.noUi-connect {
+  background: #337ab7;
+}
+
+.event-label {
+  transition: all 0.25s;
+  color: white !important;
+}
+
+// end nouislider
+
+
+.skew-container {
+  overflow: hidden;
+  position: relative;
+}
+
+.skew-image {
+  height: 350px;
+  /* Adjust the height as needed */
+  width: 100%;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+}
+
+.skew-image::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 20%;
+  /* Adjust the value to control the height of the skewed portion */
+  background: linear-gradient(to right bottom, transparent 49.5%, white 50%);
+  transform: skew(3deg);
+  /* Adjust the skew angle as needed */
+  transform-origin: bottom left;
+  z-index: 2;
+}
+
+.card-body {
+  position: relative;
+  z-index: 2;
+}
+
+.card-text {
+  margin: 0px;
+  padding: 0px;
+}
+
+.disableddiv {
+  pointer-events: none !important;
+  opacity: 0.6 !important;
+}
+
+th, td {
+  text-align: center;
+  vertical-align: middle;
+}

@@ -1,0 +1,153 @@
+<section class="pt-5 mb-4 card-pagesection">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 mx-auto">
+                <div class="row aiz-steps  ">
+                    <div class="col ">
+                        <div class="text-center ">
+                            <i class="la-3x mb-2 fa-solid fa-cart-shopping" (click)="setCartLabel('cart')"></i>
+                            <h3 class="fs-14 fw-600 d-none d-lg-block"> CART</h3>
+                        </div>
+                    </div>
+                    <div class="col  ">
+                        <div class="text-center ">
+                            <i class="la-3x mb-2 fa-solid fa-earth-asia" (click)="setCartLabel('address')"></i>
+                            <h3 class="fs-14 fw-600 d-none d-lg-block opacity-50">ADDRESS</h3>
+                        </div>
+                    </div>
+                    <div class="col active">
+                        <div class="text-center text-primary">
+                            <i class="la-3x mb-2  fa-solid fa-credit-card"></i>
+                            <h3 class="fs-14 fw-600 d-none d-lg-block opacity-50">PAYMENT</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row pt-5 mb-3 justify-content-center">
+            <div class="col-xl-8 col-lg-8 col-md-12 col-12 ">
+                <div class="on-side-pricesummary ">
+
+                    <div class="price-summary-pro shadow-sm">
+                        <div class="tittlesu">
+                            You are paying for these items
+                        </div>
+                        <div *ngFor="let cartItem of cartItems" class="payment-section-add">
+                            <div class="product-imgtext">
+                                <div class="contaent-sdd">
+                                    <h5>{{ cartItem.name }}</h5>
+                                    <p>Estimated Delivery Within <span> 7 Days </span></p>
+                                </div>
+                                <div class="image">
+                                    <img [src]="searchItem(cartItem.itemId)">
+                                </div>
+                               
+                            </div>
+                        </div>
+
+                        <!-- display delivery address -->
+                        <div class="delivey-address">
+                            <div class="row d-flex justify-content-center">
+                                <div class="col-12">
+                                    <div class="justify-address">
+                                        <span style="width: 70%">
+                                            <div class="div-d-sum">Deliver to:</div>
+                                            <p class="border-sj">
+                                                <span>
+                                                    {{user_address?.firstLine + ' ' + user_address?.secondLine}} + {{ ', ' +
+                                                    user_address?.city + ', ' }} + <br/> + {{
+                                                    user_address?.state + ', ' + user_address?.country + ', ' +
+                                                    user_address?.pincode + ', ' }} + <br/> {{
+                                                    user_address?.mobileNumber + ', ' }} + <br/> {{  user_address?.emailAddress}}
+                                                </span>
+                                            </p>
+                                        </span>
+                                            <button (click)="setCartLabel('address')" style="width:30%;height:35px;"
+                                            class="btn btn-sm btn-address">Modify Address</button>
+                                    </div>
+                                   
+                                </div>
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                    <span>
+                                      
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="info-pri">
+                            <div class="div-pric-tsumm">PRICE SUMMARY</div>
+                            <p class="border-sj"><span>Total MRP(inc. of All taxes)</span> <span>{{ getTotalMrpAmount()
+                                    | currency : '&#8377;' }}</span></p>
+                            <p class="border-sj"><span>Discount:</span>
+                                <ng-container>
+                                    <span style="color: #B53030;">
+                                        {{ getDiscountAmount() |currency : '&#8377;' }}
+                                    </span>
+                                </ng-container>
+                            
+                            </p>
+                            <p *ngIf="getCouponCodeApplied()" class="border-sj"><span>Coupon Discount:</span>
+                                <ng-container>
+                                    <span style="color: #B53030;"> {{ getCouponDiscountAmount()|
+                                        currency : '&#8377;' }}</span>
+                                </ng-container>
+                            </p>
+                            <p class="border-sj"><span>Shipping:</span> <span style="color: #B53030;">Free</span></p>
+                            <p class="border-sj"><span>Subtotal:</span> <span>{{ getSubTotalAmount() | currency : '&#8377;'
+                                    }}</span></p>
+                            <p class="border-sj"><span>GST (18%):</span> <span>{{ getTotalTax() | currency :
+                                    '&#8377;'
+                                    }}</span></p>
+<!--                            <p><span>Total: <br><strong>{{ getTotalAmount() | currency : '&#8377;'
+                                        }}</strong></span> <span class="continueok"> <a (click)="paymentComplete()"
+                                        style="color: white;">Continue to Pay </a></span> </p>-->
+                            <p><span>Total: <br><strong>{{ getTotalAmount() | currency : '&#8377;'
+                                        }}</strong></span> <span class="continueok"> <a 
+                                        style="color: white;" (click)="processPayment_phonepe()">Continue to Pay </a></span> </p>
+                        </div>
+                        <div class="securepayment">
+                            <div class="box-abuttransfact">
+                                <div class="image">
+                                    <img src="assets/img/image/cartVector.svg" alt="">
+                                    <h4>Secure Payment</h4>
+                                    <p>100% Secure Payments</p>
+                                </div>
+                            </div>
+                            <div class="box-abuttransfact">
+                                <div class="image">
+                                    <img src="assets/img/image/cartVector (1).svg" alt="">
+                                    <h4>24/7 Support</h4>
+                                    <p>Online Support 24/7</p>
+                                </div>
+                            </div>
+                            <div class="box-abuttransfact">
+                                <div class="image">
+                                    <img src="assets/img/image/cartVector (2).svg" alt="">
+                                    <h4>Free Shipping</h4>
+                                    <p>On order over ₹101</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-securepayment-option">
+                            <div class="you-pay-using">
+                                <hr>
+                                <p>Pay using</p>
+                            </div>
+                            <div class="option-option-for-pay">
+                                <img src="assets/img/image/Money.svg" alt="">
+                                <img src="assets/img/image/visa.png" alt="">
+                                <img src="assets/img/image/mastercard.png" alt="">
+                                <img src="assets/img/image/phonepay.svg" alt="">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>

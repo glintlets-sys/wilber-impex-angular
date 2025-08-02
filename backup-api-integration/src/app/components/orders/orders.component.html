@@ -1,0 +1,112 @@
+<div class="info-about-product-section">
+  <div class="container">
+    <div class="h5 mb-4">My Orders</div>
+    <div class="box-container">
+      <div class="row">
+        <div class="col-xl-3 col-md-4 col-12">
+          <div class="info-left">
+            <div class="link-section">
+              <li class="li-drop">
+                <div class="tittle-cate-laptopfilter">
+                  <p> Filter by choice</p>
+                </div>
+              </li>
+
+              <!-- Order Status -->
+              <li class="li-drop li-drop-option">
+                <h4>Order Status</h4>
+                <div class="accordion-body-info">
+                  <div class="categories-section">
+                    <div class="category-checkbox" *ngFor="let status of orderStatus | keyvalue">
+                      <label for="{{status.key}}">
+                        <input type="checkbox" [id]="status.key" class="category-checkbox-input" [value]="status.value">
+                        {{ status.value }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+              <!-- Order Time -->
+              <li class="li-drop li-drop-option">
+                <h4>Order Time</h4>
+                <div class="accordion-body-info">
+                  <div class="categories-section">
+                    <div class="category-checkbox" *ngFor="let time of orderTime | keyvalue">
+                      <label for="{{time.key}}">
+                        <input type="checkbox" [id]="time.key" class="category-checkbox-input" [value]="time.value">
+                        {{ time.value }}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </li>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-9 col-md-8 col-12">
+          <div class="right-slide-contain">
+            <div class="searc-product-demo">
+              <input type="text" placeholder="Type product name" [(ngModel)]="searchOrder" (keyup)="filterOder()">
+              <div class="btn-serarch" (click)="filterOder()">Search</div>
+            </div>
+
+            <div class="product-searchlist">
+              <div class="div-secto-scrool" *ngFor="let order of orderedItems| paginate
+              : {
+                  itemsPerPage: tableSize,
+                  currentPage: page,
+                  totalItems: count
+                };">
+                <div class="product-showlist row">
+                 <div class="col-md-2 col-6 mt-2">
+                  <img [src]="getItemImg(order?.id)" alt="" (click)="openProduct(order?.id)" class="cursor_pointer">
+                 </div> 
+                 <div class="col-md-4 col-6 mt-2">
+                  <div class="div-name-sa" style="width:150px;">
+                    <h3 style="font-size: 16px;">{{ order?.itemName }}</h3>
+                    <div *ngIf="getColor(order)?.color" class="div-color">
+                      <span class="real-color">Color:</span>
+                      <span class="less-color"> {{getColor(order)?.color}}</span>
+                    </div>
+
+                  </div>
+                 </div>
+                  <div class="col-md-2 col-6 mt-2">
+                    <div class="price-info">Rs {{ order?.price | currency:'INR':'symbol':'1.2-2' }}</div>
+                  </div>
+                  
+                  <div class="cancelorapprove col-md-4 col-6 mt-2">
+                    <div class="div-adte">
+                      <div class="accept-color"></div>  
+                      {{ order?.creationDate | date:'MMM d,y' }}
+                    </div>
+                    <p *ngIf="formatStatus(order?.shipmentStatus)">{{formatStatus(order?.shipmentStatus)}}</p>
+                    <a [routerLink]="[order.id,'writeReview']" class="pt-2">
+                      <i class="fa-star fas p-1"></i>
+                      <span class="text-primary">Rate This Product</span>
+                    </a>
+                  </div>         
+                </div>
+              </div>      
+
+            <div *ngIf="orderedItems?.length==0">
+              <h3 class="no-record-found">No order Found. <small><a class="btn btn-outline-warning"
+                    routerLink="/home">Shop
+                    Now</a></small>
+              </h3>
+            </div>
+
+            <div *ngIf="orderedItems?.length>0" class="">
+              <div class="item_count pb-3">
+                Total orders: {{ count }}
+              </div>
+              <pagination-controls (pageChange)="page = $event" class="text-center "></pagination-controls>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

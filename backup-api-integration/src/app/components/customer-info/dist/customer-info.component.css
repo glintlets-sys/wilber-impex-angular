@@ -1,0 +1,17 @@
+.gender-option {
+  margin: 0 10px;
+  cursor: pointer;
+  opacity: 0.5;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.gender-option.active {
+  opacity: 1;
+}
+
+.step-display {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+}

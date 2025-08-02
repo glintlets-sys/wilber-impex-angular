@@ -1,0 +1,19 @@
+.scroll-container {
+  overflow: hidden;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.scroll-content {
+  display: inline-block;
+  animation: scroll-left infinite linear;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

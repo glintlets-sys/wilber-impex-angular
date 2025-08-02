@@ -1,0 +1,33 @@
+
+  
+<!--<app-scroll-top-button></app-scroll-top-button>-->
+<app-loading-overlay></app-loading-overlay>
+
+<app-nav-bar *ngIf="showNavbarAndFooter"></app-nav-bar>
+<app-toast></app-toast>
+<!-- <div *ngIf="showAlert" class="alert alert-success alert-dismissible fade show p-1" role="alert"> -->
+  
+  <!-- <div class="row align-items-start m-1"> 
+   
+    <div class="col-10"> 
+      <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+      <span class="alert-text">
+        Please use <strong>LAUNCH20</strong> discount coupon to avail up to 20% discount. Free shipping on delivery on all
+        orders.
+      </span>
+    </div>
+
+    <div class="col-2">
+      <div class="d-flex align-items-center justify-content-center" style="height: 100%;"> Set the height of the container to 100% -->
+        <!-- <button type="button" class="close" (click)="closeAlert()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    </div>
+   
+  </div>
+</div>  -->
+<!---->
+<router-outlet></router-outlet>
+<app-footer *ngIf="showNavbarAndFooter"></app-footer>
+<!--<app-whatsapp-widget></app-whatsapp-widget>-->

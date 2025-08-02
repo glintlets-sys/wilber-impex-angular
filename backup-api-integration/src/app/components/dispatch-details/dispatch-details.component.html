@@ -1,0 +1,131 @@
+<div class="card mb-3 rounded">
+    <div class="card-body">
+      <div class="d-flex justify-content-between align-items-center mb-3">
+        <h6 class="card-title mb-0">Dispatch Details</h6>
+        <button class="btn btn-link text-primary small" (click)="toggleEditMode()">
+            {{ editMode ? 'Close' : 'Edit' }}
+          </button>
+          <button class="btn btn-primary" (click)="saveDispatchSummary()" *ngIf="editMode">
+            Save
+          </button>
+      </div>
+      <div *ngIf="editMode">
+        <div class="form-group">
+            <label for="shipmentId">Dispatch Summary ID</label>
+            <input type="text" class="form-control" id="Id" disabled [(ngModel)]="dispatchSummary.id">
+          </div>
+        <div class="form-group">
+          <label for="shipmentStatus">Shipment Status</label>
+          <select class="form-control" id="shipmentStatus" [(ngModel)]="dispatchSummary.shipmentStatus">
+            <option *ngFor="let status of shipmentStatusOptions" [value]="status">{{ status }}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="courierService">Courier Service</label>
+          <input type="text" class="form-control" id="courierService" [(ngModel)]="dispatchSummary.courierService">
+        </div>
+        <div class="form-group">
+          <label for="shipmentCode">Shipment Code</label>
+          <input type="text" class="form-control" id="shipmentCode" [(ngModel)]="dispatchSummary.shipmentCode">
+        </div>
+        <div class="form-group">
+          <label for="shipmentId">Shipment ID</label>
+          <input type="text" class="form-control" id="shipmentId" [(ngModel)]="dispatchSummary.shipmentId">
+        </div>
+        <div class="form-group">
+          <label for="orderId">Order ID</label>
+          <input type="number" class="form-control" id="orderId" [(ngModel)]="dispatchSummary.orderId">
+        </div>
+      </div>
+      <div *ngIf="!editMode">
+        <table class="table table-bordered">
+          <tbody>
+            <tr>
+              <td><strong>Dispatch Id:</strong></td>
+              <td>{{ dispatchSummary.id }}</td>
+            </tr>
+            <tr>
+              <td><strong>Shipment Status:</strong></td>
+              <td>{{ dispatchSummary.shipmentStatus }}</td>
+            </tr>
+            <tr>
+              <td><strong>Courier Service:</strong></td>
+              <td>{{ dispatchSummary.courierService }}</td>
+            </tr>
+            <tr>
+              <td><strong>Shipment Code:</strong></td>
+              <td>{{ dispatchSummary.shipmentCode }}</td>
+            </tr>
+            <tr>
+              <td><strong>Shipment ID:</strong></td>
+              <td>{{ dispatchSummary.shipmentId }}</td>
+            </tr>
+            <tr>
+              <td><strong>Order ID:</strong></td>
+              <td>{{ dispatchSummary.orderId }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+     
+        <div *ngIf="(shippingDetails?.track_status) && (isShipRocketIntegration)">
+          <h6 class="card-title mb-0">Shipment Details</h6>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+                <td><strong>AWB Code:</strong></td>
+                <td> {{shippingDetails.shipment_track[0].awb_code}}</td>
+              </tr>
+              <tr>
+                <td><strong>Status:</strong></td>
+                <td>{{shippingDetails.shipment_track[0].current_status}}</td>
+              </tr>
+              <tr>
+                <td><strong>Consignee Name:</strong></td>
+                <td> {{shippingDetails.shipment_track[0].consignee_name}}</td>
+              </tr>
+              <tr>
+                <td><strong>Destination:</strong></td>
+                <td>{{shippingDetails.shipment_track[0].destination}}</td>
+              </tr>
+              <tr>
+                <td><strong>Origin:</strong></td>
+                <td>{{shippingDetails.shipment_track[0].origin}}</td>
+              </tr>
+              <tr>
+                <td><strong>Expected Delivery Date:</strong></td>
+                <td> {{shippingDetails.shipment_track[0].edd}}</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h6 class="card-title mb-0">Shipment Activities</h6>
+
+          <div *ngFor="let activity of shippingDetails.shipment_track_activities">
+            <table class="table table-bordered">
+              <tbody>
+                <tr>
+                  <td><strong>Date:</strong></td>
+                  <td>{{activity.date}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Activity:</strong></td>
+                  <td> {{activity.activity}}</td>
+                </tr>
+                <tr>
+                  <td><strong>Location:</strong></td>
+                  <td>  {{activity.location}}</td>
+                </tr>
+                <tr>
+                  <td> <a href="{{shippingDetails.track_url}}" target="_blank">Track Shipment</a> </td>
+                </tr>
+               
+              </tbody>
+            </table>
+           
+        </div>
+     
+      
+    </div>
+  </div>
+  

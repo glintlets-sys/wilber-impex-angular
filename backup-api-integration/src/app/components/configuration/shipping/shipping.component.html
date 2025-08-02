@@ -1,0 +1,139 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+                        <h3 class="panel-title mb-0">
+                            <span class="align-text-top">Shipping setting</span>
+                        </h3>
+                    </div>
+
+                    <div class="row d-flex flex-wrap justify-content-between align-items-start m-3">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group row mb-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="payment">Shipping Provider:</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <select class="form-control" name="payment" id="payment"
+                                        [(ngModel)]="selectedShippingProvider" (change)="changeShippingProvider($event)">
+                                        <option *ngFor="let type of shipping_provider" [value]="type">{{ type }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group row mb-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="apiUserName">Api User Name:</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="text" name="apiUserName" id="apiUserName"
+                                        class="form-control form-control-alternative"
+                                        placeholder="Enter shipping api user name"
+                                        [(ngModel)]="shippingSettings!.apiUserName" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group row mb-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="password">Password:</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="password" name="password" id="password"
+                                        class="form-control form-control-alternative"
+                                        placeholder="Enter shipping password" [(ngModel)]="shippingSettings!.password" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group row mb-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="channelId">Channel Id:</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="text" name="channelId" id="channelId"
+                                        class="form-control form-control-alternative"
+                                        placeholder="Enter shipping channel id" [(ngModel)]="shippingSettings!.channelId" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group row mb-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="pickupLocation">Pickup Location:</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="text" name="pickupLocation" id="pickupLocation"
+                                        class="form-control form-control-alternative"
+                                        placeholder="Enter shipping pickup location"
+                                        [(ngModel)]="shippingSettings!.pickupLocation" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group row mb-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="authenticationid">Authentication Id:</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="text" name="authenticationid" id="authenticationid"
+                                        class="form-control form-control-alternative"
+                                        placeholder="Enter shipping authentication id"
+                                        [(ngModel)]="shippingSettings!.authenticationid" disabled />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="form-group row mb-2">
+                                <div class="col-lg-3 col-md-3 col-sm-3">
+                                    <label for="lastAuthenticatedon">Last authentication:</label>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <input type="text" name="lastAuthenticatedon" id="lastAuthenticatedon"
+                                        class="form-control form-control-alternative"
+                                        placeholder="Enter shipping last authentication"
+                                        [(ngModel)]="shippingSettings!.lastAuthenticatedon" disabled />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                <div class="col-lg-4 col-md-4 col-sm-4">
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6">
+                                    <button type="button" (click)="saveShipping()"
+                                        class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                        <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                            <defs>
+                                                <style>
+                                                    .cls-1 {
+                                                        fill: #fff;
+                                                    }
+                                                </style>
+                                            </defs>
+                                            <path class="cls-1"
+                                                d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                        </svg> Save
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

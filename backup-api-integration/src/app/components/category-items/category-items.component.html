@@ -1,0 +1,55 @@
+<div class="filter-by-choise">
+
+   <div class="categories-section-page">
+      <div class="container-fluid-set">
+         <div class="all-categories-contain">
+            <div class="page-info-heading">
+               <div class="div-trees">
+                  <app-bread-crumb [items]="breadcrumbItems" style="width:130%"></app-bread-crumb>
+                  <div class="special-section-viewshortlist-title" style="width:70%">
+                     <div class="category-dropdown">
+                        <select id="category-select" [(ngModel)]="selectedSortOption" style="text-align: center;">
+                           <option value="">--sort by--</option>
+                           <option *ngFor="let option of sortBy" [value]="option.label">{{'Price - '+
+                              option.value }}</option>
+                        </select>
+                     </div>
+                  </div>
+               </div>
+               <div class="phone-view-filter" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRightfilterchose"
+                  aria-controls="offcanvasRight">
+                  <div class="di-filter"><img src="../../../assets/img/image/filter.webp" alt="" style="width: 28px;">
+                     Filter by choice</div>
+               </div>
+               <div class="seprate-section-cate">
+                  <div class="row">
+                     <div class="col-lg-3">
+                        <app-filter [filterElements]="filterElements" (onFilter)="onFilterChange($event)"></app-filter>
+                     </div>
+
+                     <div class="col-lg-9 col-md-12 col-12">
+                        <div class="categories-product-listed">
+                         
+                     
+                           <div *ngIf="filteredToys.length===0">
+                              <p>No Results to show</p>
+                           </div>
+                          
+                              <div class="row">
+                                 <ng-container *ngFor="let item of filteredToys | sortData:selectedSortOption">
+                                    <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 product-card">
+                                       <app-catalog-item [item]="item" class=""></app-catalog-item>
+                                    </div>
+                                 </ng-container>
+                                 <div *ngIf="loading" class="loading-indicator">Loading...</div>
+                              </div>
+                         
+                           
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>

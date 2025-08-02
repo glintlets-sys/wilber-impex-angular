@@ -1,0 +1,12 @@
+.itemTitle {
+  height: 60px;
+  /* Adjust so that it fits exactly two lines of text */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.product-package-styling {
+  background-color: #F8F8F8;
+}

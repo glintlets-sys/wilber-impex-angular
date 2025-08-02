@@ -1,0 +1,56 @@
+.icon-title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.icon {
+  margin-right: 10px;
+}
+
+.logo-icon {
+  width: 28px;
+  height: auto;
+}
+
+.card-link {
+  padding: 0px;
+  margin: 0px;
+}
+
+p, .p {
+  font-size: 0.8rem;
+}
+
+.description {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.card-content {
+  margin-left: 5px;
+  align-content: center;
+}
+
+.small-text {
+  font-size: 0.8rem;
+}
+
+.info-title {
+  font-size: 1rem;
+}
+
+.custom-pad {
+  padding: 5px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+}
+
+.card .info {
+  position: relative;
+  min-height: 160px;
+}
+
+.card {
+  margin-bottom: 10px;
+}

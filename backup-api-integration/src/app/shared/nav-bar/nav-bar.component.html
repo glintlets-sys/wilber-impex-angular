@@ -1,0 +1,398 @@
+<!-- for mobile header -->
+<div class="phone-viewmenusilderbar">
+  <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel">
+    <div class="offcanvas-header">
+      <!-- <img src="image/Link → logo.webp.png" alt="" width="50px"> -->
+      <h3 class="fw-bold">Hello <span class="colored">{{username}}</span></h3>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="special-categories">
+        <div class="dib-list-cate">
+          <a [routerLink]="['/categoryItems', 1]" data-bs-dismiss="offcanvas">
+            <div class="div-span">
+              <p class="fw-bolder">All Category</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path
+                  d="M17.8046 16.8611L13.769 12.8261C13.8607 12.7986 13.9515 12.7694 14.0415 12.7369C15.287 12.2833 16.3014 11.3537 16.8618 10.1524C17.4222 8.95119 17.4828 7.57658 17.0303 6.33067C16.9698 6.16458 16.8458 6.02932 16.6856 5.95461C16.5254 5.8799 16.3421 5.87186 16.176 5.93226L12.4921 7.27252C12.5188 7.22084 12.5455 7.16917 12.5696 7.11582C12.9878 6.21969 13.1309 5.21969 12.9809 4.24223C12.8309 3.26477 12.3944 2.35374 11.7267 1.62429C11.059 0.894844 10.1901 0.379734 9.22971 0.144074C8.26934 -0.0915849 7.26066 -0.0372126 6.33117 0.300318C6.24864 0.32995 6.17276 0.375572 6.10789 0.434571C6.04301 0.49357 5.99041 0.564787 5.95309 0.644145C5.91578 0.723503 5.89448 0.809443 5.89042 0.897044C5.88636 0.984644 5.89963 1.07218 5.92945 1.15465L7.26965 4.83871C7.21798 4.81204 7.1663 4.78537 7.11296 4.76119C6.21667 4.34352 5.21669 4.20096 4.2394 4.35151C3.26211 4.50207 2.35138 4.93899 1.62234 5.60704C0.8933 6.2751 0.378668 7.1443 0.143493 8.10479C-0.091681 9.06528 -0.0368405 10.0739 0.301083 11.0033C0.361591 11.1693 0.485568 11.3046 0.645763 11.3793C0.805957 11.454 0.98926 11.4621 1.15538 11.4017L4.83928 10.0606C4.81261 10.1131 4.78594 10.1648 4.76177 10.2181C4.34412 11.1144 4.20155 12.1145 4.3521 13.0918C4.50265 14.0691 4.93955 14.9799 5.60758 15.709C6.27561 16.438 7.14477 16.9527 8.10522 17.1879C9.06566 17.4231 10.0743 17.3682 11.0036 17.0303C11.1696 16.9698 11.3049 16.8458 11.3796 16.6856C11.4543 16.5254 11.4623 16.3421 11.402 16.1759L10.0609 12.4919C10.1134 12.5186 10.1651 12.5452 10.2184 12.5694C10.8067 12.8449 11.4432 13.0029 12.0921 13.0345L16.8611 17.8046C16.9862 17.9297 17.1559 18 17.3329 18C17.5098 18 17.6795 17.9297 17.8046 17.8046C17.9297 17.6795 18 17.5098 18 17.3328C18 17.1559 17.9297 16.9862 17.8046 16.8611ZM9.58751 1.67559C10.1943 1.95755 10.7124 2.40014 11.0857 2.95545C11.4589 3.51075 11.6732 4.15761 11.7052 4.82595C11.7372 5.4943 11.5858 6.15868 11.2673 6.74713C10.9488 7.33558 10.4754 7.82568 9.89839 8.16436L7.43051 1.3822C8.1626 1.25743 8.91533 1.35982 9.58751 1.67559ZM1.38292 9.8997C1.23807 9.0529 1.39509 8.18212 1.82659 7.43926C2.25809 6.69639 2.93667 6.12859 3.74398 5.83491C4.55129 5.54122 5.43608 5.54028 6.244 5.83226C7.05193 6.12424 7.73172 6.6906 8.16479 7.43255L1.38292 9.8997ZM7.74806 15.655C7.1421 15.3727 6.62482 14.9302 6.25213 14.3752C5.87945 13.8202 5.66554 13.1739 5.63353 12.5062C5.60153 11.8385 5.75263 11.1747 6.07053 10.5866C6.38842 9.99851 6.861 9.50851 7.43718 9.16956L9.90422 15.9484C9.17241 16.0731 8.41994 15.9708 7.74806 15.655ZM12.3788 11.7059H12.3696C11.7253 11.7108 11.091 11.5464 10.5302 11.2291C9.96943 10.9118 9.5018 10.4528 9.17411 9.89804L15.9526 7.43005C16.0397 7.95212 16.0128 8.48683 15.8739 8.99756C15.735 9.50828 15.4874 9.98295 15.148 10.389C14.8085 10.7951 14.3853 11.1231 13.9074 11.3503C13.4294 11.5776 12.908 11.6989 12.3788 11.7059Z"
+                  fill="black" />
+              </svg>
+              <!-- <img src="assets\img\image\Link → logo.webp.png" alt=""> -->
+            </div>
+          </a>
+          <a [routerLink]="['/categoryItems', 2]" data-bs-dismiss="offcanvas">
+            <div class="div-span">
+              <p class="fw-bolder">Boys</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+                <path
+                  d="M19.4062 2.875H15.0937C14.9031 2.875 14.7202 2.95073 14.5855 3.08552C14.4507 3.22031 14.3749 3.40313 14.3749 3.59375C14.3749 3.78437 14.4507 3.96719 14.5855 4.10198C14.7202 4.23677 14.9031 4.3125 15.0937 4.3125H17.6713L13.8916 8.09223C12.4639 6.92522 10.6423 6.35157 8.8035 6.48992C6.96472 6.62828 5.24946 7.46805 4.01246 8.83556C2.77547 10.2031 2.11137 11.9937 2.15753 13.8371C2.20368 15.6805 2.95656 17.4356 4.26045 18.7395C5.56433 20.0434 7.31947 20.7963 9.16287 20.8424C11.0063 20.8886 12.7969 20.2245 14.1644 18.9875C15.5319 17.7505 16.3717 16.0352 16.51 14.1964C16.6484 12.3577 16.0747 10.5361 14.9077 9.10836L18.6874 5.32953V7.90625C18.6874 8.09687 18.7632 8.27969 18.898 8.41448C19.0327 8.54927 19.2156 8.625 19.4062 8.625C19.5968 8.625 19.7796 8.54927 19.9144 8.41448C20.0492 8.27969 20.1249 8.09687 20.1249 7.90625V3.59375C20.1249 3.40313 20.0492 3.22031 19.9144 3.08552C19.7796 2.95073 19.5968 2.875 19.4062 2.875ZM13.4082 17.7253C12.604 18.5292 11.5794 19.0765 10.4641 19.2982C9.34877 19.5199 8.19277 19.4058 7.14224 18.9706C6.09172 18.5353 5.19385 17.7983 4.56214 16.8528C3.93044 15.9072 3.59327 14.7956 3.59327 13.6585C3.59327 12.5214 3.93044 11.4098 4.56214 10.4642C5.19385 9.51871 6.09172 8.78172 7.14224 8.34644C8.19277 7.91116 9.34877 7.79714 10.4641 8.01879C11.5794 8.24045 12.604 8.78783 13.4082 9.59172C14.4849 10.6713 15.0896 12.1338 15.0896 13.6585C15.0896 15.1832 14.4849 16.6457 13.4082 17.7253Z"
+                  fill="black" />
+              </svg>
+              <!-- <img src="assets\img\image\Link → logo.webp.png" alt=""> -->
+            </div>
+          </a>
+          <a [routerLink]="['/categoryItems', 3]" data-bs-dismiss="offcanvas">
+            <div class="div-span">
+              <p class="fw-bolder">Girls</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none">
+                <path
+                  d="M18.6875 8.62491C18.6875 7.23401 18.2839 5.87299 17.5257 4.70692C16.7675 3.54084 15.6872 2.61982 14.4159 2.05555C13.1446 1.49127 11.7369 1.30799 10.3635 1.52793C8.99005 1.74787 7.70996 2.36159 6.67845 3.29464C5.64693 4.2277 4.9083 5.44 4.55214 6.78454C4.19597 8.12907 4.23758 9.54806 4.67191 10.8694C5.10624 12.1908 5.91464 13.3577 6.99905 14.2287C8.08347 15.0997 9.39732 15.6374 10.7812 15.7765V17.9687H7.90625C7.71563 17.9687 7.53281 18.0444 7.39802 18.1792C7.26323 18.314 7.1875 18.4968 7.1875 18.6874C7.1875 18.878 7.26323 19.0609 7.39802 19.1956C7.53281 19.3304 7.71563 19.4062 7.90625 19.4062H10.7812V21.5624C10.7812 21.753 10.857 21.9359 10.9918 22.0706C11.1266 22.2054 11.3094 22.2812 11.5 22.2812C11.6906 22.2812 11.8734 22.2054 12.0082 22.0706C12.143 21.9359 12.2188 21.753 12.2188 21.5624V19.4062H15.0938C15.2844 19.4062 15.4672 19.3304 15.602 19.1956C15.7368 19.0609 15.8125 18.878 15.8125 18.6874C15.8125 18.4968 15.7368 18.314 15.602 18.1792C15.4672 18.0444 15.2844 17.9687 15.0938 17.9687H12.2188V15.7765C13.9908 15.5962 15.633 14.7652 16.8279 13.4442C18.0227 12.1232 18.6853 10.4061 18.6875 8.62491ZM5.75 8.62491C5.75 7.48767 6.08723 6.37597 6.71905 5.43039C7.35087 4.4848 8.2489 3.74781 9.29957 3.31261C10.3502 2.8774 11.5064 2.76353 12.6218 2.9854C13.7372 3.20726 14.7617 3.7549 15.5659 4.55905C16.37 5.3632 16.9177 6.38775 17.1395 7.50314C17.3614 8.61854 17.2475 9.77467 16.8123 10.8253C16.3771 11.876 15.6401 12.774 14.6945 13.4059C13.7489 14.0377 12.6372 14.3749 11.5 14.3749C9.97552 14.3732 8.51395 13.7669 7.43598 12.6889C6.358 11.611 5.75166 10.1494 5.75 8.62491Z"
+                  fill="black" />
+              </svg>
+              <!-- <img src="assets\img\image\Link → logo.webp.png" alt=""> -->
+            </div>
+          </a>
+          <a [routerLink]="['/categoryItems', 4]" data-bs-dismiss="offcanvas">
+            <div class="div-span">
+              <p class="fw-bolder">Kid's Toys</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                <path
+                  d="M17.8046 16.8611L13.769 12.8261C13.8607 12.7986 13.9515 12.7694 14.0415 12.7369C15.287 12.2833 16.3014 11.3537 16.8618 10.1524C17.4222 8.95119 17.4828 7.57658 17.0303 6.33067C16.9698 6.16458 16.8458 6.02932 16.6856 5.95461C16.5254 5.8799 16.3421 5.87186 16.176 5.93226L12.4921 7.27252C12.5188 7.22084 12.5455 7.16917 12.5696 7.11582C12.9878 6.21969 13.1309 5.21969 12.9809 4.24223C12.8309 3.26477 12.3944 2.35374 11.7267 1.62429C11.059 0.894844 10.1901 0.379734 9.22971 0.144074C8.26934 -0.0915849 7.26066 -0.0372126 6.33117 0.300318C6.24864 0.32995 6.17276 0.375572 6.10789 0.434571C6.04301 0.49357 5.99041 0.564787 5.95309 0.644145C5.91578 0.723503 5.89448 0.809443 5.89042 0.897044C5.88636 0.984644 5.89963 1.07218 5.92945 1.15465L7.26965 4.83871C7.21798 4.81204 7.1663 4.78537 7.11296 4.76119C6.21667 4.34352 5.21669 4.20096 4.2394 4.35151C3.26211 4.50207 2.35138 4.93899 1.62234 5.60704C0.8933 6.2751 0.378668 7.1443 0.143493 8.10479C-0.091681 9.06528 -0.0368405 10.0739 0.301083 11.0033C0.361591 11.1693 0.485568 11.3046 0.645763 11.3793C0.805957 11.454 0.98926 11.4621 1.15538 11.4017L4.83928 10.0606C4.81261 10.1131 4.78594 10.1648 4.76177 10.2181C4.34412 11.1144 4.20155 12.1145 4.3521 13.0918C4.50265 14.0691 4.93955 14.9799 5.60758 15.709C6.27561 16.438 7.14477 16.9527 8.10522 17.1879C9.06566 17.4231 10.0743 17.3682 11.0036 17.0303C11.1696 16.9698 11.3049 16.8458 11.3796 16.6856C11.4543 16.5254 11.4623 16.3421 11.402 16.1759L10.0609 12.4919C10.1134 12.5186 10.1651 12.5452 10.2184 12.5694C10.8067 12.8449 11.4432 13.0029 12.0921 13.0345L16.8611 17.8046C16.9862 17.9297 17.1559 18 17.3329 18C17.5098 18 17.6795 17.9297 17.8046 17.8046C17.9297 17.6795 18 17.5098 18 17.3328C18 17.1559 17.9297 16.9862 17.8046 16.8611ZM9.58751 1.67559C10.1943 1.95755 10.7124 2.40014 11.0857 2.95545C11.4589 3.51075 11.6732 4.15761 11.7052 4.82595C11.7372 5.4943 11.5858 6.15868 11.2673 6.74713C10.9488 7.33558 10.4754 7.82568 9.89839 8.16436L7.43051 1.3822C8.1626 1.25743 8.91533 1.35982 9.58751 1.67559ZM1.38292 9.8997C1.23807 9.0529 1.39509 8.18212 1.82659 7.43926C2.25809 6.69639 2.93667 6.12859 3.74398 5.83491C4.55129 5.54122 5.43608 5.54028 6.244 5.83226C7.05193 6.12424 7.73172 6.6906 8.16479 7.43255L1.38292 9.8997ZM7.74806 15.655C7.1421 15.3727 6.62482 14.9302 6.25213 14.3752C5.87945 13.8202 5.66554 13.1739 5.63353 12.5062C5.60153 11.8385 5.75263 11.1747 6.07053 10.5866C6.38842 9.99851 6.861 9.50851 7.43718 9.16956L9.90422 15.9484C9.17241 16.0731 8.41994 15.9708 7.74806 15.655ZM12.3788 11.7059H12.3696C11.7253 11.7108 11.091 11.5464 10.5302 11.2291C9.96943 10.9118 9.5018 10.4528 9.17411 9.89804L15.9526 7.43005C16.0397 7.95212 16.0128 8.48683 15.8739 8.99756C15.735 9.50828 15.4874 9.98295 15.148 10.389C14.8085 10.7951 14.3853 11.1231 13.9074 11.3503C13.4294 11.5776 12.908 11.6989 12.3788 11.7059Z"
+                  fill="black" />
+              </svg>
+              <!-- <img src="assets\img\image\Link → logo.webp.png" alt=""> -->
+            </div>
+          </a>
+         <!--  <a [routerLink]="['/categoryItems', 80]" data-bs-dismiss="offcanvas">
+            <div class="div-span">
+              <p class="fw-bolder">Cosmetics</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="15" height="21" viewBox="0 0 15 21" fill="none">
+                <path
+                  d="M14.889 18.9815C14.8864 18.9737 14.8832 18.9661 14.8796 18.9588L11.0034 10.1913L12.7506 7.27849C12.754 7.27327 12.7571 7.26783 12.7599 7.2622C12.887 7.03715 12.9542 6.77966 12.9542 6.51724C12.9542 6.25482 12.887 5.99733 12.7599 5.77228C12.7523 5.7578 12.7429 5.74332 12.7344 5.72974L10.9088 2.95991V0.724138C10.9088 0.532085 10.8369 0.347897 10.7091 0.212095C10.5812 0.0762929 10.4078 0 10.2269 0C10.0461 0 9.87266 0.0762929 9.74479 0.212095C9.61692 0.347897 9.54508 0.532085 9.54508 0.724138V2.93457L9.09678 3.53017C8.90514 3.78455 8.66209 3.9899 8.38561 4.13101C8.10914 4.27212 7.80632 4.34539 7.49957 4.34539C7.19283 4.34539 6.89001 4.27212 6.61353 4.13101C6.33706 3.9899 6.09401 3.78455 5.90237 3.53017L5.45406 2.93457V0.724138C5.45406 0.532085 5.38223 0.347897 5.25436 0.212095C5.12649 0.0762929 4.95306 0 4.77222 0C4.59139 0 4.41796 0.0762929 4.29009 0.212095C4.16222 0.347897 4.09039 0.532085 4.09039 0.724138V2.95991L2.26477 5.72974C2.25624 5.74332 2.24687 5.7578 2.2392 5.77228C2.1121 5.99733 2.04496 6.25482 2.04496 6.51724C2.04496 6.77966 2.1121 7.03715 2.2392 7.2622C2.24201 7.26783 2.24514 7.27327 2.24857 7.27849L3.99578 10.1913L0.119537 18.9588C0.115902 18.9661 0.112768 18.9737 0.110161 18.9815C0.0213354 19.2017 -0.0146586 19.4419 0.00540386 19.6805C0.0254664 19.9192 0.100959 20.1488 0.225117 20.3488C0.349275 20.5488 0.51822 20.713 0.716815 20.8267C0.915409 20.9403 1.13745 20.9999 1.36304 21H13.6361C13.8618 21 14.0839 20.9406 14.2826 20.827C14.4813 20.7134 14.6504 20.5492 14.7746 20.3492C14.8989 20.1491 14.9745 19.9195 14.9946 19.6807C15.0147 19.442 14.9787 19.2018 14.8898 18.9815H14.889ZM3.40855 6.51724L4.80887 4.39642L4.837 4.43444C5.15638 4.85862 5.56153 5.20105 6.02243 5.43638C6.48333 5.67171 6.98818 5.7939 7.49957 5.7939C8.01097 5.7939 8.51582 5.67171 8.97672 5.43638C9.43762 5.20105 9.84276 4.85862 10.1621 4.43444L10.1903 4.39642L11.5906 6.51724L9.85362 9.41379H5.14638L3.40855 6.51724ZM1.36304 19.5517L5.20434 10.8621H9.7931L13.6361 19.5517H1.36304Z"
+                  fill="black" />
+              </svg>-->
+              <!-- <img src="assets\img\image\Link → logo.webp.png" alt=""> -->
+            <!--</div>-->
+            <!--</a> -->
+          <!--<a [routerLink]="['bundle']" data-bs-dismiss="offcanvas">
+            <div class="div-span">
+              <p class="fw-bolder">Bundles</p>
+              <i class="fa fa-sharp fa-thin fa-cubes-stacked fa-lg"></i>
+            </div>
+          </a>-->
+        </div>
+      </div>
+      <div class="link-section">
+        <li class="li-drop">
+          <div class="accordion   accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseone" aria-expanded="false" [class.accordion-button]="getSubCategories(5).length >0">
+                <div class="accomdationset-head" [routerLink]="['/categoryItems', 5]" data-bs-dismiss="offcanvas">
+                  <!-- <img class="sidebar-icon" src="assets\img\image\Link → logo.webp.png" alt=""> -->
+                  <h3 class="subcat">Baby Products</h3>
+                </div>
+              </div>
+              <div *ngIf="getSubCategories(5).length >0" id="flush-collapseone" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="categories-section" *ngFor="let subCat of getSubCategories(5)">
+                    <p data-bs-dismiss="offcanvas" class="m-2" [routerLink]="['/categoryItems', subCat.id]">{{
+                      subCat.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="li-drop">
+          <div class="accordion   accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapsetwo" aria-expanded="false" [class.accordion-button]="getSubCategories(6).length >0">
+                <div class="accomdationset-head" [routerLink]="['/categoryItems', 6]" data-bs-dismiss="offcanvas">
+                  <!-- <img class="sidebar-icon" src="assets\img\image\Link → logo.webp.png" alt=""> -->
+                  <h3 class="subcat">Educational</h3>
+                </div>
+              </div>
+              <div *ngIf="getSubCategories(6).length >0" id="flush-collapsetwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="categories-section" *ngFor="let subCat of getSubCategories(6)">
+                    <p data-bs-dismiss="offcanvas" class="m-2" [routerLink]="['/categoryItems', subCat.id]">{{
+                      subCat.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="li-drop">
+          <div class="accordion   accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapsethree" aria-expanded="false" [class.accordion-button]="getSubCategories(7).length >0">
+                <div class="accomdationset-head" [routerLink]="['/categoryItems', 7]" data-bs-dismiss="offcanvas">
+                  <!-- <img class="sidebar-icon" src="assets\img\image\Link → logo.webp.png" alt=""> -->
+                  <h3 class="subcat">Mattel</h3>
+                </div>
+              </div>
+              <div *ngIf="getSubCategories(7).length >0" id="flush-collapsethree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="categories-section" *ngFor="let subCat of getSubCategories(7)">
+                    <p data-bs-dismiss="offcanvas" class="m-2" [routerLink]="['/categoryItems', subCat.id]">{{
+                      subCat.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li class="li-drop">
+          <div class="accordion   accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <div class="pages accordion-button collapsed " type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapsefour" aria-expanded="false" [class.accordion-button]="getSubCategories(8).length >0">
+                <div class="accomdationset-head" [routerLink]="['/categoryItems', 8]" data-bs-dismiss="offcanvas">
+                  <!-- <img class="sidebar-icon" src="assets\img\image\Link → logo.webp.png" alt=""> -->
+                  <h3 class="subcat"> Skillmatics</h3>
+                </div>
+              </div>
+              <div *ngIf="getSubCategories(8).length >0" id="flush-collapsefour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="categories-section" *ngFor="let subCat of getSubCategories(8)">
+                    <p data-bs-dismiss="offcanvas" class="m-2" [routerLink]="['/categoryItems', subCat.id]">{{
+                      subCat.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+        <!--<li class="li-drop">
+          <div class="accordion   accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapsefive" aria-expanded="false">
+                <div class="accomdationset-head" [routerLink]="['/categoryItems', 85]" data-bs-dismiss="offcanvas">-->
+                  <!-- <img class="sidebar-icon" src="assets\img\image\Link → logo.webp.png" alt=""> -->
+                  <!--<h3>Smartivity</h3>
+                </div>
+              </div>
+              <div id="flush-collapsefive" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="categories-section" *ngFor="let subCat of getSubCategories(85)">
+                    <p data-bs-dismiss="offcanvas" class="m-2" [routerLink]="['/categoryItems', subCat.id]">{{
+                      subCat.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>-->
+       <!-- <li class="li-drop">
+          <div class="accordion   accordion-flush" id="accordionFlushExample">
+            <div class="accordion-item">
+              <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapsesix" aria-expanded="false">
+                <div class="accomdationset-head" [routerLink]="['/categoryItems', 9]" data-bs-dismiss="offcanvas">-->
+                  <!-- <img class="sidebar-icon" src="assets\img\image\Link → logo.webp.png" alt=""> -->
+                 <!-- <h3>Mama Earth</h3>
+                </div>
+              </div>
+              <div id="flush-collapsesix" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="categories-section" *ngFor="let subCat of getSubCategories(86)">
+                    <p data-bs-dismiss="offcanvas" class="m-2" [routerLink]="['/categoryItems', subCat.id]">{{
+                      subCat.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>-->
+      </div>
+      <div class="other-link-user">
+        <ul>
+          <li *ngIf="isLoggedin()"><a [routerLink]="['myaccount']" data-bs-dismiss="offcanvas">Profile</a></li>
+          <!-- <li><a href="">My Wishlist</a></li> -->
+          <li *ngIf="isLoggedin()"><a [routerLink]="['/myaccount/orderHistory']" data-bs-dismiss="offcanvas">My Order</a></li>
+          <!-- <li><a href="">Track Order</a></li> -->
+          <li><a [routerLink]="['aboutus']" data-bs-dismiss="offcanvas">Customer Care</a></li>
+          <div *ngIf="isLoggedin()">
+            <li><a (click)="logout()" data-bs-dismiss="offcanvas">Logout</a></li>
+          </div>
+          <li><a *ngIf="!isLoggedin()" [routerLink]="['login']" data-bs-dismiss="offcanvas">Login</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="for-search-phoneview">
+  <div class="offcanvas offcanvas-top" tabindex="-1" id="offcanvasTop" aria-labelledby="offcanvasTopLabel">
+    <div class="offcanvas-header">
+      <h5 id="offcanvasTopLabel"></h5>
+      <button id="buttonCloseMobile" type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas"
+        aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="phone-view-slide-search-section">
+        <input type="search" placeholder="Search here..." (keyup)="onSearch(searchText)"
+          (keyup.enter)="initiateSearch(searchText)" [(ngModel)]="searchText">
+        <div class="list-group floating-element">
+          <a *ngFor="let suggestion of suggestions" class="list-group-item list-group-item-action"
+            (click)="onSuggestionClick(suggestion, $event)" data-bs-dismiss="offcanvas">
+            {{ suggestion }}
+          </a>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="list-group">
+          <a *ngFor="let suggestion of suggestions" class="list-group-item list-group-item-action"
+              (click)="onSuggestionClick(suggestion, $event)">
+              {{ suggestion }}
+          </a>
+      </div> -->
+  </div>
+</div>
+
+<!-- for desktop header -->
+<div class="section-mainecco">
+  <header class="header">
+    <div class="contain-header-element">
+
+      <nav class="navbar navbar-expand-lg navbar-light  ">
+        <div class="container">
+
+          <a class="navbar-brand" [routerLink]="['/']">
+            <div class="image-headlog">
+              <img src="assets\img\image\Link → logo.webp.png" alt="">
+            </div>
+          </a>
+
+          <div class="  navbar-collapsee">
+            <ul class="navbar-navv me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['/']">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['categoryItems/1']">Shop</a>
+              </li>
+            <!--  <li class="nav-item">
+                <a class="nav-link" [routerLink]="['bundle']">Bundles</a>
+              </li>-->
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['shipmentPolicy']">Shipping</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" [routerLink]="['aboutus']">About us</a>
+              </li>
+            </ul>
+            <form class=" heaer-right-silde">
+              <div class="search-result">
+                <input class="form-control  " type="search" placeholder="Search" (keyup)="onSearch(searchText)"
+                  (keyup.enter)="initiateSearch(searchText)" [(ngModel)]="searchText">
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <div class="list-group floating-element">
+                  <a *ngFor="let suggestion of suggestions" class="list-group-item list-group-item-action"
+                    (click)="onSuggestionClick(suggestion, $event)">
+                    {{ suggestion }}
+                  </a>
+                </div>
+              </div>
+
+             
+              <div [hidden]="isLoggedin()" class="card-tosignpu ">
+                <a class="position-relative div-cartlist" href="/checkout" [class.disabled]="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="29" height="25" viewBox="0 0 29 25" fill="none">
+                    <path
+                      d="M11.9998 23.0769C11.9998 23.4573 11.8826 23.8291 11.6628 24.1453C11.443 24.4616 11.1307 24.7081 10.7652 24.8536C10.3998 24.9992 9.99765 25.0372 9.6097 24.963C9.22174 24.8888 8.86538 24.7057 8.58568 24.4367C8.30598 24.1678 8.1155 23.8251 8.03833 23.4521C7.96116 23.0791 8.00076 22.6924 8.15214 22.341C8.30351 21.9896 8.55985 21.6893 8.88875 21.4779C9.21764 21.2666 9.60432 21.1538 9.99987 21.1538C10.5303 21.1538 11.039 21.3565 11.4141 21.7171C11.7891 22.0777 11.9998 22.5669 11.9998 23.0769ZM22.9997 21.1538C22.6042 21.1538 22.2175 21.2666 21.8886 21.4779C21.5597 21.6893 21.3033 21.9896 21.152 22.341C21.0006 22.6924 20.961 23.0791 21.0382 23.4521C21.1153 23.8251 21.3058 24.1678 21.5855 24.4367C21.8652 24.7057 22.2216 24.8888 22.6095 24.963C22.9975 25.0372 23.3996 24.9992 23.7651 24.8536C24.1305 24.7081 24.4429 24.4616 24.6626 24.1453C24.8824 23.8291 24.9997 23.4573 24.9997 23.0769C24.9997 22.5669 24.789 22.0777 24.4139 21.7171C24.0388 21.3565 23.5301 21.1538 22.9997 21.1538ZM28.9559 6.05168L25.3897 17.1947C25.2029 17.7854 24.8231 18.3025 24.3065 18.6693C23.79 19.036 23.1643 19.2329 22.5222 19.2308H10.5086C9.85734 19.2284 9.22438 19.0233 8.70452 18.646C8.18467 18.2688 7.80588 17.7398 7.6249 17.1382L3.10246 1.92308H0.999987C0.734774 1.92308 0.480424 1.82177 0.29289 1.64145C0.105356 1.46113 0 1.21655 0 0.961538C0 0.706523 0.105356 0.461951 0.29289 0.281628C0.480424 0.101305 0.734774 0 0.999987 0H3.10246C3.53672 0.00138516 3.95883 0.137966 4.30561 0.3893C4.6524 0.640634 4.9052 0.993201 5.02619 1.39423L6.03992 4.80769H27.9996C28.1561 4.80764 28.3104 4.8429 28.4502 4.91063C28.5899 4.97837 28.7112 5.0767 28.8042 5.1977C28.8972 5.31871 28.9594 5.45901 28.9857 5.60733C29.0121 5.75565 29.0019 5.90785 28.9559 6.05168ZM26.6459 6.73077H6.61117L9.54738 16.6106C9.60711 16.8114 9.73323 16.988 9.90666 17.1138C10.0801 17.2396 10.2914 17.3076 10.5086 17.3077H22.5222C22.7362 17.3078 22.9445 17.2418 23.1167 17.1196C23.2888 16.9974 23.4156 16.8253 23.4785 16.6286L26.6459 6.73077Z"
+                      fill="#D41872" />
+                  </svg>
+                  <span
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger text-white"
+                    style="font-size: 11px !important;">
+                    {{cart?.items?.length}}
+                  </span>
+                </a>
+
+                <a class="div-signup" href="/login"><span>Login/Signup</span>
+                  <!-- <i class="fa-solid fa-user"></i> -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none"
+                    style="position: absolute;     top: 6px;      right: 5px; width:20px;">
+                    <path
+                      d="M23.8639 21.6005C22.1083 18.5757 19.4029 16.4068 16.2455 15.3786C17.8073 14.4521 19.0207 13.0402 19.6994 11.3599C20.378 9.67956 20.4845 7.82367 20.0023 6.07722C19.5202 4.33077 18.4761 2.79033 17.0305 1.69246C15.5849 0.59459 13.8176 0 12 0C10.1824 0 8.41515 0.59459 6.9695 1.69246C5.52385 2.79033 4.47979 4.33077 3.99765 6.07722C3.51552 7.82367 3.62196 9.67956 4.30065 11.3599C4.97933 13.0402 6.19272 14.4521 7.75448 15.3786C4.59714 16.4056 1.89168 18.5746 0.136064 21.6005C0.071683 21.7051 0.0289793 21.8215 0.0104728 21.9429C-0.00803369 22.0642 -0.00196803 22.188 0.0283119 22.3069C0.0585918 22.4259 0.112473 22.5376 0.186775 22.6355C0.261078 22.7333 0.354297 22.8154 0.460934 22.8768C0.56757 22.9382 0.685463 22.9776 0.807656 22.9929C0.92985 23.0081 1.05387 22.9988 1.1724 22.9655C1.29092 22.9322 1.40156 22.8756 1.49777 22.799C1.59399 22.7224 1.67384 22.6274 1.7326 22.5195C3.90435 18.779 7.74295 16.5458 12 16.5458C16.257 16.5458 20.0956 18.779 22.2674 22.5195C22.3262 22.6274 22.406 22.7224 22.5022 22.799C22.5984 22.8756 22.7091 22.9322 22.8276 22.9655C22.9461 22.9988 23.0701 23.0081 23.1923 22.9929C23.3145 22.9776 23.4324 22.9382 23.5391 22.8768C23.6457 22.8154 23.7389 22.7333 23.8132 22.6355C23.8875 22.5376 23.9414 22.4259 23.9717 22.3069C24.002 22.188 24.008 22.0642 23.9895 21.9429C23.971 21.8215 23.9283 21.7051 23.8639 21.6005ZM5.54469 8.27446C5.54469 7.00208 5.92329 5.75827 6.63261 4.70033C7.34193 3.64239 8.35011 2.81782 9.52966 2.3309C10.7092 1.84398 12.0072 1.71658 13.2594 1.96481C14.5116 2.21304 15.6618 2.82575 16.5646 3.72546C17.4674 4.62516 18.0822 5.77146 18.3313 7.01939C18.5804 8.26732 18.4525 9.56083 17.9639 10.7364C17.4753 11.9119 16.6479 12.9166 15.5864 13.6235C14.5248 14.3304 13.2767 14.7077 12 14.7077C10.2885 14.7059 8.64764 14.0275 7.43743 12.8214C6.22722 11.6154 5.54652 9.9801 5.54469 8.27446Z"
+                      fill="#D41872" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="35" viewBox="0 0 36 35" fill="none">
+                    <path
+                      d="M35 17.5C35 26.5863 27.4156 34 18 34C8.58442 34 1 26.5863 1 17.5C1 8.41367 8.58442 1 18 1C27.4156 1 35 8.41367 35 17.5Z"
+                      stroke="#D41872" stroke-width="2" />
+                  </svg>
+                </a>
+              </div>
+              <div *ngIf="isLoggedin()" class="card-tosignpu ">
+                <div class="position-relative div-cartlist" [routerLink]="['checkout']" [class.disabled]="false">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="29" height="25" viewBox="0 0 29 25" fill="none">
+                    <path
+                      d="M11.9998 23.0769C11.9998 23.4573 11.8826 23.8291 11.6628 24.1453C11.443 24.4616 11.1307 24.7081 10.7652 24.8536C10.3998 24.9992 9.99765 25.0372 9.6097 24.963C9.22174 24.8888 8.86538 24.7057 8.58568 24.4367C8.30598 24.1678 8.1155 23.8251 8.03833 23.4521C7.96116 23.0791 8.00076 22.6924 8.15214 22.341C8.30351 21.9896 8.55985 21.6893 8.88875 21.4779C9.21764 21.2666 9.60432 21.1538 9.99987 21.1538C10.5303 21.1538 11.039 21.3565 11.4141 21.7171C11.7891 22.0777 11.9998 22.5669 11.9998 23.0769ZM22.9997 21.1538C22.6042 21.1538 22.2175 21.2666 21.8886 21.4779C21.5597 21.6893 21.3033 21.9896 21.152 22.341C21.0006 22.6924 20.961 23.0791 21.0382 23.4521C21.1153 23.8251 21.3058 24.1678 21.5855 24.4367C21.8652 24.7057 22.2216 24.8888 22.6095 24.963C22.9975 25.0372 23.3996 24.9992 23.7651 24.8536C24.1305 24.7081 24.4429 24.4616 24.6626 24.1453C24.8824 23.8291 24.9997 23.4573 24.9997 23.0769C24.9997 22.5669 24.789 22.0777 24.4139 21.7171C24.0388 21.3565 23.5301 21.1538 22.9997 21.1538ZM28.9559 6.05168L25.3897 17.1947C25.2029 17.7854 24.8231 18.3025 24.3065 18.6693C23.79 19.036 23.1643 19.2329 22.5222 19.2308H10.5086C9.85734 19.2284 9.22438 19.0233 8.70452 18.646C8.18467 18.2688 7.80588 17.7398 7.6249 17.1382L3.10246 1.92308H0.999987C0.734774 1.92308 0.480424 1.82177 0.29289 1.64145C0.105356 1.46113 0 1.21655 0 0.961538C0 0.706523 0.105356 0.461951 0.29289 0.281628C0.480424 0.101305 0.734774 0 0.999987 0H3.10246C3.53672 0.00138516 3.95883 0.137966 4.30561 0.3893C4.6524 0.640634 4.9052 0.993201 5.02619 1.39423L6.03992 4.80769H27.9996C28.1561 4.80764 28.3104 4.8429 28.4502 4.91063C28.5899 4.97837 28.7112 5.0767 28.8042 5.1977C28.8972 5.31871 28.9594 5.45901 28.9857 5.60733C29.0121 5.75565 29.0019 5.90785 28.9559 6.05168ZM26.6459 6.73077H6.61117L9.54738 16.6106C9.60711 16.8114 9.73323 16.988 9.90666 17.1138C10.0801 17.2396 10.2914 17.3076 10.5086 17.3077H22.5222C22.7362 17.3078 22.9445 17.2418 23.1167 17.1196C23.2888 16.9974 23.4156 16.8253 23.4785 16.6286L26.6459 6.73077Z"
+                      fill="#D41872" />
+                  </svg>
+                  <span
+                    class="position-absolute top-0 start-100 translate-middle badge rounded-pill btn-cart-num text-white"
+                    style="font-size: 12px !important;">
+                    {{cart?.items?.length}}
+                  </span>
+                </div>
+
+                <div class="div-signup" [routerLink]="['myaccount']"><span>My Account</span>
+                  <!-- <i class="fa-solid fa-user"></i> -->
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="23" viewBox="0 0 24 23" fill="none"
+                    style="position: absolute;     top: 6px;      right: 5px; width:20px;">
+                    <path
+                      d="M23.8639 21.6005C22.1083 18.5757 19.4029 16.4068 16.2455 15.3786C17.8073 14.4521 19.0207 13.0402 19.6994 11.3599C20.378 9.67956 20.4845 7.82367 20.0023 6.07722C19.5202 4.33077 18.4761 2.79033 17.0305 1.69246C15.5849 0.59459 13.8176 0 12 0C10.1824 0 8.41515 0.59459 6.9695 1.69246C5.52385 2.79033 4.47979 4.33077 3.99765 6.07722C3.51552 7.82367 3.62196 9.67956 4.30065 11.3599C4.97933 13.0402 6.19272 14.4521 7.75448 15.3786C4.59714 16.4056 1.89168 18.5746 0.136064 21.6005C0.071683 21.7051 0.0289793 21.8215 0.0104728 21.9429C-0.00803369 22.0642 -0.00196803 22.188 0.0283119 22.3069C0.0585918 22.4259 0.112473 22.5376 0.186775 22.6355C0.261078 22.7333 0.354297 22.8154 0.460934 22.8768C0.56757 22.9382 0.685463 22.9776 0.807656 22.9929C0.92985 23.0081 1.05387 22.9988 1.1724 22.9655C1.29092 22.9322 1.40156 22.8756 1.49777 22.799C1.59399 22.7224 1.67384 22.6274 1.7326 22.5195C3.90435 18.779 7.74295 16.5458 12 16.5458C16.257 16.5458 20.0956 18.779 22.2674 22.5195C22.3262 22.6274 22.406 22.7224 22.5022 22.799C22.5984 22.8756 22.7091 22.9322 22.8276 22.9655C22.9461 22.9988 23.0701 23.0081 23.1923 22.9929C23.3145 22.9776 23.4324 22.9382 23.5391 22.8768C23.6457 22.8154 23.7389 22.7333 23.8132 22.6355C23.8875 22.5376 23.9414 22.4259 23.9717 22.3069C24.002 22.188 24.008 22.0642 23.9895 21.9429C23.971 21.8215 23.9283 21.7051 23.8639 21.6005ZM5.54469 8.27446C5.54469 7.00208 5.92329 5.75827 6.63261 4.70033C7.34193 3.64239 8.35011 2.81782 9.52966 2.3309C10.7092 1.84398 12.0072 1.71658 13.2594 1.96481C14.5116 2.21304 15.6618 2.82575 16.5646 3.72546C17.4674 4.62516 18.0822 5.77146 18.3313 7.01939C18.5804 8.26732 18.4525 9.56083 17.9639 10.7364C17.4753 11.9119 16.6479 12.9166 15.5864 13.6235C14.5248 14.3304 13.2767 14.7077 12 14.7077C10.2885 14.7059 8.64764 14.0275 7.43743 12.8214C6.22722 11.6154 5.54652 9.9801 5.54469 8.27446Z"
+                      fill="#D41872" />
+                  </svg>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="35" viewBox="0 0 36 35" fill="none">
+                    <path
+                      d="M35 17.5C35 26.5863 27.4156 34 18 34C8.58442 34 1 26.5863 1 17.5C1 8.41367 8.58442 1 18 1C27.4156 1 35 8.41367 35 17.5Z"
+                      stroke="#D41872" stroke-width="2" />
+                  </svg>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <!-- for phone menu -->
+          <div class="phone-menu-start">
+            <div class="div-phone-view-header-icon">
+              <i class="fa-solid fa-magnifying-glass" data-bs-toggle="offcanvas" data-bs-target="#offcanvasTop"
+                aria-controls="offcanvasTop"></i>
+              <i [class.disabled]="false" class="fa-solid fa-cart-shopping position-relative"
+                [routerLink]="['checkout']">
+                <span
+                class="position-absolute top-1 translate-middle badge rounded-pill text-white inlineCount"
+                style="font-size: 9px !important;">
+                {{cart?.items?.length}}
+                </span>
+              </i>
+               
+              <!--<i *ngIf="!isLoggedin()" class="fa-solid fa-cart-shopping" (click)="navigateToLogin()"></i>-->
+              <!-- <i class="fa-solid fa-user" [routerLink]="['myaccount']"></i> -->
+              <i *ngIf="isLoggedin()" class="fa-solid fa-user" [routerLink]="['myaccount']"></i>
+              <i *ngIf="!isLoggedin()" class="fa-solid fa-user" (click)="navigateToLogin()"></i>
+              <i class="fa-solid fa-bars" data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight"
+                aria-controls="offcanvasRight"></i>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <div class="categorieslist-laptop-view">
+        <ul class="list-cate">
+          <li><a [routerLink]="['/categoryItems', 1]">ALL CATEGORIES</a></li>
+          <li><a [routerLink]="['/categoryItems', 2]">BOYS</a></li>
+          <li><a [routerLink]="['/categoryItems', 3]">GIRLS</a></li>
+         <!-- <li><a [routerLink]="['/categoryItems', 80]">COSMETICS</a></li>-->
+          <li><a [routerLink]="['/categoryItems', 4]">BABY PRODUCTS</a></li>
+          <li><a [routerLink]="['/categoryItems', 5]">Kid’s Toys</a></li>
+          <li><a [routerLink]="['/categoryItems', 6]">EDUCATIONAL</a></li>
+          <li><a [routerLink]="['/categoryItems', 7]">MATTEL</a></li>
+          <!--<li><a [routerLink]="['/categoryItems', 85]">SMARTIVITY</a></li>-->
+          <li><a [routerLink]="['/categoryItems', 8]">SKILLMATICS</a></li>
+          <!--<li><a [routerLink]="['/categoryItems', 9]">MAMA EARTH</a></li>-->
+         <!-- <li><a [routerLink]="['/himalaya']">HIMALAYA</a></li>-->
+
+        </ul>
+      </div>
+    </div>
+  </header>
+</div>

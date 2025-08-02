@@ -1,0 +1,70 @@
+<section class="section m-0 p-0">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-primary text-center">Enhanced Shopping Experience</h5>
+              <p *ngIf="currentStep !== 4" class="text-center text-danger">Please help me with details to serve you better</p>
+            
+              <!-- Rest of your component content -->
+         <div class="section m-0 p-0">
+
+        
+              <!-- Step 1: Name of the Kid -->
+              <div *ngIf="currentStep === 1">
+                <div class="form-group">
+                  <label for="kidName">Name of your child?</label>
+                  <input type="text" id="kidName" class="form-control" [(ngModel)]="kidName">
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                    <button class="btn btn-primary" (click)="nextStep()">Next</button>
+                  </div>
+              
+              </div>
+  
+              <!-- Step 2: Select Girl or Boy -->
+              <div *ngIf="currentStep === 2">
+                <div class="form-group">
+                  <div class="d-flex justify-content-center">
+                    <div class="gender-option" [ngClass]="{ active: selectedGender === 'girl' }" (click)="selectGender('girl')">
+                      <img src="https://glinttoyshoppics.s3.ap-south-1.amazonaws.com/e6d9ce02-eeb6-43fd-8070-0cb48a6376f1-20230718222138137.png" alt="Girl Icon" class="img-fluid">
+                    </div>
+                    <div class="gender-option" [ngClass]="{ active: selectedGender === 'boy' }" (click)="selectGender('boy')">
+                      <img src="https://glinttoyshoppics.s3.ap-south-1.amazonaws.com/08e72a25-54a2-44ea-9845-19fdaa7d441e-20230718222144475.png" alt="Boy Icon" class="img-fluid">
+                    </div>
+                  </div>
+                  <div class="d-flex justify-content-end mt-3">
+                    <button class="btn btn-primary" (click)="nextStep()">Next</button>
+                  </div>
+                </div>
+              </div>
+              
+  
+              <!-- Step 3: Date of Birth -->
+              <div *ngIf="currentStep === 3">
+                <div class="form-group">
+                  <label for="dob">Date of Birth:</label>
+                  <input type="date" id="dob" class="form-control" [(ngModel)]="dateOfBirth">
+                </div>
+                <div class="d-flex justify-content-end mt-3">
+                    <button class="btn btn-primary" (click)="nextStep()">Next</button>
+                  </div>
+             
+              </div>
+  
+              <!-- Step 4: Category of Toys -->
+              <div *ngIf="currentStep === 4">
+                <p class="mb-4 text-center text-danger"> Please select the Category you like to see? </p>
+                <app-category [age]="age" [gender]="gender"></app-category>
+              </div>
+
+
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  

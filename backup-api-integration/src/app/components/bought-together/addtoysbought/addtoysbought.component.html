@@ -1,0 +1,164 @@
+<div class="modal-header">
+    <h3 class="panel-title mb-0 p-0">
+        <span *ngIf="!editBoughtTogetherData"> Add Bought Together </span>
+        <span *ngIf="editBoughtTogetherData"> Edit Bought Together </span>
+    </h3>
+    <button type="button" class="btn-close btn btn-primary btn-with-icon save-profile" (click)="modal.close()">
+    </button>
+</div>
+<div class="modal-body">
+    <section>
+        <div class="container">
+            <form #myForm="ngForm">
+
+                <!-- Item Id -->
+                <!-- <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="ItemId" class="control-label">Item<span class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-sm-6">
+                            <ng-select required [searchable]="true" [(ngModel)]="boughtTogether.id" [clearable]="false"
+                                name="ItemId" (change)="onChangeLoad()" ngModel #id="ngModel">
+                                <ng-option *ngFor="let toy of toys" [value]="toy.id">{{ toy.name }}</ng-option>
+                            </ng-select>
+                            <div class="errormessage" *ngIf="controlHasError('required', id)">
+                                Please enter item
+                            </div>
+
+                        </div>
+                    </div>
+                </div> -->
+
+                <!-- Discount Percent -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="discountPercent" class="control-label">Discount(%) <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="number" required name="discountPercent"
+                                class="form-control form-control-alternative" placeholder="Enter discount in percent"
+                                [(ngModel)]="boughtTogether.discountPercent" #discountPercent="ngModel" ngModel />
+                            <div class="errormessage" *ngIf="controlHasError('required', discountPercent)">
+                                Please Enter Discount
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Creation Date -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="creationDate" class="control-label">Creation Date</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="date" name="creationDate" class="form-control form-control-alternative"
+                                placeholder="Select Creation Date"
+                                [ngModel]="boughtTogether.creationDate | date:'yyyy-MM-dd'" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Bought Together Items -->
+                <div class="col-md-12">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="recommendationType" class="control-label">Bought Together Items<span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-sm-6">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Item Id</th>
+                                        <th>Name</th>
+                                        <th>Brand</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="bought_together_list">
+                                        <tr *ngFor="let toy of bought_together_list">
+                                            <td>{{ toy?.itemId }}</td>
+                                            <td>{{ toy?.itemName }}</td>
+                                            <td>{{ toy?.brand }}</td>
+                                            <td> <button type="button" class="btn btn-sm btn-danger"
+                                                    (click)="removeBoughtTogetherItems(toy)">-</button></td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                            <div class="errormessage"
+                                *ngIf="!bought_together_list || bought_together_list.length === 0">
+                                Please enter at least one bought together item
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 ">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-12">
+                            <div class="row d-flex flex-wrap justify-content-between align-items-center mb-3 mt-2">
+                                <div class="col-4">
+                                    <input type="text" class="form-control" placeholder="Search toys"
+                                        (keyup)="filterData()" [(ngModel)]="searchToy">
+                                </div>
+                                <div class="col-8 text-end">
+                                    <button class="btn btn-white btn-secondary" type="button"
+                                        (click)="modal.dismiss()">Cancel</button>&nbsp;
+                                    <button type="button" *ngIf="!editBoughtTogetherData"
+                                        (click)="saveBoughtTogetherItem()"
+                                        class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                        <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                            <defs>
+                                                <style>
+                                                    .cls-1 {
+                                                        fill: #fff;
+                                                    }
+                                                </style>
+                                            </defs>
+                                            <path class="cls-1"
+                                                d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                        </svg>&nbsp;Save
+                                    </button>
+                                    <button type="button" *ngIf="editBoughtTogetherData"
+                                        class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage"
+                                        (click)="saveBoughtTogetherItem()">Update</button>
+                                </div>
+                            </div>
+
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Item Id</th>
+                                        <th>Name</th>
+                                        <th>Brand</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let toy of toysPaginated">
+                                        <td>{{ toy.id}}</td>
+                                        <td>{{ toy.name }}</td>
+                                        <td>{{ toy.brand }}</td>
+                                        <td> <button type="button" class="btn btn-sm btn-primary"
+                                                (click)="addBoughtTogetherItems(toy)">+</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="toysPaginated?.length==0" class="text-center">
+                                <h2>No Record Found.</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>

@@ -1,0 +1,75 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 m-auto">
+      <div class="row">
+        <div class="col-lg-12 col-md-8 pr-0">
+          <div *ngIf="successMessage" class="card-header">
+            <div class="row">
+              <div class="col-md-12">
+                <div class="alert alert-success">
+                  {{ successMessage }}
+                </div>
+              </div>
+            </div>
+          </div>
+          
+            <div class="card-body">
+    
+              <div class="border p-3 m-3">
+                <div class="row">
+                  <div class="col-md-6 ml-3">
+                    <p> Your Rating </p>
+                    <div class="revieww">
+                      <div class="rating">
+                        <i class="fa-star" [ngClass]="{'far': selectedRating < 1, 'fas': selectedRating >= 1}" (click)="selectRating(1)"></i>
+                        <i class="fa-star" [ngClass]="{'far': selectedRating < 2, 'fas': selectedRating >= 2}" (click)="selectRating(2)"></i>
+                        <i class="fa-star" [ngClass]="{'far': selectedRating < 3, 'fas': selectedRating >= 3}" (click)="selectRating(3)"></i>
+                        <i class="fa-star" [ngClass]="{'far': selectedRating < 4, 'fas': selectedRating >= 4}" (click)="selectRating(4)"></i>
+                        <i class="fa-star" [ngClass]="{'far': selectedRating < 5, 'fas': selectedRating >= 5}" (click)="selectRating(5)"></i>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <hr style="width:100%" />
+                <div class="row">
+                  <div class="col-md-6">
+                    <div class="form-group" [ngClass]="{ 'focused': focus6 === true }">
+                    
+                      <div class="input-group">
+                        <input aria-label="First Name..." class="form-control" placeholder="Name..." type="text"
+                          (blur)="focus6 = false" (focus)="focus6 = true" [(ngModel)]="formData.name" name="name" required />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-md-6">
+                    <div class="form-group" [ngClass]="{ 'focused': focus8 === true }">
+                    
+                      <div class="input-group">
+                        <input class="form-control" placeholder="Email Here..." (blur)="focus8 = false"
+                          (focus)="focus8 = true" [(ngModel)]="formData.email" name="email" required />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group mt-2" [ngClass]="{ 'focused': focus9 === true }">
+              
+                  <textarea class="form-control" id="message" name="message" placeholder="Your review... " (blur)="focus9 = false"
+                    (focus)="focus9 = true" rows="2" [(ngModel)]="formData.comment" name="comment" required></textarea>
+                </div>
+                <div class="row">
+                  <div class="col-md-12 m-2">
+                    <div>
+                      <a class="btn active" (click)="submitRatingAndComment()">Submit</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              </div>
+            </div>
+        </div>
+        
+
+      </div>
+    </div>
+
+  </div>

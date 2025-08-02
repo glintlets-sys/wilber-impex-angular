@@ -1,0 +1,119 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+                    <h3 class="panel-title mb-0">
+                        <span class="align-text-top">Recommended Toys List</span>
+                    </h3>
+                    <span class="pull-right">
+                        <button type="button" (click)="addEditRecommendItem('')"
+                            class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                            <svg style="width: 13px" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 100 100">
+                                <defs>
+                                    <style>
+                                        .cls-1 {
+                                            fill: #fff;
+                                        }
+                                    </style>
+                                </defs>
+                                <path class="cls-1"
+                                    d="M96.09,46.09H53.91V3.91a3.91,3.91,0,1,0-7.82,0V46.09H3.91a3.91,3.91,0,1,0,0,7.82H46.09V96.09a3.91,3.91,0,0,0,7.82,0V53.91H96.09a3.91,3.91,0,0,0,0-7.82Z" />
+                            </svg>&nbsp; Add
+                        </button>
+                    </span>
+                </div>
+
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <!-- <th></th> -->
+                            <th>Id</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Recommendation Item</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let itemRecommendation of itemRecommendations| paginate
+                        : {
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count
+                          };
+            ">
+                            <td>
+                                {{itemRecommendation.sourceItemId}}
+                            </td>
+                            <td>
+                                <!-- <img src="{{itemRecommendation.item?.thumbnail}}" width="60" height="60"> -->
+                                <img [src]="getItemImg(itemRecommendation?.sourceItemId)" width="60" height="60">
+                            </td>
+                            <td>
+                                <!-- {{itemRecommendation.item?.name}} -->
+                                {{getItemName(itemRecommendation?.sourceItemId)}}
+                            </td>
+                            <td>{{ itemRecommendation.recommendationType }}</td>
+
+                            <td>
+                                <!-- {{itemRecommendation|json}} -->
+                                <span>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let id of itemRecommendation?.recommendedItemIds">
+                                                <td>
+                                                    {{id}} |
+                                                </td>
+                                                <td>
+                                                    {{getItemName(id)}}
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </span>
+                            </td>
+
+                            <td class="text-center">
+                                <span>
+                                    <a (click)="
+                                      addEditRecommendItem(itemRecommendation)
+                                    "><img class="list-action-image cursor_pointer"
+                                            src="assets/icons/edit_icon.svg" /></a>
+
+                                    <a (click)="deleteRecommend(itemRecommendation.id)"><img
+                                            class="list-action-image cursor_pointer"
+                                            src="assets/icons/delete_icon.svg" />
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="itemRecommendations?.length==0">
+                    <h3 class="no-record-found">No Record Found.</h3>
+                </div>
+                <div *ngIf="itemRecommendations?.length>0" class="d-flex justify-content-center" style="padding: 15px">
+                    <div class="item_count">
+                        Total Items: {{ count }}
+                    </div>
+                    <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,478 @@
+// .card{
+//   background: #F8F8F8;
+//   box-shadow: none;
+// }
+
+// .reviews{
+//   color: #000;
+//   font-family: Lato;
+//   font-size: 12px;
+//   font-style: normal;
+//   font-weight: 300;
+//   line-height: normal;
+// }
+
+// .original-price {
+//   color: #7D7D7D;
+//   font-size: 12px;
+//   font-style: normal;
+//   font-weight: 400;
+//   line-height: normal;
+//   text-decoration-line: line-through;
+// }
+
+// .price{
+//   color: #D41872;
+//   font-style: normal;
+//   font-weight: 600;
+//   line-height: normal;
+// }
+// .add-to-cart{
+//   color: #D41872;
+//   border-radius: 3px;
+//   border: 1px solid #D41872;
+//   background: none;
+//   font-family: Lato;
+//   padding: 6px 14px 6px 14px;
+// }
+// .bottom-row {
+//     display: flex;
+//     justify-content: space-between;
+//     margin-top: auto;
+//     align-items: flex-end;
+//   }
+
+//   .text-danger {
+//     text-align: left;
+//   }
+
+//   .text-success {
+//     text-align: right;
+//   }
+
+
+
+//   .out-of-stock-message,
+//   .item-in-cart-message {
+//     height: 20px; /* Adjust the height as per your requirement */
+//   }
+
+//   .cart-icon {
+//     padding: 5px; /* Add padding to the container */
+//     cursor: pointer; /* Add cursor pointer for interaction */
+// }
+
+//   .added-to-cart {
+//     color: green; /* Change color when added to cart */
+//   }
+
+//   .smaller-text {
+//     font-size: 0.8rem;
+//   }
+
+// /*  .card-img-top {
+//     max-height: 400px;
+//     width: auto;
+//     max-width: 320px;
+//   }*/
+
+//   .two-line {
+//     display: -webkit-box;
+//     -webkit-line-clamp: 2;
+//     -webkit-box-orient: vertical;
+//     overflow: hidden;
+//   }
+
+//   .out-of-stock {
+//     filter: blur(1px); /* Adjust the blur amount as desired */
+//     opacity: 0.9; /* Adjust the opacity as desired */
+//   }
+
+//   .card {
+//     min-height: 280;
+//     margin-bottom: 0px;
+//   }
+
+//   p, .p {
+//     letter-spacing: 0.5px; /* You might want to adjust as per your design */
+//     font-weight: 600;
+//     font-size: 15px; /* Default for large screens */
+//     padding: 3px; /* Default for large screens */
+//   }
+
+//   /* Medium screens (tablets, 768px and up) */
+//   @media only screen and (max-width: 768px) {
+//     p, .p {
+//       letter-spacing: 0.4px; /* You might want to adjust as per your design */
+//       font-size: 13px; /* Adjusted size */
+//       padding: 2px; /* Adjusted padding */
+//     }
+//   }
+
+//   /* Small screens (landscape phones, 576px and up) */
+//   @media only screen and (max-width: 576px) {
+//     p, .p {
+//       letter-spacing: 0.3px; /* You might want to adjust as per your design */
+//       font-size: 13px; /* Further adjusted size */
+//       padding: 2px; /* Further adjusted padding */
+//     }
+//   }
+
+
+// /* Large screens (base styles) */
+// h4, .h4 {
+//   font-size: 0.8rem; /* Baseline for large screens */
+// }
+
+// h5, .h5, h6, .h6 {
+//   font-size: 0.7.5rem; /* Baseline for large screens */
+// }
+
+// /* Medium screens (tablets, 768px and below) */
+// @media only screen and (max-width: 768px) {
+//   h4, .h4 {
+//     font-size: 0.75rem; /* Adjusted for medium screens */
+//   }
+
+//   h5, .h5, h6, .h6 {
+//     font-size: 0.70rem; /* Adjusted for medium screens */
+//   }
+// }
+
+// /* Small screens (mobiles, 576px and below) */
+// @media only screen and (max-width: 576px) {
+//   h4, .h4 {
+//     font-size: 0.75rem; /* Adjusted for small screens */
+//   }
+
+//   h5, .h5, h6, .h6 {
+//     font-size: 0.70rem; /* Adjusted for small screens */
+//   }
+// }
+
+// .far {
+//   color:grey;
+// }
+
+//  .card-footer {
+//   padding-left: 0.8rem;
+//   padding-right: 0.8rem;
+//   padding-top: 0.8rem;
+//   padding-bottom: 0.8rem;
+//  }
+
+
+//  .img-wrapper {
+//   position: relative;
+// }
+
+// .overlay {
+//   position: absolute;
+//   top: 0;
+//   bottom: 0;
+//   left: 0;
+//   right: 0;
+//   background-color: rgba(256, 256, 256, 1.0);
+// }
+
+// .view-more-link {
+//   position: absolute;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   color: #fff; /* white color for the link text */
+// }
+
+// span{
+//     color: #000;
+//     font-weight: 600;
+//     min-height: 21px;
+//     font-size: 16px;
+//     letter-spacing: 0;
+//     margin-bottom: 0;
+// }
+
+.itemTitle {
+  /*height: 60px;*/
+  /* Adjust so that it fits exactly two lines of text */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+
+.title-sm {
+  color: #000;
+  font-family: Lato;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.btn-success {
+  background-color: green;
+}
+
+
+
+
+.card,
+.card-body {
+  width: 160px;
+  height: 219px;
+}
+
+.sm-img {
+  width: 132px;
+  height: 132px;
+}
+
+
+@media(max-width: 390px) {
+  .sm-img {
+    width: 108px;
+    height: 108px;
+  }
+}
+
+@media(max-width: 440px) {
+  .sm-img {
+    width: 118px;
+    height: 118px;
+  }
+}
+
+
+.title-sm {
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 19px;
+  /* Set line-height to 19px */
+  /* 2 lines maximum, so 2 x 19px */
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  /* Number of lines you want to display */
+  -webkit-box-orient: vertical;
+  text-overflow: ellipsis;
+}
+
+.og-price {
+  color: #D41872;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  font-family: Lato;
+}
+
+.blur-image {
+  //filter: blur(1px);
+}
+
+.disc-price {
+  color: #7D7D7D;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  font-family: Lato;
+  text-decoration-line: line-through;
+}
+
+.disc-per {
+  color: #D37AA4;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+
+.out-of-stock {
+  color: #d41872;
+  font-size: 14px;
+  font-style: normal;
+  margin-right: 20px;
+}
+
+.out-of-stock-mobile{
+  color: #d41872;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+}
+
+.card {
+  font-family: Arial, sans-serif;
+  max-width: 160px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+  width: 100%;
+  display: block;
+}
+
+.featured {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: pink;
+  padding: 2px 5px;
+  color: white;
+  font-size: 14px;
+  border-radius: 0 0 8px 0;
+}
+
+.card-body {
+  padding: 15px;
+  background: #fff;
+}
+
+.card-title {
+  margin: 0;
+  font-size: 18px;
+  color: #333;
+}
+
+.price {
+  color: green;
+  font-weight: bold;
+}
+
+.original-price {
+  color: #777;
+  text-decoration: line-through;
+  margin-left: 5px;
+  font-size: 14px;
+}
+
+.discount {
+  color: red;
+  font-weight: bold;
+}
+
+.stars i {
+  color: #f3cd03;
+}
+
+
+.mobileCard-view {
+  /* ... other styles ... */
+}
+
+/* Medium screens (tablets) */
+@media (min-width: 768px) {
+  .mobileCard-view {
+    display: none;
+    /* This will hide the div on medium screens */
+  }
+}
+
+/* Large screens (desktops) */
+@media (min-width: 992px) {
+  .mobileCard-view {
+    display: none;
+    /* This will hide the div on large screens */
+  }
+}
+
+
+.browserViewCard-view {
+  /* ... other styles ... */
+}
+
+@media (max-width: 767px) {
+  .browserViewCard-view {
+    display: none;
+    /* This will hide the div on small screens */
+  }
+  .contain-addpackage {
+    padding: 0px 5px;
+   // display: flex !important;
+  }
+
+
+}
+
+.product-card {
+  padding: 0px !important;
+}
+
+.product-package-styling {
+  border: none;
+  margin-bottom: 0px !important;
+ 
+}
+
+.display-flex {
+  display:flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+.seprate-section-cate .categories-product-listed .product-package-styling {
+  margin-bottom: 0px !important;
+  box-shadow: 0 2px 5px #f1eff0;
+  //box-shadow: none !important;
+  transform: .6s;
+}
+
+
+
+@media(max-width: 590px) {
+
+  .special-section-viewshortlist-title {
+    margin: 5px 0 5px;
+  }
+
+  
+
+  .product-card {
+    padding: 0px;
+  }
+
+  .product-package-styling .carousel .carousel-inner img {
+    width: 100%;
+    height: 180px;
+    margin: auto;
+    object-fit: contain;
+
+  }
+
+ 
+
+  .product-package-styling {
+  
+    padding: 0px; 
+   overflow: hidden;
+   position: relative;
+   box-shadow: none !important;
+   margin: 0px;
+  
+
+ }
+
+
+  // .product-package-styling {
+  //  border:0px;
+  //  background-color: #f4f4f4;
+  // }
+  .product-package-styling .carousel {
+    height: 190px;
+  }
+
+  
+
+}
+
+
+
+
+
+

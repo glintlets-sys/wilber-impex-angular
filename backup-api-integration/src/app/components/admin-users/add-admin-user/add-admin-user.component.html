@@ -1,0 +1,73 @@
+<div class="modal-header">
+    <h3 class="panel-title mb-0 p-0">
+        <span *ngIf="editUser == undefined"> Add User </span>
+        <span *ngIf="editUser != undefined"> Edit User </span>
+    </h3>
+    <button type="button" class="btn-close btn btn-primary btn-with-icon save-profile" (click)="modal.close()">
+    </button>
+</div>
+<div class="modal-body">
+    <section>
+        <div class="container">
+            <form>
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2">
+                            <label for="user" class="control-label">Select User:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <ng-select [searchable]="true" [clearable]="false" [(ngModel)]="selected_user.id"
+                                [disabled]="editUser !== undefined" (change)="changeUser($event)">
+                                <ng-option *ngFor="let user of all_user" [value]="user?.id">
+                                    {{ editUser !== undefined ? selected_user?.user_name : user?.name }}
+                                    {{ editUser===undefined ? '(' + user?.username + ')' : '' }}</ng-option>
+                            </ng-select>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2">
+                            <label for="role" class="control-label">Select Role:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <select name="role" class="form-control" id="" [(ngModel)]="selected_user.role.role_name">
+                                <option *ngFor="let role of user_role" [value]="role.role">{{ role.role }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Save and Cancel Buttons -->
+                <div class="col-md-12">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <button class="btn btn-white cancelbtn" type="button"
+                                (click)="modal.close()">Cancel</button>&nbsp;
+                            <button type="button" *ngIf="editUser == undefined" (click)="saveUser()"
+                                class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                    <defs>
+                                        <style>
+                                            .cls-1 {
+                                                fill: #fff;
+                                            }
+                                        </style>
+                                    </defs>
+                                    <path class="cls-1"
+                                        d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                </svg>&nbsp;Save
+                            </button>
+                            <button type="button" *ngIf="editUser != undefined"
+                                class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage"
+                                (click)="saveUser()">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

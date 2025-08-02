@@ -1,0 +1,301 @@
+<section>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="card shadow">
+                    <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+                        <h3 class="panel-title mb-0">
+                            <span class="align-text-top">Payment setting</span>
+                        </h3>
+                    </div>
+
+                    <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                        <div class="col-md-10">
+                            <div class="form-group row mb-2">
+                                <div class="col-md-4">
+                                    <label for="payment">Selected Payment:</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <select class="form-control" name="payment" id="paymentF"
+                                        [(ngModel)]="selectedPaymentProvider" (change)="changeSelectedPayment($event)">
+                                        <option *ngFor="let type of payment_Types" [value]="type">{{ type }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span *ngIf="selectedPaymentProvider=='CCAvenueSettings'">
+                        <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-2">
+                                        <label for="merchantId" class="control-label">Merchant id:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-md-6">
+                                            <input type="text" name="merchantId"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Enter merchantId" [(ngModel)]="ccAvenueConfiguration.merchant_id" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-2">
+                                        <label for="access_code" class="control-label">Access Code:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-md-6">
+                                            <input type="text" name="access_code"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Enter access code" [(ngModel)]="ccAvenueConfiguration.access_code" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-2">
+                                        <label for="working_key" class="control-label">Working key:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-md-6">
+                                            <input type="text" name="working_key"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Enter working key" [(ngModel)]="ccAvenueConfiguration.working_key" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-2">
+                                        <label for="redirect_url" class="control-label">Redirect url:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-md-6">
+                                            <input type="text" name="redirect_url"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Enter redirect url" [(ngModel)]="ccAvenueConfiguration.redirect_url" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-2">
+                                        <label for="cancel_url" class="control-label">Cancel Url:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <div class="col-md-6">
+                                            <input type="text" name="cancel_url"
+                                                class="form-control form-control-alternative"
+                                                placeholder="Enter cancel url" [(ngModel)]="ccAvenueConfiguration.cancel_url" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-2">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="button" (click)="savePaymentConfiguration()"
+                                            class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                            <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                                <defs>
+                                                    <style>
+                                                        .cls-1 {
+                                                            fill: #fff;
+                                                        }
+                                                    </style>
+                                                </defs>
+                                                <path class="cls-1"
+                                                    d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                            </svg> Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </span>
+
+                    <!-- PhonePeSettings -->
+                    <span *ngIf="selectedPaymentProvider=='PhonePeSettings'">
+                        <div class="row d-flex flex-wrap justify-content-between align-items-center m-3">
+                            <!-- PhonePe Merchant ID -->
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-4">
+                                        <label for="phonePeMerchantId" class="control-label">PhonePe Merchant
+                                            ID:</label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="text" name="phonePeMerchantId"
+                                            class="form-control form-control-alternative"
+                                            placeholder="Enter PhonePe Merchant ID"
+                                            [(ngModel)]="phonePeConfiguration.phonePeMerchantId" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PhonePe Redirect URL -->
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-4">
+                                        <label for="phonePeRedirectUrl" class="control-label">PhonePe Redirect
+                                            URL:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="phonePeRedirectUrl"
+                                            class="form-control form-control-alternative"
+                                            placeholder="Enter PhonePe Redirect URL"
+                                            [(ngModel)]="phonePeConfiguration.phonePeRedirectUrl" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PhonePe Redirect Mode -->
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-4">
+                                        <label for="phonePeRedirectMode" class="control-label">PhonePe Redirect
+                                            Mode:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="phonePeRedirectMode"
+                                            class="form-control form-control-alternative"
+                                            placeholder="Enter PhonePe Redirect Mode"
+                                            [(ngModel)]="phonePeConfiguration.phonePeRedirectMode" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PhonePe Callback URL -->
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-4">
+                                        <label for="phonePeCallbackUrl" class="control-label">PhonePe Callback
+                                            URL:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="phonePeCallbackUrl"
+                                            class="form-control form-control-alternative"
+                                            placeholder="Enter PhonePe Callback URL"
+                                            [(ngModel)]="phonePeConfiguration.phonePeCallbackUrl" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PhonePe Payment Instrument Type -->
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-4">
+                                        <label for="phonePePaymentInstrumentType" class="control-label">PhonePe Payment
+                                            Instrument Type:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="phonePePaymentInstrumentType"
+                                            class="form-control form-control-alternative"
+                                            placeholder="Enter PhonePe Payment Instrument Type"
+                                            [(ngModel)]="phonePeConfiguration.phonePePaymentInstrumentType" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PhonePe Salt Key -->
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-4">
+                                        <label for="phonepeSaltKey" class="control-label">PhonePe Salt Key:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="phonepeSaltKey"
+                                            class="form-control form-control-alternative"
+                                            placeholder="Enter PhonePe Salt Key"
+                                            [(ngModel)]="phonePeConfiguration.phonepeSaltKey" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PhonePe Salt Index -->
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-4">
+                                        <label for="phonepeSaltIndex" class="control-label">PhonePe Salt Index:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="phonepeSaltIndex"
+                                            class="form-control form-control-alternative"
+                                            placeholder="Enter PhonePe Salt Index"
+                                            [(ngModel)]="phonePeConfiguration.phonepeSaltIndex" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- PhonePe Payment Gateway -->
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-4">
+                                        <label for="phonepePaymentGateway" class="control-label">PhonePe Payment
+                                            Gateway:</label>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" name="phonepePaymentGateway"
+                                            class="form-control form-control-alternative"
+                                            placeholder="Enter PhonePe Payment Gateway"
+                                            [(ngModel)]="phonePeConfiguration.phonepePaymentGateway" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Save and Cancel Buttons -->
+                            <div class="col-md-12 mb-2">
+                                <div class="form-group row clearfix">
+                                    <div class="col-md-4">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <button type="button" (click)="savePaymentConfiguration()"
+                                            class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                            <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                                xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                                <defs>
+                                                    <style>
+                                                        .cls-1 {
+                                                            fill: #fff;
+                                                        }
+                                                    </style>
+                                                </defs>
+                                                <path class="cls-1"
+                                                    d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                            </svg>&nbsp; Save
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,90 @@
+<!-- <div *ngIf="currentRoute === 'feedback'" class="section-shaped my-0 skew-separator skew-mini">
+    <div class="page-header page-header-mini header-filter">
+        <div class="page-header-image" style="background-image: url('https://glinttoyshoppics.s3.ap-south-1.amazonaws.com/63225fd2-0372-4289-bc5e-5f616889bf47-20230728114719234.jpg');"></div>
+        <div class="container">
+            <div class="header-body text-center mb-7">
+                <div class="row justify-content-center">
+                    <div class="col-xl-5 col-lg-6 col-md-8 px-5">
+                        <h1 class="text-white">Hello !!</h1>
+                      
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid p-0 m-0">
+    <div class="row">
+        <div class="col-12 mx-auto">
+            <form class="card bg-secondary p-3" (ngSubmit)="submitForm()" #feedbackForm="ngForm">
+                <div class="card-body text-white">
+                    <div class="row">
+                        <div class="col-md-8 ml-auto mr-auto text-center mt-0">
+                            <h5 class="title text-white"><strong> We'd love to hear from you </strong></h5>
+                            <p class="text-white desc small">
+                                Your valuable feedback help us learn and serve better.<br/>
+                            </p>
+                            
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{ 'focused': focus === true }">
+                                <label>First name</label>
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="ni ni-circle-08"></i>
+                                        </span>
+                                    </div>
+                                    <input aria-label="First Name..." class="form-control" placeholder="First Name..."
+                                        type="text" [(ngModel)]="firstName" name="firstName"
+                                        #firstNameInput="ngModel" (blur)="focus = false" (focus)="focus = true" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group" [ngClass]="{ 'focused': focus1 === true }">
+                                <label>Last name</label>
+                                <div class="input-group input-group-alternative">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text">
+                                            <i class="ni ni-tag"></i>
+                                        </span>
+                                    </div>
+                                    <input aria-label="Last Name..." class="form-control" placeholder="Last Name..."
+                                        type="text" [(ngModel)]="lastName" name="lastName"
+                                        #lastNameInput="ngModel" (blur)="focus1 = false" (focus)="focus1 = true" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'focused': focus2 === true }">
+                        <label>Email address</label>
+                        <div class="input-group input-group-alternative">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="ni ni-email-83"></i>
+                                </span>
+                            </div>
+                            <input class="form-control" placeholder="Email Here..." type="email" [(ngModel)]="email"
+                                name="email" #emailInput="ngModel" (blur)="focus2 = false"
+                                (focus)="focus2 = true" />
+                        </div>
+                    </div>
+                    <div class="form-group" [ngClass]="{ 'focused': focus3 === true }">
+                        <label>Your message</label>
+                        <textarea class="form-control form-control-alternative" id="message" name="message"
+                            [(ngModel)]="message" #messageInput="ngModel" rows="6" (blur)="focus3 = false"
+                            (focus)="focus3 = true"></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 ml-auto">
+                            <button class="btn btn-primary pull-right" type="submit" [disabled]="feedbackForm.invalid">
+                                Send Message
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div> -->

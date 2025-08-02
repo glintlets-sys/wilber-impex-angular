@@ -1,0 +1,60 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+                    <h3 class="panel-title mb-0">
+                        <span class="align-text-top">Notify Me List</span>
+                    </h3>
+                </div>
+
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Users Count</th>
+                            <th>Activate Notify</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let notify of notify_me_list| paginate
+                        : {
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count
+                          };">
+                            <td>
+                                <img [src]="getItemImg(notify?.itemId)" width="60" height="60">
+                            </td>
+                            <td>
+                                {{getItemName(notify?.itemId)}}
+                            </td>
+                            <td>{{notify?.userCount}}</td>
+                            <td><a class="btn btn-sm btn-primary" (click)="sendNotification(notify)">Send
+                                    Notification</a></td>
+                            <td class="text-center">
+                                <span>
+                                    <a (click)="
+                                      viewUserDetails(notify)
+                                    "><img class="list-action-image cursor_pointer" src="assets/icons/view.svg" /></a>
+
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="notify_me_list?.length==0">
+                    <h3 class="no-record-found">No Record Found.</h3>
+                </div>
+                <div *ngIf="notify_me_list?.length>0" class="d-flex justify-content-center" style="padding: 15px">
+                    <div class="item_count">
+                        Total Notify Me Records: {{ count }}
+                    </div>
+                    <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,14 @@
+
+<div class="page-info-heading">
+    <div class="div-trees">
+      <p> <ng-container *ngFor="let item of items; let last = last">
+        <ng-container *ngIf="!last; else lastTemplate">
+          <a [routerLink]="item.url">{{ item.label }} </a> >
+        </ng-container> 
+        <ng-template #lastTemplate>
+          <span>{{ item.label }}</span>
+        </ng-template>
+      </ng-container> </p>
+    </div>
+</div>
+  

@@ -1,0 +1,20 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../out-tsc/app",
+    "lib": ["es2020", "dom"],
+    "types": ["node"],
+    "paths": {
+      "stream": [
+        "node_modules/stream-browserify"
+      ]
+    }
+  },
+  "files": [
+    "main.ts",
+    "polyfills.ts"
+  ],
+  "include": [
+    "src/**/*.d.ts"
+  ]
+}

@@ -1,0 +1,362 @@
+   <!-- for mobile screen -->
+  <div class="filter-by-choise">
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRightfilterchose"
+      aria-labelledby="offcanvasRightLabel">
+      <div class="offcanvas-header">
+        <h5 id="offcanvasRightLabel">Filter by choice</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+      </div>
+      <div class="offcanvas-body">
+        <div class="categories-viewmenusilderbar">
+          <div class="link-section">
+            <li class="li-drop">
+              <div *ngFor="let element of filterElements" class="accordion   accordion-flush"
+                id="accordionFlushExample">
+                <!-- brand -->
+                <div *ngIf="element.key==='brand'" class="accordion-item">
+                  <ng-container *ngIf="element.options[0]!=null">
+                    <div class="pages accordion-button" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseBrand" aria-expanded="true">
+                      <div class="accomdationset-head">
+                        <h3>{{element.label}}</h3>
+                      </div>
+                    </div>
+                    <div id="flush-collapseBrand" class="accordion-collapse" data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <div class="categories-section">
+                          <div class="category-checkbox">
+                            <label *ngFor="let option of element.options">
+                              <input type="checkbox" class="category-checkbox-input" [value]="option"
+                                (change)="onInputChange($event, option,element.key)"> {{option!=''?option:'Unknown'}}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <!-- colour -->
+                <div *ngIf="element.key==='colour'" class="accordion-item">
+                  <ng-container *ngIf="element.options[0]!=null">
+                    <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseColour" aria-expanded="false">
+                      <div class="accomdationset-head">
+                        <h3>{{element.label}}</h3>
+                      </div>
+                    </div>
+                    <div id="flush-collapseColour" class="accordion-collapse collapse"
+                      data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <div class="categories-section">
+                          <div class="category-checkbox">
+                            <label *ngFor="let option of element.options">
+                              <input type="checkbox" class="category-checkbox-input" [value]="option"
+                                (change)="onInputChange($event, option,element.key)">
+                                {{option!=''?option:'Unknown'}}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <!-- skillset -->
+                <div *ngIf="element.key==='skillset'" class="accordion-item">
+                  <ng-container *ngIf="element.options[0]!=null">
+                    <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseSkillset" aria-expanded="false">
+                      <div class="accomdationset-head">
+                        <h3>{{element.label}}</h3>
+                      </div>
+                    </div>
+                    <div id="flush-collapseSkillset" class="accordion-collapse collapse"
+                      data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <div class="categories-section">
+                          <div class="category-checkbox">
+                            <label *ngFor="let option of element.options">
+                              <input type="checkbox" class="category-checkbox-input" [value]="option"
+                                (change)="onInputChange($event, option,element.key)">
+                              {{option}}
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </ng-container>
+                </div>
+
+                <!-- ageRange -->
+                <div *ngIf="element.key === 'ageRange'" class="accordion   accordion-flush" id="accordionFlushExample">
+                  <div class="accordion-item">
+                    <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseAgeRange" aria-expanded="false">
+                      <div class="accomdationset-head">
+                        <h3>{{element.label}}</h3>
+                      </div>
+                    </div>
+                    <div id="flush-collapseAgeRange" class="accordion-collapse collapse"
+                      data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+
+                        <ng-container>
+                          <nouislider class="custom-connect" [config]="element.config" [(ngModel)]="element.range"
+                            (change)="onInputChange($event, option,element.key)">
+
+                          </nouislider>
+                          <div class="mt-2 d-flex justify-content-between">
+                            <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[0]"
+                              (change)="onInputChange($event, option,element.key)" />
+                            <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[1]"
+                              (change)="onInputChange($event, option,element.key)" />
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- price -->
+                <div *ngIf="element.key === 'price'" class="accordion   accordion-flush" id="accordionFlushExample">
+                  <div class="accordion-item">
+                    <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapsePrice" aria-expanded="false">
+                      <div class="accomdationset-head">
+                        <h3>{{element.label}}</h3>
+                      </div>
+                    </div>
+                    <div id="flush-collapsePrice" class="accordion-collapse collapse"
+                      data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <ng-container>
+                          <nouislider [config]="element.config" [(ngModel)]="element.range"
+                            (change)="onInputChange($event, option,element.key)">
+                            <pre>{{ element.config | json }}</pre>
+                            <pre>{{ element.range | json }}</pre>
+                          </nouislider>
+                          <div class="mt-2 d-flex justify-content-between">
+                            <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[0]"
+                              (change)="onInputChange($event, option,element.key)" />
+                            <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[1]"
+                              (change)="onInputChange($event, option,element.key)" />
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- discount -->
+                <div *ngIf="element.key === 'discount'" class="accordion   accordion-flush" id="accordionFlushExample">
+                  <div class="accordion-item">
+                    <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#flush-collapseDiscount" aria-expanded="false">
+                      <div class="accomdationset-head">
+                        <h3>{{element.label}}</h3>
+                      </div>
+                    </div>
+                    <div id="flush-collapseDiscount" class="accordion-collapse collapse"
+                      data-bs-parent="#accordionFlushExample">
+                      <div class="accordion-body">
+                        <ng-container>
+                          <nouislider [config]="element.config" [(ngModel)]="element.range"
+                            (change)="onInputChange($event, option,element.key)">
+                            <pre>{{ element.config | json }}</pre>
+                            <pre>{{ element.range | json }}</pre>
+                          </nouislider>
+                          <div class="mt-2 d-flex justify-content-between">
+                            <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[0]"
+                              (change)="onInputChange($event, option,element.key)" />
+                            <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[1]"
+                              (change)="onInputChange($event, option,element.key)" />
+                          </div>
+                        </ng-container>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- for desktop screen -->
+  <div class="categories-viewmenusilderbar categories-viewmenusilderbar-none">
+    <div class="link-section">
+      <li class="li-drop">
+        <div class="tittle-cate-laptopfilter">
+          <p> Filter by choice</p>
+        </div>
+      </li>
+
+      <li class="li-drop">
+        <div *ngFor="let element of filterElements" class="accordion   accordion-flush" id="accordionFlushExample">
+          <!-- brand -->
+          <div *ngIf="element.key==='brand'" class="accordion-item">
+            <ng-container *ngIf="element.options[0]!=null">
+              <div class="pages accordion-button" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseBrand" aria-expanded="true">
+                <div class="accomdationset-head">
+                  <h3>{{element.label}}</h3>
+                </div>
+              </div>
+              <div id="flush-collapseBrand" class="accordion-collapse" data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="categories-section">
+                    <div class="category-checkbox">
+                      <label *ngFor="let option of element.options">
+                        <input type="checkbox" class="category-checkbox-input" [value]="option"
+                          (change)="onInputChange($event, option,element.key)"> {{option !=""?option:'Unknown'}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- colour -->
+          <div *ngIf="element.key==='colour'" class="accordion-item">
+            <ng-container *ngIf="element.options[0]!=null">
+              <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseColour" aria-expanded="false">
+                <div class="accomdationset-head">
+                  <h3>{{element.label}}</h3>
+                </div>
+              </div>
+              <div id="flush-collapseColour" class="accordion-collapse collapse"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="categories-section">
+                    <div class="category-checkbox">
+                      <label *ngFor="let option of element.options">
+                        <input type="checkbox" class="category-checkbox-input" [value]="option"
+                          (change)="onInputChange($event, option,element.key)"> 
+                          {{option!=''?option:'Unknown'}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- skillset -->
+          <div *ngIf="element.key==='skillset'" class="accordion-item">
+            <ng-container *ngIf="element.options[0]!=null">
+              <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                data-bs-target="#flush-collapseSkillset" aria-expanded="false">
+                <div class="accomdationset-head">
+                  <h3>{{element.label}}</h3>
+                </div>
+              </div>
+              <div id="flush-collapseSkillset" class="accordion-collapse collapse"
+                data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                  <div class="categories-section">
+                    <div class="category-checkbox">
+                      <label *ngFor="let option of element.options">
+                        <input type="checkbox" class="category-checkbox-input"
+                          (change)="onInputChange($event, option,element.key)" [value]="option"> {{option}}
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- ageRange -->
+          <!-- <div  class="accordion   accordion-flush"> -->
+          <!-- <ng-container *ngIf="element.options[0]!=null"> -->
+          <div *ngIf="element.key === 'ageRange'" class="accordion-item">
+            <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapseAgeRange" aria-expanded="false">
+              <div class="accomdationset-head">
+                <h3>{{element.label}}</h3>
+              </div>
+            </div>
+            <div id="flush-collapseAgeRange" class="accordion-collapse collapse"
+              data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+
+                <ng-container>
+                  <nouislider class="custom-connect" [config]="element.config" [(ngModel)]="element.range"
+                    (change)="onInputChange($event, option,element.key)">
+
+                  </nouislider>
+                  <div class="mt-2 d-flex justify-content-between">
+                    <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[0]"
+                      (change)="onInputChange($event, option,element.key)" />
+                    <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[1]"
+                      (change)="onInputChange($event, option,element.key)" />
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <!-- </ng-container> -->
+          <!-- </div> -->
+
+          <!-- price -->
+          <div *ngIf="element.key === 'price'" class="accordion-item">
+            <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapsePrice" aria-expanded="false">
+              <div class="accomdationset-head">
+                <h3>{{element.label}}</h3>
+              </div>
+            </div>
+            <div id="flush-collapsePrice" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <ng-container>
+                  <nouislider [config]="element.config" [(ngModel)]="element.range"
+                    (change)="onInputChange($event, option,element.key)">
+                  </nouislider>
+                  <div class="mt-2 d-flex justify-content-between">
+                    <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[0]"
+                      (change)="onInputChange($event, option,element.key)" />
+                    <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[1]"
+                      (change)="onInputChange($event, option,element.key)" />
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+          <!-- discount -->
+          <div *ngIf="element.key === 'discount'" class="accordion-item">
+            <div class="pages accordion-button collapsed" type="button" data-bs-toggle="collapse"
+              data-bs-target="#flush-collapseDiscount" aria-expanded="false">
+              <div class="accomdationset-head">
+                <h3>{{element.label}}</h3>
+              </div>
+            </div>
+            <div id="flush-collapseDiscount" class="accordion-collapse collapse"
+              data-bs-parent="#accordionFlushExample">
+              <div class="accordion-body">
+                <ng-container>
+                  <nouislider [config]="element.config" [(ngModel)]="element.range"
+                    (change)="onInputChange($event, option,element.key)">
+                    <pre>{{ element.config | json }}</pre>
+                    <pre>{{ element.range | json }}</pre>
+                  </nouislider>
+                  <div class="mt-2 d-flex justify-content-between">
+                    <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[0]"
+                      (change)="onInputChange($event, option,element.key)" />
+                    <input type="number" class="form-control" style="width: 48%;" [(ngModel)]="element.range[1]"
+                      (change)="onInputChange($event, option,element.key)" />
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </li>
+    </div>
+  </div>

@@ -1,0 +1,65 @@
+<!--
+    This will contain loop of Categories and featured items of each category. 
+-->
+
+<div class="container">
+    <div class="row">
+       
+
+        <div class="col-12 m-0 p-0" *ngIf="ageRange !== null">
+            <div class="card rounded" style="max-width: 100%; overflow: hidden;">
+                <div class="card-header">
+                    <h5 class="mb-0 text-danger text-center"><strong>Child Age: {{ ageRange.from }} - {{ ageRange.to }} years</strong></h5>
+                </div>
+                
+                <div class="row m-2 horizontal-scroll">
+                    <div class="col-4">
+                        <div class="custom-image-container" *ngFor="let item of categories" (click)="navigateToMore(item?.category)">
+                            <img src="{{ item.category.image }} || assets/img/empty-image.jpg" alt="Circle image" class="custom-img">
+                            <small class="d-block mb-4 text-container">{{ item.category.title }}</small>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+
+        <div *ngIf="categoryDetail!== null" class="col-12 p-0">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><strong>{{ categoryDetail?.category.title }}</strong></h5>
+                </div>
+                <div class="row m-0">
+                    <div class="col-6 col-lg-6 col-md-6 p-1" *ngFor="let itemToy of categoryDetail?.toys">
+                        <app-catalog-item [item]="itemToy" [categoryId]="categoryDetail?.id" [category]="categoryDetail"></app-catalog-item>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 p-1 m-0" *ngFor="let item of loadedCategories;let i = index">
+            <div class="card p-1">
+                <div class="card-header">
+                    <h5 class="card-title mb-0"><strong>{{ item.category.title }}</strong></h5>
+                </div>
+            
+                <div class="row m-0">
+                    <div class="col-6 col-lg-4 col-md-4 p-1" *ngFor="let itemToy of item.toys">
+                        <app-catalog-item [item]="itemToy" [category]="item?.category" [categoryId]="item?.category.id"></app-catalog-item>
+                    </div>
+                    <div class="col-6 col-lg-4 col-md-4 p-1" (click)="navigateToMore(item?.category)">
+                        <app-catalog-item [isMoreLink]=true [category]="item?.category" ></app-catalog-item>
+                    </div>
+                    
+                </div>
+            </div>
+            <div *ngIf="canDisplayAgeCategory(i)">
+                <app-age-category></app-age-category>
+            </div>
+        </div>
+    </div>
+   <div *ngIf="canDisplayAgeCategoryInEnd()">
+    <app-age-category></app-age-category>
+   </div>
+    
+</div>

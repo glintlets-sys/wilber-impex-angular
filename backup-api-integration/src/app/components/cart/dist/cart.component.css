@@ -1,0 +1,12 @@
+.custom-table {
+  border: none;
+}
+
+.custom-table td,
+.custom-table th {
+  border: none;
+}
+
+.custom-img {
+  max-width: 100px;
+}

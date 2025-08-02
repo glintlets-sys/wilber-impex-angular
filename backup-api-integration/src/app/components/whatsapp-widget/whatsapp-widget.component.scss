@@ -1,0 +1,16 @@
+.whatsapp-button {
+    position: fixed;
+    bottom: 90px;
+    right: 30px;
+    z-index: 999;
+    opacity: 0.6;
+    transition: opacity 0.1s;
+  }
+  
+  .whatsapp-button:hover {
+    opacity: 1;
+  }
+
+  .btn-inner--icon i.fab.fa-whatsapp {
+    font-size: 18px; /* Adjust the size to your desired value */
+  }

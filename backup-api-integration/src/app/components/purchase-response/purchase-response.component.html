@@ -1,0 +1,27 @@
+<div class="wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-10">
+            <div class="card p-4">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <span *ngIf="isSuccess" class="text-success">Purchase Successful</span>
+                  <span *ngIf="!isSuccess" class="text-danger">Purchase Failed</span>
+                </h2>
+                <p class="card-text">
+                  <span *ngIf="isSuccess">Thank you for your purchase! Your transaction was successful.</span>
+                  <span *ngIf="!isSuccess">Sorry, your purchase transaction failed. Please try again later.</span>
+                </p>
+                <div *ngIf="encryptedResponse" class="mt-4 bg-light p-3 rounded">
+                  <strong>Purchase Reference Number for any queries:</strong>
+                  <p class="m-0">{{ encryptedResponse }}</p>
+                </div>
+                <button class="btn btn-primary mt-4" (click)="navigateToHomePage()">Back to Home</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+</div>
+    
+  

@@ -1,0 +1,87 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+          <h3 class="panel-title mb-0">
+            <span class="align-text-top">Stock Consignment List</span>
+          </h3>
+          <span class="pull-right">
+            <button type="button" class="btn btn-primary" (click)="exportStock()">Export Stock</button>&nbsp;
+            <button type="button" class="btn btn-primary" (click)="importStock()">Import Stock</button>&nbsp;
+
+            <button type="button" class="btn btn-primary" (click)="addStockConsignment(null)">Add Stock</button>
+          </span>
+        </div>
+
+        <div class=" row m-3">
+          <div class="col-4">
+            <input type="text" class="form-control " placeholder="Search consignment" [(ngModel)]="searchConsignment"
+              (keyup)="filterData()">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th class="sort" data-sort="id" scope="col">ID</th>
+                <th class="sort" data-sort="dealer" scope="col">Dealer</th>
+                <th class="sort" data-sort="purchaseDate" scope="col">Purchase Date</th>
+                <th class="sort" data-sort="consignmentCost" scope="col">Consignment Cost</th>
+                <th class="sort" data-sort="stockCreated" scope="col">Stock Created</th>
+                <th class="sort" data-sort="stockCreatedOn" scope="col">Stock Created On</th>
+                <th scope="col">Activate Stock</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              <tr *ngFor="let stockConsignment of stockConsignments | paginate
+              : {
+                  itemsPerPage: tableSize,
+                  currentPage: page,
+                  totalItems: count
+                };">
+                <td>{{ stockConsignment.id }}</td>
+                <td>{{ stockConsignment.dealer?.dealerName }}</td>
+                <td>{{ stockConsignment.purchaseDate ? (stockConsignment.purchaseDate | date) : '' }}</td>
+                <td>{{ stockConsignment.consignmentCost?.amount }}</td>
+                <td>{{ stockConsignment.stockCreated }}</td>
+                <td>{{ stockConsignment.stockCreatedOn ? (stockConsignment.stockCreatedOn | date) : '' }}</td>
+                <td class="text-right">
+                  <button type="button" class="btn btn-primary"
+                    [ngClass]="{ 'disabled-button': stockConsignment.stockCreated }"
+                    [disabled]="stockConsignment.stockCreated" (click)="activateStock(stockConsignment.id)">
+                    Activate
+                  </button>
+                </td>
+                <td>
+                  <a [ngClass]="{ 'disabled-button': stockConsignment.stockCreated }"
+                    [disabled]="stockConsignment.stockCreated" (click)="
+                  addStockConsignment(stockConsignment)
+                "><img class="list-action-image cursor_pointer" src="assets/icons/edit_icon.svg" /></a>
+
+                  <a [ngClass]="{ 'disabled-button': stockConsignment.stockCreated }"
+                    [disabled]="stockConsignment.stockCreated"
+                    (click)="deleteStockConsignment(stockConsignment.id)"><img class="list-action-image cursor_pointer"
+                      src="assets/icons/delete_icon.svg" />
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div *ngIf="stockConsignments?.length==0">
+            <h3 class="no-record-found">No Record Found.</h3>
+          </div>
+          <div *ngIf="stockConsignments?.length>0" class="d-flex justify-content-center" style="padding: 15px">
+            <div class="item_count">
+              Total Items: {{ count }}
+            </div>
+            <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

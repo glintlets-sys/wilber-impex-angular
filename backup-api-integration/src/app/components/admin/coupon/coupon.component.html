@@ -1,0 +1,83 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+                    <h3 class="panel-title mb-0">
+                        <span class="align-text-top">Coupons List</span>
+                    </h3>
+                    <span class="pull-right">
+                        <button type="button" (click)="openAddEditCoupon('')"
+                            class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                            <svg style="width: 13px" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 100 100">
+                                <defs>
+                                    <style>
+                                        .cls-1 {
+                                            fill: #fff;
+                                        }
+                                    </style>
+                                </defs>
+                                <path class="cls-1"
+                                    d="M96.09,46.09H53.91V3.91a3.91,3.91,0,1,0-7.82,0V46.09H3.91a3.91,3.91,0,1,0,0,7.82H46.09V96.09a3.91,3.91,0,0,0,7.82,0V53.91H96.09a3.91,3.91,0,0,0,0-7.82Z" />
+                            </svg>&nbsp;Add Coupon
+                        </button>
+                    </span>
+                </div>
+
+                <div class=" row m-3">
+                    <div class="col-4">
+                        <input type="text" class="form-control " placeholder="Search coupon" [(ngModel)]="searchCoupon"
+                            (keyup)="filterData()">
+                    </div>
+                </div>
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>id</th>
+                            <th>Coupon Code</th>
+                            <th>Coupon Definition </th>
+                            <th>Start Date</th>
+                            <th>Expiry Date</th>
+                            <th>Active Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let coupon of coupons| paginate
+                        : {
+                            itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count
+                          };
+            ">
+                            <td>{{coupon.id}}</td>
+                            <td>{{coupon.couponCode}}</td>
+                            <td>{{coupon.couponDefinition}}</td>
+                            <td>{{coupon.startDate}}</td>
+                            <td [ngClass]="{'expired-coupon': isExpired(coupon.endDate)}">{{coupon.endDate}}</td>
+                            <td>{{coupon.active}}</td>
+                            <td class="text-center">
+                                <span>
+                                    <a (click)="openAddEditCoupon(coupon)"><img class="list-action-image cursor_pointer"
+                                            src="./assets/icons/edit_icon.svg" />
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div *ngIf="coupons?.length==0">
+                    <h3 class="no-record-found">No Record Found.</h3>
+                </div>
+                <div *ngIf="coupons?.length>0" class="d-flex justify-content-center" style="padding: 15px">
+                    <div class="item_count">
+                        Total Coupons: {{ count }}
+                    </div>
+                    <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

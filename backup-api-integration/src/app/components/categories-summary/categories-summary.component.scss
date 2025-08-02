@@ -1,0 +1,103 @@
+.skew-container {
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .skew-image {
+    height: 350px; /* Adjust the height as needed */
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+  }
+
+  .custom-skew {
+    height: 150px; /* Adjust the height as needed */
+    width: 100%;
+    background-position: center;
+    background-size: cover;
+    position: relative;
+  }
+
+  .custom-card {
+    min-height: 280;
+    margin-bottom: 0px;
+  }
+  
+  .skew-image::before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 20%; /* Adjust the value to control the height of the skewed portion */
+    background: linear-gradient(to right bottom, transparent 49.5%, white 50%);
+    transform: skew(3deg); /* Adjust the skew angle as needed */
+    transform-origin: bottom left;
+    z-index: 2;
+  }
+  
+  .card-body {
+    position: relative;
+    z-index: 2;
+  }
+
+  .card-text {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  .card {
+    border-radius: 15px;
+  }
+
+  .font-custom {
+    font-size: 1rem;
+  }
+
+
+/* Add these styles to your component's CSS file */
+
+.horizontal-scroll {
+  overflow-x: scroll;
+  white-space: nowrap;
+}
+
+
+  /* Add these styles to your component's CSS file */
+
+.custom-image-container {
+  display: inline-block;
+  width: 120px; /* Adjust as needed */
+  margin-right: 15px; /* Adjust as needed */
+  text-align: center;
+}
+
+.custom-img {
+  width: 100px; /* Set a fixed width */
+  height: 100px; /* Set a fixed height */
+  object-fit: cover; /* Maintain aspect ratio and cover the container */
+  border-radius: 50%;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.text-container {
+  text-align: center;
+  width: 100px; /* Adjust to match image width */
+  overflow: hidden;
+  display: block;
+  white-space: normal;
+  line-height: 1.2em; /* Adjust as needed */
+  height: 2.4em; /* Number of lines * line height */
+}
+
+.text-container::after {
+  content: "...";
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding-left: 1em; /* Space for ellipsis */
+  background: linear-gradient(to right, transparent, white 50%);
+}
+
+

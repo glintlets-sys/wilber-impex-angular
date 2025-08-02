@@ -1,0 +1,65 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="input-group input-group-alternative mb-4">
+               
+                <input class="form-control" type="text" placeholder="Search..." (keyup)="onSearch(searchText)"
+                    (keyup.enter)="initiateSearch(searchText)" [(ngModel)]="searchText">
+                <div class="input-group-append ml-2">
+                    <button class="btn btn-outline-primary" type="button" (click)="initiateSearch(searchText)">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="list-group">
+                <a *ngFor="let suggestion of suggestions" class="list-group-item list-group-item-action"
+                    (click)="onSuggestionClick(suggestion, $event)">
+                    {{ suggestion }}
+                </a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="section m-0 p-0" *ngIf="searchResult.length>0">
+        <div class="container mx-auto">
+            <div class="row">
+                <div class="col-12 text-center mb-1">
+                    <div class="bg-background">
+                        <h2 class="display-4 text-center rounded p-2 custom-margin">
+                            Search Results:  {{ searchResult.length }} item(s) found
+                        </h2>
+                        <hr style="width:100%">
+                    </div>
+                </div>
+
+                <div class="col-xl-4 col-lg-4 col-md-6 col-12 p-1" *ngFor="let item of searchResult">
+                    <app-catalog-item [item]="item"></app-catalog-item>
+                </div>
+            </div>     
+        </div>
+    </div>
+
+    <div class="section m-0 p-0" *ngIf="(searchResult.length==0) && searchResultNull">
+        <div class="container mx-auto">
+            <div class="row">
+                <div class="col-12 text-center mb-1">
+                    <div class="bg-background">
+                        <p class="display-4 text-center rounded p-2 custom-margin">
+                            No search results. 
+                        </p>
+                        <hr style="width:100%">
+                    </div>
+                </div>
+
+            </div>     
+        </div>
+    </div>
+
+</div>
+
+<br/>
+<br/>
+<br/>
+<br/>

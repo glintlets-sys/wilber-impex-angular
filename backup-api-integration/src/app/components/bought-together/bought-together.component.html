@@ -1,0 +1,111 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow">
+                <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+                    <h3 class="panel-title mb-0">
+                        <span class="align-text-top">Bought Together</span>
+                    </h3>
+                    <span class="pull-right">
+                        <button type="button" (click)="openAddEditBoughtTogether('')"
+                            class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                            <svg style="width: 13px" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 100 100">
+                                <defs>
+                                    <style>
+                                        .cls-1 {
+                                            fill: #fff;
+                                        }
+                                    </style>
+                                </defs>
+                                <path class="cls-1"
+                                    d="M96.09,46.09H53.91V3.91a3.91,3.91,0,1,0-7.82,0V46.09H3.91a3.91,3.91,0,1,0,0,7.82H46.09V96.09a3.91,3.91,0,0,0,7.82,0V53.91H96.09a3.91,3.91,0,0,0,0-7.82Z" />
+                            </svg>&nbsp;Add
+                        </button>
+                    </span>
+                </div>
+
+                <!-- <div class=" row m-3">
+                    <div class="col-4">
+                        <input type="text" class="form-control " placeholder="Search Item" [(ngModel)]="searchToy"
+                            (keyup)="filterData()">
+                    </div>
+                </div> -->
+                <table class="table">
+                    <thead class="table-light">
+                        <tr>
+                            <th>id</th>
+                            <!-- <th>Images</th>
+                            <th>Name</th> -->
+                            <th>Creation Date</th>
+                            <th>Discount(%)</th>
+                            <th>Bought Together Items</th>
+                            <th class="text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of bought_together| paginate:
+                         {itemsPerPage: tableSize,
+                            currentPage: page,
+                            totalItems: count};">
+                            <td>
+                                {{item?.id}}
+                            </td>
+                            <!-- <td>
+                                <img [src]="getItemImg(item?.id)" width="60" height="60">
+                            </td>
+                            <td>{{ getItemName(item?.id) }}</td> -->
+                            <td>{{ item?.creationDate| date }}</td>
+                            <td>{{item?.discountPercent}}</td>
+                            <td> <span>
+                                    <table>
+                                        <thead>
+                                            <tr>
+                                                <th></th>
+                                                <th></th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            <tr *ngFor="let boughtItem of item?.items">
+                                                <td>
+                                                    {{boughtItem?.id}} |
+                                                </td>
+                                                <td>
+                                                    {{boughtItem?.itemName}}
+                                                </td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </span></td>
+                            <td class="text-center">
+                                <span>
+                                    <a (click)="openAddEditBoughtTogether(item)"><img
+                                            class="list-action-image cursor_pointer"
+                                            src="./assets/icons/edit_icon.svg" />
+                                    </a>
+                                    <a (click)="deleteBoughtTogether(item.id)"><img
+                                            class="list-action-image cursor_pointer"
+                                            src="assets/icons/delete_icon.svg" />
+                                    </a>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div *ngIf="bought_together?.length==0">
+                    <h3 class="no-record-found">No Record Found.</h3>
+                </div>
+                <div *ngIf="bought_together?.length>0" class="d-flex justify-content-center" style="padding: 15px">
+                    <div class="item_count">
+                        Total Items: {{ count }}
+                    </div>
+                    <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</div>

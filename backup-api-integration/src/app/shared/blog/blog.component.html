@@ -1,0 +1,107 @@
+<!-- Hidden section for search engine optimization -->
+<div class="hidden-section" style="display: none;">
+  <h2>Keywords for SEO:</h2>
+  <ul>
+    <li>online toy shop</li>
+    <li>safe toys</li>
+    <li>innovative toys</li>
+    <li>high-quality toys</li>
+    <li>trending toys</li>
+    <li>latest toys</li>
+    <li>affordable prices</li>
+    <li>customer satisfaction</li>
+    <li>toys for kids of all ages</li>
+    <li>educational toys</li>
+    <li>fun-filled toys</li>
+    <li>market trends</li>
+    <li>top online toy shops</li>
+    <li>learning through play</li>
+    <li>creativity in children</li>
+    <li>competitive prices</li>
+    <li>trusted online toy shop</li>
+    <li>user-friendly website</li>
+    <li>hot toys</li>
+    <li>go-to destination for toys</li>
+    <li>exceptional toys</li>
+    <li>outstanding service</li>
+  </ul>
+</div>
+<!-- End of hidden section -->
+<!--
+  <div class="card shadow border-0">
+    <div class="card-header" [style.background-image]="'url(' + blog.imageUrl + ')'" style="background-size: cover; background-position: center; height: 300px; display: flex; align-items: center; justify-content: center;">
+      <h5 class="h3 mb-0 text-white">{{ blog.title }}</h5>
+    </div>
+    <div class="card-body">
+      <div [innerHTML]="blog.content"></div>
+    </div>
+  </div>
+  -->
+<div class="container">
+
+  <div class="row bg-white mt-0 mb-0">
+    <app-bread-crumb [items]="breadcrumbItems"></app-bread-crumb>
+
+</div>
+
+  <!-- Blog Title -->
+  <h5 class="h3">{{ blog.title }}</h5>
+  <div class="row">
+    <!-- Blog Image -->
+    <div class="col-md-6 col-xs-12">
+      <img [src]="blog.imageUrl" alt="{{ blog.title }}" class="img-fluid center-block">
+    </div>
+
+    <!-- Blog Content -->
+    <div class="col-md-6 col-xs-12 card-body">
+      <h2 class="header text-center">Summary</h2>
+      <hr>
+      <div class="p-2" [innerHTML]="blog.shortContent">...</div>
+      <p class="small text-end text-dark read-time">{{blog.readTime}} minute Read</p>
+    </div>
+  </div>
+<div class="container">
+  <div class="row">
+    <div class="card-footer">
+      <div [innerHTML]="blog.content"></div>
+      <div class="d-flex align-items-center">
+        <img *ngIf="blog.authorPic" [src]="blog.authorPic" alt="Author" class="avatar avatar-sm rounded-circle">
+        <div>
+          <p *ngIf="blog.author !== undefined" class="mb-0"><i>{{ blog.author }}</i></p>
+          <p *ngIf="blog.authorTitle !== undefined" class="small"><i>{{ blog.authorTitle }}</i></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  <!-- <h5 class="text-title">Similar Reads</h5>
+  <div class="container">
+    <div class="row">
+      <div *ngFor="let blog of blogRecommendations" class="col-md-4"> Add the col-4 class here -->
+        <!-- <div class="card shadow border-0"> -->
+          <!-- Blog Title -->
+          <!-- <h5 class="h3 text-white text-center bg-danger p-1 small"><strong>{{ blog.title }}</strong></h5> -->
+  
+          <!-- Blog Image -->
+          <!-- <div class="d-flex justify-content-center">
+            <img [src]="blog.imageUrl" alt="{{ blog.title }}" class="img-fluid img-fluid-sm">
+          </div>
+   -->
+          <!-- Blog Content -->
+          <!-- <div class="card-body">
+            <div [innerHTML]="blog.shortContent | slice:0:150" class="small">...</div>
+            <br />
+            <div class="d-flex justify-content-end"> Align the button to the right -->
+              <!-- <div class="btn btn-primary btn-sm" (click)="navigateToBlog(blog.id)">Read Full</div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <p class="small text-dark">{{blog.readTime}} minute Read</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+   -->
+</div>

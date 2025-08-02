@@ -1,0 +1,40 @@
+// .img-fluid {
+//     max-height: 500px;
+// }
+
+.img-fluid-sm {
+    max-height: 250px;
+}
+
+h5{
+    font-weight: 600;
+    font-size: 25px;
+    text-transform: capitalize;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+hr {
+    width: 60px;
+    border: 1.5px solid #ff3973;
+    text-align: center;
+    margin: -15px auto 20px;
+}
+.main{
+    background: transparent;
+}
+.center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+    width: 555px;
+    height: 300px;
+}
+.header, .read-time{
+    font-weight: 400;
+    letter-spacing: 0.5px;
+}
+.card-body{
+    padding: 0;
+}

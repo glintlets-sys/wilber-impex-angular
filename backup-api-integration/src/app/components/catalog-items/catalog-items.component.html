@@ -1,0 +1,63 @@
+<div class="scrool-delevry">
+  <ul class="nav nav-nav nav-tabs ">
+    <li class="nav-item">
+      <a class="nav-link show active" data-bs-toggle="tab"  href="#tabmobileone"> FEATURED</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab"  href="#tabmobiletwo">LATEST</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab"  href="#tabmobilethree">BESTSELLERS</a>
+    </li>
+  </ul>
+</div>
+
+<div class="tab-content">
+  <div class="tab-pane show active tabmobileone" id="tabmobileone">
+    <div class="swiper trendingswiper2">
+      <div class="swiper-wrapper">
+        <div *ngFor="let featured of featuredItems" class="swiper-slide" swiperSlide>
+          <app-catalog-item [item]="featured" [strip]="'FEATURED'"></app-catalog-item>
+        </div>
+
+      </div>
+      <div class="swiper-button-prev d-none d-md-block"></div>
+      <div class="swiper-button-next d-none d-md-block"></div>
+
+    </div>
+  </div>
+
+   <div class="tab-pane tabmobiletwo" id="tabmobiletwo">
+    <div class="swiper trendingswiper2">
+      <div class="swiper-wrapper">
+        <div *ngFor="let latestItem of latestItems" class="swiper-slide" swiperSlide>
+          <app-catalog-item [item]="latestItem" [strip]="'LATEST'"></app-catalog-item>
+        </div>
+     
+      </div>
+
+      <div class="swiper-button-prev d-none d-md-block"></div>
+      <div class="swiper-button-next d-none d-md-block"></div>
+
+    </div>
+  </div>
+
+
+  <div class="tab-pane tabmobilethree" id="tabmobilethree">
+    <div class="swiper trendingswiper2">
+
+      <div class="swiper-wrapper">
+        <div *ngFor="let bestSellers of bestSellers" class="swiper-slide" swiperSlide>
+          <app-catalog-item [item]="bestSellers" [strip]="'BESTSELLER'"></app-catalog-item>
+        </div>
+       
+
+      </div>
+
+      <div class="swiper-button-prev d-none d-md-block"></div>
+      <div class="swiper-button-next d-none d-md-block"></div>
+
+
+    </div>
+  </div> 
+</div>

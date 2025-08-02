@@ -1,0 +1,221 @@
+.alert {
+  position: relative;
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 1rem;
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  background-color: white;
+}
+
+.alert-heading {
+  color: inherit;
+}
+
+.alert-link {
+  font-weight: 700;
+}
+
+.alert-dismissible {
+  padding-right: 4rem;
+}
+.alert-dismissible .close {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 0.75rem 1.25rem;
+  color: inherit;
+}
+
+.alert-primary {
+  color: #004085;
+ 
+  border-color: #b8daff;
+}
+.alert-primary hr {
+  border-top-color: #9fcdff;
+}
+.alert-primary .alert-link {
+  color: #002752;
+}
+
+.alert-secondary {
+  color: #383d41;
+ 
+  border-color: #d6d8db;
+}
+.alert-secondary hr {
+  border-top-color: #c8cbcf;
+}
+.alert-secondary .alert-link {
+  color: #202326;
+}
+
+.alert-success {
+  color: #23856D;
+ 
+  border-color: #c3e6cb;
+}
+.alert-success hr {
+  border-top-color: #b1dfbb;
+}
+.alert-success .alert-link {
+  color: #0b2e13;
+}
+
+.alert-info {
+  color: blue;
+ 
+  border-color: #bee5eb;
+}
+.alert-info hr {
+  border-top-color: #abdde5;
+}
+.alert-info .alert-link {
+  color: #062c33;
+}
+
+.alert-warning {
+  color: #D4D800;
+ 
+  border-color: #ffeeba;
+}
+.alert-warning hr {
+  border-top-color: #ffe8a1;
+}
+.alert-warning .alert-link {
+  color: #533f03;
+}
+
+.alert-danger {
+  color: #F40000;
+
+  border-color: #f5c6cb;
+}
+.alert-danger hr {
+  border-top-color: #f1b0b7;
+}
+.alert-danger .alert-link {
+  color: #491217;
+}
+
+.alert-light {
+  color: #818182;
+
+  border-color: #fdfdfe;
+}
+.alert-light hr {
+  border-top-color: #ececf6;
+}
+.alert-light .alert-link {
+  color: #686868;
+}
+
+.alert-dark {
+  color: #1b1e21;
+
+  border-color: #c6c8ca;
+}
+.alert-dark hr {
+  border-top-color: #b9bbbe;
+}
+.alert-dark .alert-link {
+  color: #040505;
+}
+
+
+.alert {
+  top: 0%; /* Adjust this value to position the toast vertically */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%; /* Adjust the width as needed */
+  transition: opacity 3s ease-in-out;
+  opacity: 0; /* Start with the toast invisible */
+  z-index: 1050; /* Ensure it's above most other elements */
+  margin-bottom: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.alert.show {
+  opacity: 1; /* Fully visible when the .show class is added */
+}
+
+.btn-close {
+  position: fixed;
+  top: 0.5rem;
+  right: 0.9rem;
+}
+
+.alert .toast-body {
+  padding: 0.75rem;
+}
+
+/* Remove or adjust any conflicting styles */
+.fixed-top {
+  /* Adjust or remove properties that might conflict with the toast's positioning */
+}
+
+.browser-alert {
+  position: fixed; /* Fixed position to stay at the bottom */
+  top: 10px; /* Align to the bottom of the screen */
+  left: 50%; /* Stretch from the left edge */
+  transform: translateX(-50%);
+  width: 52%; /* Full width to span across the screen */
+  background-color: black; /* Typical toast background */
+  color: white; /* Text color for readability */
+  text-align: center; /* Center the text inside the toast */
+  padding: 1rem; /* Some padding for spacing */
+  z-index: 999999; /* High z-index to ensure it's above other content */
+  animation: slideInUp 0.5s ease-in-out, fadeOut 3s ease-in-out 3s forwards; /* Slide in and fade out */
+  border-radius: 15px;
+}
+
+/* Mobile-specific styles for the toast */
+.mobile-alert {
+  position: fixed; /* Fixed position to stay at the bottom */
+  bottom: 10px; /* Align to the bottom of the screen */
+  left: 50%; /* Stretch from the left edge */
+  transform: translateX(-50%);
+  width: 80%; /* Full width to span across the screen */
+  background-color: black; /* Typical toast background */
+  color: white; /* Text color for readability */
+  text-align: center; /* Center the text inside the toast */
+  padding: 1rem; /* Some padding for spacing */
+  z-index: 1050; /* High z-index to ensure it's above other content */
+  animation: slideInUp 0.5s ease-in-out, fadeOut 3s ease-in-out 3s forwards; /* Slide in and fade out */
+  border-radius: 15px;
+}
+
+/* Close button styling to ensure visibility and usability on mobile */
+.btn-close-mobile {
+  font-size: 10px;
+  position: absolute;
+  right: 1rem;
+  top: 0.0rem;
+  background-color: white;
+  border: none;
+  color: white;
+  padding:10px;
+  margin-top:10px;
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%) translateX(-50%);
+  }
+  to {
+    transform: translateY(0) translateX(-50%);
+  }
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+

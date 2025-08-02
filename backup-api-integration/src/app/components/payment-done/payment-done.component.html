@@ -1,0 +1,45 @@
+<section *ngIf="oderDetails?.paymentStatus=='PAYMENTSUCCESS'" class="payment-donesuccesfully full-page-modal">
+    <div class="div-curve"> </div>
+    <div class="section-donefull">
+        <div class="div-conferm-done">
+            <div class="image">
+                <img src="assets/img/image/paymentconfirm.png" alt="">
+            </div>
+            <h3>Payment done successfully</h3>
+            <p>Your order will be delivered on <span>23rd December </span></p>
+            <p>Order ID: <span>{{getOrderId}} </span></p>
+            <p>This modal will redirect back to the My Account page in {{ countdown }} seconds.</p>
+        </div>
+
+        <div class="shop-morebtn">
+
+            <a (click)="redirectToHome()">
+                <p>Shop More</p>
+            </a>
+        </div>
+    </div>
+
+</section>
+
+<section *ngIf="oderDetails?.paymentStatus=='PAYMENTFAILED'" class="payment-donesuccesfully full-page-modal">
+    <div class="div-curve"> </div>
+    <div class="section-donefull">
+        <div class="div-conferm-done">
+            <div class="image">
+                <img src="assets/img/image/paymentfailed.png" alt="">
+            </div>
+            <h3>Payment failed</h3>
+            <!-- <p>Your order will be delivered on  <span>23rd December </span></p> -->
+            <!-- <p>Order ID:  <span>9695943345677</span></p> -->
+            <p>This modal will redirect back to the My Account page in {{ countdown }} seconds.</p>
+        </div>
+
+        <div class="shop-morebtn">
+
+            <a (click)="redirectToHome()">
+                <p>Shop More</p>
+            </a>
+        </div>
+    </div>
+
+</section>

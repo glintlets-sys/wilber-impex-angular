@@ -1,0 +1,179 @@
+
+<div class="main-content">
+  <div class="container-fluid">
+    <div class="row">
+      
+      <div class="header contain-header-element categorieslist-laptop-view text-white" style="background-color: #4074FF;">
+        <a [routerLink]="['/']">
+          <div class="image-headlog">
+              <img src="assets\img\image\Link → logo.webp.png" alt="">
+          </div>
+        </a>
+         <h2>Administration</h2>
+      </div>
+    </div>
+
+    
+    <div class="row">
+      <!-- New Left Side -->
+      <nav class="col-md-3 col-lg-3 d-md-block sidebar">
+        <div class="position-sticky" style="background-color: #f8f9fa; box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1);">
+          <div class="card text-center" style="height: 100%;">
+            
+            <!-- Dashboard Section -->
+            <div class="h6 card-header bg-light text-dark text-center" (click)="toggleSection('dashboard')">
+              Home <span class="ml-auto">{{ sections.dashboard ? '-' : '+' }}</span>
+            </div>
+            <ul class="list-group list-group-flush" *ngIf="sections.dashboard">
+              <button class="list-group-item list-group-item-action" (click)="toggleDashbard()">Dashboard</button>
+            </ul>
+      
+            <!-- Customer Details Section -->
+            <div class="h6 card-header bg-light text-dark text-center" (click)="toggleSection('customerDetails')">
+              Customer Details <span class="float-right">{{ sections.customerDetails ? '-' : '+' }}</span>
+            </div>
+            <ul class="list-group list-group-flush" *ngIf="sections.customerDetails"> 
+              <button    class="list-group-item list-group-item-action" routerLink="/profile" (click)="toggleStocked()" >Profile</button>
+              <button   class="list-group-item list-group-item-action" (click)="toggleUserTable()">Admin Users</button>
+              <button   class="list-group-item list-group-item-action" (click)="toggleStocks()">Contact Us</button>
+              <button   class="list-group-item list-group-item-action" (click)="toggleStocks()">Settings</button>
+            </ul>
+      
+            <!-- Transactions Section -->
+            <div class="h6 card-header bg-light text-dark text-center" (click)="toggleSection('transactions')">
+              Transactions <span class="float-right">{{ sections.transactions ? '-' : '+' }}</span>
+            </div>
+            <ul class="list-group list-group-flush" *ngIf="sections.transactions">
+              <button class="list-group-item list-group-item-action" (click)="toggleStocks()">Stocks</button>
+              <button class="list-group-item list-group-item-action" (click)="toggleStockConsignments()">Consignments</button>
+              <button class="list-group-item list-group-item-action" (click)="toggleOrdersView()">Orders</button>
+              <button   class="list-group-item list-group-item-action" (click)="toggleStocks()">Shipments</button>
+              <button   class="list-group-item list-group-item-action">Tax</button>
+              <button   class="list-group-item list-group-item-action" (click)="toggleStocks()">Items in Cart</button>
+            </ul>
+      
+            <!-- My Customers Section -->
+            <div class="h6 card-header bg-light text-dark text-center" (click)="toggleSection('myCustomers')">
+              My Customers <span class="float-right">{{ sections.myCustomers ? '-' : '+' }}</span>
+            </div>
+            <ul class="list-group list-group-flush" *ngIf="sections.myCustomers">
+              <button class="list-group-item list-group-item-action" (click)="toggleUserTable()">Customers</button>
+            </ul>
+      
+            <!-- Content Management Section -->
+            <div class="h6 card-header bg-light text-dark text-center" (click)="toggleSection('contentManagement')">
+              Content Management <span class="float-right">{{ sections.contentManagement ? '-' : '+' }}</span>
+            </div>
+            <ul class="list-group list-group-flush" *ngIf="sections.contentManagement">
+              <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Settings</button>
+              <button class="list-group-item list-group-item-action" (click)="toggleToys()">Items</button>
+              <button class="list-group-item list-group-item-action" (click)="toggleCategoryView()">Categories</button>
+            </ul>
+      
+            <!-- Communication Section -->
+            <div class="h6 card-header bg-light text-dark text-center" (click)="toggleSection('communication')">
+              Communication <span class="float-right">{{ sections.communication ? '-' : '+' }}</span>
+            </div>
+            <ul class="list-group list-group-flush" *ngIf="sections.communication">
+              <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Settings</button>
+              <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Blogs</button>
+              <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">NewsLetters</button>
+              <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Subscribers</button>
+              <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Email templates</button>
+              <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Testimonials</button>
+              <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Customer Messages</button>
+              <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Bulk Emails/SMS/WhatsApp Notifications</button>
+            </ul>
+      
+            <!-- Additional sections can follow the same pattern -->
+
+               <!-- Landing Page Section -->
+      <div class="h6 card-header bg-light text-dark text-center" (click)="toggleSection('landingPage')">
+        Landing Page <span class="float-right">{{ sections.landingPage ? '-' : '+' }}</span>
+      </div>
+      <ul class="list-group list-group-flush" *ngIf="sections.landingPage">
+        <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Settings</button>
+        <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Landing Pages</button>
+      </ul>
+
+      <!-- Promotions Section -->
+      <div class="h6 card-header bg-light text-dark text-center" (click)="toggleSection('promotions')">
+        Promotions <span class="float-right">{{ sections.promotions ? '-' : '+' }}</span>
+      </div>
+      <ul class="list-group list-group-flush" *ngIf="sections.promotions">
+        <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Festivals</button>
+        <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Discounts</button>
+        <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Coupons</button>
+        <button disabled class="list-group-item list-group-item-action" (click)="toggleStocks()">Ratings & Comments</button>
+      </ul>
+      
+          </div>
+        </div>
+      </nav>
+      
+      
+     
+
+      <!-- Content Area -->
+      <main class="col-md-9 ms-sm-auto col-lg-9 px-md-4">
+      
+        
+
+        <!-- <div *ngIf="toggleDashboardView">
+          <app-admin-dashboard></app-admin-dashboard>
+        </div> -->
+
+        <!-- <div *ngIf="toggleStocksView">
+          <div class="h5 mb-4">Profile</div>
+          <app-profile></app-profile>
+        </div> -->
+
+        <div *ngIf="toggleStocksView">
+          <div class="h5 mb-4">Tax</div>
+          <app-admin-users></app-admin-users>
+        </div>    
+
+         <div *ngIf="toggleStocksView">
+          <div class="h5 mb-4">Manage Stocks</div>
+          <app-stocks></app-stocks>
+        </div>
+
+        <div *ngIf="toggleToysView">
+          <div class="h5 mb-4">Manage Toys</div>
+          <app-toy-list></app-toy-list>
+        </div>
+
+        <div *ngIf="togglePicturesView">
+          <div class="h5 mb-4">Manage S3 Pictures & Files</div>
+          <app-aws-image-list></app-aws-image-list>
+        </div>
+
+        <div *ngIf="toggleStockConsignmentsView">
+          <div class="h5 mb-4">Manage Stock Consignments</div>
+          <app-stock-consignment></app-stock-consignment>
+        </div>
+
+        <div *ngIf="toggleUserTableView">
+          <div class="h5 mb-4">Users Table</div>
+          <app-user-table></app-user-table>
+        </div>
+
+        <div *ngIf="toggleOrdersTableView">
+          <div class="h5 mb-4">Admin orders</div>
+          <app-admin-orders></app-admin-orders>
+        </div>
+
+        <div *ngIf="toggleCategoryTableView">
+          <div class="h5 mb-4">Category View</div>
+          <app-admin-category></app-admin-category>
+        </div>
+
+        <div *ngIf="toggleFeaturedTableView">
+          <div class="h5 mb-4">Category View</div>
+          <app-admin-category></app-admin-category>
+        </div>  
+
+      </main>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div *ngIf="topCategories.length >0" class="top-destination-sub">
+  <div class="swiper trendingswiper3">
+    <!-- Additional required wrapper -->
+    <div class="swiper-wrapper">
+      <!-- Slides -->
+      <div *ngFor="let featuredItem of topCategories" class="swiper-slide" swiperSlide>
+        <app-catalog-item [item]="featuredItem"></app-catalog-item>
+      </div>
+      <div *ngFor="let featuredItem of topCategories" class="swiper-slide" swiperSlide>
+        <app-catalog-item [item]="featuredItem"></app-catalog-item>
+      </div>
+      <div *ngFor="let featuredItem of topCategories" class="swiper-slide" swiperSlide>
+        <app-catalog-item [item]="featuredItem"></app-catalog-item>
+      </div>
+    </div>
+    <!-- If we need navigation buttons -->
+    <div class="swiper-button-prev d-none d-md-block"></div>
+    <div class="swiper-button-next d-none d-md-block"></div>
+
+  </div>
+</div>

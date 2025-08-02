@@ -1,0 +1,303 @@
+<div class="modal-header">
+    <h3 class="panel-title mb-0 p-0">
+        <span *ngIf="!consignmentItemData"> Add Consignment </span>
+        <span *ngIf="consignmentItemData"> Edit Consignment </span>
+    </h3>
+    <button type="button" class="btn-close btn btn-primary btn-with-icon save-profile" (click)="modal.close()">
+    </button>
+</div>
+
+<div class="modal-body">
+    <section>
+        <div class="container">
+            <form #myForm="ngForm">
+                <!-- Dealer Name -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="dealerName" class="control-label">Name <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" required name="dealerName" class="form-control form-control-alternative"
+                                placeholder="Enter Name" [(ngModel)]="consignment.dealer.dealerName"
+                                #dealerName="ngModel" ngModel />
+                            <div class="errormessage" *ngIf="controlHasError('required', dealerName)">
+                                Please Enter Name
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dealer Address - First Line -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="addressFirstLine" class="control-label">Address (First Line)</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="addressFirstLine" class="form-control form-control-alternative"
+                                placeholder="Enter First Line" [(ngModel)]="consignment.dealer.address.firstLine" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dealer Address - Second Line -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="addressSecondLine" class="control-label">Address (Second
+                                Line)</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="addressSecondLine" class="form-control form-control-alternative"
+                                placeholder="Enter Second Line" [(ngModel)]="consignment.dealer.address.secondLine" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- City -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="city" class="control-label">City</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="city" class="form-control form-control-alternative"
+                                placeholder="Enter City" [(ngModel)]="consignment.dealer.address.city" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- State -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="state" class="control-label">State</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="state" class="form-control form-control-alternative"
+                                placeholder="Enter State" [(ngModel)]="consignment.dealer.address.state" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Country -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="country" class="control-label">Country</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="country" class="form-control form-control-alternative"
+                                placeholder="Enter Country" [(ngModel)]="consignment.dealer.address.country" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pincode -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="pincode" class="control-label">Pincode</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="pincode" class="form-control form-control-alternative"
+                                placeholder="Enter Pincode" [(ngModel)]="consignment.dealer.address.pincode" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mobile Number -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="mobileNumber" class="control-label">Mobile Number</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="mobileNumber" class="form-control form-control-alternative"
+                                placeholder="Enter Mobile Number"
+                                [(ngModel)]="consignment.dealer.address.mobileNumber" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Alternate Number -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="alternateNumber" class="control-label">Alternate Number</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="alternateNumber" class="form-control form-control-alternative"
+                                placeholder="Enter Alternate Number"
+                                [(ngModel)]="consignment.dealer.address.alternateNumber" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Address -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="emailAddress" class="control-label">Email Address</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="emailAddress" class="form-control form-control-alternative"
+                                placeholder="Enter Email Address"
+                                [(ngModel)]="consignment.dealer.address.emailAddress" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Purchase Date -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="purchaseDate" class="control-label">Purchase Date</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="date" name="purchaseDate" class="form-control form-control-alternative"
+                                placeholder="Select Purchase Date" [(ngModel)]="consignment.purchaseDate" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consignment Cost - Amount -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="consignmentCost" class="control-label">Cost( Amount) <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="number" name="consignmentCost" class="form-control form-control-alternative"
+                                required placeholder="Enter Consignment Cost"
+                                [(ngModel)]="consignment.consignmentCost.amount" #costAmount="ngModel" ngModel />
+                            <div class="errormessage" *ngIf="controlHasError('required', costAmount)">
+                                Please Enter consignment cost
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Consignment Cost - Currency -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="consignmentCurrency" class="control-label">Cost( Currency)</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="consignmentCurrency" class="form-control form-control-alternative"
+                                [(ngModel)]="consignment.consignmentCost.currency" disabled />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- consignment item -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2">
+                            <label for="consignmentItem" class="control-label">Item <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-md-10">
+                            <table class="table" *ngIf="consignment.consignmentItem.length>0">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Item Id</th>
+                                        <th>Item Name</th>
+                                        <th>purchase Price</th>
+                                        <th>Quantity</th>
+                                        <th>Variation</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let item of consignment.consignmentItem; let i = index">
+                                        <td>{{ item.itemId }}</td>
+                                        <td>{{ item.itemName }}</td>
+                                        <td>{{ item.purchasePrice.amount }}</td>
+                                        <td>{{ item.quantity }}</td>
+                                        <td>{{item.variationId}}</td>
+                                        <td><button class="btn btn-outline-danger" type="button"
+                                                (click)="removeConsignment(i)">-</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="errormessage"
+                                *ngIf="!consignment.consignmentItem || consignment.consignmentItem.length==0">
+                                Please enter at least one consignment item
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-5">
+                                    <ng-select [searchable]="true" [clearable]="false" [(ngModel)]="selectedItem">
+                                        <ng-template ng-option-tmp let-item="item">
+                                            {{ item.name }}
+                                        </ng-template>
+                                        <ng-option *ngFor="let item of items" [value]="item">
+                                            {{ item.name }}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                                <div *ngIf="selectedItem?.variations?.length > 0" class="col-md-2">
+                                    <ng-select [searchable]="true" [clearable]="false" [(ngModel)]="selectedVariation">
+                                        <ng-option *ngFor="let variation of selectedItem?.variations" [value]="variation">
+                                            {{ variation.color + ' : ' + variation.size }}
+                                        </ng-option>
+                                    </ng-select>
+                                </div>
+                                
+                                
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="Amount" [(ngModel)]="amount">
+                                </div>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" placeholder="Quantity"
+                                        [(ngModel)]="quantity">
+                                </div>
+                                <div class="col-md-1">
+                                    <button type="button" class="btn btn-primary" (click)="addNew()">+</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save and Cancel Buttons -->
+                <div class="col-md-12">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button class="btn btn-white cancelbtn" type="button"
+                                (click)="modal.close()">Cancel</button>&nbsp;
+                            <button *ngIf="!consignmentItemData" type="button" (click)="saveConsignment()"
+                                class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                    <defs>
+                                        <style>
+                                            .cls-1 {
+                                                fill: #fff;
+                                            }
+                                        </style>
+                                    </defs>
+                                    <path class="cls-1"
+                                        d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                </svg>&nbsp;Save
+                            </button>
+
+                            <button *ngIf="consignmentItemData" type="button" (click)="updateConsignment()"
+                                class="btn btn-primary ">
+                                Update
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

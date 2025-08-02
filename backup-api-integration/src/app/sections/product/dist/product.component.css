@@ -1,0 +1,8 @@
+.original-price {
+  text-decoration: line-through;
+  color: red;
+}
+
+p, .p {
+  font-size: 0.8rem;
+}

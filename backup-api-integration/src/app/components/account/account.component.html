@@ -1,0 +1,483 @@
+<!-- for customer -->
+<div *ngIf="!isAdminUser">
+  <div class="container">
+    <div class="myaccount-section-new">
+      <div class="box-contaiiner">
+        <h3 class="myaccount-profile">
+          My Account
+        </h3>
+        <div class="box-backimg" style="background-image: url(assets/img/image/myaccountbanner87.png);">
+          <div class="div-profile-my-ac">
+            <div class="div-nameid">
+              <p>{{firstLetterUseName}}</p>
+            </div>
+            <div class="div-namelocat">
+              <h4>{{profileUserName}}</h4>
+              <!-- <p><i class="fa-solid fa-location-dot"></i> Delhi</p> -->
+            </div>
+          </div>
+          <div class="edit-account-btn">
+            <div class="div-ed cursor_pointer" (click)="toggleProfile()">
+              <i class="fa-regular fa-pen-to-square"></i>
+              <p>Edit Profile</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="div-all-editaddres-section ">
+          <div class="div-setall pb-0">
+            <div class=" divall-same div-prof cursor_pointer" (click)="toggleProfile()">
+              <div class="div-myor">
+                <h5>My Profile</h5>
+                <i class="fa-solid fa-angle-right"></i>
+              </div>
+              <p>Edit personal info, change password</p>
+            </div>
+
+            <div class="div-rigr-bor"></div>
+            <div class=" divall-same div-orer cursor_pointer" (click)="toggleOrders()">
+              <div class="div-myor">
+                <h5>My Orders</h5>
+                <i class="fa-solid fa-angle-right"></i>
+              </div>
+              <p>View, Modify and Track Orders</p>
+            </div>
+
+            <div class="div-rigr-bor"></div>
+            <div class=" divall-same div-address cursor_pointer" (click)="toggleAddress()">
+              <div class="div-myor">
+                <h5>My Addresses</h5>
+                <i class="fa-solid fa-angle-right"></i>
+              </div>
+              <p>Edit, Add or Remove Address</p>
+            </div>
+
+            <div class="div-rigr-bor"></div>
+            <div class=" divall-same div-address cursor_pointer" (click)="logout()">
+              <div class="div-myor">
+                <h5>Sign Out</h5>
+              </div>
+              <p>Click Here To Sign Out</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="toggleProfileView">
+    <!-- account.component.html -->
+    <div class="container mt-4 mb-3">
+      <div class="h5 mb-4">My Profile</div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">User Information</h5>
+          <form (ngSubmit)="saveUser()" #userForm="ngForm">
+            <div class="mb-3">
+              <label for="name" class="form-label">Name</label>
+              <input type="text" id="name" class="form-control" [ngModel]="user?.name"
+                (ngModelChange)="user.name = $event" name="name" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="text" id="email" class="form-control" [ngModel]="user?.email"
+                (ngModelChange)="user.email = $event" name="email" required>
+              <!-- <input type="email" id="email" class="form-control" [(ngModel)]="user.email" name="email" required> -->
+            </div>
+            <div class="mb-3">
+              <label for="mobileNumber" class="form-label">Mobile Number</label>
+              <input type="text" id="mobileNumber" class="form-control" [ngModel]="user?.mobileNumber"
+                (ngModelChange)="user.mobileNumber = $event" name="mobileNumber" required>
+              <!-- <input type="text" id="mobileNumber" class="form-control" [(ngModel)]="user.mobileNumber"
+              name="mobileNumber" required> -->
+            </div>
+            <button type="submit" class="btn save-btn active m-2">Save</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="toggleOrdersView">
+    <app-orders></app-orders>
+  </div>
+
+  <div *ngIf="toggleAddressView">
+    <div class="container mt-4 mb-3">
+      <div class="h5 mb-4">My Address</div>
+      <!-- <div class="h5 mb-4">My Profile</div> -->
+      <div class="card address-page-fill-detail">
+        <div class="card-body">
+          <h5 class="card-title">Manage Addresses</h5>
+
+          <div class="card mb-3">
+            <div class="card-body">
+              <div class="card-text"><a *ngIf="!add_address" class="btn text-primary fw-bold add_new_address"
+                  (click)="addAdress()"> +
+                  ADD A NEW ADDRESS </a>
+                <h6 *ngIf="add_address" class="text-primary add_new_address">ADD A NEW ADDRESS</h6>
+                <form *ngIf="add_address">
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="firstName">First Line <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="firstName" name="firstName"
+                          [(ngModel)]="newAddress.firstLine">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="secondName">Second Line</label>
+                        <input type="text" class="form-control" id="secondName" name="secondName"
+                          [(ngModel)]="newAddress.secondLine">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="city">City <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="city" name="city" [(ngModel)]="newAddress.city">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="state">State <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="state" name="state" [(ngModel)]="newAddress.state">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="country">Country</label>
+                        <input type="text" class="form-control" id="country" name="country"
+                          [(ngModel)]="newAddress.country" disabled>
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="pincode">Pincode <span class="text-danger">*</span></label>
+                        <input type="tel" pattern="[0-9]*" class="form-control" id="pincode" name="pincode"
+                          [(ngModel)]="newAddress.pincode" maxlength="6">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="mobileNumber">Mobile Number <span class="text-danger">*</span></label>
+                        <input type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]*" class="form-control"
+                          id="mobileNumber" name="mobileNumber" [(ngModel)]="newAddress.mobileNumber">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="newAlternateNumber">Alt. Number</label>
+                        <input type="tel" inputmode="numeric" maxlength="10" pattern="[0-9]*" class="form-control"
+                          id="newAlternateNumber" name="newAlternateNumber" [(ngModel)]="newAddress.alternateNumber">
+                      </div>
+                    </div>
+
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label for="email">Email Address <span class="text-danger">*</span></label>
+                        <input type="email" class="form-control" id="email" name="email"
+                          [(ngModel)]="newAddress.emailAddress">
+                      </div>
+                    </div>
+
+                    <!-- <div class="col-12">
+                      <div class="form-group mb-3">
+                        <input class="form-check-input" type="checkbox" value="" id="agreeCheck"
+                          [(ngModel)]="newAddress.isDefault">
+                        <label class="form-check-label" for="agreeCheck" style="font-weight: 500;">
+                          &nbsp; Save this information for faster check-out next time
+                        </label>
+                      </div>
+                    </div> -->
+                    <div class="col-md-12">
+                      <div class="btn-addresss-submit mb-3">
+                        <button class="cancel cursor_pointer" (click)="cancelNewAddress()"> Cancel </button>
+                        <button class="cont-save cursor_pointer" (click)="saveNewAddress()">Save 
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div class="card mb-2" *ngFor="let address of addresses">
+            <div class="card-body d-flex">
+              <div class="card-text">
+                <div class="fw-bold">{{ address.firstLine }} {{ address.secondLine }} </div>
+                <p>{{address.mobileNumber}} <br/>{{ address.city }},
+                  {{ address.state }}, {{ address.country }},
+                  &nbsp;{{address.pincode}}
+                </p>
+                <p>{{ address.emailAddress }}</p>
+              </div>
+
+              <div class="dropdown ms-auto">
+                <i class="fas fa-ellipsis-vertical cursor_pointer" data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <ul class="dropdown-menu">
+                  <!-- <li>
+                    <span class="dropdown-item">
+                      <i class="fas fa-pen mx-2"></i> Update
+                    </span>
+                  </li> -->
+                  <li (click)="deleteAddress(address)" class="cursor_pointer">
+                    <span class="dropdown-item">
+                      <i class="fas fa-trash mx-2"></i> Delete
+                    </span>
+                  </li>
+                </ul>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- for admin user -->
+<div class="main-content" *ngIf="isAdminUser">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12 p-0 m-0">
+        <div style="background-color: #f8f9fa; box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1);"
+          class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3">
+          <h5 class="m-1 p-1"> Account Summary</h5>
+          <div class="toggleOn">
+            <label class="switch">
+              <input type="checkbox"  [(ngModel)]="isToggled" (click)="onToggleClick()">
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+        
+      </div>
+      <nav class="col-md-2 col-lg-2 d-md-block sidebar">
+        <div class="position-sticky" style="background-color: #f8f9fa; box-shadow: 3px 0 5px rgba(0, 0, 0, 0.1);">
+          <div class="card text-center" style="height: 100%;">
+
+            <!-- Customer Details Section -->
+            <!-- <span *ngIf="!isAdminUser">
+              <div
+                class="h6 card-header bg-light text-dark text-center  d-flex justify-content-between align-items-center">
+                <span>Home </span>
+              </div>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleProfile()">My Profile</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleOrders()">My Orders</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="logout()">Sign out</button>
+              </ul>
+            </span> -->
+
+            <span *ngIf="isAdminUser">
+              <div
+                class="h6 card-header bg-light text-dark text-center  d-flex justify-content-between align-items-center">
+                <span>Administration </span>
+              </div>
+              <div class="list-group card-header-dark list-group-flush">
+                <span>My Account </span>
+              </div>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleProfile()">My
+                  Profile</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" disabled (click)="toggleClientProfile()">My
+                  Business Profile</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleManageAdminUsers()">Admin
+                  Users</button>
+              </ul>
+
+              <!-- configuration section-->
+              <div class="list-group card-header-dark list-group-flush">
+                <span>Configuration </span>
+              </div>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="togglePlatform()">Platform</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="togglePayment()">Payment</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleSms()">Sms</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleShipping()">Shipping</button>
+              </ul>
+
+              <!-- customer section -->
+              <div class="list-group card-header-dark list-group-flush">
+                <span>Customers </span>
+              </div>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleCustomers()">My Customers</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" disabled (click)="toggleCustomerCart()">View
+                  Items in Customer Cart</button>
+              </ul>
+              <div class="list-group card-header-dark list-group-flush">
+                <span>Inventory </span>
+              </div>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleCategories()">Categories</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleManageItems()">Items</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleBoughtTogether()">Bought
+                  Together</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleAllOrders()">All Orders</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleStock()">View Stock</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action"
+                  (click)="toggleConsignment()">Consignments</button>
+              </ul>
+              <div class="list-group card-header-dark list-group-flush">
+                <span>Promotions </span>
+              </div>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleRecommendedItems()">Recommended
+                  Items</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleManageCoupon()">Coupons</button>
+              </ul>
+              <ul class="list-group list-group-flush">
+                <button class="list-group-item list-group-item-action" (click)="toggleManageNotify()">Notify Me</button>
+              </ul>
+
+              <div class="list-group card-header-dark list-group-flush">
+                <span><button class="list-group-item list-group-item-action" (click)="logout()">Sign out</button>
+                </span>
+              </div>
+            </span>
+          </div>
+        </div>
+      </nav>
+
+
+      <!-- Content Area -->
+      <main class="col-md-10 col-lg-10 d-md-block">
+        <div *ngIf="toggleOrdersView">
+          <app-orders></app-orders>
+        </div>
+
+        <div *ngIf="toggleManageAdminUsersView">
+          <app-admin-users></app-admin-users>
+        </div>
+
+        <!-- configuration section component -->
+        <!-- start -->
+        <div *ngIf="togglePlatformView">
+          <app-platform></app-platform>
+        </div>
+        <div *ngIf="togglePaymentView">
+          <app-payment></app-payment>
+        </div>
+        <div *ngIf="toggleSmsView">
+          <app-sms></app-sms>
+        </div>
+        <div *ngIf="toggleShippingView">
+          <app-shipping></app-shipping>
+        </div>
+        <!-- end -->
+
+
+        <div *ngIf="toggleStockView">
+          <app-stocks></app-stocks>
+        </div>
+        <div *ngIf="toggleManageItemsView">
+          <app-toy-list></app-toy-list>
+        </div>
+        <div *ngIf="toggleboughtTogetherView">
+          <app-bought-together></app-bought-together>
+        </div>
+        <div *ngIf="toggleConsignmentView">
+          <app-stock-consignment></app-stock-consignment>
+        </div>
+        <div *ngIf="toggleManageCouponView">
+          <app-coupon></app-coupon>
+        </div>
+        <div *ngIf="toggleManageNotifyMeView">
+          <app-notify-me></app-notify-me>
+        </div>
+
+        <div *ngIf="toggleAllOrdersView">
+          <app-admin-orders></app-admin-orders>
+        </div>
+        <div *ngIf="toggleCategoriesView">
+          <app-admin-category></app-admin-category>
+        </div>
+
+        <div *ngIf="toggleCustomersView">
+          <app-user-table></app-user-table>
+        </div>
+
+        <div *ngIf="toggleRecommendedItemsView">
+          <app-recommended-items></app-recommended-items>
+        </div>
+
+
+
+
+
+        <div *ngIf="toggleProfileView">
+          <!-- account.component.html -->
+          <div class="container mt-5">
+            <div class="h5 mb-4">My Profile</div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title">User Information</h5>
+                <form (ngSubmit)="saveUser()" #userForm="ngForm">
+                  <div class="mb-3">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" id="name" class="form-control" [ngModel]="user?.name"
+                      (ngModelChange)="user.name = $event" name="name" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="text" id="email" class="form-control" [ngModel]="user?.email"
+                      (ngModelChange)="user.email = $event" name="email" required>
+                    <!-- <input type="email" id="email" class="form-control" [(ngModel)]="user.email" name="email" required> -->
+                  </div>
+                  <div class="mb-3">
+                    <label for="mobileNumber" class="form-label">Mobile Number</label>
+                    <input type="text" id="mobileNumber" class="form-control" [ngModel]="user?.mobileNumber"
+                      (ngModelChange)="user.mobileNumber = $event" name="mobileNumber" required>
+                    <!-- <input type="text" id="mobileNumber" class="form-control" [(ngModel)]="user.mobileNumber"
+                      name="mobileNumber" required> -->
+                  </div>
+                  <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+</div>

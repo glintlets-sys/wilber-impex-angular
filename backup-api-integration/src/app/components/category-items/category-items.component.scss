@@ -1,0 +1,54 @@
+.example-viewport {
+    height:1000px; /* Set according to your layout */
+    width: 100%; /* Adjust width as necessary */
+   // border: 1px solid #ccc; /* Optional styling */
+   // overflow: auto; /* Handle overflow */
+    display: flex;
+    flex-wrap: wrap; /* Ensure that items can wrap into new lines */
+
+  }
+  
+  .loading-indicator {
+    text-align: center;
+    padding: 10px;
+  }
+
+  .categories-section-page .container-fluid-set {
+    padding: 5px 10px 10px;
+}
+
+.item-card {
+    width:300px;
+    height:400px;
+}
+
+.item-container {
+    height: 500px; /* Set a height according to your layout */
+    overflow-y: auto; /* Enable vertical scrolling */
+  }
+
+
+  
+.row {
+  --bs-gutter-x: 0.1rem !important;
+}
+
+.product-card {
+  padding: 0px 1px 0px 0px;
+}
+
+.div-trees {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0px !important;
+  padding: 0px 2px 0px;
+}
+
+@media(max-width: 590px) {
+  .categories-section-page .container-fluid-set {
+    padding: 0px 2px 0px;
+  }
+  
+}
+

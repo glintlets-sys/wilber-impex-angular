@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-12">
+      <div class="card shadow">
+        <div class="border-0 d-flex flex-wrap justify-content-between align-items-center m-3">
+          <h3 class="panel-title mb-0">
+            <span class="align-text-top">Stocks</span>
+          </h3>
+        </div>
+
+        <div class=" row m-3">
+          <div class="col-4">
+            <input type="text" class="form-control " placeholder="Search stocks" [(ngModel)]="searchStock"
+              (keyup)="filterData()">
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="table align-items-center">
+            <thead class="thead-light">
+              <tr>
+                <th>Item Name</th>
+                <th>Brand</th>
+                <th>Quantity</th>
+                <!-- <th>Locked</th> -->
+                <th>Active</th>
+                <th>In Stock</th>
+                <th>In Cart</th>
+                <th>Out of Stock</th>
+              </tr>
+            </thead>
+            <tbody class="list">
+              <tr *ngFor="let item of itemStocksArr| paginate
+              : {
+                  itemsPerPage: tableSize,
+                  currentPage: page,
+                  totalItems: count
+                };">
+                <td>{{ item.name }}</td>
+                <td>{{item?.brand?item?.brand:'Unknown' }}</td>
+                <td>{{ item.quantity }}</td>
+                <!-- <td>{{ item.locked }}</td> -->
+                <td>{{ item.active }}</td>
+                <td>{{ item.ready }}</td>
+                <td>{{ item.addedToCart }}</td>
+                <td>{{ item.sold }}</td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="itemStocksArr?.length==0">
+            <h3 class="no-record-found">No Record Found.</h3>
+          </div>
+          <div *ngIf="itemStocksArr?.length>0" class="d-flex justify-content-center" style="padding: 15px">
+            <div class="item_count">
+              Total Items: {{ count }}
+            </div>
+            <pagination-controls (pageChange)="page = $event" class="float-right"></pagination-controls>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

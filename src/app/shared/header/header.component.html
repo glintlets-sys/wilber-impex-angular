@@ -41,8 +41,8 @@
                             Products
                         </a>
                         <ul class="dropdown-menu" [class.show]="isDropdownOpen">
-                            <li><a class="dropdown-item" routerLink="/stone-solutions">Industrial Solutions</a></li>
-                            <li><a class="dropdown-item" routerLink="/stone-solutions">Stone Solutions</a></li>
+                            <li><a class="dropdown-item" routerLink="/stone-solutions" (click)="closeDropdown()">Industrial Solutions</a></li>
+                            <li><a class="dropdown-item" routerLink="/stone-solutions" (click)="closeDropdown()">Stone Solutions</a></li>
                         </ul>
                     </li>
                     <li class="nav-item">

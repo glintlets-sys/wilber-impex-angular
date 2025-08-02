@@ -1,0 +1,40 @@
+.on-side-pricesummary .payment-section-add .product-imgtext {
+    display: flex;
+    gap: 5px;
+    border-bottom: 1px solid black;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px
+}
+
+@media only screen and (max-width: 567px) {
+    .on-side-pricesummary .payment-section-add .product-imgtext {
+        padding: 0px 10px;
+    }
+
+    .justify-address {
+        padding: 0px 10px
+    }
+}
+
+.btn-address {
+   
+    background-color:transparent !important;
+    color:#d41872;
+    border: 1px solid #d41872;
+}
+
+
+.btn-address:hover {
+    
+    background-color: #d41872 !important;
+    color:white;
+    
+}
+
+.justify-address {
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 10px
+}
+

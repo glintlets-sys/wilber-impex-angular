@@ -1,0 +1,62 @@
+.icon-selected {
+    background-color: #4CAF50; /* Green background, change color as needed */
+    border-radius: 50%; /* Circular background */
+    padding: 5px; /* Padding around the icon */
+    color: white; /* White icon color */
+}
+
+.btn-delete {
+    color: #d41872!important; /* Style for delete button */
+}
+
+.position-relative {
+    position: relative;
+}
+
+.position-absolute {
+    position: absolute;
+}
+
+.top-0 {
+    top: 0;
+}
+
+.end-0 {
+    right: 0;
+}
+
+.m-2 {
+    margin: 0.5rem; /* Adjust margin as needed */
+}
+
+.address-card {
+    height: 150px; /* Adjust the height as needed */
+    overflow: auto; /* Ensures content fits within the card */
+  }
+
+.delivery-address-1 {
+    display: flex;
+    align-items:center;
+    justify-content: space-between;
+}
+
+
+.form-check-input:checked {
+    background-color: #d41872 !important;
+    border-color: #d41872 !important;
+}
+
+.btn-cart {
+   
+    background-color:transparent !important;
+    color:#d41872;
+    border: 1px solid #d41872;
+}
+
+
+.btn-cart:hover {
+    
+    background-color: #d41872 !important;
+    color:white;
+    
+}

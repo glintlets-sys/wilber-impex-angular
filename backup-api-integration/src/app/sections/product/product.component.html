@@ -1,0 +1,350 @@
+<div class="single-productpagesection">
+
+  <div class="container-fluid">
+    <app-bread-crumb [items]="breadcrumbItems"></app-bread-crumb>
+    <div class="contain-box">
+      <div class="row">
+        <div class="col-xl-6 col-lg-6 col-md-12">
+          <div class="image-slider">
+
+            <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
+              <div class="swiper-wrapper govindone">
+                <div *ngFor="let photoLink of getItem()?.photoLinks; let i = index" carouselSlide [id]="photoLink"
+                  class="swiper-slide">
+                  <img [src]="getPhotoLink(i) || assets/img/empty-image.jpg" alt="">
+                </div>
+
+              </div>
+              <div class="swiper-button-next"></div>
+              <div class="swiper-button-prev"></div>
+            </div>
+            <div thumbsSlider="" class="swiper mySwiper">
+              <div class="swiper-wrapper govindtwo">
+                <div *ngFor="let photoLink of getItem()?.photoLinks; let i = index" carouselSlide [id]="photoLink"
+                  class="swiper-slide ">
+                  <img [src]="getPhotoLink(i) || assets/img/empty-image.jpg" alt="">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-6 col-lg-6 col-md-12">
+          <div class="section-right-product-infor">
+            <div class="content">
+
+
+              <h3 class="fw-bold">{{getItem()?.name}}</h3>
+              <div class="stars">
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 1, 'fas': itemRatings?.averageRating >= 1}"></i>
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 2, 'fas': itemRatings?.averageRating >= 2}"></i>
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 3, 'fas': itemRatings?.averageRating >= 3}"></i>
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 4, 'fas': itemRatings?.averageRating >= 4}"></i>
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 5, 'fas': itemRatings?.averageRating >= 5}"></i>
+                <span>&nbsp;{{ itemRatings?.totalRatings }} Reviews</span>
+              </div>
+              <div *ngIf="hasDiscount(item?.discount)" class="singleproduct-price">
+                <span class="real-price">Rs {{calculateDiscountedPrice(item?.price.amount,
+                  item.discount?.discountPercent)}} </span>
+                <span class="less-price">Rs {{ item?.price.amount}}</span>
+                <span class="offerpec">&nbsp;{{item.discount?.discountPercent}}% off</span>
+              </div>
+              <div *ngIf="!hasDiscount(item?.discount)" class="singleproduct-price">
+                <span class="real-price">Rs {{ item?.price.amount}}</span>
+              </div>
+              <div class="taxsib">MRP Incl. All Taxes</div>
+              <div class="in-avlable-stock">
+                <p>Availability : <span>{{(getStockCount()>0)? "In Stock ("+ getStockCount() +")": "Out of Stock"}}</span>
+                  &nbsp;
+                  <span class="cursor_pointer">
+                    <img style="width: 30px;height: 20px;" src="assets/icons/icons-16.svg" *ngIf="validateWishList()"
+                      (click)="favourite(1)">
+                    <img style="width: 30px;height: 20px;" src="assets/icons/icons-12.svg" *ngIf="!validateWishList()"
+                      (click)="favourite(0)">
+                  </span></p>
+              </div>
+              <div class="product-descrt">
+                <p>{{getItem()?.summary}}</p>
+              </div>
+
+              <div *ngIf="getItem()?.variations?.length > 0" class="descP">
+                <div class="div-color">
+                  <span *ngFor="let variation of getItem().variations" >
+                    <button *ngIf="(variation.color !== '') && (variation.color !== null) " [id]="variation?.color?.toLowerCase()" 
+                    [ngClass]="{'selected': selectedVariation?.color === variation?.color}"
+                    (click)="selectVariation(variation)">
+                    </button>
+                  </span>
+                  
+              <!--    <button id="red"></button>
+                  <button id="green"></button>
+                  <button id="yellow"></button>
+                  <button id="blue"></button>-->
+                 </div>
+              </div>
+              <div class="insingleproductpagecount">
+                <div class="div-qty">
+                  <p>QTY</p>
+                  <div class="product-count">
+                    <button class="button-count" (click)="decreaseQuantity()"
+                      [disabled]="(getStockCount()<=0)"><span>-</span></button>
+                    <input type="text" readonly="" class="number-product" [(ngModel)]="quantity">
+                    <button class="button-count" (click)="increaseQuantity()"
+                      [disabled]="(getStockCount()<=0)"><span>+</span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="add-to-buy add-to-com">
+              <!--  <button *ngIf="!hasUserLoggedIn() " (click)="navigateToLogin()" class="btn active m-2"
+                  [disabled]="(getStockCount()<=0)">Buy Now</button>
+                <button *ngIf="!hasUserLoggedIn()" (click)="navigateToLogin()" class="btn active"
+                  [disabled]="(getStockCount()<=0)">Add to cart</button>-->
+                <button (click)="navigateToCheckout()" class="btn active m-2"
+                  [disabled]="(getStockCount()<=0)">Buy Now</button>
+                <button *ngIf="!isAddedToCart()" (click)="addToCart()" class="btn active test"
+                  [disabled]="(getStockCount()<=0)">Add to cart</button>
+                <button *ngIf="isAddedToCart()" class="btn btn-custom text-dark"
+                  [routerLink]="['/checkout']"><i class="fa-solid fa-check"></i> View in Cart </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Additional Information -->
+    <div class="additional-information-product">
+      <h5 class="additionalhead">Additional <strong>Information</strong></h5>
+      <div class="coloos">
+        <div class="row">
+          <div *ngFor="let details of getItem()?.productDescription; let i = index" class="col-lg-6">
+            <div>
+              <h5 class="fw-bolder">{{getItem()?.productDescription[i].heading}}</h5>
+              <p>
+                {{getItem()?.productDescription[i].text}}
+              </p>
+              <br />
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="(item?.tableData!==null) && (getTableData(item).length >0) ">
+      <div class="container mt-4 table-container">
+        <div class="row">
+          <h5 class="fw-bolder">More Details</h5>
+          <div class="col-12">
+            <table class="table table-bordered" styele="max-width:400px">
+              <tbody>
+               <tr *ngFor="let entry of getTableData(item)">
+                <td style="width:30%"><p class="boldP">{{entry.key}}</p></td>
+                <td>{{entry.value}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+       
+      </div>
+
+    </ng-container>
+
+    <!-- display video -->
+    <ng-container *ngIf="item?.videoLinks.length > 0">
+      <div class="additional-information-product">
+        <h5 class="additionalhead"><strong>Video</strong></h5>
+        <div class="coloos">
+          <div class="row">
+            <div *ngFor="let video of video_list; let i = index">
+              <div class="row mb-3">
+                <div class="col-12">
+                  <div class="video-container" [style.paddingTop]="calculateHeight()">
+                    <iframe [class.thumbnail]="thumbnail" [src]="video?.embedLink" width="100%" height="100%"
+                      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen class="mt-2"></iframe>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <!-- Rating and Reviews -->
+    <div class="rattingandreviewsection" *ngIf="reviewComment.length>0">
+      <div class="row">
+        <div class="col-lg-12">
+          <h5 class="reviehead">Rating and Reviews</h5>
+        </div>
+
+        <div class="col-lg-3 col-md-4 col-12">
+          <div class="well well-sm">
+            <div class="  revieww">
+              <h1 class="rating-num">{{ itemRatings?.averageRating }}</h1>
+              <div class="rating">
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 1, 'fas': itemRatings?.averageRating >= 1}">
+                </i>
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 2, 'fas': itemRatings?.averageRating >= 2}">
+                </i>
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 3, 'fas': itemRatings?.averageRating >= 3}">
+                </i>
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 4, 'fas': itemRatings?.averageRating >= 4}">
+                </i>
+                <i class="fa-star"
+                  [ngClass]="{'far': itemRatings?.averageRating < 5, 'fas': itemRatings?.averageRating >= 5}">
+                </i>
+              </div>
+            </div>
+
+            <div class="rating-desc">
+              <div *ngIf="itemRatings?.averageRating >= 5" class="progress-bar-review">
+                <div class="number-forratting"><span>5 <i class="fas fa-star  "></i> </span></div>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                    aria-valuemax="100" style="width: 100%">
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="itemRatings?.averageRating >= 4" class="progress-bar-review">
+                <div class="number-forratting"><span>4 <i class="fas fa-star"></i> </span></div>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0"
+                    aria-valuemax="100" style="width: 80%">
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="itemRatings?.averageRating >= 3" class="progress-bar-review">
+                <div class="number-forratting"><span>3 <i class="fas fa-star"></i> </span></div>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-info-medi" role="progressbar" aria-valuenow="80"
+                    aria-valuemin="0" aria-valuemax="100" style="width: 60%">
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="itemRatings?.averageRating >= 2" class="progress-bar-review">
+                <div class="number-forratting"><span>2 <i class="fas fa-star"></i> </span></div>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-warning " role="progressbar" aria-valuenow="20"
+                    aria-valuemin="0" aria-valuemax="100" style="width: 40%">
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="itemRatings?.averageRating >= 1" class="progress-bar-review">
+                <div class="number-forratting"><span>1 <i class="fas fa-star"></i> </span></div>
+                <div class="progress">
+                  <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0"
+                    aria-valuemax="100" style="width: 20%">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- rating and reviews -->
+        <div class="col-lg-9 col-md-8 col-12" *ngIf="reviewComment.length>0">
+          <div class="customer-review-singlepage">
+            <div class="headin-nuber-review">
+              <p>Reviews <span>({{ itemRatings?.totalRatings }})</span></p>
+            </div>
+            <ng-container *ngFor="let review of reviewComment; let i = index">
+              <div class="show-customer-review" *ngIf="showAllReviews || i < 3">
+                <div class="rattingby-review">
+                  <div [class.divdk]="true" [class.fiveratting]="review?.rating > 2"
+                    [class.fourratting]="review?.rating <= 2">
+                    {{ review?.rating }} <i class="fas fa-star"></i>
+                  </div>
+                </div>
+                <div class="content-withimg">
+                  <p>{{ review?.comment }}</p>
+                  <ul class="images">
+                    <li *ngFor="let images of review.imageUrls">
+                      <img [src]="images" alt="" width="80px">
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </ng-container>
+            <div *ngIf="showViewAllButton">
+              <a class="btn text-primary fw-medium fw-bold colorPink" (click)="toggleShowAll()">
+                {{ showAllReviews ? 'View Less Reviews' : 'View ' + reviewComment?.length + ' Reviews' }}
+              </a>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+
+  <!-- bought together -->
+  <ng-container *ngIf="bought_together_list?.length>0">
+    <app-landing-bought-together></app-landing-bought-together>
+  </ng-container>
+
+  <!-- Similar and Related Products -->
+  <!-- similar and related item list array -->
+  <ng-container *ngIf="combinedList && combinedList.length > 0">
+    <div class="suggested-for-you-section">
+      <div class="container">
+        <div class="suggest-package-for-you">
+          <div class="heading-section">
+            <p>Similar and Related <span> Products </span></p>
+          </div>
+          <div class="top-destination-sub">
+            <div class="swiper trendingswiper">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide" *ngFor="let combineItem of combinedList" swiperSlide>
+                  <app-catalog-item [item]="combineItem"></app-catalog-item>
+                </div>
+              </div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- previous view item -->
+  <!-- Previously Viewed By You -->
+  <!--<ng-container *ngIf="uniquePreviewItem && uniquePreviewItem.length > 0">
+    <div class="suggested-for-you-section">
+      <div class="container">
+        <div class="suggest-package-for-you">
+          <div class="heading-section">
+            <p>Previously Viewed<span> By You </span></p>
+          </div>
+          <div class="top-destination-sub">
+            <div class="swiper trendingswiper">
+              <div class="swiper-wrapper">
+                <div *ngFor="let previewItem of uniquePreviewItem" class="swiper-slide" swiperSlide>
+                  <app-catalog-item [item]="previewItem"></app-catalog-item>
+                </div>
+              </div>
+              <div class="swiper-button-prev"></div>
+              <div class="swiper-button-next"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>-->
+
+</div>

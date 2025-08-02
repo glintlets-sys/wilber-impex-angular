@@ -1,0 +1,76 @@
+body {
+    font-family: sans-serif;
+}
+
+.state-ut {
+    margin-top: -18px;
+}
+
+.table-one table,
+th,
+td {
+    border: 1.5px solid black;
+    border-collapse: collapse;
+    padding: 4px;
+}
+
+th {
+    padding: 10px 5px;
+}
+
+td {
+    padding: 10px 5px;
+
+}
+
+.table-one {
+    padding: 5px 4%;
+}
+
+.table-on {
+    padding: 5px 4%;
+}
+
+.back-bg {
+    background: #c5c5c5;
+}
+
+span {
+    font-size: 14px;
+}
+
+.div-footer span {
+    font-size: 15px;
+}
+
+.div-footer th {
+    padding: 4px 4px 4px 10px;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: auto;
+    /* margin: 0;   */
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+
+.fgj {
+    font-size: 15px;
+}
+
+@media only screen and (max-width: 600px) {
+    .fgj {
+        font-size: 12px;
+    }
+}
+
+.printwidth {
+    width: 940px;
+}

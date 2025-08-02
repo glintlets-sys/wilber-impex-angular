@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CartService, CartItem } from '../services/cart.service';
-import { AuthService, User } from '../services/auth.service';
+import { AuthService } from '../services/auth.service';
+import { User } from '../services/interfaces';
 import { AddressService, Address } from '../services/address.service';
 import { Subscription } from 'rxjs';
 import { HeaderComponent } from '../shared/header/header.component';
@@ -39,17 +40,21 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       this.totalPrice = cart.totalPrice;
     });
     
-    this.userSubscription = this.authService.currentUser$.subscribe(user => {
-      this.currentUser = user;
+    this.userSubscription = this.authService.userDetails.subscribe(userDetails => {
+      if (userDetails && userDetails !== '') {
+        this.currentUser = userDetails;
+      }
     });
   }
 
   ngOnInit(): void {
     // Check if user is logged in
-    if (!this.authService.isLoggedIn()) {
-      this.router.navigate(['/login']);
-      return;
-    }
+    this.authService.isUserLoggedIn.subscribe(isLoggedIn => {
+      if (isLoggedIn !== 'true') {
+        this.router.navigate(['/login']);
+        return;
+      }
+    });
 
     // Subscribe to address changes
     this.addressService.addresses$.subscribe(addresses => {

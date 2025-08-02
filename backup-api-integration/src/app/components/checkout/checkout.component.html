@@ -1,0 +1,305 @@
+<section *ngIf="paymentWizard==='cart'" class="pt-5 mb-4 card-pagesection">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-8 mx-auto">
+                <div class="row aiz-steps  ">
+                    <div class="col active">
+                        <div class="text-center text-primary">
+                            <i class="la-3x mb-2 fa-solid fa-cart-shopping"></i>
+                            <h3 class="fs-14 fw-600 d-none d-lg-block"> CART</h3>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-center">
+                            <i class="la-3x mb-2 fa-solid fa-earth-asia" (click)="redirectToGetLabel('address')"></i>
+                            <h3 class="fs-14 fw-600 d-none d-lg-block opacity-50">ADDRESS</h3>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="text-center">
+                            <i class="la-3x mb-2  fa-solid fa-credit-card"></i>
+                            <h3 class="fs-14 fw-600 d-none d-lg-block opacity-50">PAYMENT</h3>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="row pt-5 mb-3">
+            <div class="col-xl-8 col-md-7 col-12">
+                <div *ngFor="let cartItem of cartItems" class="summary-product-card shadow-sm">
+                    <div class="setj">
+                        <div class="left-side-text" style="width:70%">
+                            <a [routerLink]="['/product', cartItem.itemId]"
+                                style="text-decoration: none; color: inherit;">
+                                <h3>{{ cartItem.name }}</h3>
+                            </a>
+                            <div *ngIf="getVariation(cartItem)?.color !== null" class="descP">
+                                <div class="div-color">
+                                    Colour: <button [id]="getVariation(cartItem).color.toLowerCase()" class="color-circle"></button>
+                                </div>
+                            </div>
+
+                            <div *ngIf="cartItem.discount>0" class="div-price">
+                                <span class="real-price">{{ ((cartItem.price.amount * cartItem.quantity)
+                                    *((100-cartItem.discount)/100)) | currency: cartItem.price.currency }}</span>
+                                &nbsp;
+
+                                <span class="less-price">{{ cartItem.price.amount * cartItem.quantity | currency:
+                                    cartItem.price.currency }}</span>
+                                &nbsp; <span class="offerpec">{{ cartItem.discount}}% off</span>
+                            </div>
+
+                            <div *ngIf="!(cartItem.discount>0)" class="div-price">
+                                <span class="real-price">{{ ((cartItem.price.amount * cartItem.quantity)
+                                    *((100-cartItem.discount)/100)) | currency: cartItem.price.currency }}</span>
+                                &nbsp;
+                            </div>
+                            <ng-container *ngIf="!getCouponCodeApplied()">
+                                <div *ngIf="cartItem.discount > 0" class="you-save">
+                                    You saved Rs {{ ((cartItem.price.amount * cartItem.quantity) *
+                                    (cartItem.discount / 100)).toFixed(2) }}
+                                </div>
+                               
+                            </ng-container>
+                           
+
+                            <div class="multu-select">
+                                <div class="dropdown-s">
+                                    <div class="section-right-product-infor">
+                                        <div class="content">
+                                            <div class="insingleproductpagecount">
+                                                <div class="div-qty">
+                                                    <p>QTY</p>
+                                                    <div class="product-count">
+                                                        <button class="button-count"
+                                                            (click)="decrementQuantity(cartItem)"><span>-</span></button>
+                                                        <input type="text" readonly="" class="number-product"
+                                                            [(ngModel)]="cartItem.quantity">
+                                                        <button class="button-count"
+                                                            (click)="incrementQuantity(cartItem)"><span>+</span></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                           
+
+                        </div>
+                        <div class="right-side-image" style="width:30%">
+                            <a [routerLink]="['/product', cartItem.itemId]">
+                                <div class="image">
+                                    <img class="d-block" [src]="fetchImageForItem(cartItem.itemId)" alt="">
+                                </div>
+                            </a>
+                          
+                        </div>
+                    </div>
+                    <div class="move-remove">
+                        <div class="div-ss div-remove">
+                            <a>
+                                <p (click)="removeItem(cartItem)">Remove</p>
+                            </a>
+                        </div>
+                        <div class="div-ss div-movewish">
+                            <a>
+                                <p (click)="moveToWishList(cartItem)">Move to Wishlist</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wishlist -->
+                <ng-container *ngIf="wishList?.length>0">
+                    <div class="card rounded">
+                        <div class="card-title wishCard rounded-top">
+                            <h4 class="m-2 wishlist">WishList ({{wishList?.length}})</h4>
+                        </div>
+                        <div *ngFor="let cartItem of wishList" class="summary-product-card shadow-sm">
+                            <div class="setj">
+                                <div class="left-side-text">
+                                    <a [routerLink]="['/product', cartItem.itemId]"
+                                        style="text-decoration: none; color: inherit;">
+                                        <h3>{{ cartItem.name }}</h3>
+                                    </a>
+
+                                    <div *ngIf="cartItem.discount>0" class="div-price">
+                                        <span class="real-price">{{ ((cartItem.price.amount * cartItem.quantity)
+                                            *((100-cartItem.discount)/100)) | currency: cartItem.price.currency
+                                            }}</span>
+                                        &nbsp;
+
+                                        <span class="less-price">{{ cartItem.price.amount * cartItem.quantity |
+                                            currency:
+                                            cartItem.price.currency }}</span>
+                                        &nbsp; <span class="offerpec">{{ cartItem.discount}}% off</span>
+                                    </div>
+
+                                    <div *ngIf="!(cartItem.discount>0)" class="div-price">
+                                        <span class="real-price">{{ ((cartItem.price.amount * cartItem.quantity)
+                                            *((100-cartItem.discount)/100)) | currency: cartItem.price.currency
+                                            }}</span>
+                                        &nbsp;
+                                    </div>
+                                    <ng-container *ngIf="!getCouponCodeApplied()">
+                                        <div *ngIf="cartItem.discount > 0" class="you-save">
+                                            You saved Rs {{ ((cartItem.price.amount * cartItem.quantity) *
+                                            (cartItem.discount / 100)).toFixed(2) }}
+                                        </div>
+                                    </ng-container>
+
+                                    <div class="multu-select">
+                                        <div class="dropdown-s">
+                                            <div class="section-right-product-infor">
+                                                <div class="content">
+                                                    <div class="insingleproductpagecount">
+                                                        <div class="div-qty">
+                                                            <p>QTY</p>
+                                                            <div class="product-count">
+                                                                <button class="button-count"
+                                                                    disabled><span>-</span></button>
+                                                                <input type="text" readonly="" class="number-product"
+                                                                    [(ngModel)]="cartItem.quantity">
+                                                                <button class="button-count"
+                                                                    disabled><span>+</span></button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="right-side-image">
+                                    <a [routerLink]="['/product', cartItem.itemId]">
+                                        <div class="image">
+                                            <img class="d-block" [src]="fetchImageForItem(cartItem.itemId)" alt="">
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="move-remove">
+                                <div class="div-ss div-remove">
+                                    <a>
+                                        <p (click)="moveToCart(cartItem)">Move To Cart</p>
+                                    </a>
+                                </div>
+                                <div class="div-ss div-movewish">
+                                    <a>
+                                        <p (click)="removeFromWishList(cartItem)">Remove From WishList</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+            <!-- Calculation section -->
+            <div class="col-xl-4 col-md-5 col-12">
+                <div class="on-side-pricesummary sticky">
+                    <!-- Apply Coupon -->
+                    <div class="div-apply-cupon shadow-sm">
+                        <input type="text" placeholder="Apply Coupon/ Gift Card/ Referral" name="couponCode"
+                            id="couponCode" [(ngModel)]="couponCode" [disabled]="getCouponCodeApplied()">
+                        <button *ngIf="getCouponCodeApplied()" class="btn" (click)="clearCouponCode()"><i
+                                class="fas fa-times text-danger"></i></button>
+                        <div *ngIf="!getCouponCodeApplied()" class="btn-apply" (click)="applyCouponCode()">Apply Coupon
+                        </div>
+                    </div>
+
+                    <!-- PRICE SUMMARY -->
+                    <div class="price-summary-pro shadow-sm">
+                        <div class="tittlesu">
+                            PRICE SUMMARY
+                        </div>
+                        <div class="info-pri">
+                            <p class="border-sj"><span>Total MRP(inc. of All taxes)</span> <span>{{ getTotalMrpAmount()
+                                    | currency : '&#8377;' }}</span></p>
+
+                            <p class="border-sj"><span>Discount:</span>
+                                <ng-container>
+                                    <span style="color: #B53030;">
+                                        {{ getDiscountAmount() |currency : '&#8377;' }}
+                                    </span>
+                                </ng-container>
+                            </p>
+
+                            <p *ngIf="getCouponCodeApplied()" class="border-sj"><span>Coupon Discount:</span>
+                                <ng-container>
+                                    <span style="color: #B53030;"> {{ getCouponDiscountAmount()|
+                                        currency : '&#8377;' }}</span>
+                                </ng-container>
+                            </p>
+
+                            <p class="border-sj"><span>Shipping:</span> <span style="color: #B53030;">Free</span></p>
+
+                            <p class="border-sj"><span>Subtotal:</span> <span>{{ getSubTotalAmount() | currency :
+                                    '&#8377;'
+                                    }}</span></p>
+                            <p class="border-sj"><span>GST (Tax):</span> <span>{{ getTotalTax() | currency :
+                                    '&#8377;'
+                                    }}</span></p>
+
+                            <p><span>Total: </span><span><strong>{{ getTotalAmount() | currency : '&#8377;'
+                                        }}</strong></span></p>
+                            <p> <span class="continueok"> <a (click)="continueToAddress()"
+                                        style="color: white;">Continue
+                                    </a></span></p>
+
+                        </div>
+
+                        <div class="securepayment">
+                            <div class="box-abuttransfact">
+                                <div class="image">
+                                    <img src="assets/img/image/cartVector.svg" alt="">
+                                    <h4>Secure Payment</h4>
+                                    <p>100% Secure Payments</p>
+                                </div>
+                            </div>
+                            <div class="box-abuttransfact">
+                                <div class="image">
+                                    <img src="assets/img/image/cartVector (1).svg" alt="">
+                                    <h4>24/7 Support</h4>
+                                    <p>Online Support 24/7</p>
+                                </div>
+                            </div>
+                            <div class="box-abuttransfact">
+                                <div class="image">
+                                    <img src="assets/img/image/cartVector (2).svg" alt="">
+                                    <h4>Free Shipping</h4>
+                                    <p>On order over ₹101</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="div-securepayment-option">
+                            <div class="you-pay-using">
+                                <hr>
+                                <p>Pay using</p>
+                            </div>
+                            <div class="option-option-for-pay">
+                                <img src="assets/img/image/Money.svg" alt="">
+                                <img src="assets/img/image/visa.png" alt="">
+                                <img src="assets/img/image/mastercard.png" alt="">
+                                <img src="assets/img/image/phonepay.svg" alt="">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div *ngIf="paymentWizard==='address'" class="col-lg-12 col-md-12 col-sm-12 mb-2">
+    <app-delivery-address [address]="deliveryAddress"
+        (set_cart_label)="redirectToGetLabel($event)"></app-delivery-address>
+</div>
+
+
+<div *ngIf="paymentWizard==='payment'" class="col-lg-12 col-md-12 col-sm-12 mb-2">
+    <app-payment (set_cart_label)="redirectToGetLabel($event)"></app-payment>
+</div>

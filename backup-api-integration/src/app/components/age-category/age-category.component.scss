@@ -1,0 +1,205 @@
+.image-container {
+  position: relative;
+  text-align: center;
+  max-height: 80%;
+  flex: 1 0 auto;
+  margin-bottom: 50px;
+}
+
+.image-container img {
+  max-width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  background-color: #fff;
+  border: 1px solid #efe7dd;
+  transition: all 500ms ease 0s;
+}
+
+
+/* Default max-height for mobile devices */
+.image-container img {
+  max-height: 250px;
+}
+
+/* Medium devices (tablets, less than 768px) */
+@media (min-width: 576px) {
+  .image-container img {
+      max-height: 250px;
+  }
+}
+
+/* Large devices (desktops, less than 992px) */
+@media (min-width: 768px) {
+  .image-container img {
+      max-height: 250px;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 992px) {
+  .image-container img {
+      max-height: 300px;
+  }
+}
+
+
+.image-container img:hover{
+  opacity: 0.6;
+}
+.card-body {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 10px;
+  color: #fff; /* Set the color for the text */
+  overflow-y: auto;
+}
+
+
+.rounded-image {
+  width: auto; /* Adjust as needed */
+  height: 120px; /* Adjust as needed */
+  //border-radius: 100%;
+  overflow: hidden;
+  margin: auto;
+}
+
+.rounded-circle {
+  border-radius: 10%!important;
+}
+
+.image-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card {
+  text-align: center;
+  background-color: transparent !important; /* !important is used to ensure that this style will be applied even if there are other conflicting styles */
+  box-shadow: none;
+}
+
+.card-title {
+  margin: 0;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 5px 10px;
+  display: block;
+  color: #222;
+}
+
+/* For larger desktops */
+@media (min-width: 1200px) {
+  .card-title {
+    padding: 10px 15px;
+    font-size: 0.9rem;
+  }
+}
+
+/* For tablets and smaller desktops */
+@media (max-width: 1024px) {
+  .card-title {
+    padding: 8px 12px;
+    font-size: 0.8rem;
+  }
+}
+
+/* For landscape phones and some tablets */
+@media (max-width: 768px) {
+  .card-title {
+    padding: 6px 10px;
+    font-size: 0.7rem;
+  }
+}
+
+/* For portrait phones */
+@media (max-width: 480px) {
+  .card-title {
+    padding: 4px 8px;
+    font-size: 0.5rem;
+  }
+}
+
+
+.icon-title-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+  }
+  
+  .icon {
+    margin-right: 10px;
+  }
+  
+  .logo-icon {
+    width: 28px;
+    height: auto;
+  }
+
+  .card-link {
+    padding:0px;
+    margin:0px;
+  }
+
+  .custom-img {
+    object-fit: contain; /* Maintain aspect ratio and cover the entire container */
+    max-width: 80%; /* Ensure the image doesn't exceed the container's width */
+    max-height: 80%; /* Ensure the image doesn't exceed the container's height */
+    border-radius: 30px 30px 0 0; 
+  }
+
+ 
+  p, .p {
+    font-size: 0.8rem;
+  }
+
+
+  .description {
+    margin-left: 10px;
+    margin-right: 10px;
+  }
+
+  .card-content {
+    margin-left:5px;
+    align-content: center;
+  }
+
+  .small-text {
+    font-size: 0.8rem;
+  }
+
+  .info-title {
+    font-size: 1rem;
+  }
+
+.custom-pad{
+  padding: 5px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  border-radius: 30px;
+
+}
+
+.card .info {
+  position: relative;
+  min-height: 160px;
+}
+
+.card {
+  margin-bottom: 10px;
+}
+.header-line {
+  width: 60px;
+  border: 1.5px solid #ff3973;
+  text-align: center;
+  margin: -12px auto 20px;
+}
+
+.custom-margin{
+  margin-top: 50px;
+}
+strong{
+  color:  #D41872;
+}

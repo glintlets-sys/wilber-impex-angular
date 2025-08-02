@@ -1,0 +1,34 @@
+.cursor_pointer {
+  cursor: pointer;
+}
+
+.image-preview {
+  position: relative;
+  display: inline-block;
+  margin-right: 5px;
+}
+
+.fa-circle-xmark {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: black;
+  color: white;
+  border-radius: 50%;
+  padding: 2px;
+  font-size: 18px;
+}
+
+.product-reviesection .select-prod-img-section .div-img-choose .image .image-choose img {
+  height: 20px;
+  width: 20px;
+}
+
+.product-reviesection .full-descriptin-section-review .ratting-option .ratting-five i {
+  color: orange;
+  font-size: 25px;
+}
+
+.borderNone{
+  border: none !important;
+}

@@ -1,0 +1,192 @@
+.section-formshowcashproductstylethree{
+    background: linear-gradient(180deg, #4B3EA7 0%, rgba(255, 255, 255, 0.91) 100%);
+ }
+ .section-formshowcashproductstyletwo{
+    background: linear-gradient(180deg, #D0E0FF 0%, rgba(212, 250, 255, 0.65) 100%);
+ }
+.section-formshowcashproductstyleone{
+   background: linear-gradient(180deg, #D1FFD0 0%, rgba(208, 255, 207, 0.65) 100%);
+}
+.content-row {
+  
+display: flex;
+flex-wrap: wrap;
+width: 100%;
+overflow: hidden;
+position: relative;
+padding: 40px 0px 0px 0px;
+}
+.content-row .content-col-half {
+width: 50%;
+position: relative;
+/* min-height: 30vw;  */
+flex: 1 0 auto; 
+margin-bottom: 50px; 
+} 
+.image-section{
+position: relative;
+}
+.tittel-spel{
+position: absolute;
+top: 0px;
+right: -70px;
+}
+.tittel-spel .div{
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.tittel-spel .div .count{
+color: #3D3D3D; 
+font-size: 68px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+}
+.tittel-spel .div .textsh{
+width: 80px;
+color: #3D3D3D; 
+font-size: 20px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+letter-spacing: 1.16px;
+text-transform: uppercase;
+}
+/*  */
+.tittel-speltwo{
+position: absolute;
+bottom: 0px;
+left: -70px;
+}
+.tittel-speltwo .div{
+display: flex;
+align-items: center;
+gap: 6px;
+}
+.tittel-speltwo .div .count{
+color: #3D3D3D; 
+font-size: 68px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+}
+.tittel-speltwo .div .textsh{
+width: 80px;
+color: #3D3D3D; 
+font-size: 20px;
+font-style: normal;
+font-weight: 300;
+line-height: normal;
+letter-spacing: 1.16px;
+text-transform: uppercase;
+}
+/*  */
+.in-center{
+text-align: center;
+}
+.in-center img{
+width: 350px; 
+}
+.in-side img{
+width: 450px; 
+}
+.in-side-right{
+text-align: end;
+}
+.in-side-right img{
+width: 450px; 
+}
+
+
+.addvertisement-other-pagebanner .image img{
+width: 100%;
+}
+
+
+
+/* suggested-for-you-section */
+.suggested-for-you-section{
+padding: 30px 0px;
+}
+.suggested-for-you-section .see-more-section{
+padding: 15px 0px;
+text-align: center;
+background: #FFEBF4;
+margin-top: 30px;
+}
+.suggested-for-you-section .see-more-section p{
+font-size: 20px;
+margin-bottom: 0px;
+}
+.suggested-for-you-section .see-more-section p i{
+font-size: 15px;
+}
+/* suggested-for-you-section end */
+
+
+
+
+
+
+@media only screen and (max-width: 993px){
+.in-side img {
+width: 340px;
+}
+.in-center img {
+width: 280px;
+}
+.in-side-right img {
+width: 340px;
+}
+.tittel-spel .div .count{ 
+font-size: 45px;
+}
+.tittel-speltwo .div .count{
+font-size: 45px;
+}
+.tittel-speltwo .div .textsh{
+font-size: 16px;
+}
+.tittel-speltwo { 
+left: -40px;
+}
+.tittel-spel .div .textsh{
+font-size: 16px;
+}
+}
+@media only screen and (max-width: 767px){
+.tittel-spel .div .count {
+font-size: 35px;
+}
+.tittel-spel .div .textsh {
+font-size: 12px;
+}
+.tittel-spel { 
+top: -30px;
+right: 4px;
+}
+.tittel-speltwo .div .count {
+font-size: 35px;
+}
+.tittel-speltwo .div .textsh {
+font-size: 12px;
+}
+.tittel-speltwo{
+left: 40px;
+bottom: -35px;
+}
+.in-center img {
+width: 230px;
+}
+.in-side img {
+width: 270px;
+}
+.in-side-right img {
+width: 270px;
+}
+.content-col-half {
+width: 100% !important; 
+
+}
+}

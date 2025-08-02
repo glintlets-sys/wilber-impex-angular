@@ -1,0 +1,123 @@
+<div class="modal-header">
+    <h3 class="panel-title mb-0 p-0">
+        <span *ngIf="editCategoryData?.id==undefined"> Add Category </span>
+        <span *ngIf="editCategoryData?.id!=undefined"> Edit Category </span>
+    </h3>
+    <button type="button" class="btn-close btn btn-primary btn-with-icon save-profile" (click)="modal.close()">
+    </button>
+</div>
+<div class="modal-body">
+    <section>
+        <div class="container">
+            <form>
+                <!-- Category Name -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2">
+                            <label for="categoryName" class="control-label">Name:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="categoryName" class="form-control form-control-alternative"
+                                placeholder="Enter Category Name" [(ngModel)]="categories.name" />
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2">
+                            <label for="categorytype" class="control-label">Type:</label>
+                        </div>
+
+                        <div class="col-sm-6">
+                            <select class="form-control" name="categorytype" id="categorytype"
+                                [(ngModel)]="categories.type">
+                                <option *ngFor="let selectType of categoryTypes" [value]="selectType">{{ selectType }}
+                                </option>
+                            </select>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2">
+                            <label for="categoryName" class="control-label">Parent ID:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <select class="form-control" id="categorySelect" [(ngModel)]="categories.parentId">
+                                <option *ngFor="let category of allCategories" [value]="category.id">{{ category.name }}
+                                    ({{ category.id }})</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Image URL -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2">
+                            <label for="inputFirstName" class="control-label">Category Logo</label>
+                        </div>
+                        <div class="col-sm-8">
+                            <div class="userpic">
+                                <div class="userpic-wrapper" style="background-color: #666666">
+                                    <img [src]="categories.image" (change)="onFileChange($event)"
+                                        (click)="triggerSelectFile(fileInput)" />
+                                </div>
+                                <i class="fa fa-times-circle-o" (click)="removeImage()"></i>
+                                <a class="change-userpic" (change)="onFileChange($event)"
+                                    (click)="triggerSelectFile(fileInput)">Change Category Image
+                                </a>
+                                <input type="file" id="categoryImageFile" #fileInput (click)="fileInput.click()"
+                                    [hidden]="true" (change)="onFileChange($event)" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2">
+                            <label for="description" class="control-label">Description:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <input type="text" name="description" class="form-control form-control-alternative"
+                                placeholder="Enter Category Description" [(ngModel)]="categories.description" />
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Save and Cancel Buttons -->
+                <div class="col-md-12">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <button class="btn btn-white cancelbtn" type="button"
+                                (click)="modal.close()">Cancel</button>&nbsp;
+                            <button type="button" *ngIf="editCategoryData == undefined" (click)="saveCategory()"
+                                class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                    <defs>
+                                        <style>
+                                            .cls-1 {
+                                                fill: #fff;
+                                            }
+                                        </style>
+                                    </defs>
+                                    <path class="cls-1"
+                                        d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                </svg>&nbsp;Save
+                            </button>
+                            <button type="button" *ngIf="editCategoryData?.id!=undefined"
+                                class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage"
+                                (click)="saveCategory()">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+</div>

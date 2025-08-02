@@ -1,0 +1,181 @@
+<div class="container printwidth">
+    <section>
+
+    
+    <div class="container table-on">
+        <table style="width:100%">
+            <tr>
+                <td style=" font-weight: 600; width: 50%; border: none;">
+                    <!-- <h1 style="border: 2px solid black ; width: 100px; padding-left: 10px;">Bazru <i class="fa-solid fa-cart-shopping" style="color:red; font-size:18px; margin-left:-7px;"></i> </h1> -->
+                    <img src="assets\img\image\Link → logo.webp.png" alt=""
+                        style="width: 200px; height: 100px; object-fit: contain;">
+                </td>
+                <td style=" font-weight: 600; width: 50%; text-align: end; border: none;">
+                    <p style="font-size: 20px; margin-bottom: 0px;"> Tax invoice/bill of supply/cash Memo </p>
+                    <span>(triplicate of suplier)</span>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="container table-on">
+        <table style="width:100%">
+            <tr>
+                <td style=" font-weight: 600; width: 50%; border: none;">
+                    <h4 style="margin: 0px 0px 5px 0px;">Sold by :</h4>
+                    <span style=" font-weight: 400;   ">SRI GANESH AGENCY </span>
+                    <br>
+                    <span style=" font-weight: 400;   ">
+                        NO 8, 4TH BLOCK, 5TH MAIN ROAD,
+                        THYAGARAJANAGAR, NEAR MOOKAMBIKA
+                        SCHOOL</span>
+                    <br>
+                    <span style=" font-weight: 400;   ">BENGALURU, KARNATAKA, 560028
+                        IN</span>
+                </td>
+                <td style=" font-weight: 600; width: 50%; text-align: end; border: none;">
+                    <h4 style="margin: 0px 0px 5px 0px;">Billing Address</h4>
+                    <span style="margin-top: 0px; font-weight: 400; "> {{json_purchase_summary?.customerName}}
+                        <br>{{json_purchase_summary?.address?.firstLine + " " + json_purchase_summary?.address?.
+                        secondLine}}, <br/> {{json_purchase_summary?.address?.
+                        city + "," + json_purchase_summary?.address?.
+                        state + "," +json_purchase_summary?.address?.
+                        pincode +"," +json_purchase_summary?.address?.
+                        country }} </span>
+                </td>
+            </tr>
+
+            <tr style="vertical-align: top;">
+                <td style=" font-weight: 600; width: 50%; border: none;">
+                    <div>
+                        <div class="space-bar" style="height: 20px;"></div>
+                        <h4 class="pan-no" style="margin: 0px 0px 5px 0px;">PAN No: <span
+                                style="font-weight: 400; ">AEFPR0018C</span></h4>
+                        <h4 class="gst-no" style="margin: 0px 0px 5px 0px;">GST Registeration No :<span
+                                style="font-weight: 400; ">0AMP43#7HJOSWS6</span></h4>
+                    </div>
+                </td>
+                <td style=" font-weight: 600; width: 50%; text-align: end; border: none;">
+                    <div class="space-bar" style="height: 20px;"></div>
+                    <h4 style="margin: 0px 0px 5px 0px;">Shipping Address</h4>
+                    <span style="margin-top: 0px; font-weight: 400; "> {{json_purchase_summary?.customerName}}
+                        <br>{{json_purchase_summary?.address?.firstLine + " " + json_purchase_summary?.address?.
+                        secondLine}}, <br/> {{json_purchase_summary?.address?.
+                        city + "," + json_purchase_summary?.address?.
+                        state + "," +json_purchase_summary?.address?.
+                        pincode +"," +json_purchase_summary?.address?.
+                        country }} </span>
+                </td>
+            </tr>
+            <tr>
+                <td style=" font-weight: 600; width: 50%; border: none;">
+                    <div>
+                        <h4 class="pan-no" style="margin: 0px 0px 5px 0px;">Order Number: <span
+                                style="font-weight: 400; "> {{orders?.id}} </span></h4>
+                        <h4 class="gst-no" style="margin: 0px 0px 5px 0px;">Order Date:<span style="font-weight: 400; ">
+                            {{getOrderDate() | date:'yyyy-MM-dd HH:mm:ss'}}</span></h4>
+                    </div>
+                </td>
+                <td style=" font-weight: 600; width: 50%; text-align: end; border: none;">
+                    <div>
+                        <h4>State ut code :<span style="  font-weight: 400; ">36</span></h4>
+                        <h4 class="state-ut">Place of supply :<span style="  font-weight: 400; "> {{getPlaceOfSupply()}}</span>
+                        </h4>
+                        <h4 class="state-ut">Place of delivery :<span style="  font-weight: 400; ">{{getPlaceOfDelivery()}}</span>
+                        </h4>
+                        <h4 class="state-ut">Invoice Number : <span style="  font-weight: 400; ">IN-{{orders?.id}}</span>
+                        </h4>
+                        <h4 class="state-ut">Invoice Details : <span
+                                style="  font-weight: 400; ">KA-171607751-2324</span></h4>
+                        <h4 class="state-ut">Invoice Date : <span style="  font-weight: 400; ">{{getOrderDate() | date:'yyyy-MM-dd'}}</span>
+                        </h4>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <div class="container table-one">
+        <table style="width:100%" class="price-sum">
+            <tr>
+                <th class="back-bg">Sr.no</th>
+                <th class="back-bg" style="width: 70%; text-align: start;"> Description</th>
+                <th class="back-bg" style="width: 5%;">Unit Price</th>
+                <th class="back-bg" style="width: 5%;">Qty</th>
+                <th class="back-bg" style="width: 5%;">Net Amount</th>
+                <th class="back-bg" style="width: 5%;">Tax Rate</th>
+                <th class="back-bg" style="width: 5%;">Tax Type</th>
+                <th class="back-bg" style="width: 5%;">Tax Amount</th>
+                <th class="back-bg" style="width: 5%;">Total Amount</th>
+            </tr>
+            <tr *ngFor="let item of json_purchase_summary?.cartSummary?.items;let i=index">
+                <td style="text-align: center;">{{i+1}}</td>
+                <td>{{item?.name}}</td>
+                <td>{{'₹'+item?.price?.amount}}</td>
+                <td>{{item?.quantity}}</td>
+                <td>{{'₹'+item?.price?.amount}}</td>
+                <td> {{item?.tax}}%</td>
+                <td>GST</td>
+                <td>{{'₹'+ round(getItemTax(item)) }}</td>
+                <td>{{'₹'+ round(getItemTotalPrice(item))}}</td>
+            </tr>
+
+        </table>
+        <table style="width:100%" class="price-sum-total-show">
+            <tr>
+                <th style=" text-align: left;">Total</th>
+                <th style="width:60px;" class="back-bg">{{'₹'+round(json_purchase_summary?.billSummary?.tax)}}</th>
+                <th style="width: 60px;" class="back-bg">{{'₹'+ (round(json_purchase_summary?.billSummary?.subTotalPrice) + round(json_purchase_summary?.billSummary?.tax)) }}</th>
+            </tr>
+        </table>
+        <table style="width:100%">
+            <tr>
+                <th style="width: 100%; text-align: left;">Amount in words :
+                    <br>{{ round(json_purchase_summary?.billSummary?.subTotalPrice) | convertToWords}}
+                </th>
+            </tr>
+        </table>
+        <table style="width:100%">
+            <tr>
+                <th style="width: 100%; text-align: right;">
+                    <div class="div">
+                        <p style="margin: 5px 0px 10px 0px;">For SRI GANESH AGENCY: </p>
+                        <img src="" alt=""
+                            style="width: 200px; height: 40px; border: 1px solid black; object-fit: contain;">
+                        <p style="margin: 10px 0px 5px 0px;"> Authorized Signature </p>
+                    </div>
+                </th>
+            </tr>
+        </table>
+        <h3 class="fgj  " style="margin-top: 5px;  ">Whether tax is payable under reverse charge - No</h3>
+        <div class="div-footer" style="margin-top: 50px;">
+            <table style="width: 100%;">
+                <tr>
+                    <th style="width: 25%; text-align: start;">
+                        <p>Payment Transaction ID: <span style=" font-weight: 400;   "> <br/> {{getTransactionId()}}</span>
+                        </p>
+                    </th>
+                    <th style="width: 25%; text-align: start;">
+                        <p>Date & Time: <span style=" font-weight: 400;   "> <br/> {{getOrderDate() | date:'yyyy-MM-dd HH:mm:ss'}}</span></p>
+                    </th>
+                    <th style="width: 25%; text-align: start;" rowspan="2">
+                        <p>Invoice Value: <span style=" font-weight: 400;   "> <br/> {{getInvoiceValue()}}</span></p>
+                    </th>
+                    <th style="width: 25%; text-align: start;">
+                        <p>Mode of Payment: <span style=" font-weight: 400;   "> <br/> {{getPaymentMode()}}</span></p>
+                    </th>
+                </tr>
+                
+            </table>
+        </div>
+    </div>
+    <div class="container table-one">
+        <div class="footer-note">
+            <p style="  text-align: center ; font-size: 13px; line-height: 24px; margin-top: 70px;">ASSPL-Amazon
+                Seller Services Pvt. Ltd., ARIPL-Amazon Retail India Pvt. Ltd. (only where Amazon Retail India Pvt.
+                Ltd. fulfillment center is co-located)
+                Customers desirous of availing input GST credit are requested to create a Business account and
+                purchase on Amazon.in/business from Business eligible offers
+                Please note that this invoice is not a demand for payment</p>
+        </div>
+    </div>
+</section>
+</div>

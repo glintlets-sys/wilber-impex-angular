@@ -1,0 +1,369 @@
+<div class="main-content-dodyhome">
+  <div class="container-fluid-set">
+    <div class="banner-secction">
+      <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" [routerLink]="['/categoryItems', 5]">
+            <img src="assets/img/image/banner1.png" class=" w-100 banner-showlap" alt=" ">
+            <img src="assets/img/image/banner1-mobile.png" class=" w-100 banner-showmob" alt=" ">
+          </div>
+          <div class="carousel-item" [routerLink]="['/categoryItems', 4]">
+            <img src="assets/img/image/banner2.png" class=" w-100 banner-showlap" alt=" ">
+            <img src="assets/img/image/banner2-mobile.png" class=" w-100 banner-showmob" alt=" ">
+          </div>
+         <!-- <div class="carousel-item" [routerLink]="['/categoryItems', 93]">
+            <img src="assets/img/image/banner3.png" class=" w-100 banner-showlap" alt=" ">
+            <img src="assets/img/image/banner3-mobile.png" class=" w-100 banner-showmob" alt=" ">
+          </div>-->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="prev">
+          <!-- <span class="carousel-control-prev-icon" aria-hidden="true"></span> -->
+          <i class="fa-solid fa-angle-left"></i>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleFade" data-bs-slide="next">
+          <!-- <span class="carousel-control-next-icon" aria-hidden="true"></span> -->
+          <i class="fa-solid fa-angle-right"></i>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="first-add-section">
+        <div class="image" [routerLink]="['/categoryItems', 15]">
+          <img class="d-none d-md-block" src="assets/img/image/Group 72.png" alt="">
+          <!-- Mobile Version -->
+          <img class="d-block d-md-none" src="assets/img/image/Group 72-mobile.png" alt="">
+        </div>
+      </div>
+      <div class="sectiontoptrendingproduct">
+        <div class="heading-section">
+          <p>Trending <span>Products</span></p>
+        </div>
+
+        <app-catalog-items></app-catalog-items>
+
+      </div>
+      <div class="sectionshopbycate">
+        <div class="heading-section">
+          <p>Shop By <span>Category</span></p>
+        </div>
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="categories-colloection">
+              <a [routerLink]="['/categoryItems', 5]">
+                <div class="image">
+                  <img class="active" src="assets/img/image/card-itemwww.png" alt="">
+                </div>
+              </a>
+              <div class="content">
+                <P>KIDS TOYS</P>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-12">
+            <div class="categories-colloection">
+              <a [routerLink]="['/categoryItems', 6]">
+                <div class="image">
+                  <img src="assets/img/image/card-item.png" alt="">
+                </div>
+              </a>
+              <div class="content">
+                <P>EDUCATIONAL GAMES</P>
+              </div>
+            </div>
+            <div class="categories-colloection">
+              <a [routerLink]="['/categoryItems', 16]">
+                <div class="image">
+                  <img src="assets/img/image/Frame 65soft-toys-category.png" alt="">
+                </div>
+              </a>
+              <div class="content">
+                <P>STUFFED TOYS</P>
+              </div>
+            </div>
+            <div class="categories-colloection">
+              <a [routerLink]="['/categoryItems', 4]">
+                <div class="image">
+                  <img src="assets/img/image/Frame 62baby-prod-categoery.png" alt="">
+                </div>
+              </a>
+              <div class="content">
+                <P>BABY PRODUCTS</P>
+              </div>
+            </div>
+          <!--  <div class="categories-colloection">
+              <a [routerLink]="['/categoryItems', 80]">
+                <div class="image">
+                  <img src="assets/img/image/card-itemcosmetics-category.png" alt="">
+                </div>
+              </a>
+              <div class="content">
+                <P>COSMETICS</P>
+              </div>
+            </div>-->
+          </div>
+      
+        </div>
+      </div>
+    
+      <div class="same-brandecolloection">
+        <div class="heading-section">
+          <p>Shop By <span> Brand</span></p>
+        </div>
+        <div class="row">
+          <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+            <div class="categories-colloection" [routerLink]="['/categoryItems', 7]">
+              <div class="image">
+                <img src="assets/img/image/card-itembrand-mattel.png" alt="">
+              </div>
+              <div class="content">
+                <P>MATTEL</P>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+            <div class="categories-colloection" [routerLink]="['/categoryItems', 8]">
+              <div class="image">
+                <img src="assets/img/image/card-itembrand-skillmatics.png" alt="">
+              </div>
+              <div class="content">
+                <P>SKILLMATICS</P>
+              </div>
+            </div>
+          </div>
+          <!--<div class="col-lg-4 col-md-6 col-sm-12 col-12">
+            <div class="categories-colloection" [routerLink]="['/11']">
+              <div class="image">
+                <img src="assets/img/image/media bg-coverbrand-smartivity.png" alt="">
+              </div>
+              <div class="content">
+                <P>ADITI TOYS</P>
+              </div>
+            </div>
+          </div>-->
+          <div class="col-lg-4 col-md-4 col-sm-12 col-12">
+            <div class="categories-colloection" [routerLink]="['/categoryItems', 10]">
+              <div class="image">
+                <img src="assets/img/image/card-itembrand-wild-republic.png" alt="">
+              </div>
+              <div class="content">
+                <P>WILD REPUBLIC</P>
+              </div>
+            </div>
+          </div>
+         <!-- <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+            <div class="categories-colloection" [routerLink]="['/categoryItems', 88]">
+              <div class="image">
+                <img src="assets/img/image/Frame 60brand-sebamed.png" alt="">
+              </div>
+              <div class="content">
+                <P>SEBAMED</P>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6 col-sm-12 col-12">
+            <div class="categories-colloection" [routerLink]="['/mamaearth']">
+              <div class="image">
+                <img src="assets/img/image/card-itembrand-mamaearth.png" alt="">
+              </div>
+              <div class="content">
+                <P>MAMA EARTH </P>
+              </div>
+            </div>
+          </div>-->
+
+        </div>
+      </div>
+      <div class="top-feature-section">
+        <div class="heading-section">
+          <p>Top <span>Catagories</span></p>
+        </div>
+        <app-top-categories [categoryId]="17"></app-top-categories>
+        
+      </div>
+      <div class="advertisement-section-second">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-12">
+            <div class="image">
+              <a [routerLink]="['/categoryItems', 19]">
+                <img src="assets/img/image/Frame 54footer-banner1.png" alt="">
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-12">
+            <div class="image">
+              <a [routerLink]="['/categoryItems', 18]">
+                <img src="assets/img/image/Frame 59footer-banner2.png" alt="">
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-6 col-md-6 col-12">
+            <div class="image">
+              <a [routerLink]="['/categoryItems', 20]">
+                <img src="assets/img/image/Frame 57footer-banner3.png" alt="">
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-12 col-md-12 col-12">
+            <div class="image">
+              <a [routerLink]="['/categoryItems', 21]">
+                <img src="assets/img/image/Group 106footer-banner4.png" alt="">
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="our-brand-partner">
+        <div class="swiper brand-partner">
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+         
+            <div class="swiper-slide">
+              <div class="image">
+                <img src="assets/img/image/partner2.png" alt="">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="image">
+                <img src="assets/img/image/partner3.png" alt="">
+              </div>
+            </div>
+          
+            <div class="swiper-slide">
+              <div class="image">
+                <img src="assets/img/image/partner5.png" alt="">
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="image">
+                <img src="assets/img/image/partner6.png" alt="">
+              </div>
+            </div>
+
+          </div>
+          <!-- <div class="swiper-button-prev"></div>
+                        <div class="swiper-button-next"></div>  -->
+        </div>
+      </div>
+      <!--<div class="our-happy-clints">
+        <div class="heading-section">
+          <p>Our <span> Happy Clients</span></p>
+        </div>
+        <div class="our-heppyclint-review">
+          <div class="swiper our-clint-review">-->
+            <!-- Additional required wrapper -->
+          <!--  <div class="swiper-wrapper">-->
+              <!-- Slides -->
+            <!--  <div class="swiper-slide">
+
+                <div class="review-box">
+                  <div class="review-box-cont">
+                    <div class="image">
+                      <img src="assets/img/image/review.jpeg" alt="">
+                    </div>
+                    <div class="rigt-side">
+                      <div class="div-set">
+                        <p>Mother</p>
+                        <div class="ratting-five">
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                        </div>
+                      </div>
+                      <p>Lorem ipsum dolor sit amet consectetur. Quam metus tincidunt mattis non praesent est.
+                        Viverra quisque neque amet congue at curabitur. Molestie nunc sagittis purus pulvinar.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+
+                <div class="review-box">
+                  <div class="review-box-cont">
+                    <div class="image">
+                      <img src="assets/img/image/review.jpeg" alt="">
+                    </div>
+                    <div class="rigt-side">
+                      <div class="div-set">
+                        <p>Mother</p>
+                        <div class="ratting-five">
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                        </div>
+                      </div>
+                      <p>Lorem ipsum dolor sit amet consectetur. Quam metus tincidunt mattis non praesent est.
+                        Viverra quisque neque amet congue at curabitur. Molestie nunc sagittis purus pulvinar.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+
+                <div class="review-box">
+                  <div class="review-box-cont">
+                    <div class="image">
+                      <img src="assets/img/image/review.jpeg" alt="">
+                    </div>
+                    <div class="rigt-side">
+                      <div class="div-set">
+                        <p>Mother</p>
+                        <div class="ratting-five">
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                        </div>
+                      </div>
+                      <p>Lorem ipsum dolor sit amet consectetur. Quam metus tincidunt mattis non praesent est.
+                        Viverra quisque neque amet congue at curabitur. Molestie nunc sagittis purus pulvinar.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="swiper-slide">
+
+                <div class="review-box">
+                  <div class="review-box-cont">
+                    <div class="image">
+                      <img src="assets/img/image/review.jpeg" alt="">
+                    </div>
+                    <div class="rigt-side">
+                      <div class="div-set">
+                        <p>Mother</p>
+                        <div class="ratting-five">
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                          <i class="fa-solid fa-star"></i>
+                        </div>
+                      </div>
+                      <p>Lorem ipsum dolor sit amet consectetur. Quam metus tincidunt mattis non praesent est.
+                        Viverra quisque neque amet congue at curabitur. Molestie nunc sagittis purus pulvinar.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </div>-->
+
+    </div>
+
+  </div>
+</div>
+
+
+
+

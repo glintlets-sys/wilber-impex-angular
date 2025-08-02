@@ -1,0 +1,121 @@
+<!-- People Bought These Together -->
+<div class="suggested-for-you-section" *ngIf="bought_together_items?.length>0">
+    <div class="container">
+        <div class="suggest-package-for-you">
+            <div class="heading-section">
+                <p>People Bought<span> These Together </span></p>
+            </div>
+
+            <div class="div-together-price-product">
+                <div class="row together-price-product-style">
+                    <!-- Render each bought-together item -->
+                    <ng-container *ngFor="let item of bought_together_items;let i=index">
+                        <div class="col-xl-3 col-lg-3 col-md-5 col-5 cursor_pointer" (click)="openProduct(item)">
+                            <!-- Item details -->
+                            <div class="image-plusone">
+                                <!-- Render item image carousel -->
+                                <div class="product-package-styling">
+                                    <!-- Carousel -->
+                                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel"
+                                        (click)="openProduct(item)">
+                                        <div class="carousel-indicators">
+                                            <button type="button" data-bs-target="#carouselExampleCaptions "
+                                                data-bs-slide-to="0" class="active" aria-current="true"
+                                                aria-label="Slide 1"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions "
+                                                data-bs-slide-to="1" aria-label="Slide 2"></button>
+                                            <button type="button" data-bs-target="#carouselExampleCaptions "
+                                                data-bs-slide-to="2" aria-label="Slide 3"></button>
+                                        </div>
+
+                                        <div class="carousel-inner">
+                                            <div class="carousel-item active">
+                                                <img *ngIf="item.photoLinks !== null" src="{{item.photoLinks[0]}}"
+                                                    class="d-block  " alt=" ">
+                                            </div>
+                                            <div *ngIf="item.photoLinks[1]" class="carousel-item">
+                                                <img *ngIf="item.photoLinks !== null" src="{{item.photoLinks[1]}}"
+                                                    class="d-block  " alt=" ">
+                                            </div>
+                                            <div *ngIf="item.photoLinks[2]" class="carousel-item">
+                                                <img *ngIf="item.photoLinks !== null" src="{{item.photoLinks[2]}}"
+                                                    class="d-block  " alt=" ">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- item detail -->
+                                    <div class="contain-addpackage">
+                                        <div class="stars">
+                                            <i class="fa-star"
+                                                [ngClass]="{'far': itemRatingsMap.get(item.id)?.averageRating < 1, 'fas': itemRatingsMap.get(item.id)?.averageRating >= 1}"></i>
+                                            <i class="fa-star"
+                                                [ngClass]="{'far': itemRatingsMap.get(item.id)?.averageRating < 2, 'fas': itemRatingsMap.get(item.id)?.averageRating >= 2}"></i>
+                                            <i class="fa-star"
+                                                [ngClass]="{'far': itemRatingsMap.get(item.id)?.averageRating < 3, 'fas': itemRatingsMap.get(item.id)?.averageRating >= 3}"></i>
+                                            <i class="fa-star"
+                                                [ngClass]="{'far': itemRatingsMap.get(item.id)?.averageRating < 4, 'fas': itemRatingsMap.get(item.id)?.averageRating >= 4}"></i>
+                                            <i class="fa-star"
+                                                [ngClass]="{'far': itemRatingsMap.get(item.id)?.averageRating < 5, 'fas': itemRatingsMap.get(item.id)?.averageRating >= 5}"></i>
+                                            <span>&nbsp;{{ itemRatingsMap.get(item.id)?.totalRatings }} Reviews</span>
+
+                                        </div>
+                                        <h3 class="itemTitle">{{item.name}}</h3>
+                                        <div *ngIf="hasDiscount(item.discount)" class="div-price">
+                                            <span class="real-price">{{ calculateDiscountedPrice(item.price.amount,
+                                                item.discount?.discountPercent) | currency: 'INR':'symbol-narrow'
+                                                }}</span>&nbsp;
+                                            <span class="less-price">{{ item.price.amount |
+                                                currency:'INR':'symbol-narrow' }}</span>&nbsp;
+                                            <span class="offerpec">{{item.discount?.discountPercent}}% off</span>
+                                        </div>
+                                        <div *ngIf="!hasDiscount(item.discount)" class="div-price">
+                                            <span class="real-price">{{ calculateDiscountedPrice(item.price.amount,
+                                                item.discount?.discountPercent) | currency: 'INR':'symbol-narrow'
+                                                }}</span>&nbsp;
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Plus sign -->
+                        <div class="col-xl-1 col-lg-1 col-md-2 col-2" *ngIf="i<bought_together_items?.length-1">
+                            <div class="image-plusone in-centss"><i class="fa-solid fa-plus"></i></div>
+                        </div>
+                    </ng-container>
+
+                    <!-- equal sign -->
+                    <div class="col-xl-1 col-lg-1 col-md-12 col-12">
+                        <div class="image-plusone in-centss"><i class="fa-solid fa-equals"></i></div>
+                    </div>
+
+                    <!-- Total price calculation -->
+                    <div class="col-xl-4 col-lg-4 col-md-12 col-12">
+                        <div class="image-plusone">
+                            <div class="total-cal-toget">
+                                <div class="cal-price-prod">
+                                    <!-- Total price -->
+                                    <p>Total price : <span>Rs {{
+                                            bought_together_discount!=0?getBoughtTogetherDicount():getTotalAmount()
+                                            }}</span></p>
+                                </div>
+                                <!-- Add all to cart button -->
+                                <div class="add-alltocard-toge" *ngIf="bought_together_items.length >= 2 ">
+                                    <div *ngIf="!addedToCartFlagForLanding" class="div-btn cursor_pointer"
+                                        (click)="addToCart()">
+                                        Add all {{ bought_together_items.length }} to cart
+                                    </div>
+
+                                    <div *ngIf="addedToCartFlagForLanding"
+                                        class="div-btn cursor-pointer add-tocard-btn btn bg-success text-white"
+                                        (click)="viewInCart()">
+                                        <i class="fas fa-check"></i> View in cart
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,111 @@
+/* You can add global styles to this file, and also import other style files */
+$primary: #0484c4;
+$secondary: #646464;
+$success: #00a439;
+$danger: #a44c7c;
+$warning: #fcc511;
+
+@import 'swiper/css';
+
+// h1,
+// .h1 {
+//     font-size: 0.8rem;
+// }
+
+// h2,
+// .h2 {
+//     font-size: 0.8rem;
+// }
+
+// h3,
+// .h3 {
+//     font-size: 0.8rem;
+// }
+
+// h4,
+// .h4 {
+//     font-size: 0.8rem;
+// }
+
+// h5,
+// .h5 {
+//     font-size: 0.8rem;
+// }
+
+// h6,
+// .h6 {
+//     font-size: 0.8rem;
+// }
+
+// p,
+// .p {
+//     font-size: 0.8rem;
+// }
+
+.errormessage {
+    color: red;
+    font-size: 14px !important;
+    margin-top: 2px;
+    margin-bottom: 3px;
+    display: block;
+}
+
+.cancelbtn {
+    background-color: #98999b !important;
+    color: white !important;
+}
+
+.no-record-found {
+    width: 100%;
+    text-align: center;
+    float: left;
+    font-size: 16px;
+    padding: 20px 20px 0 20px;
+}
+
+.item_count {
+    margin-right: auto;
+}
+
+.list-action-image {
+    margin-right: 5px;
+    padding: 6px;
+    width: 30px;
+    height: 30px;
+}
+
+.cursor_pointer {
+    cursor: pointer;
+}
+
+.notify-me {
+    color: #0484c4;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.we-notify-me {
+    color: #0484c4;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.disc-per-notify-me {
+    color: #0484c4;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.disc-we-notify-me {
+    color: #0484c4;
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

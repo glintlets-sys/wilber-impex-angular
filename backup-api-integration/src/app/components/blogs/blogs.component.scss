@@ -1,0 +1,66 @@
+.title{
+    font-weight: 600;
+    font-size: 25px;
+    text-transform: capitalize;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    margin-top: 15px;
+    margin-bottom: 30px;
+}
+
+h5{
+    color: #332d35;
+    display: inline;
+    font-size: 16px;
+    font-weight: 600;
+    text-transform: capitalize;
+    letter-spacing: .5px;
+}
+
+hr{
+    width: 60px;
+    border: 1.5px solid #ff3973;
+    text-align: center;
+    margin: 6px auto 20px;
+}
+
+.center-block {
+    display: block;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.img-responsive {
+    width: 100%;
+    height: 303px;
+}
+.panel-body {
+    padding: 15px;
+}
+
+.btn{
+    background: #332d35;
+    border: 1px solid #332d35;
+    color: #fff;
+    display: inline-block;
+    padding: 6px 10px;
+    transition: all 300ms ease 0s;
+    text-transform: capitalize;
+    border-radius: 6px;
+}
+
+.btn:hover{
+    background-color:#ff3973;
+}
+
+.card-body{
+    margin: 10px 0;
+    color: #666;
+    text-transform: capitalize;
+    font-size: 13px;
+    text-align: justify;
+}
+
+.card-footer{
+    padding: 0;
+}

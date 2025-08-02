@@ -1,0 +1,161 @@
+<div class="modal-header">
+    <h3 class="panel-title mb-0 p-0">
+        <span *ngIf="edit_recommended_item?.id==undefined"> Add Recommended Item </span>
+        <span *ngIf="edit_recommended_item?.id!=undefined"> Edit Recommended Item </span>
+    </h3>
+    <button type="button" class="btn-close btn btn-primary btn-with-icon save-profile" (click)="modal.dismiss()">
+    </button>
+</div>
+<div class="modal-body">
+    <section>
+        <div class="container">
+            <form #myForm="ngForm">
+
+                <!-- Recommend Type -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="recommendationType" class="control-label">Recommend Type <span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-sm-6">
+                            <ng-select required [searchable]="true"
+                                [(ngModel)]="defaultItemRecommendation.recommendationType" [clearable]="false"
+                                name="recommendationType" (change)="onChangeLoad()" #recommendType="ngModel" ngModel>
+                                <ng-option *ngFor="let type of recommendationTypes" [value]="type">{{
+                                    type }}
+                                </ng-option>
+                            </ng-select>
+                            <div class="errormessage" *ngIf="controlHasError('required', recommendType)">
+                                Please enter recommend type
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Source Id -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="sourceId" class="control-label">Source Id<span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-sm-6">
+                            <ng-select required [searchable]="true" [(ngModel)]="defaultItemRecommendation.sourceItemId"
+                                [clearable]="false" name="sourceId" (change)="onChangeLoad()" ngModel
+                                #sourceIdControl="ngModel">
+                                <ng-option *ngFor="let toy of toys" [value]="toy.id">{{ toy.name }}</ng-option>
+                            </ng-select>
+                            <div class="errormessage" *ngIf="controlHasError('required', sourceIdControl)">
+                                Please enter source item
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Add Recommended Items -->
+                <div class="col-md-12">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="recommendationType" class="control-label">Add Recommended Items<span
+                                    class="text-danger">*</span></label>
+                        </div>
+                        <div class="col-sm-6">
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Name</th>
+                                        <th>Code</th>
+                                        <th>Brand</th>
+                                        <th>Price</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <ng-container *ngIf="recommended_list">
+                                        <tr *ngFor="let toy of recommended_list">
+                                            <td>{{ toy.id }}</td>
+                                            <td>{{ toy.name }}</td>
+                                            <td>{{ toy.code }}</td>
+                                            <td>{{ toy.brand }}</td>
+                                            <td>{{ toy.price.amount }}</td>
+                                            <td> <button type="button" class="btn btn-sm btn-danger"
+                                                    (click)="removeSelectedToys(toy)">-</button></td>
+                                        </tr>
+                                    </ng-container>
+                                </tbody>
+                            </table>
+                            <div class="errormessage" *ngIf="!recommended_list || recommended_list.length === 0">
+                                Please enter at least one recommended item
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-12 ">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-12">
+                            <div class="row d-flex flex-wrap justify-content-between align-items-center mb-3 mt-2">
+                                <div class="col-4">
+                                    <input type="text" class="form-control" placeholder="Search toys"
+                                        (keyup)="filterData()" [(ngModel)]="searchToy">
+                                </div>
+                                <div class="col-8 text-end">
+                                    <button class="btn btn-white btn-secondary" type="button"
+                                        (click)="modal.dismiss()">Cancel</button>&nbsp;
+                                    <button type="button" *ngIf="!edit_recommended_item" (click)="saveRecommendedItem()"
+                                        class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                        <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                            <defs>
+                                                <style>
+                                                    .cls-1 {
+                                                        fill: #fff;
+                                                    }
+                                                </style>
+                                            </defs>
+                                            <path class="cls-1"
+                                                d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                        </svg>&nbsp;Save
+                                    </button>
+                                    <button type="button" *ngIf="edit_recommended_item"
+                                        class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage"
+                                        (click)="saveRecommendedItem()">Update</button>
+                                </div>
+                            </div>
+
+                            <table class="table">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Code</th>
+                                        <th>Brand</th>
+                                        <th>Price</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let toy of toysPaginated">
+                                        <td>{{ toy.name }}</td>
+                                        <td>{{ toy.code }}</td>
+                                        <td>{{ toy.brand }}</td>
+                                        <td>{{ toy.price.amount }}</td>
+                                        <td> <button type="button" class="btn btn-sm btn-primary"
+                                                (click)="addSelectedToys(toy)">+</button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="toysPaginated?.length==0" class="text-center">
+                                <h2>No Record Found.</h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </section>
+</div>

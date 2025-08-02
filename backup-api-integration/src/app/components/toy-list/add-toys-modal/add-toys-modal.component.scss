@@ -1,0 +1,126 @@
+.cancelbtn {
+    background-color: #98999b !important;
+    color: white !important;
+}
+
+// .userpic {
+//     border: 1px dashed #b8b8b8;
+//     width: 202px;
+//     height: 202px;
+//     position: relative;
+//     cursor: pointer;
+
+//     .userpic-wrapper {
+//         width: 200px;
+//         height: 200px;
+//         overflow: hidden;
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//     }
+
+//     img {
+//         max-width: 100%;
+//         max-height: 100%;
+//     }
+
+//     i {
+//         display: none;
+//         position: absolute;
+//         font-size: 32px;
+//         background: #ffffff;
+//         cursor: pointer;
+//         color: #f7931e;
+//         top: -11px;
+//         right: -11px;
+//         height: 26px;
+//         border-radius: 50%;
+
+//         :before {
+//             line-height: 26px;
+//         }
+//     }
+
+//     a.change-userpic {
+//         display: none;
+//         width: 202px;
+//         background: rgba(0, 0, 0, 0.7);
+//         transition: all 200ms ease-in-out;
+//         color: #fefefe;
+//         text-decoration: none;
+//         position: absolute;
+//         bottom: -1px;
+//         left: -1px;
+//         line-height: 32px;
+//         text-align: center;
+//     }
+
+//     &:hover {
+//         i {
+//             display: block;
+//         }
+
+//         .change-userpic {
+//             display: block;
+//         }
+//     }
+// }
+
+.userpic {
+    border: 1px dashed #b8b8b8;
+    width: 202px;
+    height: 202px;
+    position: relative;
+    cursor: pointer;
+
+    .userpic-wrapper {
+        position: relative;
+        /* Added position relative */
+        width: 200px;
+        height: 200px;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    img {
+        max-width: 100%;
+        max-height: 100%;
+    }
+
+    button {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 16px;
+        color: #f7931e;
+    }
+
+    a.change-userpic {
+        display: none;
+        width: 202px;
+        background: rgba(0, 0, 0, 0.7);
+        transition: all 200ms ease-in-out;
+        color: #fefefe;
+        text-decoration: none;
+        position: absolute;
+        bottom: -1px;
+        left: -1px;
+        line-height: 32px;
+        text-align: center;
+    }
+
+    &:hover {
+        button {
+            display: block;
+        }
+
+        .change-userpic {
+            display: block;
+        }
+    }
+}

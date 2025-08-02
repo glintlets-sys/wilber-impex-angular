@@ -1,0 +1,82 @@
+<div class="addvertisement-other-pagebanner">
+    <div class="image">
+        <img src="assets/img/image/Mama_Earth-Banner2.png" alt="">
+    </div>
+</div>
+<div class="divide-add">
+    <div class="image">
+        <img src="assets/img/image/filtermore.png" alt="">
+    </div>
+    <div class="image">
+        <img src="assets/img/image/filtermore.png" alt="">
+    </div>
+</div>
+<div class="all-product-colloectswiper">
+    <div class="container-fluid">
+
+        <!-- Get Bundles -->
+        <div class="box-container" *ngIf="normalBundles?.length>0">
+            <div class="heading-section">
+                <p>Get <span> Bundles</span></p>
+            </div>
+            <div class="slider-section-shopmore">
+                <div class="swiper trendingswiper">
+                    <div class="swiper-wrapper">
+                        <div *ngFor="let normal of normalBundles" class="swiper-slide" swiperSlide>
+                            <app-catalog-item [item]="normal" [strip]="'Great Deal'"></app-catalog-item>
+                        </div>
+                    </div>
+                    <div class="swiper-button-prev d-none d-md-block"></div>
+                    <div class="swiper-button-next d-none d-md-block"></div>
+                </div>
+            </div>
+            <div class="shop-btn-more">
+                <div class="btn" (click)="navigateTocategory('bundle')">Shop More</div>
+            </div>
+        </div>
+
+        <!-- Buy 2 and get 20% off  -->
+        <div class="box-container" *ngIf="buyTwoGetTwentyPercentBundle?.length>0">
+            <div class="heading-section">
+                <p> <span>Buy 2</span> and Get <span> 20%</span> Off </p>
+            </div>
+            <div class="slider-section-shopmore">
+                <div class="swiper trendingswiper">
+                    <div class="swiper-wrapper">
+                        <div *ngFor="let buyTwoGetTwenty of buyTwoGetTwentyPercentBundle" class="swiper-slide"
+                            swiperSlide>
+                            <app-catalog-item [item]="buyTwoGetTwenty" [strip]="'Great Deal'"></app-catalog-item>
+                        </div>
+                    </div>
+                    <div class="swiper-button-prev d-none d-md-block"></div>
+                    <div class="swiper-button-next d-none d-md-block"></div>
+                </div>
+            </div>
+            <div class="shop-btn-more">
+                <div class="btn" (click)="navigateTocategory('buyTwoGetTwenty')">Shop More</div>
+            </div>
+        </div>
+
+        <!-- Greats Deals  -->
+        <div class="box-container" *ngIf="greatDealBundle?.length>0">
+            <div class="heading-section">
+                <p>Greats   <span> Deals</span></p>
+            </div>
+            <div class="slider-section-shopmore">
+                <div class="swiper trendingswiper">
+                    <div class="swiper-wrapper">
+                        <div *ngFor="let buyTwoGetTwenty of greatDealBundle" class="swiper-slide"
+                            swiperSlide>
+                            <app-catalog-item [item]="buyTwoGetTwenty" [strip]="'Great Deal'"></app-catalog-item>
+                        </div>
+                    </div>
+                    <div class="swiper-button-prev d-none d-md-block"></div>
+                    <div class="swiper-button-next d-none d-md-block"></div>
+                </div>
+            </div>
+            <div class="shop-btn-more">
+                <div class="btn" (click)="navigateTocategory('')">Shop More</div>
+            </div>
+        </div>
+    </div>
+</div>

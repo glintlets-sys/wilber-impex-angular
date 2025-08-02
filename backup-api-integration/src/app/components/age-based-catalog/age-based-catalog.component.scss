@@ -1,0 +1,60 @@
+
+.custom-image-container {
+    display: inline-block;
+    width: 120px; /* Adjust as needed */
+    margin-right: 15px; /* Adjust as needed */
+    text-align: center;
+  }
+  
+  .custom-img {
+    width: auto; /* Set a fixed width */
+    height: 100px; /* Set a fixed height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+    //border-radius: 50%;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #efe7dd;
+    transition: all 500ms ease 0s;
+    margin-bottom: 5px
+  ;
+  }
+
+  .custom-img:hover{
+    opacity: 0.6;
+  }
+  
+  /* Add these styles to your component's CSS file */
+
+.horizontal-scroll {
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
+  
+
+  
+.text-container {
+    text-align: center;
+    width: 100px; /* Adjust to match image width */
+    overflow: hidden;
+    display: block;
+    white-space: normal;
+    line-height: 1em; /* Adjust as needed */
+    height: 2em; /* Number of lines * line height */
+    font-weight: 400;
+    text-transform: capitalize;
+  }
+  
+  .text-container::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding-left: 1em; /* Space for ellipsis */
+    background: linear-gradient(to right, transparent, white 50%);
+  }
+
+strong{
+  color: #ff3973;
+  letter-spacing: 0.5px;
+  margin-top: 0;
+  text-transform: capitalize;
+}

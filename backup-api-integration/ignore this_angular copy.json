@@ -1,0 +1,60 @@
+"build": {
+  "builder": "@angular-devkit/build-angular:browser",
+  "options": {
+    "aot": true,
+    "outputPath": "dist",
+    "index": "src/index.html",
+    "main": "src/main.ts",
+    "polyfills": "src/polyfills.ts",
+    "tsConfig": "src/tsconfig.app.json",
+    "assets": [
+      "src/favicon.ico",
+      "src/assets"
+    ],
+    "styles": [
+      "src/styles.scss",
+      "src/assets/css/nucleo-svg.css",
+      "src/assets/css/nucleo-icons.css",
+      "src/assets/css/font-awesome.css",
+      "src/assets/scss/argon-design-system.scss"
+    ],
+    "scripts": [],
+    "sourceMap": false // Set sourceMap to false in the production configuration
+  },
+  "configurations": {
+    "production": {
+      "fileReplacements": [
+        {
+          "replace": "src/environments/environment.ts",
+          "with": "src/environments/environment.prod.ts"
+        }
+      ],
+      "optimization": true,
+      "outputHashing": "all",
+      "namedChunks": false,
+      "extractLicenses": true,
+      "vendorChunk": false,
+      "buildOptimizer": true,
+      "budgets": [
+        {
+          "type": "initial",
+          "maximumWarning": "2mb",
+          "maximumError": "5mb"
+        },
+        {
+          "type": "anyComponentStyle",
+          "maximumWarning": "6kb",
+          "maximumError": "10kb"
+        }
+      ]
+    },
+    "development": {
+      "buildOptimizer": false,
+      "optimization": false,
+      "vendorChunk": true,
+      "extractLicenses": false,
+      "sourceMap": true,
+      "namedChunks": true
+    }
+  }
+}

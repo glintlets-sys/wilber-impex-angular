@@ -1,0 +1,166 @@
+<!-- for browser -->
+<div class="product-package-styling browserViewCard-view">
+  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" (click)="openProduct()">
+    <!-- <div class="carousel-indicators">
+     <button type="button" data-bs-target="#carouselExampleCaptions " data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions " data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions " data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+    </div>-->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <ng-container *ngIf="item.photoLinks && item.photoLinks[0]; else emptyImage">
+          <img [src]="item.photoLinks[0]" class="d-block" [class.blur-image]="isOutofStock()" alt="">
+        </ng-container>
+        <ng-template #emptyImage>
+          <img src="assets/img/image_empty.jpg" class="d-block" [class.blur-image]="isOutofStock()" alt="">
+        </ng-template>
+        
+      </div>
+   <!--   <div *ngIf="item.photoLinks[1]" class="carousel-item">
+        <img *ngIf="item.photoLinks !== null" src="{{item.photoLinks[1]}}" class="d-block  " alt=" "
+          [class.blur-image]="isOutofStock()">
+      </div>
+      <div *ngIf="item.photoLinks[2]" class="carousel-item">
+        <img *ngIf="item.photoLinks !== null" src="{{item.photoLinks[2]}}" class="d-block  " alt=" "
+          [class.blur-image]="isOutofStock()">
+      </div>-->
+    </div>
+  </div>
+
+  <div *ngIf="strip!=undefined" class="strip-offer">{{strip}}</div>
+  <div class="contain-addpackage">
+    <div class="stars">
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 1, 'fas': itemRatings?.averageRating >= 1}"></i>
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 2, 'fas': itemRatings?.averageRating >= 2}"></i>
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 3, 'fas': itemRatings?.averageRating >= 3}"></i>
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 4, 'fas': itemRatings?.averageRating >= 4}"></i>
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 5, 'fas': itemRatings?.averageRating >= 5}"></i>
+      <span>&nbsp;{{ itemRatings?.totalRatings }} Reviews</span>
+    </div>
+    <h3 class="itemTitle">{{item.name}}</h3>
+    <div class="display-flex">
+      <div *ngIf="hasDiscount(item.discount)" class="div-price">
+        <span class="real-price">{{ calculateDiscountedPrice(item.price.amount,
+          item.discount?.discountPercent) | currency: 'INR':'symbol-narrow' }}</span>&nbsp;
+        <span class="less-price">{{ item.price.amount | currency:'INR':'symbol-narrow' }}</span>&nbsp;
+        <span class="offerpec">{{item.discount?.discountPercent}}% off</span>
+      </div>
+      <div *ngIf="!hasDiscount(item.discount)" class="div-price">
+        <span class="real-price">{{ calculateDiscountedPrice(item.price.amount,
+          item.discount?.discountPercent) | currency: 'INR':'symbol-narrow' }}</span>&nbsp;
+      </div>
+      <div class="btn-addto-addmor">
+        <div *ngIf="!isAddedToCart() && !isOutofStock()" class="add-tocard-btn">
+          <button [disabled]="isOutofStock()" (click)="addToCart()"><i class="fa-solid fa-cart-shopping"></i> Add to
+            cart</button>
+        </div>
+        <div *ngIf="isAddedToCart() && !isOutofStock()" class="add-tocard-btn">
+          <button [routerLink]="['/checkout']" class="btn text-success"><i class="fa-solid fa-check"></i> View in cart
+          </button>
+        </div>
+       <!-- <div *ngIf="false" class="increase-product">
+          <div class="product-count">
+            <button [disabled]="isOutofStock()" class="button-count" style="border-right: 1px solid black;"
+              (click)="decreaseQuantity()">-</button>
+            <input type="text" readonly class="number-product" [(ngModel)]="quantity">
+            <button [disabled]="isOutofStock()" class="button-count" style="border-left: 1px solid black;"
+              (click)="increaseQuantity()">+</button>
+          </div>
+        </div>-->
+      </div>
+      <div *ngIf="isOutofStock()" class="d-flex justify-content-between">
+        <div class="out-of-stock">
+          Out of Stock
+        </div>
+        <ng-container *ngIf="customerId">
+          <div class="notify-me cursor_pointer" *ngIf="!notifyMe" (click)="createNotifyMe(item)" title="Notify Me">
+            <i class="fa-sharp fa-regular fa-bell" style="color: #d41872;"></i>
+        </div>
+        <div class="we-notify-me" *ngIf="notifyMe" title="Notification Added">
+            <i class="fa fa-bell" style="color: #d41872;" aria-hidden="true"></i>
+        </div>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+ 
+</div>
+
+
+<!-- for mobile card view -->
+<div class="product-package-styling-sm product-package-styling mobileCard-view">
+  <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" (click)="openProduct()">
+   <!-- <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleCaptions " data-bs-slide-to="0" class="active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions " data-bs-slide-to="1"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleCaptions " data-bs-slide-to="2"
+        aria-label="Slide 3"></button>
+    </div>-->
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img [src]="item.photoLinks && item.photoLinks[0] ? item.photoLinks[0] : 'assets/img/image_empty.jpg'" 
+             class="d-block sm-img" loading="lazy" alt="" 
+             [class.blur-image]="isOutofStock()">
+      </div>
+      
+     <!-- <div *ngIf="item.photoLinks[1]" class="carousel-item">
+        <img src="{{item.photoLinks[1]}}" class="d-block sm-img" loading="lazy" alt=" " [class.blur-image]="isOutofStock()">
+      </div>
+      <div *ngIf="item.photoLinks[2]" class="carousel-item">
+        <img src="{{item.photoLinks[2]}}" class="d-block sm-img" loading="lazy" alt=" " [class.blur-image]="isOutofStock()">
+      </div>-->
+    </div>
+  </div>
+  <div *ngIf="strip!=undefined" class="strip-offer">{{strip}}</div>
+  <div class="contain-addpackage">
+    <span class="title-sm">{{item.name}}</span>
+
+    <div *ngIf="hasDiscount(item.discount)" class="div-price">
+      <span class="og-price">{{ calculateDiscountedPrice(item.price.amount,
+        item.discount?.discountPercent) | currency: 'INR':'symbol-narrow':'1.0-0' }}</span>&nbsp;
+      <span class="disc-price">{{ item.price.amount | currency:'INR':'symbol-narrow':'1.0-0' }}</span>&nbsp;
+      <span class="disc-per">{{item.discount?.discountPercent}}% off</span>
+    </div>
+
+    <div *ngIf="!hasDiscount(item.discount)" class="div-price">
+      <span class="og-price">{{ calculateDiscountedPrice(item.price.amount,
+        item.discount?.discountPercent) | currency: 'INR':'symbol-narrow':'1.0-0' }}</span>&nbsp;
+    </div>
+
+    <div *ngIf="isOutofStock()" class="d-flex justify-content-between">
+      <div class="disc-per">
+        Out of Stock
+      </div>
+      <ng-container *ngIf="customerId">
+        <div class="notify-me cursor_pointer" *ngIf="!notifyMe" (click)="createNotifyMe(item)" title="Notify Me">
+          <i class="fa-sharp fa-regular fa-bell" style="color: #d41872;"></i>
+      </div>
+      <div class="we-notify-me" *ngIf="notifyMe" title="Notification Added">
+          <i class="fa fa-bell" style="color: #d41872;" aria-hidden="true"></i>
+      </div>
+      </ng-container>
+    </div>
+    <div class="stars">
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 1, 'fas': itemRatings?.averageRating >= 1}"></i>
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 2, 'fas': itemRatings?.averageRating >= 2}"></i>
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 3, 'fas': itemRatings?.averageRating >= 3}"></i>
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 4, 'fas': itemRatings?.averageRating >= 4}"></i>
+      <i class="fa-star"
+        [ngClass]="{'far': itemRatings?.averageRating < 5, 'fas': itemRatings?.averageRating >= 5}"></i>
+    </div>
+  </div>
+</div>

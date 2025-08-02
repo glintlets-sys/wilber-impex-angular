@@ -1,0 +1,208 @@
+// .custom-bg-color {
+//     background-color: #a44c7c;
+//   }
+  
+//   .navbar-brand-left {
+//     position: absolute;
+//     left: 10;
+//     top: 50%; /* Adjusted */
+//     transform: translateY(-50%); /* Added */
+//     display: flex;
+//     align-items: center;
+//   }
+  
+
+// .container {
+//   position: relative;
+// }
+
+// @media (max-width: 768px) {
+//   .navbar-brand-left {
+//       /* Your mobile-specific styles here, for example: */
+//       left: 10px; /* or any value that suits your design on mobile */
+//   }
+// }
+
+.inlineCount {
+ 
+    font-size: 9px !important;
+    left: 90%;
+    top: 2px;
+    background-color: #D41872;
+
+}
+
+.colored {
+  font-weight: 600;
+  color: #D41872;
+}
+.btn-cart-num {
+  background-color: #D41872;
+}
+  
+
+.subcat {
+  font-size: 16px;
+  margin-bottom: 0px;
+  font-weight: 500 !important;
+  margin-left: 10px;
+  padding-top: 10px;
+}
+
+.background-logo {
+  background-color: #b68fd5;
+}
+// .navbar-brand-center {
+//   position: absolute;
+//   left:50%;
+//   transform: translateX(-50%);
+// }
+
+// .whatsapp-button {
+//   opacity: 0.6;
+//   transition: opacity 0.1s;
+//   color: green;
+//   margin-top: auto;
+//   margin-bottom: auto;
+// }
+
+// .whatsapp-button:hover {
+//   opacity: 1;
+// }
+
+// .btn-inner--icon i.fab.fa-whatsapp {
+//   font-size: 36px; /* Adjust the size to your desired value */
+// }
+.disabled {
+    pointer-events: none;
+    opacity: 0.5; /* Optionally reduce opacity to visually indicate the disabled state */
+    /* Add any other styles you want to apply to indicate the disabled state */
+  }
+
+
+.floating-element {
+    position: absolute; /* Or 'fixed' if you want it to stay in place on scrolling */
+    z-index: 1000; /* Make sure this is higher than other elements' z-index */
+    animation: float 3s ease-in-out infinite; /* Apply floating animation */
+}
+
+.div-signup , .div-cartlist{
+  cursor: pointer;
+}
+// .nav-link-icon {
+//   font-size: 24px;
+// }
+
+//   .custom-img{
+//     min-height: 78px;
+//     width: auto;
+//   }
+
+//   .custom-cart-icon {
+//     font-size:24px; /* Adjust the size as needed */
+//   }
+
+//   .custom-image-icon {
+//     font-size: 44px;
+//   }
+
+  
+//   .navbar-brand-icons {
+//     display: flex;
+//     justify-content: right;
+//     align-items: center;
+//   }
+
+//   .nav-link {
+//     padding-left: 0.25rem;
+//     padding-right: 0.25rem;
+//   }
+
+//   .nav-bar {
+//     padding-top: 10px;
+//     padding-bottom: 10px;
+//   }
+
+  
+// .logo-img {
+//   width: 150px; /* or whatever value you want for mobile screens */
+//   height: auto; /* maintain aspect ratio */
+// }
+
+// @media (min-width: 400px) { /* Adjusts the logo size for screens larger than 768px */
+//   .logo-img {
+//     width: 300px; /* or whatever value you want for larger screens */
+//     height: auto; /* maintain aspect ratio */
+//   }
+// }
+
+// @media (min-width: 769px) { /* Adjusts the logo size for screens larger than 768px */
+//   .logo-img {
+//     width: 500px; /* or whatever value you want for larger screens */
+//     height: auto; /* maintain aspect ratio */
+//   }
+// }
+
+// .search-bar{
+//   border-radius: 38px;
+//   border: 1px solid #D41872;
+// }
+// .nav-link{
+//   color: #000;
+//   font-family: Fredoka;
+//   font-size: 20px;
+//   font-style: normal;
+//   font-weight: 600;
+//   line-height: normal;
+// }
+
+// .catagory{
+//   background: #4074FF;
+//   height: 65px;
+//   align-items: center;
+// }
+// .left-pan{
+//   padding-left: 7px;
+// }
+
+// .left-pan svg{
+ 
+//  padding-left: 10px;
+// }
+// .form{
+
+//   position: relative;
+// }
+// .form span{
+//   position: absolute;
+//   right: 17px;
+//   top: 6px;
+//   padding: 2px;
+//   border-left: 1px solid #d1d5db;
+// }
+
+// .cart-text, .login-text{
+//   color: #D41872;
+//   font-family: Fredoka;
+//   font-size: 16px;
+//   font-style: normal;
+//   font-weight: 500;
+//   line-height: normal;
+//   margin-right: 8px;
+// }
+a{
+  cursor: pointer;
+  user-select: none;
+}
+li a{
+  cursor: pointer;
+  user-select: none;
+}
+.div-signup{
+  cursor: pointer;
+  user-select: none;
+}
+.accomdationset-head{
+  cursor: pointer;
+  user-select: none;
+}

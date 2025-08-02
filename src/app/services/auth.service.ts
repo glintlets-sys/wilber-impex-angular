@@ -1,266 +1,172 @@
-import { Injectable, Injector } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
-import { delay } from 'rxjs/operators';
-import { AddressService, Address } from './address.service';
+import { environment } from '../../environments/environment';
 
-export interface User {
-  id: string;
-  mobile: string;
-  firstName: string;
-  lastName: string;
-  email?: string;
-  isNewUser: boolean;
-  createdAt: Date;
-}
+const SERVICE_URL = environment.serviceURL;
+const AUTHENTICATION_SERVICE_URL = SERVICE_URL + 'authenticate/';
 
-export interface LoginRequest {
-  mobile: string;
-}
-
-export interface VerifyOTPRequest {
-  mobile: string;
-  otp: string;
-}
-
-export interface RegisterRequest {
-  mobile: string;
-  firstName: string;
-  lastName: string;
-  email?: string;
-}
-
-
-
-export interface Order {
-  id: string;
-  orderNumber: string;
-  orderDate: Date;
-  status: 'pending' | 'confirmed' | 'shipped' | 'delivered' | 'cancelled';
-  totalAmount: number;
-  items: OrderItem[];
-  shippingAddress: Address;
-  invoiceUrl?: string;
-}
-
-export interface OrderItem {
-  productId: string;
-  productName: string;
-  quantity: number;
-  price: number;
-  size?: string;
-  color?: string;
-  packagingType?: string;
-}
+const USER_DETAILS = 'userDetails';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private currentUserSubject = new BehaviorSubject<User | null>(null);
-  public currentUser$ = this.currentUserSubject.asObservable();
+  private isUserLoggedInBehavior: BehaviorSubject<string> = new BehaviorSubject<string>('');
+  public isUserLoggedIn = this.isUserLoggedInBehavior.asObservable();
 
-  private isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  public isAuthenticated$ = this.isAuthenticatedSubject.asObservable();
+  private userDetailsBehavior: BehaviorSubject<any> = new BehaviorSubject<any>('');
+  public userDetails = this.userDetailsBehavior.asObservable();
 
-  constructor(private injector: Injector) {
-    this.loadUserFromStorage();
+  constructor(private http: HttpClient) {
+    this.initializeUserLogin();
   }
 
-  private loadUserFromStorage(): void {
-    const userStr = localStorage.getItem('currentUser');
-    if (userStr) {
-      try {
-        const user = JSON.parse(userStr);
-        this.currentUserSubject.next(user);
-        this.isAuthenticatedSubject.next(true);
-      } catch (error) {
-        console.error('Error loading user from storage:', error);
-        this.clearUser();
+  private userLogin(mobileNumber: string, authPin: string) {
+    return this.http.post<any>(AUTHENTICATION_SERVICE_URL + 'login', { username: mobileNumber, password: authPin });
+  }
+
+  private userRegistration(username: string, mobileNumber: string, authPin: string) {
+    return this.http.post<any>(AUTHENTICATION_SERVICE_URL + 'register', { username: mobileNumber, password: authPin, firstName: username });
+  }
+
+  private successSubject: BehaviorSubject<string> = new BehaviorSubject<string>("");
+  public success$ = this.successSubject.asObservable();
+
+  public authenticateUser(mobileNumber: string, authPin: string) {
+    this.userLogin(mobileNumber, authPin).subscribe(
+      (data) => {
+        this.handleAuthenticationResponse(data);
+      },
+      (error) => {
+        this.handleError(error); // Handle the error
       }
+    );
+  }
+
+  public registerUser(username: string, mobileNumber: string, authPin: string) {
+    return this.userRegistration(username, mobileNumber, authPin);
+  }
+
+  private handleAuthenticationResponse(data: any) {
+    if (data && data.authStatus === 'SUCCESS') {
+      this.updateUserLoggedIn(true);
+      const userDetails = this.getUserDetailsFromAPI(data);
+      this.updateUserDetails(userDetails);
+      this.updateUserDetailsInLocalStorage(userDetails);
+      this.successSubject.next('true'); // Update success BehaviorSubject
+    } else {
+      this.successSubject.next('false');
     }
   }
 
-  private saveUserToStorage(user: User): void {
-    localStorage.setItem('currentUser', JSON.stringify(user));
+  public resetSuccessSubject() {
+    this.successSubject.next('');
   }
 
-  private clearUser(): void {
-    localStorage.removeItem('currentUser');
-    this.currentUserSubject.next(null);
-    this.isAuthenticatedSubject.next(false);
+  private handleError(error: any) {
+    // Handle the error based on your requirements
+    this.successSubject.next(error);
+    console.log('An error occurred:', error);
+    // Perform any additional error handling tasks
+  }
+  
+  public requestOTP(mobileNumber: string): any {
+    return this.http.post<any>(SERVICE_URL + 'api/otp/generate-otp', { phoneNumber: mobileNumber });
   }
 
-  getCurrentUser(): User | null {
-    return this.currentUserSubject.value;
+  public verifyOTP(mobileNumber: string, otp: string): Observable<any> {
+    return this.http.post<any>(AUTHENTICATION_SERVICE_URL + 'verify-otp', { 
+      username: mobileNumber, 
+      password: otp 
+    });
   }
 
-  isLoggedIn(): boolean {
-    return this.isAuthenticatedSubject.value;
+  public logoutUser() {
+    this.updateUserLoggedIn(false);
+    this.updateUserDetails('');
+    //this.updateUserDetailsInLocalStorage('');
+    this.deleteuserDetailInLocalStorate();
+    this.cleanCartInLocalStorage();
   }
 
-  // Stub API: Send OTP
-  sendOTP(request: LoginRequest): Observable<{ success: boolean; message: string }> {
-    console.log('Sending OTP to:', request.mobile);
-    
-    // Simulate API call delay
-    return of({ success: true, message: 'OTP sent successfully' }).pipe(delay(1000));
+  private updateUserLoggedIn(status: boolean) {
+    this.isUserLoggedInBehavior.next(status.toString());
   }
 
-  // Stub API: Verify OTP
-  verifyOTP(request: VerifyOTPRequest): Observable<{ success: boolean; user?: User; message: string }> {
-    console.log('Verifying OTP for:', request.mobile, 'OTP:', request.otp);
-    
-    // For testing purposes, accept any OTP or specifically '123456'
-    const isValidOTP = request.otp === '123456' || request.otp.length === 6;
-    
-    if (!isValidOTP) {
-      return of({ 
-        success: false, 
-        message: 'Invalid OTP. Please enter a valid 6-digit OTP.'
-      }).pipe(delay(1000));
+  public updateUserDetails(userDetails: any) {
+    this.userDetailsBehavior.next(userDetails);
+  }
+
+  private deleteuserDetailInLocalStorate() {
+    localStorage.removeItem(USER_DETAILS);
+  }
+
+  private updateUserDetailsInLocalStorage(userDetails: any) {
+    if (userDetails === '') {
+      this.setDataToLocal(USER_DETAILS, '');
+    } else {
+      this.setDataToLocal(USER_DETAILS, JSON.stringify(userDetails));
     }
-    
-    // Simulate API call delay
-    return of({ 
-      success: true, 
-      user: {
-        id: 'user_' + Date.now(),
-        mobile: request.mobile,
-        firstName: '',
-        lastName: '',
-        isNewUser: true,
-        createdAt: new Date()
-      },
-      message: 'OTP verified successfully'
-    }).pipe(delay(1500));
   }
 
-  // Stub API: Register new user
-  register(request: RegisterRequest): Observable<{ success: boolean; user?: User; message: string }> {
-    console.log('Registering user:', request);
-    
-    const user: User = {
-      id: 'user_' + Date.now(),
-      mobile: request.mobile,
-      firstName: request.firstName,
-      lastName: request.lastName,
-      email: request.email,
-      isNewUser: false,
-      createdAt: new Date()
-    };
-
-    // Simulate API call delay
-    return of({ 
-      success: true, 
-      user: user,
-      message: 'Registration successful'
-    }).pipe(delay(1000));
+  private getUserDetailsFromAPI(data: any) {
+    return data;
   }
 
+  private initializeUserLogin() {
+    const userDetails = this.getDataFromLocal(USER_DETAILS);
 
-
-  // Stub API: Get user orders
-  getUserOrders(): Observable<Order[]> {
-    const orders: Order[] = [
-      {
-        id: 'order_1',
-        orderNumber: 'ORD-2024-001',
-        orderDate: new Date('2024-01-15'),
-        status: 'delivered',
-        totalAmount: 2500.00,
-        items: [
-          {
-            productId: 'prod_1',
-            productName: 'Cement Cleaner',
-            quantity: 2,
-            price: 1250.00,
-            size: '1kg',
-            packagingType: 'Polythene Bag'
-          }
-        ],
-        shippingAddress: {
-          id: 'addr_1',
-          label: 'home',
-          fullName: 'John Doe',
-          mobile: '9876543210',
-          addressLine1: '123 Main Street',
-          city: 'Mumbai',
-          state: 'Maharashtra',
-          pincode: '400001',
-          isDefault: true,
-          userId: 'user_1',
-          createdAt: new Date(),
-          updatedAt: new Date()
-        },
-        invoiceUrl: '/invoices/ORD-2024-001.pdf'
-      },
-      {
-        id: 'order_2',
-        orderNumber: 'ORD-2024-002',
-        orderDate: new Date('2024-01-20'),
-        status: 'shipped',
-        totalAmount: 1800.00,
-        items: [
-          {
-            productId: 'prod_2',
-            productName: 'Epoxy Adhesive',
-            quantity: 1,
-            price: 1800.00,
-            size: '2kg',
-            packagingType: 'Polythene Bag'
-          }
-        ],
-        shippingAddress: {
-          id: 'addr_2',
-          label: 'office',
-          fullName: 'John Doe',
-          mobile: '9876543210',
-          addressLine1: '456 Business Park',
-          city: 'Mumbai',
-          state: 'Maharashtra',
-          pincode: '400002',
-          isDefault: false,
-          userId: 'user_1',
-          createdAt: new Date(),
-          updatedAt: new Date()
-        }
-      }
-    ];
-
-    return of(orders).pipe(delay(800));
+    if (userDetails) {
+      this.updateUserLoggedIn(true);
+      this.updateUserDetails(JSON.parse(userDetails));
+    }
   }
 
-  // Stub API: Download invoice
-  downloadInvoice(orderId: string): Observable<{ success: boolean; url?: string; message: string }> {
-    console.log('Downloading invoice for order:', orderId);
-    
-    return of({ 
-      success: true, 
-      url: `/invoices/ORD-${orderId}.pdf`,
-      message: 'Invoice download started'
-    }).pipe(delay(500));
+  private getDataFromLocal(dataKey: string) {
+    return localStorage.getItem(dataKey);
   }
 
-  // Stub API: Merge cart with backend
-  mergeCart(cartItems: any[]): Observable<{ success: boolean; message: string }> {
-    console.log('Merging cart with backend:', cartItems);
-    
-    return of({ 
-      success: true, 
-      message: 'Cart merged successfully'
-    }).pipe(delay(1000));
+  private setDataToLocal(dataKey: string, value: any) {
+    localStorage.setItem(dataKey, value);
   }
 
-  login(user: User): void {
-    this.currentUserSubject.next(user);
-    this.isAuthenticatedSubject.next(true);
-    this.saveUserToStorage(user);
+  private cleanCartInLocalStorage() {
+    localStorage.removeItem('cart');
   }
 
-  logout(): void {
-    this.clearUser();
-    // Clear addresses on logout
-    const addressService = this.injector.get(AddressService);
-    addressService.clearAddresses();
+  public getUserId() {
+    const userDetailsStr = localStorage.getItem(USER_DETAILS);
+    if (!userDetailsStr) return null;
+    const userDetails = JSON.parse(userDetailsStr);
+    return userDetails ? userDetails.userId : null;
+  }
+
+  public getUsername() {
+    const userDetailsStr = localStorage.getItem(USER_DETAILS);
+    if (!userDetailsStr) return null;
+    const userDetails = JSON.parse(userDetailsStr);
+    return userDetails ? userDetails.username : null;
+  }
+
+  public isUserAdmin() {
+    const role = this.getUserRole();
+    return role != null && (role === 'SUPER_ADMIN' );
+  }
+
+  public getUserRole() {
+    const userDetailsStr = localStorage.getItem(USER_DETAILS);
+    if (!userDetailsStr) return null;
+    const userDetails = JSON.parse(userDetailsStr);
+    return userDetails ? userDetails.role : null;
+  }
+
+  public getAdminUsers() {
+    return this.http.get(AUTHENTICATION_SERVICE_URL + 'adminusers');
+  }
+
+  isRegisteredUser(mobileNumber: string): Observable<boolean> {
+    const url = `${AUTHENTICATION_SERVICE_URL}verifyRegistration/${mobileNumber}`;
+    return this.http.get<boolean>(url);
   }
 } 

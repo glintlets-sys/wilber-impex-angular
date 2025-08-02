@@ -1,0 +1,162 @@
+<div class="container mt-5" *ngIf="isLoggedIn">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Purchase Summary</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Subtotal
+              <span>{{ getSubTotalAmount() | currency : '&#8377;' }}</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Discount
+              <span><sub class="text-success" *ngIf="getCouponCodeApplied()">(Coupon discount: &nbsp;
+                  {{ getCouponDiscountAmount() | currency : '&#8377;' }})</sub>
+                {{ getDiscountAmount() + getCouponDiscountAmount() | currency : '&#8377;' }} </span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
+              Total
+              <span>{{ getTotalAmount() | currency : '&#8377;' }}</span>
+            </li>
+          </ul>
+          <button class="btn btn-success btn-block mt-3" [disabled]="isButtonDisabled"
+            (click)="processPayment_phonepe()">Proceed to Pay</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+      <div class="card">
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
+              <div class="form-group mt-3 row">
+                <div class="col-sm-10">
+                  <label for="couponCode" class="col-form-label">Coupon Code</label>
+                </div>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" id="couponCode" [(ngModel)]="couponCode"> 
+                  <button *ngIf="getCouponCodeApplied()" class="btn btn-link" (click)="clearCouponCode()">X</button>
+                  <label class="text-success" *ngIf="getCouponCodeApplied()">Coupon Code Applied</label>
+                </div>
+
+              </div>
+            </li>
+          </ul>
+          <button class="btn btn-dark btn-block mt-3" [disabled]="isButtonDisabled" (click)="applyCouponCode()">Apply
+            Coupon</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Your Shopping Cart</h5>
+        </div>
+        <div class="card-body">
+          <div class="row row-grid mt-0">
+            <div class="col-lg-12 mt-1 p-0" *ngFor="let cartItem of cartItems">
+              <div class="card m-0 p-0">
+                <div class="card-header">
+                  <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="card-title text-primary mb-0">{{ cartItem.name }}</h5>
+                    <a class="text-danger" (click)="removeItem(cartItem)">
+                      <i class="fas fa-trash-alt"></i>
+                    </a>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-6 p-0">
+                      <div class="media align-items-center mb-3">
+                        <div class="col-md-12 col-12">
+                          <div class="rounded text-center" style="overflow: hidden;">
+                            <img [src]="searchItem(cartItem.itemId)" alt="Product Image" class="img-fluid custom-img">
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-6 p-0">
+                      <table class="table table-responsive table-sm mb-0 custom-table mr-0">
+                        <tbody>
+                          <tr>
+                            <td class="font-weight-bold">Quantity :</td>
+                            <td>
+                              <div class="d-flex align-items-center justify-content-center">
+                                <button class="btn btn-warning btn-round btn-sm mr-2"
+                                  (click)="decrementQuantity(cartItem)">-</button>
+                                <span class="font-weight-bold">{{ cartItem.quantity }}</span>
+                                <button class="btn btn-warning btn-round btn-sm ml-2"
+                                  (click)="incrementQuantity(cartItem)">+</button>
+                              </div>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td class="font-weight-bold">Price:</td>
+                            <td class="d-flex align-items-center justify-content-center">
+                              {{ cartItem.price.amount | currency: cartItem.price.currency }}</td>
+                          </tr>
+                          <tr>
+                            <td class="font-weight-bold">Discount:</td>
+                            <td class="d-flex align-items-center justify-content-center">{{ cartItem.discount}} % </td>
+                          </tr>
+                          <tr>
+                            <td class="font-weight-bold">Subtotal:</td>
+                            <td class="d-flex align-items-center justify-content-center">
+                              {{ ((cartItem.price.amount * cartItem.quantity) *((100-cartItem.discount)/100)) | currency: cartItem.price.currency }}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+      <app-delivery-address [address]="deliveryAddress"></app-delivery-address>
+    </div>
+
+    <div class="col-lg-12 col-md-12 col-sm-12 mb-2">
+      <div class="card">
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center font-weight-bold">
+              Total
+              <span>{{ getTotalAmount() | currency : '&#8377;' }}</span>
+            </li>
+          </ul>
+          <button class="btn btn-success btn-block mt-3" [disabled]="isButtonDisabled"
+            (click)="processPayment_phonepe()">Proceed to Pay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container text-center mt-5" *ngIf="!isLoggedIn">
+  <div class="alert alert-light text-dark">
+    Please log in to view your cart items. &nbsp;
+    <button class="btn btn-dark text-light" (click)="login()">Log In</button>
+  </div>
+</div>
+
+
+<div ng-show="false" style="visibility: hidden">
+  <form ngNoForm id="ccavenueForm" method="POST" name="ccavenueForm"
+    action="https://secure.ccavenue.com/transaction/transaction.do?command=initiateTransaction">
+    <input type="hidden" id="encRequest" name="encRequest" value="{{encryptionRequest}}">
+    <input type="hidden" name="access_code" id="access_code" value="{{accessCode}}">
+  </form>
+</div>

@@ -1,0 +1,13 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.section {
+  flex-grow: 1;
+}
+
+.container-fluid {
+  min-height: 100vh;
+}

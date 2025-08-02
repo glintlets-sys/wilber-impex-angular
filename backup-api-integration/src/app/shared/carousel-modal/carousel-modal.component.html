@@ -1,0 +1,28 @@
+<ng-container *ngIf="photoLinks && photoLinks.length > 0">
+    <div class="modal fade show d-block custom-modal" 
+    (touchstart)="onTouchStart($event)"
+    (touchmove)="onTouchMove($event)"
+    (touchend)="onTouchEnd()"
+    >
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">{{title}}</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body" [ngStyle]="{ 'height': modalHeight }">
+            <carousel [showIndicators]="true">
+              <ng-container *ngFor="let photoLink of photoLinks; let i = index">
+                <slide>
+                  <img class="d-block w-100" [src]="photoLink" alt="Slide {{ i + 1 }}" />
+                </slide>
+              </ng-container>
+            </carousel>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  

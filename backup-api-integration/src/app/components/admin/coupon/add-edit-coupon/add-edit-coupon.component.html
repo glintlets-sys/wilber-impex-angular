@@ -1,0 +1,557 @@
+<div class="modal-header">
+    <h3 class="panel-title mb-0 p-0">
+        <span *ngIf="editCoupon == undefined"> Add Coupon </span>
+        <span *ngIf="editCoupon != undefined"> Edit Coupon </span>
+    </h3>
+    <button type="button" class="btn-close btn btn-primary btn-with-icon save-profile" (click)="modal.close()">
+    </button>
+</div>
+<div class="modal-body">
+    <section>
+        <div class="container">
+            <form *ngIf="editCoupon == undefined">
+                <!-- Coupon Type -->
+                <div class="col-md-12 mb-2">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4">
+                            <label for="couponType" class="control-label">Coupon Type:</label>
+                        </div>
+                        <div class="col-sm-6">
+                            <select class="form-control" name="couponType" id="couponType" [(ngModel)]="selected_coupon"
+                                (change)="getSelectedCoupon($event)">
+                                <option *ngFor="let type of couponTypes" [value]="type">{{ type }}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coupon Code -->
+                <span *ngIf="selected_coupon=='OneTimePercentDiscount'">
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="couponName" class="control-label">Coupon Code <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="couponName" class="form-control form-control-alternative"
+                                    placeholder="Enter coupon code" [(ngModel)]="one_time_percent_dicount.couponCode" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="date" class="control-label">Start Date <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="date" name="date" class="form-control form-control-alternative"
+                                    placeholder="Coupon start date" [(ngModel)]="one_time_percent_dicount.startDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Number of days -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="days" class="control-label">No of Days <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="days" class="form-control form-control-alternative"
+                                    placeholder="Enter number of days"
+                                    [(ngModel)]="one_time_percent_dicount.numOfDays" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- One-time percent discount -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="discountPercent" class="control-label">Discount(%) <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="discountPercent" class="form-control form-control-alternative"
+                                    placeholder="Enter discount percent"
+                                    [(ngModel)]="one_time_percent_dicount.discountPercent" />
+                            </div>
+                        </div>
+                    </div>
+                </span>
+
+                <span *ngIf="selected_coupon=='FlatDiscountCoupon'">
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="couponName" class="control-label">Coupon Code <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="couponName" class="form-control form-control-alternative"
+                                    placeholder="Enter coupon code" [(ngModel)]="flat_discount_coupon.couponCode" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="date" class="control-label">Start Date <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="date" name="date" class="form-control form-control-alternative"
+                                    placeholder="Coupon start date" [(ngModel)]="flat_discount_coupon.startDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Number of days -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="days" class="control-label">No of Days <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="days" class="form-control form-control-alternative"
+                                    placeholder="Enter number of days" [(ngModel)]="flat_discount_coupon.numOfDays" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix mb-2">
+                            <div class="col-md-4">
+                                <label for="minOrder" class="control-label">Min Order <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="minOrder" class="form-control form-control-alternative"
+                                    placeholder="Enter min order" [(ngModel)]="flat_discount_coupon.minOrder" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="percentDiscount" class="control-label">Is Percent Discount:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <select name="percentDiscount" class="form-control form-control-alternative"
+                                    [(ngModel)]="flat_discount_coupon.percentDiscount">
+                                    <option [ngValue]=true>Yes</option>
+                                    <option [ngValue]=false>No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="discountAmount" class="control-label">Discount Value <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="discountAmount" class="form-control form-control-alternative"
+                                    placeholder="Enter discount amount"
+                                    [(ngModel)]="flat_discount_coupon.discountAmount" />
+                            </div>
+                        </div>
+                    </div>
+                </span>
+
+
+                <span *ngIf="selected_coupon=='CartAmountBasedCoupon'">
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="couponName" class="control-label">Coupon Code <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="couponName" class="form-control form-control-alternative"
+                                    placeholder="Enter coupon code" [(ngModel)]="cart_amount_based_coupon.couponCode" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Date -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="date" class="control-label">Start Date <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="date" name="date" class="form-control form-control-alternative"
+                                    placeholder="Coupon start date" [(ngModel)]="cart_amount_based_coupon.startDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Number of days -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="days" class="control-label">No of Days <span
+                                        class="text-danger">*</span></label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" name="days" class="form-control form-control-alternative"
+                                    placeholder="Enter number of days"
+                                    [(ngModel)]="cart_amount_based_coupon.numOfDays" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label for="percentDiscount" class="control-label">Is Percent Discount:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <select name="percentDiscount" class="form-control form-control-alternative"
+                                    [(ngModel)]="cart_amount_based_coupon.percentDiscount">
+                                    <option [ngValue]=true>Yes</option>
+                                    <option [ngValue]=false>No</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+
+                        <div class="form-group row clearfix">
+                            <div class="col-md-4">
+                                <label class="control-label">Discount Limits:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <!-- Form for adding new discount limit -->
+                                <div class="input-group mb-3">
+                                    <input type="number" class="form-control" placeholder="Amount" #amountInput>
+                                    <input type="number" class="form-control" placeholder="Discount" #discountInput> &nbsp;
+                                    <div class="input-group-append ml-1">
+                                        <button class="btn btn-primary" type="button" (click)="addDiscountLimit(amountInput.value, discountInput.value, cart_amount_based_coupon)">Add</button>
+                                    </div>
+                                </div>
+
+                                <!-- Table for displaying existing discount limits -->
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>Cart Value</th>
+                                            <th>Discount {{cart_amount_based_coupon.percentDiscount? "%": "Rs."}}</th>
+                                            <th></th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let limit of cart_amount_based_coupon.discountLimits | keyvalue">
+                                            <td>{{ limit.key }}</td>
+                                            <td>{{ limit.value }}</td>
+                                            <td></td>
+                                            <td>
+                                                <button class="btn btn-danger"
+                                                    (click)="removeDiscountLimit(limit.key, cart_amount_based_coupon)">Remove</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </span>
+
+
+
+                <!-- Save and Cancel Buttons -->
+                <div class="col-md-12">
+                    <div class="form-group row clearfix">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4">
+                            <button class="btn btn-white cancelbtn" type="button"
+                                (click)="modal.close()">Cancel</button>&nbsp;
+                            <button type="button" *ngIf="editCoupon == undefined" (click)="saveCoupon()"
+                                class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage">
+                                <svg style="width: 13px" id="Layer_1" data-name="Layer 1"
+                                    xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+                                    <defs>
+                                        <style>
+                                            .cls-1 {
+                                                fill: #fff;
+                                            }
+                                        </style>
+                                    </defs>
+                                    <path class="cls-1"
+                                        d="M77.78,0H11.11A11.1,11.1,0,0,0,0,11.11V88.89A11.1,11.1,0,0,0,11.11,100H88.89A11.1,11.1,0,0,0,100,88.89V22.22ZM50,88.89A16.67,16.67,0,1,1,66.67,72.22,16.68,16.68,0,0,1,50,88.89ZM66.67,33.33H11.11V11.11H66.67Z" />
+                                </svg>&nbsp;Save
+                            </button>
+                            <button type="button" *ngIf="editCoupon != undefined"
+                                class="btn btn-primary btn-with-icon save-profile globleSVGColorButtonChnage"
+                                (click)="saveCoupon()">Update</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form *ngIf="editCoupon != undefined">
+                <form>
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-3">
+                                <label for="couponCode" class="control-label">Coupon Code:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" name="couponCode" class="form-control form-control-alternative"
+                                    placeholder="Enter coupon code" [(ngModel)]="edit_couponData.couponCode" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-3">
+                                <label for="couponType" class="control-label">Coupon Type:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" name="couponType" class="form-control form-control-alternative"
+                                    placeholder="Enter coupon type" [(ngModel)]="edit_couponData.couponType" disabled />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-3">
+                                <label for="couponDefinition" class="control-label">Coupon Definition:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="text" name="couponDefinition" class="form-control form-control-alternative"
+                                    placeholder="Enter coupon definition" [(ngModel)]="edit_couponData.couponDefinition"
+                                    disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-3">
+                                <label for="description" class="control-label">Description:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <textarea name="description" class="form-control form-control-alternative"
+                                    placeholder="Enter description"
+                                    [(ngModel)]="edit_couponData.description"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-3">
+                                <label for="active" class="control-label">Active:</label>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="checkbox" name="active" class="form-check-input"
+                                    [(ngModel)]="edit_couponData.active" />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Start Date -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-3">
+                                <label for="startDate" class="control-label">Start Date:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="date" name="startDate" class="form-control"
+                                    [(ngModel)]="edit_couponData.startDate" disabled />
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Date -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-3">
+                                <label for="endDate" class="control-label">End Date:</label>
+                            </div>
+                            <div class="col-sm-4">
+                                <input type="date" name="endDate" class="form-control"
+                                    [(ngModel)]="edit_couponData.endDate" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Coupon Benefits -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-3">
+                                <label for="couponBenefits" class="control-label">Coupon Benefits:</label>
+                            </div>
+                            <div class="col-sm-8 table-responsive">
+                                <table class="table">
+                                    <thead class="bg-light">
+                                        <tr>
+                                            <th>Benefit Type</th>
+                                            <th>Minimum Cart Amount</th>
+                                            <th>Discount Amount</th>
+                                            <th>Discount Percent</th>
+                                            <th>Amount Discount</th>
+                                            <th>Percent Discount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let benefit of edit_couponData.couponBenefits; let i = index">
+                                            <td>
+                                                {{benefit.benefitType}}
+                                            </td>
+                                            <td>
+                                                {{benefit.minimumCartAmountForCoupon}}
+                                            </td>
+                                            <td>
+                                                {{benefit.discountAmount}}
+                                            </td>
+                                            <td>
+                                                {{benefit.discountPercent}}
+                                            </td>
+                                            <td>
+                                                {{benefit.amountDiscount}}
+                                            </td>
+                                            <td>
+                                                {{benefit.percentDiscount}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Usage Limits -->
+                    <div class="col-md-12 mb-2">
+                        <div class="form-group row clearfix">
+                            <div class="col-md-3">
+                                <label for="usageLimits" class="control-label">Usage Limits:</label>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="form-check">
+                                    <input type="checkbox" id="oneTimeUsePerUser" class="form-check-input"
+                                        [(ngModel)]="edit_couponData.usageLimits.oneTimeUsePerUser"
+                                        [ngModelOptions]="{standalone: true}" disabled />
+                                    <label for="oneTimeUsePerUser" class="form-check-label">One Time Use Per
+                                        User</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input type="checkbox" id="allowAllUsers" class="form-check-input"
+                                        [(ngModel)]="edit_couponData.usageLimits.allowAllUsers"
+                                        [ngModelOptions]="{standalone: true}" disabled />
+                                    <label for="allowAllUsers" class="form-check-label">Allow All Users</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" id="allowAllItems" class="form-check-input"
+                                        [(ngModel)]="edit_couponData.usageLimits.allowAllItems"
+                                        [ngModelOptions]="{standalone: true}" disabled />
+                                    <label for="allowAllItems" class="form-check-label">Allow All Items</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" id="canBeApplyAboveItemDiscount" class="form-check-input"
+                                        [(ngModel)]="edit_couponData.usageLimits.canBeApplyAboveItemDiscount"
+                                        [ngModelOptions]="{standalone: true}" disabled />
+                                    <label for="canBeApplyAboveItemDiscount" class="form-check-label">Can Be Applied
+                                        Above Item Discount</label>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" id="usageCountRestricted" class="form-check-input"
+                                        [(ngModel)]="edit_couponData.usageLimits.usageCountRestricted"
+                                        [ngModelOptions]="{standalone: true}" disabled />
+                                    <label for="usageCountRestricted" class="form-check-label">Usage Count
+                                        Restricted</label>
+                                </div>
+
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-group row clearfix">
+                                        <div class="col-md-4">
+                                            <label for="maxQuantityAllowedPerItem" class="control-label">Max Quantity
+                                                Allowed Per Item:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" name="maxQuantityAllowedPerItem" class="form-control"
+                                                [(ngModel)]="edit_couponData.usageLimits.maxQuantityAllowedPerItem"
+                                                disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-group row clearfix">
+                                        <div class="col-md-4">
+                                            <label for="minPurchaseAmountLimit" class="control-label">Min Purchase
+                                                Amount Limit:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" name="minPurchaseAmountLimit" class="form-control"
+                                                [(ngModel)]="edit_couponData.usageLimits.minPurchaseAmountLimit"
+                                                disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-group row clearfix">
+                                        <div class="col-md-4">
+                                            <label for="maxNumberOfTimesCouponCanBeUsed" class="control-label">Max
+                                                Number Of Times Coupon Can Be Used:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" name="maxNumberOfTimesCouponCanBeUsed"
+                                                class="form-control"
+                                                [(ngModel)]="edit_couponData.usageLimits.maxNumberOfTimesCouponCanBeUsed"
+                                                disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-2">
+                                    <div class="form-group row clearfix">
+                                        <div class="col-md-4">
+                                            <label for="maxDiscountAmountAllocatedForThisCoupon"
+                                                class="control-label">Max Discount Amt. Allocated For This
+                                                Coupon:</label>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <input type="text" name="maxDiscountAmountAllocatedForThisCoupon"
+                                                class="form-control"
+                                                [(ngModel)]="edit_couponData.usageLimits.maxDiscountAmountAllocatedForThisCoupon"
+                                                disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="col-md-12 mb-2">
+                        <button type="submit" class="btn btn-primary" (click)="updateCoupon()">Update Coupon</button>
+                    </div>
+                </form>
+
+            </form>
+        </div>
+    </section>
+</div>

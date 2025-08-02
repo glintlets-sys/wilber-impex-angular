@@ -1,0 +1,137 @@
+
+<div class="section section-components">
+    <div class="container">
+      <h3 class="h5 text-primary font-weight-bold mb-3">Order Summary</h3>
+      <div class="row">
+        <!-- Total Number of Orders centered in the middle of the row -->
+        <div class="col-8 d-flex justify-content-start align-items-center">
+          <span *ngIf="numberOfResults>0" class="text-muted small">
+            <strong>Total Number of Orders: {{numberOfResults}}</strong>
+          </span>
+        </div>
+      
+        <!-- Pagination controls aligned to the right -->
+        <div class="col-4 d-flex justify-content-end align-items-center">
+          <div>
+            <button class="btn btn-link" (click)="loadPreviousPage()" [disabled]="currentPage === 0">Previous</button>
+            <button class="btn btn-link" (click)="loadNextPage()" [disabled]="currentPage === totalPages - 1">Next</button>
+          </div>
+        </div>
+      </div>
+      <div class="row justify-content-center">
+      
+        <div class="col-md-6 col-12" *ngFor="let order of orders">
+          <div class="card mb-3 rounded">
+            <div class="card-body">
+
+              
+
+              <div class="d-flex mr-auto justify-content-start">
+                <div>
+                  <h6 class="card-title text-left font-weight-normal">
+                    <span class="text-muted small"> <strong>{{ getOrderAddress(order.purchaseSummary)?.customerName }} </strong>| 
+                      <strong> Order Number:  </strong> {{ order.id }} | {{ getDispatchStatus(order.dispatchSummary.shipmentStatus) }} </span>
+                    
+                  </h6>
+                  <h6 class="card-title text-left font-weight-normal">
+                    <span class="text-muted small">
+                      <strong>Order Date: </strong> {{ order.creationDate |  date: 'yyyy-MM-dd HH:mm:ss'  }} | <strong>Order Amount:</strong> {{ getPurchaseSummary(order.purchaseSummary)?.billSummary.totalPrice }} 
+                    </span>  
+                    <span class="text-muted small" [ngClass]="{'text-danger': order.paymentStatus === 'PAYMENTINITIATED',
+                    'text-danger': order.paymentStatus === 'PAYMENTFAILED',
+                    'text-success': order.paymentStatus === 'PAYMENTSUCCESS'}"> | {{ getPaymentStatus(order.paymentStatus) }} </span>
+                  </h6>
+                  <h6 class="card-title text-left font-weight-normal">
+                    <span class="text-muted small" style="white-space: pre-line;"><strong> Delivery Address: </strong> {{ getFormattedAddress(order)}}  </span>
+                  </h6>
+                
+                </div>
+              </div>
+         
+              <div class="text-right">
+                <a (click)="toggleShipmentDetails(order)" class="text-primary small">
+                  {{ order.showShipmentDetails ? 'Hide Shipment' : 'View Shipment' }}
+                </a>
+                &nbsp;|&nbsp;
+                <a (click)="toggleOrderDetails(order)" class="text-primary small">
+                  {{ order.showDetails ? 'Hide Items' : 'View Items' }}
+                </a>&nbsp;|&nbsp;
+                <a (click)="navigateToInvoice(order)" class="text-primary small">
+                  Invoice
+                </a>
+                &nbsp;|&nbsp;
+                <a (click)="sendToShippingProvider(order)" class="text-primary small">
+                  Send Order To Shipping Service
+                </a>
+              </div>
+          
+              <div *ngIf="order.showDetails">
+                <hr class="my-3">
+                <h6 class="heading-small text-muted mb-4">Order Items</h6>
+                <div class="card mb-3 rounded">
+                  <div class="card-body">
+                    <div *ngFor="let item of getPurchaseSummary(order.purchaseSummary)?.cartSummary?.items; let i = index" class="mb-3">
+                      <h6 class="card-title mb-0" style="font-size: smaller;">{{ i + 1 }}. {{ item?.name }}</h6>
+                      <p class="card-text" style="font-size: smaller; margin: 0;">
+                        <strong>Price:</strong> {{ item?.price?.amount }} |
+                        <strong>Quantity:</strong> {{ item?.quantity }}
+                      </p>
+                    </div>
+                  </div>
+                </div>        
+              </div>
+              <div *ngIf="order.showShipmentDetails">
+                <hr class="my-3">
+                <h6 class="heading-small text-muted mb-4">Shipment Details</h6>
+                <app-dispatch-details [dispatchSummary] = "order.dispatchSummary"></app-dispatch-details>
+                <!--<div class="card mb-3 rounded">
+                  <div class="card-body">
+                   
+                    <div class="d-flex mr-auto justify-content-start">
+                      <div>
+                        <h6 class="card-title text-left font-weight-normal">
+                            <span class="text-muted small">
+                              <strong> Dispatch Id: </strong> {{ order.dispatchSummary?.id }} </span>
+                          </h6>
+                        <h6 class="card-title text-left font-weight-normal">
+                          <span class="text-muted small">
+                            <strong> Shipment Service: </strong> {{ order.dispatchSummary?.courierService }} </span>
+                        </h6>
+                        <h6 class="card-title text-left font-weight-normal">
+                          <span class="text-muted small">
+                            <strong> Shipment Code:   </strong> {{ order.dispatchSummary?.shipmentCode }} </span>
+                        </h6>
+                        <h6 class="card-title text-left font-weight-normal">
+                          <span class="text-muted small">
+                            <strong> Shipment Id:  </strong> {{ order.dispatchSummary?.shipmentId }} </span>
+                        </h6>                    
+                      </div>
+                    </div>
+  
+                  </div>
+                </div>-->
+                <div class="table-responsive">
+                  <table class="table">
+                    <tbody>
+                      <ng-container *ngFor="let audit of getPurchaseSummary(order.purchaseSummary)?.audits">
+                        <tr>
+                          <td>{{ audit?.actionDate | date: 'yyyy-MM-dd HH:mm:ss'  }}</td>
+                          <td>{{ audit?.auditMessage }}</td>
+                        </tr>
+                      </ng-container>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="text-center" *ngIf="orders?.length==0">
+        <h3>No orders Available. <span><a class="btn btn-outline-primary" routerLink="/">Shop Now</a></span></h3>
+      </div>
+    </div>
+  </div>
+  

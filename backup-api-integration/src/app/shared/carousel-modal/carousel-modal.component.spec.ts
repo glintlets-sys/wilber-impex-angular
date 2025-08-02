@@ -1,0 +1,23 @@
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { CarouselModalComponent } from './carousel-modal.component';
+
+describe('CarouselModalComponent', () => {
+  let component: CarouselModalComponent;
+  let fixture: ComponentFixture<CarouselModalComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [ CarouselModalComponent ]
+    })
+    .compileComponents();
+
+    fixture = TestBed.createComponent(CarouselModalComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

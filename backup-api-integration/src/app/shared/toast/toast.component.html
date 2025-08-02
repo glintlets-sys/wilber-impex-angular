@@ -1,0 +1,15 @@
+<div *ngIf="(toast !== null) && (isMobile != true)" class="browser-alert" [ngClass]="['alert-' + toast.type, 'alert-dismissible', 'fade', 'show']" role="alert">
+  <div class="alert-inner text-center">
+    <span class="alert-inner--text" style="font-size: 1rem;">
+      {{ toast.message }}
+    </span>
+  </div>
+  <button type="button" class="btn-close btn-close-mobile" aria-label="Close" (click)="dismissToast()"></button>
+</div>
+
+<div *ngIf="toast !== null && (isMobile == true)" class="mobile-alert" role="alert">
+  <div class="alert-inner text-center">
+    <span class="alert-inner--text">{{ toast.message }}</span>
+  </div>
+  <button type="button" class="btn-close btn-close-mobile" aria-label="Close" (click)="dismissToast()"></button>
+</div>
