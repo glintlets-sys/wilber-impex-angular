@@ -138,33 +138,106 @@
           <div class="card-header" style="background: var(--gradient-primary); color: white;">
             <h6 class="mb-0">
               <i class="fas fa-map-marker-alt me-2"></i>
-              My Addresses
+              Manage Addresses
             </h6>
           </div>
           <div class="card-body">
-            <!-- Address Form (shown when adding/editing) -->
-            <div *ngIf="showAddressForm" class="mb-4">
-              <app-address-form
-                [address]="editingAddress"
-                [showTitle]="true"
-                (addressSaved)="onAddressSaved($event)"
-                (cancelled)="onAddressFormCancelled()">
-              </app-address-form>
+            <h5 class="card-title">Manage Addresses</h5>
+
+            <div class="card mb-3">
+              <div class="card-body">
+                <div class="card-text">
+                  <a *ngIf="!add_address" class="btn text-primary fw-bold add_new_address" (click)="addAdress()">
+                    + ADD A NEW ADDRESS
+                  </a>
+                  <h6 *ngIf="add_address" class="text-primary add_new_address">ADD A NEW ADDRESS</h6>
+                  <form *ngIf="add_address">
+                    <div class="row g-3">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="firstName">First Line <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="firstName" name="firstName" [(ngModel)]="newAddress.firstLine">
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="secondName">Second Line</label>
+                          <input type="text" class="form-control" id="secondName" name="secondName" [(ngModel)]="newAddress.secondLine">
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="city">City <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="city" name="city" [(ngModel)]="newAddress.city">
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="state">State <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="state" name="state" [(ngModel)]="newAddress.state">
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="pincode">Pincode <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="pincode" name="pincode" [(ngModel)]="newAddress.pincode">
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="mobile">Mobile Number <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="mobile" name="mobile" [(ngModel)]="newAddress.mobileNumber">
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="alternate">Alternate Number</label>
+                          <input type="text" class="form-control" id="alternate" name="alternate" [(ngModel)]="newAddress.alternateNumber">
+                        </div>
+                      </div>
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label for="email">Email Address <span class="text-danger">*</span></label>
+                          <input type="email" class="form-control" id="email" name="email" [(ngModel)]="newAddress.emailAddress">
+                        </div>
+                      </div>
+
+                      <div class="col-md-12">
+                        <div class="btn-addresss-submit mb-3">
+                          <button class="cancel cursor_pointer" (click)="cancelNewAddress()">Cancel</button>
+                          <button class="cont-save cursor_pointer" (click)="saveNewAddress()">Save</button>
+                        </div>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
             </div>
 
-            <!-- Address List -->
-            <div *ngIf="!showAddressForm">
-              <app-address-list
-                [addresses]="addresses"
-                [showActions]="true"
-                [showSelection]="false"
-                [emptyMessage]="'No addresses saved yet'"
-                [emptySubMessage]="'Add your first address to get started'"
-                (addressEdited)="showEditAddressForm($event)"
-                (addressDeleted)="onAddressDeleted($event)"
-                (addressSetDefault)="onAddressSetDefault($event)"
-                (addNewAddress)="showAddAddressForm()">
-              </app-address-list>
+            <div class="card mb-2" *ngFor="let address of addresses">
+              <div class="card-body d-flex">
+                <div class="card-text">
+                  <div class="fw-bold">{{ address.firstLine }} {{ address.secondLine }}</div>
+                  <p>{{address.mobileNumber}} <br/>{{ address.city }}, {{ address.state }}, {{ address.country }}, &nbsp;{{address.pincode}}</p>
+                  <p>{{ address.emailAddress }}</p>
+                </div>
+
+                <div class="dropdown ms-auto">
+                  <button class="btn btn-link dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-ellipsis-v"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" (click)="deleteAddress(address)">Delete</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
           </div>
         </div>

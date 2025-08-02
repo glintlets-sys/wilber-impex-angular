@@ -9,13 +9,11 @@ import { UserService } from '../services/user.service';
 import { User as BackendUser } from '../services/user';
 import { User, Order } from '../services/interfaces';
 import { HeaderComponent } from '../shared/header/header.component';
-import { AddressFormComponent } from '../shared/address-form/address-form.component';
-import { AddressListComponent } from '../shared/address-list/address-list.component';
 
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, AddressFormComponent, AddressListComponent],
+  imports: [CommonModule, FormsModule, HeaderComponent],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })
@@ -36,6 +34,21 @@ export class AccountComponent implements OnInit, OnDestroy {
   // Address management
   showAddressForm = false;
   editingAddress: Address | null = null;
+  add_address: boolean = false;
+  newAddress: Address = {
+    id: 0,
+    firstLine: '',
+    userId: 0,
+    secondLine: '',
+    city: '',
+    state: '',
+    country: 'India',
+    pincode: '',
+    mobileNumber: '',
+    alternateNumber: '',
+    emailAddress: '',
+    isDefault: false
+  };
   
   loading = false;
   errorMessage = '';
@@ -69,10 +82,8 @@ export class AccountComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Subscribe to address changes
-    this.addressService.addresses$.subscribe(addresses => {
-      this.addresses = addresses;
-    });
+    // Load addresses when component initializes
+    this.refreshAddresses();
   }
 
   ngOnDestroy(): void {
@@ -147,65 +158,82 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   // Address management methods
-  showAddAddressForm(): void {
-    this.editingAddress = null;
-    this.showAddressForm = true;
-  }
-
-  showEditAddressForm(address: Address): void {
-    this.editingAddress = address;
-    this.showAddressForm = true;
-  }
-
-  onAddressSaved(address: Address): void {
-    this.showAddressForm = false;
-    this.editingAddress = null;
-    this.successMessage = 'Address saved successfully!';
-    setTimeout(() => {
-      this.successMessage = '';
-    }, 3000);
-  }
-
-  onAddressFormCancelled(): void {
-    this.showAddressForm = false;
-    this.editingAddress = null;
-  }
-
-  onAddressDeleted(addressId: string): void {
-    this.addressService.deleteAddress(addressId).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.successMessage = response.message;
-          setTimeout(() => {
-            this.successMessage = '';
-          }, 3000);
-        } else {
-          this.errorMessage = response.message;
-        }
-      },
-      error: (error) => {
-        this.errorMessage = 'Failed to delete address';
-      }
+  refreshAddresses() {
+    this.addressService.getAllAddresses().subscribe(val => {
+      this.addresses = val;
     });
   }
 
-  onAddressSetDefault(addressId: string): void {
-    this.addressService.setDefaultAddress(addressId).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.successMessage = response.message;
-          setTimeout(() => {
-            this.successMessage = '';
-          }, 3000);
-        } else {
-          this.errorMessage = response.message;
-        }
-      },
-      error: (error) => {
-        this.errorMessage = 'Failed to set default address';
+  addAdress() {
+    this.add_address = true;
+  }
+
+  cancelNewAddress() {
+    this.add_address = false;
+    this.clearAddressData();
+  }
+
+  saveNewAddress() {
+    const requiredFields = ['firstLine', 'city', 'state', 'pincode', 'mobileNumber', 'emailAddress'];
+
+    for (const field of requiredFields) {
+      if (this.newAddress[field as keyof Address] === '') {
+        this.errorMessage = `Please enter the ${field}`;
+        return;
       }
+
+      if (this.newAddress.pincode?.length < 6) {
+        this.errorMessage = `Pincode should be 6 digits.`;
+        return;
+      }
+
+      if (this.newAddress.mobileNumber?.length < 10) {
+        this.errorMessage = `Mobile number should be 10 digits.`;
+        return;
+      }
+    }
+
+    this.addressService.addAddress(this.newAddress).subscribe((val) => {
+      this.add_address = false;
+      this.clearAddressData();
+      this.refreshAddresses();
+      this.successMessage = 'Address added successfully!';
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 3000);
     });
   }
+
+  clearAddressData() {
+    this.newAddress = {
+      id: 0,
+      userId: 0,
+      firstLine: '',
+      secondLine: '',
+      city: '',
+      state: '',
+      country: '',
+      pincode: '',
+      mobileNumber: '',
+      alternateNumber: '',
+      emailAddress: '',
+      isDefault: false
+    };
+  }
+
+  deleteAddress(address: Address) {
+    this.addressService.deleteAddress(address).subscribe(val => {
+      this.refreshAddresses();
+      this.successMessage = 'Address deleted successfully!';
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 3000);
+    });
+  }
+
+
+
+
 
   private loadOrders(): void {
     this.loading = true;
@@ -243,6 +271,10 @@ export class AccountComponent implements OnInit, OnDestroy {
     this.activeTab = tab;
     this.errorMessage = '';
     this.successMessage = '';
+    
+    if (tab === 'addresses') {
+      this.refreshAddresses();
+    }
   }
 
   // Profile management

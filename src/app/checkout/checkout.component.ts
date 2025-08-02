@@ -8,13 +8,12 @@ import { User } from '../services/interfaces';
 import { AddressService, Address } from '../services/address.service';
 import { Subscription } from 'rxjs';
 import { HeaderComponent } from '../shared/header/header.component';
-import { AddressListComponent } from '../shared/address-list/address-list.component';
-import { AddressFormComponent } from '../shared/address-form/address-form.component';
+
 
 @Component({
   selector: 'app-checkout',
   standalone: true,
-  imports: [CommonModule, RouterModule, FormsModule, HeaderComponent, AddressListComponent, AddressFormComponent],
+  imports: [CommonModule, RouterModule, FormsModule, HeaderComponent],
   templateUrl: './checkout.component.html',
   styleUrls: ['./checkout.component.scss']
 })
@@ -56,18 +55,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
       }
     });
 
-    // Subscribe to address changes
-    this.addressService.addresses$.subscribe(addresses => {
-      this.addresses = addresses;
-      // Set default address if available
-      const defaultAddress = addresses.find(addr => addr.isDefault);
-      this.selectedAddress = defaultAddress || (addresses.length > 0 ? addresses[0] : null);
-    });
-
-    // Subscribe to selected address changes
-    this.addressService.selectedAddress$.subscribe(selectedAddress => {
-      this.selectedAddress = selectedAddress;
-    });
+    // Load addresses
+    this.loadAddresses();
   }
 
   ngOnDestroy(): void {
@@ -79,8 +68,17 @@ export class CheckoutComponent implements OnInit, OnDestroy {
     }
   }
 
+  loadAddresses(): void {
+    this.addressService.getAllAddresses().subscribe(addresses => {
+      this.addresses = addresses;
+      // Set default address if available
+      const defaultAddress = addresses.find(addr => addr.isDefault);
+      this.selectedAddress = defaultAddress || (addresses.length > 0 ? addresses[0] : null);
+    });
+  }
+
   selectAddress(address: Address): void {
-    this.addressService.setSelectedAddress(address);
+    this.selectedAddress = address;
   }
 
   navigateToAccount(): void {

@@ -155,16 +155,46 @@
             </h6>
           </div>
           <div class="card-body">
-            <app-address-list
-              [addresses]="addresses"
-              [selectedAddress]="selectedAddress"
-              [showActions]="false"
-              [showSelection]="true"
-              [emptyMessage]="'No addresses found'"
-              [emptySubMessage]="'Please add an address to your account to continue'"
-              (addressSelected)="selectAddress($event)"
-              (addNewAddress)="navigateToAccount()">
-            </app-address-list>
+            <div *ngIf="addresses.length === 0" class="text-center py-4">
+              <p class="text-muted mb-3">No addresses found</p>
+              <p class="text-muted mb-3">Please add an address to your account to continue</p>
+              <button class="btn btn-primary" (click)="navigateToAccount()">
+                <i class="fas fa-plus me-2"></i>Add Address
+              </button>
+            </div>
+            
+            <div *ngIf="addresses.length > 0">
+              <div class="mb-3">
+                <label class="form-label">Select Delivery Address:</label>
+                <div class="address-options">
+                  <div *ngFor="let address of addresses" class="address-option mb-2">
+                    <div class="form-check">
+                      <input class="form-check-input" 
+                             type="radio" 
+                             [id]="'address-' + address.id"
+                             [name]="'selectedAddress'"
+                             [checked]="selectedAddress?.id === address.id"
+                             (change)="selectAddress(address)">
+                      <label class="form-check-label" [for]="'address-' + address.id">
+                        <div class="address-details">
+                          <div class="fw-bold">{{ address.firstLine }} {{ address.secondLine }}</div>
+                          <div class="text-muted">{{ address.mobileNumber }}</div>
+                          <div class="text-muted">{{ address.city }}, {{ address.state }}, {{ address.country }}, {{ address.pincode }}</div>
+                          <div class="text-muted">{{ address.emailAddress }}</div>
+                          <span *ngIf="address.isDefault" class="badge bg-primary ms-2">Default</span>
+                        </div>
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <div class="text-center">
+                <button class="btn btn-outline-primary" (click)="navigateToAccount()">
+                  <i class="fas fa-plus me-2"></i>Add New Address
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
