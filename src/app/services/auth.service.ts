@@ -146,10 +146,13 @@ export class AuthService {
   }
 
   private updateUserDetailsInLocalStorage(userDetails: any) {
+    console.log('🔍 [AUTH] updateUserDetailsInLocalStorage called with:', userDetails);
     if (userDetails === '') {
       this.setDataToLocal(USER_DETAILS, '');
+      console.log('✅ [AUTH] Cleared user details from localStorage');
     } else {
       this.setDataToLocal(USER_DETAILS, JSON.stringify(userDetails));
+      console.log('✅ [AUTH] Stored user details in localStorage:', userDetails);
     }
   }
 
@@ -179,6 +182,12 @@ export class AuthService {
     this.http.get<any>(`${SERVICE_URL}users/${username}`).subscribe({
       next: (userDetails) => {
         console.log('✅ [AUTH] User details fetched successfully:', userDetails);
+        
+        // Ensure the user details include the userId for address service
+        if (userDetails && !userDetails.userId && userDetails.id) {
+          userDetails.userId = userDetails.id;
+        }
+        
         this.updateUserDetails(userDetails);
         this.updateUserDetailsInLocalStorage(userDetails);
         this.successSubject.next('true');
@@ -229,7 +238,15 @@ export class AuthService {
     const userDetailsStr = localStorage.getItem(USER_DETAILS);
     if (!userDetailsStr) return null;
     const userDetails = JSON.parse(userDetailsStr);
-    return userDetails ? userDetails.userId : null;
+    console.log('🔍 [AUTH] getUserId() - userDetails from localStorage:', userDetails);
+    
+    // Check for both userId and id fields
+    if (userDetails) {
+      const userId = userDetails.userId || userDetails.id;
+      console.log('🔍 [AUTH] getUserId() - returning userId:', userId);
+      return userId;
+    }
+    return null;
   }
 
   public getUsername() {

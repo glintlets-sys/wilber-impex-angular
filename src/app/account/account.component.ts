@@ -162,8 +162,23 @@ export class AccountComponent implements OnInit, OnDestroy {
 
   // Address management methods
   refreshAddresses() {
-    this.addressService.getAllAddresses().subscribe(val => {
-      this.addresses = val;
+    this.addressService.getAllAddresses().subscribe({
+      next: (val) => {
+        this.addresses = val;
+        console.log('✅ [ADDRESS] Addresses loaded successfully:', val);
+      },
+      error: (error) => {
+        console.error('❌ [ADDRESS] Error fetching addresses:', error);
+        if (error.message && error.message.includes('User ID not available')) {
+          this.errorMessage = 'User session expired. Please login again.';
+          // Optionally redirect to login
+          setTimeout(() => {
+            this.router.navigate(['/login']);
+          }, 2000);
+        } else {
+          this.errorMessage = 'Failed to load addresses. Please try again.';
+        }
+      }
     });
   }
 
@@ -196,26 +211,42 @@ export class AccountComponent implements OnInit, OnDestroy {
       }
     }
 
-    this.addressService.addAddress(this.newAddress).subscribe((val) => {
-      this.add_address = false;
-      this.clearAddressData();
-      this.refreshAddresses();
-      this.successMessage = 'Address added successfully!';
-      setTimeout(() => {
-        this.successMessage = '';
-      }, 3000);
+    // Set the userId from the auth service before sending
+    const userId = this.authService.getUserId();
+    if (!userId) {
+      this.errorMessage = 'User not found. Please login again.';
+      return;
+    }
+
+    // Create a copy of the address with the correct userId
+    const addressToSave = { ...this.newAddress, userId: userId };
+
+    this.addressService.addAddress(addressToSave).subscribe({
+      next: (val) => {
+        this.add_address = false;
+        this.clearAddressData();
+        this.refreshAddresses();
+        this.successMessage = 'Address added successfully!';
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 3000);
+      },
+      error: (error) => {
+        console.error('❌ [ADDRESS] Error adding address:', error);
+        this.errorMessage = 'Failed to add address. Please try again.';
+      }
     });
   }
 
   clearAddressData() {
     this.newAddress = {
       id: 0,
-      userId: 0,
+      userId: 0, // Will be set when saving
       firstLine: '',
       secondLine: '',
       city: '',
       state: '',
-      country: '',
+      country: 'India',
       pincode: '',
       mobileNumber: '',
       alternateNumber: '',
@@ -225,12 +256,18 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   deleteAddress(address: Address) {
-    this.addressService.deleteAddress(address).subscribe(val => {
-      this.refreshAddresses();
-      this.successMessage = 'Address deleted successfully!';
-      setTimeout(() => {
-        this.successMessage = '';
-      }, 3000);
+    this.addressService.deleteAddress(address).subscribe({
+      next: (val) => {
+        this.refreshAddresses();
+        this.successMessage = 'Address deleted successfully!';
+        setTimeout(() => {
+          this.successMessage = '';
+        }, 3000);
+      },
+      error: (error) => {
+        console.error('❌ [ADDRESS] Error deleting address:', error);
+        this.errorMessage = 'Failed to delete address. Please try again.';
+      }
     });
   }
 
