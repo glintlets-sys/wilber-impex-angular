@@ -3,10 +3,11 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../services/auth.service';
-import { AddressService, Address } from '../services/address.service';
-import { UserService } from '../services/user.service';
-import { User, Order } from '../services/interfaces';
+import { AuthenticationService } from '../shared-services/authentication.service';
+import { AddressService, Address } from '../shared-services/address.service';
+import { UserService } from '../shared-services/user.service';
+import { User } from '../shared-services/user';
+import { OrderDTO } from '../shared-services/order';
 import { HeaderComponent } from '../shared/header/header.component';
 
 @Component({
@@ -20,7 +21,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   activeTab: 'profile' | 'addresses' | 'orders' = 'profile';
   currentUser: User | null = null;
   addresses: Address[] = [];
-  orders: Order[] = [];
+  orders: OrderDTO[] = [];
   
   // Profile form
   profileForm = {
@@ -56,7 +57,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   private userSubscription: Subscription | null = null;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private addressService: AddressService,
     private userService: UserService,
     private router: Router
@@ -271,32 +272,21 @@ export class AccountComponent implements OnInit, OnDestroy {
     });
   }
 
-
-
-
-
   private loadOrders(): void {
     this.loading = true;
     // Stub orders data since backup doesn't have getUserOrders method
-    const stubOrders: Order[] = [
+    const stubOrders: OrderDTO[] = [
       {
-        id: 'order_1',
-        orderNumber: 'ORD-2024-001',
-        orderDate: new Date('2024-01-15'),
-        status: 'delivered',
-        totalAmount: 2500.00,
-        items: [
-          {
-            productId: 'prod_1',
-            productName: 'Cement Cleaner',
-            quantity: 2,
-            price: 1250.00,
-            size: '1kg',
-            packagingType: 'Polythene Bag'
-          }
-        ],
-        shippingAddress: null,
-        invoiceUrl: '/invoices/ORD-2024-001.pdf'
+        id: 1,
+        username: this.currentUser?.name || '',
+        userId: this.currentUser?.id?.toString() || '',
+        paymentStatus: 2, // PAYMENTSUCCESS
+        purchaseSummary: 'Cement Cleaner - 2 units',
+        showDetails: false,
+        showShipmentDetails: false,
+        showItemsTable: false,
+        dispatchSummary: null,
+        creationDate: new Date('2024-01-15')
       }
     ];
     
@@ -358,16 +348,13 @@ export class AccountComponent implements OnInit, OnDestroy {
           currentUserData.creationDate || new Date(),
           currentUserData.age || 0,
           currentUserData.sex || '',
-          currentUserData.profiles || [],
-          currentUserData.username || username,
-          currentUserData.state || '',
-          currentUserData.city || ''
+          currentUserData.profiles || []
         );
 
         console.log('📝 [PROFILE] Updating user profile with complete data including id:', updateData);
         console.log('📝 [PROFILE] Calling userService.updateUserByUsername()');
 
-                // Call backend API to update profile with complete user object
+        // Call backend API to update profile with complete user object
         this.userService.updateUserByUsername(username, updateData).subscribe({
           next: (updatedUser) => {
             console.log('✅ [PROFILE] Profile updated successfully:', updatedUser);
@@ -390,7 +377,8 @@ export class AccountComponent implements OnInit, OnDestroy {
                 };
                 
                 // Update in auth service - this will also update localStorage
-                this.authService.updateUserDetails(updatedUserForAuth);
+                // Note: We'll handle this differently since updateUserDetails is private
+                this.updateUserDetailsInLocalStorage(updatedUserForAuth);
                 
                 // Update user name in user service
                 this.userService.storeuserNameData.next(updatedUserForAuth.name || '');
@@ -421,7 +409,15 @@ export class AccountComponent implements OnInit, OnDestroy {
     });
   }
 
-
+  // Helper method to update user details in localStorage
+  private updateUserDetailsInLocalStorage(userDetails: any) {
+    const USER_DETAILS = 'userDetails';
+    if (userDetails === '') {
+      localStorage.setItem(USER_DETAILS, '');
+    } else {
+      localStorage.setItem(USER_DETAILS, JSON.stringify(userDetails));
+    }
+  }
 
   // Order management
   downloadInvoice(orderId: string): void {

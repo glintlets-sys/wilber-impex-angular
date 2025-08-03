@@ -6,6 +6,7 @@ export const environment = {
   production: false,
   //serviceURL: 'http://localhost:5000/',
   serviceURL: 'https://api.glintcloudshops.com/',
+  tenant: 'wilber-prod',
   MERCHANT_ID: '2513554',
   ACCESS_CODE: 'AVUR72KF48AB14RUBA',
   WORKING_KEY: 'F3BFA2BD31149ACBECC23D86107DEEED',

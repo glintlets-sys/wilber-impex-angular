@@ -1,9 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { CartService } from '../../services/cart.service';
-import { AuthService } from '../../services/auth.service';
-import { User } from '../../services/interfaces';
+import { CartService } from '../../shared-services/cart.service';
+import { AuthenticationService } from '../../shared-services/authentication.service';
+import { User } from '../../shared-services/user';
 import { Subscription } from 'rxjs';
 import { HoverCartComponent } from '../hover-cart/hover-cart.component';
 
@@ -24,11 +24,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   constructor(
     private cartService: CartService,
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private router: Router
   ) {
     this.cartSubscription = this.cartService.getCart().subscribe(cart => {
-      this.totalItems = cart.totalItems;
+      this.totalItems = cart.items ? cart.items.reduce((total, item) => total + (item.quantity || 0), 0) : 0;
     });
     
     // Subscribe to user details changes
@@ -54,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // Prevent Bootstrap from interfering
     setTimeout(() => {
       const dropdownMenu = document.querySelector('.nav-item.dropdown .dropdown-menu');
-      if (dropdownMenu) {
+      if (dropdownMenu && dropdownMenu.classList) {
         dropdownMenu.classList.toggle('show', this.isDropdownOpen);
       }
     }, 0);
@@ -65,7 +65,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // Ensure dropdown is closed
     setTimeout(() => {
       const dropdownMenu = document.querySelector('.nav-item.dropdown .dropdown-menu');
-      if (dropdownMenu) {
+      if (dropdownMenu && dropdownMenu.classList) {
         dropdownMenu.classList.remove('show');
       }
     }, 0);
@@ -76,7 +76,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // Prevent Bootstrap from interfering
     setTimeout(() => {
       const dropdownMenu = document.querySelector('.user-account .dropdown-menu');
-      if (dropdownMenu) {
+      if (dropdownMenu && dropdownMenu.classList) {
         dropdownMenu.classList.toggle('show', this.isUserDropdownOpen);
       }
     }, 0);
@@ -87,7 +87,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // Ensure dropdown is closed
     setTimeout(() => {
       const dropdownMenu = document.querySelector('.user-account .dropdown-menu');
-      if (dropdownMenu) {
+      if (dropdownMenu && dropdownMenu.classList) {
         dropdownMenu.classList.remove('show');
       }
     }, 0);
@@ -113,12 +113,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private initializeHeaderEffects() {
     const header = document.querySelector('.main-header');
-    if (header) {
+    if (header && header.setAttribute) {
       window.addEventListener('scroll', () => {
-        if (window.pageYOffset > 100) {
-          header.setAttribute('style', 'box-shadow: 0 2px 20px rgba(0,0,0,0.1)');
-        } else {
-          header.setAttribute('style', 'box-shadow: 0 2px 15px rgba(0,0,0,0.05)');
+        // Re-check if header still exists before modifying
+        const currentHeader = document.querySelector('.main-header');
+        if (currentHeader && currentHeader.setAttribute) {
+          if (window.pageYOffset > 100) {
+            currentHeader.setAttribute('style', 'box-shadow: 0 2px 20px rgba(0,0,0,0.1)');
+          } else {
+            currentHeader.setAttribute('style', 'box-shadow: 0 2px 15px rgba(0,0,0,0.05)');
+          }
         }
       });
     }
@@ -143,7 +147,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
     // Prevent Bootstrap from initializing dropdowns
     const dropdownElements = document.querySelectorAll('[data-bs-toggle="dropdown"]');
     dropdownElements.forEach(element => {
-      element.removeAttribute('data-bs-toggle');
+      if (element && element.removeAttribute) {
+        element.removeAttribute('data-bs-toggle');
+      }
     });
   }
 }

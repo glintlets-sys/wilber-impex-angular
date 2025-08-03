@@ -3,10 +3,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
-import { AuthService } from '../services/auth.service';
-import { User } from '../services/interfaces';
-import { CartService } from '../services/cart.service';
-import { SMSService } from '../services/sms.service';
+import { AuthenticationService } from '../shared-services/authentication.service';
+import { User } from '../shared-services/user';
+import { CartService } from '../shared-services/cart.service';
+import { SMSService } from '../shared-services/sms.service';
 import { HeaderComponent } from '../shared/header/header.component';
 
 @Component({
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit {
   countdown$: Observable<number>;
 
   constructor(
-    private authService: AuthService,
+    private authService: AuthenticationService,
     private cartService: CartService,
     private smsService: SMSService,
     private router: Router
@@ -71,21 +71,21 @@ export class LoginComponent implements OnInit {
       console.log('✅ [LOGIN] User existence check result:', isRegistered);
       
       if (!isRegistered) {
-        console.log('👤 [LOGIN] User EXISTS - sending OTP directly for login');
-        // Existing user - send OTP directly for login
-        const success = await this.smsService.sendSMS(this.mobile);
+        console.log('👤 [LOGIN] User EXISTS - sending PIN directly for login');
+        // Existing user - send PIN directly for login (using sendCustomerPin)
+        const success = await this.smsService.sendCustomerPin(this.mobile);
         this.loading = false;
         
         if (success) {
-          console.log('📱 [LOGIN] OTP sent successfully for existing user');
-          this.successMessage = 'OTP sent successfully!';
+          console.log('📱 [LOGIN] PIN sent successfully for existing user');
+          this.successMessage = 'PIN sent successfully!';
           this.step = 'otp';
           this.otp = '';
           // Start countdown for resend
           this.smsService.startCountdown(60);
         } else {
-          console.log('❌ [LOGIN] Failed to send OTP for existing user');
-          this.errorMessage = 'Failed to send OTP. Please try again.';
+          console.log('❌ [LOGIN] Failed to send PIN for existing user');
+          this.errorMessage = 'Failed to send PIN. Please try again.';
         }
       } else {
         console.log('🆕 [LOGIN] User NOT EXISTS - redirecting to registration form');
@@ -185,10 +185,7 @@ export class LoginComponent implements OnInit {
       new Date(), // creationDate
       0, // age
       '', // sex
-      [], // profiles
-      this.mobile, // username
-      '', // state
-      '' // city
+      [] // profiles
     );
     
     this.handleSuccessfulLogin(user);
