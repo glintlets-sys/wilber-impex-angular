@@ -13,13 +13,19 @@ export const HeaderInterceptor: HttpInterceptorFn = (
   let tenant = configService.getTenantDetails(); // Get tenant from config service
 
   // Get auth token from localStorage
-  const userDetailsStr = localStorage.getItem(environment.USER_DETAILS);
-  if (userDetailsStr !== null && userDetailsStr !== '') {
-    try {
-      const userDetails = JSON.parse(userDetailsStr);
-      authToken = userDetails.authToken || '';
-    } catch (error) {
-      console.error('Error parsing user details from localStorage:', error);
+  const bearerToken = localStorage.getItem('bearerToken');
+  if (bearerToken) {
+    authToken = bearerToken;
+  } else {
+    // Fallback to user details for backward compatibility
+    const userDetailsStr = localStorage.getItem(environment.USER_DETAILS);
+    if (userDetailsStr !== null && userDetailsStr !== '') {
+      try {
+        const userDetails = JSON.parse(userDetailsStr);
+        authToken = userDetails.authToken || '';
+      } catch (error) {
+        console.error('Error parsing user details from localStorage:', error);
+      }
     }
   }
 

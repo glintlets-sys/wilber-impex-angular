@@ -6,7 +6,6 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { AddressService, Address } from '../services/address.service';
 import { UserService } from '../services/user.service';
-import { User as BackendUser } from '../services/user';
 import { User, Order } from '../services/interfaces';
 import { HeaderComponent } from '../shared/header/header.component';
 
@@ -95,10 +94,14 @@ export class AccountComponent implements OnInit, OnDestroy {
   private loadProfileData(): void {
     if (this.currentUser) {
       // Handle user format from backup service
-      const firstName = this.currentUser.firstName || '';
-      const lastName = this.currentUser.lastName || '';
+      const name = this.currentUser.name || '';
       const email = this.currentUser.email || '';
-      const mobile = this.currentUser.mobile || '';
+      const mobile = this.currentUser.mobileNumber || '';
+      
+      // Split name into firstName and lastName
+      const nameParts = name.split(' ');
+      const firstName = nameParts[0] || '';
+      const lastName = nameParts.slice(1).join(' ') || '';
       
       this.profileForm = {
         firstName,
@@ -143,9 +146,9 @@ export class AccountComponent implements OnInit, OnDestroy {
           
           // Update current user with backend data
           if (this.currentUser) {
-            this.currentUser.firstName = this.profileForm.firstName;
-            this.currentUser.lastName = this.profileForm.lastName;
+            this.currentUser.name = `${this.profileForm.firstName} ${this.profileForm.lastName}`.trim();
             this.currentUser.email = this.profileForm.email;
+            this.currentUser.mobileNumber = this.profileForm.mobile;
             // Don't call updateUserDetails here to avoid infinite loop
           }
         },
@@ -307,7 +310,7 @@ export class AccountComponent implements OnInit, OnDestroy {
         console.log('📝 [PROFILE] Current user data from backend:', currentUserData);
         
         // Create complete user object with id from backend
-        const updateData = new BackendUser(
+        const updateData = new User(
           currentUserData.id,
           `${this.profileForm.firstName.trim()} ${this.profileForm.lastName.trim()}`,
           this.profileForm.email.trim() || '',
@@ -318,7 +321,10 @@ export class AccountComponent implements OnInit, OnDestroy {
           currentUserData.creationDate || new Date(),
           currentUserData.age || 0,
           currentUserData.sex || '',
-          currentUserData.profiles || []
+          currentUserData.profiles || [],
+          currentUserData.username || username,
+          currentUserData.state || '',
+          currentUserData.city || ''
         );
 
         console.log('📝 [PROFILE] Updating user profile with complete data including id:', updateData);

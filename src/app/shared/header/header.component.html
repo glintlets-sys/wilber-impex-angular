@@ -65,7 +65,7 @@
                                     (click)="toggleUserDropdown()"
                                     [attr.aria-expanded]="isUserDropdownOpen">
                                 <i class="fa-solid fa-user-circle me-1"></i>
-                                {{ currentUser.firstName || 'User' }}
+                                {{ currentUser.name || 'User' }}
                             </button>
                             <ul class="dropdown-menu" [class.show]="isUserDropdownOpen">
                                 <li><a class="dropdown-item" routerLink="/account" routerLinkActive="active" (click)="closeUserDropdown()">

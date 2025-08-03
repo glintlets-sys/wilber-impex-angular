@@ -51,13 +51,32 @@ export class AuthService {
   private handleAuthenticationResponse(data: any) {
     console.log('🔍 [AUTH] Authentication response received:', data);
     if (data && data.authStatus === 'SUCCESS') {
-      console.log('✅ [AUTH] Authentication successful, updating user state');
+      console.log('✅ [AUTH] Authentication successful, storing token and fetching user details');
+      
+      // Store the bearer token from authentication response
+      const token = this.extractTokenFromAuthResponse(data);
+      if (token) {
+        console.log('✅ [AUTH] Bearer token extracted and stored');
+        this.storeBearerToken(token);
+      } else {
+        console.log('❌ [AUTH] No bearer token found in auth response');
+        this.successSubject.next('false');
+        return;
+      }
+      
       this.updateUserLoggedIn(true);
-      const userDetails = this.getUserDetailsFromAPI(data);
-      console.log('✅ [AUTH] User details from API:', userDetails);
-      this.updateUserDetails(userDetails);
-      this.updateUserDetailsInLocalStorage(userDetails);
-      this.successSubject.next('true'); // Update success BehaviorSubject
+      
+      // Get username from authentication response (usually mobile number)
+      const username = this.getUsernameFromAuthResponse(data);
+      console.log('🔍 [AUTH] Username from auth response:', username);
+      
+      if (username) {
+        // Fetch user details from separate API with bearer token
+        this.fetchUserDetails(username);
+      } else {
+        console.log('❌ [AUTH] No username found in auth response');
+        this.successSubject.next('false');
+      }
     } else {
       console.log('❌ [AUTH] Authentication failed');
       this.successSubject.next('false');
@@ -99,6 +118,7 @@ export class AuthService {
     localStorage.removeItem('selectedAddress');
     localStorage.removeItem('userAddresses');
     localStorage.removeItem('userName');
+    localStorage.removeItem('bearerToken');
     
     // Log all remaining localStorage keys for debugging
     console.log('🔍 [AUTH] Remaining localStorage keys after logout:');
@@ -133,8 +153,41 @@ export class AuthService {
     }
   }
 
-  private getUserDetailsFromAPI(data: any) {
-    return data;
+  private extractTokenFromAuthResponse(data: any): string | null {
+    // Extract bearer token from auth response
+    // This depends on your auth API response structure
+    return data?.token || data?.accessToken || data?.bearerToken || data?.authToken || null;
+  }
+
+  private storeBearerToken(token: string) {
+    // Store bearer token in localStorage for the interceptor to use
+    localStorage.setItem('bearerToken', token);
+    console.log('✅ [AUTH] Bearer token stored in localStorage');
+  }
+
+  private getUsernameFromAuthResponse(data: any): string | null {
+    // Extract username from auth response (usually mobile number)
+    // This depends on your auth API response structure
+    return data?.username || data?.mobileNumber || data?.mobile || null;
+  }
+
+  private fetchUserDetails(username: string) {
+    console.log('🔍 [AUTH] Fetching user details for username:', username);
+    
+    // Import UserService to make the API call
+    // For now, we'll use a simple approach - you may need to inject UserService
+    this.http.get<any>(`${SERVICE_URL}users/${username}`).subscribe({
+      next: (userDetails) => {
+        console.log('✅ [AUTH] User details fetched successfully:', userDetails);
+        this.updateUserDetails(userDetails);
+        this.updateUserDetailsInLocalStorage(userDetails);
+        this.successSubject.next('true');
+      },
+      error: (error) => {
+        console.error('❌ [AUTH] Error fetching user details:', error);
+        this.successSubject.next('false');
+      }
+    });
   }
 
   private initializeUserLogin() {

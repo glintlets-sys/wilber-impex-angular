@@ -174,14 +174,22 @@ export class LoginComponent implements OnInit {
   private handleExistingUserLogin(): void {
     // For existing users, we can either auto-login or require additional verification
     // For now, we'll create a basic user object and login
-    const user: User = {
-      id: 'user_' + Date.now(),
-      mobile: this.mobile,
-      firstName: '',
-      lastName: '',
-      isNewUser: false,
-      createdAt: new Date()
-    };
+    const user: User = new User(
+      Date.now(), // id as number
+      '', // name
+      '', // email
+      this.mobile, // mobileNumber
+      '', // address
+      '', // pincode
+      '', // profilePictureUrl
+      new Date(), // creationDate
+      0, // age
+      '', // sex
+      [], // profiles
+      this.mobile, // username
+      '', // state
+      '' // city
+    );
     
     this.handleSuccessfulLogin(user);
   }
@@ -246,7 +254,7 @@ export class LoginComponent implements OnInit {
 
   private handleSuccessfulLogin(user: User): void {
     // Login the user using backup service
-    this.authService.authenticateUser(user.mobile, "0000");
+    this.authService.authenticateUser(user.mobileNumber, "0000");
     
     // Note: Backup doesn't have mergeCart method, so we'll skip that for now
     // const cartItems = this.cartService.getCartItems();
