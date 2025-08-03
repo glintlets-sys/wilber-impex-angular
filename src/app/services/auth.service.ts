@@ -87,11 +87,29 @@ export class AuthService {
   }
 
   public logoutUser() {
+    console.log('🔍 [AUTH] Logout initiated');
     this.updateUserLoggedIn(false);
     this.updateUserDetails('');
-    //this.updateUserDetailsInLocalStorage('');
     this.deleteuserDetailInLocalStorate();
     this.cleanCartInLocalStorage();
+    
+    // Clear any other user-related localStorage items
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('user');
+    localStorage.removeItem('selectedAddress');
+    localStorage.removeItem('userAddresses');
+    localStorage.removeItem('userName');
+    
+    // Log all remaining localStorage keys for debugging
+    console.log('🔍 [AUTH] Remaining localStorage keys after logout:');
+    for (let i = 0; i < localStorage.length; i++) {
+      const key = localStorage.key(i);
+      if (key) {
+        console.log(`  - ${key}: ${localStorage.getItem(key)}`);
+      }
+    }
+    
+    console.log('✅ [AUTH] Logout completed - all user data cleared from localStorage');
   }
 
   private updateUserLoggedIn(status: boolean) {
