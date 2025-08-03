@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { ToyTestService } from './services/toy-test.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +11,7 @@ import { filter } from 'rxjs/operators';
   styleUrl: './app.component.scss'
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private toyTestService: ToyTestService) {}
 
   ngOnInit() {
     // Subscribe to router events to scroll to top on navigation
@@ -19,6 +20,9 @@ export class AppComponent implements OnInit {
       .subscribe(() => {
         this.scrollToTop();
       });
+
+    // Test toy service data availability
+    this.testToyService();
   }
 
   private scrollToTop(): void {
@@ -33,5 +37,14 @@ export class AppComponent implements OnInit {
       // Fallback for older browsers
       window.scrollTo(0, 0);
     }
+  }
+
+  // Method to test toy service
+  private testToyService(): void {
+    console.log('🚀 [APP] Initializing toy service test...');
+    // Delay the test to ensure the app is fully loaded
+    setTimeout(() => {
+      this.toyTestService.testToyService();
+    }, 1000);
   }
 }
