@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
-import { CartService, Cart, CartItem } from '../services/cart.service';
+import { CartIntegrationService, LocalCart } from '../services/cart-integration.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,33 +13,33 @@ import { CartService, Cart, CartItem } from '../services/cart.service';
   styleUrls: ['./cart.component.scss']
 })
 export class CartComponent implements OnInit {
-  cart: Cart = {
+  cart: LocalCart = {
     items: [],
     totalItems: 0,
     totalPrice: 0
   };
 
   constructor(
-    private cartService: CartService,
+    private cartIntegrationService: CartIntegrationService,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.cartService.getCart().subscribe(cart => {
+    this.cartIntegrationService.getCart().subscribe(cart => {
       this.cart = cart;
     });
   }
 
   updateQuantity(itemIndex: number, newQuantity: number): void {
-    this.cartService.updateQuantity(itemIndex, newQuantity);
+    this.cartIntegrationService.updateQuantity(itemIndex, newQuantity);
   }
 
   removeItem(itemIndex: number): void {
-    this.cartService.removeFromCart(itemIndex);
+    this.cartIntegrationService.removeFromCart(itemIndex);
   }
 
   clearCart(): void {
-    this.cartService.clearCart();
+    this.cartIntegrationService.clearCart();
   }
 
   continueShopping(): void {

@@ -203,4 +203,20 @@ export class ProductIntegrationService {
       });
     });
   }
+
+  /**
+   * Get backend product for a frontend product ID
+   */
+  getBackendProductForFrontendProduct(frontendProductId: string): Toy | undefined {
+    const backendProducts = this.backendProducts$.value;
+    return backendProducts.find(p => p.code === frontendProductId);
+  }
+
+  /**
+   * Get backend product ID for a frontend product ID
+   */
+  getBackendProductId(frontendProductId: string): number | null {
+    const backendProduct = this.getBackendProductForFrontendProduct(frontendProductId);
+    return backendProduct ? backendProduct.id : null;
+  }
 } 

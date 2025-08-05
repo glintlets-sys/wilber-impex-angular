@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
-import { CartService } from '../../shared-services/cart.service';
+import { CartIntegrationService } from '../../services/cart-integration.service';
 import { AuthenticationService } from '../../shared-services/authentication.service';
 import { User } from '../../shared-services/user';
 import { Subscription } from 'rxjs';
@@ -23,11 +23,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private userSubscription: Subscription;
 
   constructor(
-    private cartService: CartService,
+    private cartIntegrationService: CartIntegrationService,
     private authService: AuthenticationService,
     private router: Router
   ) {
-    this.cartSubscription = this.cartService.getCart().subscribe(cart => {
+    this.cartSubscription = this.cartIntegrationService.getCart().subscribe(cart => {
       this.totalItems = cart.items ? cart.items.reduce((total, item) => total + (item.quantity || 0), 0) : 0;
     });
     

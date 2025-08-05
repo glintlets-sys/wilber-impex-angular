@@ -28,7 +28,7 @@
           <div class="cart-items-list">
                          <div class="cart-item" *ngFor="let item of displayItems; let i = index">
               <div class="item-image">
-                <img [src]="item.product.image" [alt]="item.product.name">
+                <img [src]="fetchImageForItem(item.product.id)" [alt]="item.product.name">
               </div>
               <div class="item-details">
                 <h6 class="item-name">{{ item.product.name }}</h6>

@@ -112,9 +112,12 @@
                                 </div>
                                 <button class="add-to-cart" 
                                         (click)="addToCart(product)"
-                                        [class.added]="addedToCartItems.has(product.id)">
-                                    <i [class]="addedToCartItems.has(product.id) ? 'fas fa-check me-2' : 'fas fa-shopping-cart me-2'"></i>
-                                    {{ addedToCartItems.has(product.id) ? 'Added to Cart' : 'Add To Cart' }}
+                                        [disabled]="isAddToCartDisabled(product)"
+                                        [class]="getAddToCartButtonClass(product)">
+                                    <i [class]="stockLoading[product.id] ? 'fas fa-spinner fa-spin me-2' : 
+                                               addedToCartItems.has(product.id) ? 'fas fa-check me-2' : 
+                                               !isInStock[product.id] ? 'fas fa-ban me-2' : 'fas fa-shopping-cart me-2'"></i>
+                                    {{ getAddToCartButtonText(product) }}
                                 </button>
                             </div>
                         </div>

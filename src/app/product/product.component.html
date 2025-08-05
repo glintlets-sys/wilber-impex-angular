@@ -92,39 +92,67 @@
               </span>
             </div>
             
-            <div class="countaty-value">
+            <!-- Product Availability Notice -->
+            <div class="product-availability-notice" *ngIf="!backendProduct">
+              <div class="alert alert-info">
+                <i class="fas fa-info-circle me-2"></i>
+                <strong>Product Information:</strong> This product is currently being reviewed for availability. 
+                Please contact our support team for more information.
+              </div>
+            </div>
+            
+            <div class="countaty-value" *ngIf="backendProduct && isInStock">
               <span>Quantity:</span>
               <div class="quantity-selector">
-                <button class="qty-btn" (click)="updateQuantity(-1)">
+                <button class="qty-btn" (click)="updateQuantity(-1)" [disabled]="quantity <= 1">
                   <i class="fas fa-minus"></i>
                 </button>
-                <input type="number" [(ngModel)]="quantity" min="1" readonly>
-                <button class="qty-btn" (click)="updateQuantity(1)">
+                <input type="number" [(ngModel)]="quantity" min="1" [max]="availableStock" readonly>
+                <button class="qty-btn" (click)="updateQuantity(1)" [disabled]="quantity >= availableStock">
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
-              <div class="stock-warning" *ngIf="backendProduct && availableStock > 0 && quantity > availableStock">
+              <div class="stock-warning" *ngIf="availableStock > 0 && quantity > availableStock">
                 <small class="text-warning">
                   <i class="fas fa-exclamation-triangle"></i>
                   Only {{ availableStock }} available
                 </small>
               </div>
             </div>
+            
+            <!-- Out of Stock Notice -->
+            <div class="out-of-stock-notice" *ngIf="backendProduct && !isInStock">
+              <div class="alert alert-warning">
+                <i class="fas fa-exclamation-triangle me-2"></i>
+                <strong>Out of Stock:</strong> This product is currently unavailable. 
+                <a href="#" class="alert-link">Notify me when available</a>
+              </div>
+            </div>
           </div>
           
           <div class="product-actions">
-            <a href="#" class="btn" style="background: var(--gradient-primary); color: white; border: none;">Buy Now</a>
+            <a href="#" class="btn" 
+               style="background: var(--gradient-primary); color: white; border: none;"
+               [class.disabled]="!backendProduct || !isInStock"
+               [style.opacity]="(!backendProduct || !isInStock) ? '0.6' : '1'"
+               [style.pointer-events]="(!backendProduct || !isInStock) ? 'none' : 'auto'">
+              Buy Now
+            </a>
             <button class="btn" 
                     (click)="addToCart()" 
-                    [disabled]="backendProduct && !isInStock"
+                    [disabled]="!backendProduct || !isInStock || stockLoading"
                     [class.btn-success]="isAddedToCart"
-                    [class.btn-outline-primary]="!isAddedToCart && (!backendProduct || isInStock)"
-                    [class.btn-outline-secondary]="backendProduct && !isInStock"
+                    [class.btn-outline-primary]="!isAddedToCart && backendProduct && isInStock"
+                    [class.btn-outline-secondary]="!backendProduct || !isInStock"
+                    [class.btn-loading]="stockLoading"
                     [style.color]="!isAddedToCart ? 'var(--primary)' : 'white'"
                     [style.border-color]="!isAddedToCart ? 'var(--primary)' : 'transparent'"
                     [style.background]="isAddedToCart ? 'var(--success)' : 'transparent'">
-              <i [class]="isAddedToCart ? 'fas fa-check me-2' : 'fas fa-cart-plus me-2'"></i>
-              {{ isAddedToCart ? 'Added to Cart' : (backendProduct && !isInStock ? 'Out of Stock' : 'Add to Cart') }}
+              <i *ngIf="stockLoading" class="fas fa-spinner fa-spin me-2"></i>
+              <i *ngIf="!stockLoading && isAddedToCart" class="fas fa-check me-2"></i>
+              <i *ngIf="!stockLoading && !isAddedToCart && backendProduct && isInStock" class="fas fa-cart-plus me-2"></i>
+              <i *ngIf="!stockLoading && !isAddedToCart && (!backendProduct || !isInStock)" class="fas fa-ban me-2"></i>
+              {{ getAddToCartButtonText() }}
             </button>
           </div>
           

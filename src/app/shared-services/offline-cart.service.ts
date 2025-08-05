@@ -17,12 +17,14 @@ export class OfflineCartService {
 
   private loadCartFromLocalStorage(): void {
     const savedCart = localStorage.getItem(LOCAL_STORAGE_CART_KEY);
+    console.log('🛒 [OfflineCartService] Loading cart from localStorage:', savedCart);
     if (savedCart) {
       this.offlineCartSubject.next(JSON.parse(savedCart));
     }
   }
 
   private saveCartToLocalStorage(cart: Cart): void {
+    console.log('🛒 [OfflineCartService] Saving cart to localStorage:', cart);
     localStorage.setItem(LOCAL_STORAGE_CART_KEY, JSON.stringify(cart));
   }
 
@@ -31,17 +33,24 @@ export class OfflineCartService {
   }
 
   public addToOfflineCart(item: CartItem): void {
+    console.log('🛒 [OfflineCartService] Adding item to offline cart:', item);
     const currentCart = this.offlineCartSubject.value;
+    console.log('🛒 [OfflineCartService] Current cart before adding:', currentCart);
+    
     let existingItem = currentCart.items?.find(cartItem => (cartItem.itemId === item.itemId)&&(cartItem.variationId === item.variationId));
 
     if (existingItem) {
+      console.log('🛒 [OfflineCartService] Updating existing item quantity');
       existingItem.quantity = item.quantity;
     } else {
+      console.log('🛒 [OfflineCartService] Adding new item to cart');
       currentCart.items?.push(item);
     }
 
+    console.log('🛒 [OfflineCartService] Cart after adding item:', currentCart);
     this.offlineCartSubject.next(currentCart);
     this.saveCartToLocalStorage(currentCart);
+    console.log('🛒 [OfflineCartService] Cart saved to localStorage');
   }
 
   public deleteFromOfflineCart(itemId: number, variationId: number): void {
@@ -57,6 +66,8 @@ export class OfflineCartService {
   }
 
   public getOfflineCartItems(): CartItem[] {
-    return this.offlineCartSubject.value.items || [];
+    const items = this.offlineCartSubject.value.items || [];
+    console.log('🛒 [OfflineCartService] Getting offline cart items:', items);
+    return items;
   }
 }

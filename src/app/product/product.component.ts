@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { ProductService, Product } from '../services/product.service';
-import { CartService } from '../services/cart.service';
+import { CartIntegrationService } from '../services/cart-integration.service';
 import { ProductIntegrationService } from '../services/product-integration.service';
 import { Toy } from '../shared-services/toy';
 
@@ -38,7 +38,7 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private cartService: CartService,
+    private cartIntegrationService: CartIntegrationService,
     private productIntegrationService: ProductIntegrationService
   ) {}
 
@@ -151,20 +151,6 @@ export class ProductComponent implements OnInit {
   addToCart(): void {
     if (!this.product) return;
 
-    // Check if product is in stock before adding to cart
-    if (this.backendProduct && !this.isInStock) {
-      console.warn('⚠️ [ProductComponent] Cannot add to cart - product is out of stock');
-      // You can show a toast notification here
-      return;
-    }
-
-    // Check if requested quantity is available
-    if (this.backendProduct && this.availableStock > 0 && this.quantity > this.availableStock) {
-      console.warn('⚠️ [ProductComponent] Requested quantity exceeds available stock');
-      // You can show a toast notification here
-      return;
-    }
-
     // Get selected variations
     const size = this.selectedSize || (this.product.size.length > 0 ? this.product.size[0] : undefined);
     const color = this.selectedColor || (this.product.colors.length > 0 ? this.product.colors[0] : undefined);
@@ -176,7 +162,8 @@ export class ProductComponent implements OnInit {
       selectedPrice = this.product.sizePrices[size] || this.product.price;
     }
 
-    this.cartService.addToCart(
+    // Cart integration service will handle all stock validation
+    this.cartIntegrationService.addToCart(
       this.product,
       this.quantity,
       size,
@@ -192,19 +179,11 @@ export class ProductComponent implements OnInit {
     setTimeout(() => {
       this.isAddedToCart = false;
     }, 3000);
-
-    // Show success message (you can implement a toast notification here)
-    console.log('Product added to cart successfully!');
   }
 
   updateQuantity(change: number): void {
     const newQuantity = this.quantity + change;
     if (newQuantity >= 1) {
-      // Check if the new quantity doesn't exceed available stock
-      if (this.backendProduct && this.availableStock > 0 && newQuantity > this.availableStock) {
-        console.warn('⚠️ [ProductComponent] Cannot increase quantity - exceeds available stock');
-        return;
-      }
       this.quantity = newQuantity;
     }
   }
@@ -342,6 +321,29 @@ export class ProductComponent implements OnInit {
     }
     
     return this.isInStock ? 'stock-available' : 'stock-unavailable';
+  }
+
+  /**
+   * Get Add to Cart button text based on current state
+   */
+  getAddToCartButtonText(): string {
+    if (this.stockLoading) {
+      return 'Checking Stock...';
+    }
+    
+    if (this.isAddedToCart) {
+      return 'Added to Cart';
+    }
+    
+    if (!this.backendProduct) {
+      return 'Out of Stock';
+    }
+    
+    if (!this.isInStock) {
+      return 'Out of Stock';
+    }
+    
+    return 'Add to Cart';
   }
 
   private initializeProductFunctionality() {
