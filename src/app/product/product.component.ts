@@ -6,6 +6,8 @@ import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
 import { ProductService, Product } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { ProductIntegrationService } from '../services/product-integration.service';
+import { Toy } from '../shared-services/toy';
 
 @Component({
   selector: 'app-product',
@@ -16,6 +18,7 @@ import { CartService } from '../services/cart.service';
 })
 export class ProductComponent implements OnInit {
   product: Product | null = null;
+  backendProduct: Toy | null = null;
   relatedProducts: Product[] = [];
   loading = true;
   error = false;
@@ -29,18 +32,24 @@ export class ProductComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private productIntegrationService: ProductIntegrationService
   ) {}
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
-      const productId = params['id'];
-      if (productId) {
-        this.loadProduct(productId);
-      } else {
-        this.error = true;
-        this.loading = false;
-      }
+    // First, load backend products to see what's available
+    this.productIntegrationService.getBackendProducts().subscribe(backendProducts => {
+      // Now load the specific product
+      this.route.params.subscribe(params => {
+        const productId = params['id'];
+        if (productId) {
+          this.loadProduct(productId);
+        } else {
+          console.error('❌ [ProductComponent] No product ID provided');
+          this.error = true;
+          this.loading = false;
+        }
+      });
     });
 
     // Initialize quantity controls and other functionality after view init
@@ -50,18 +59,36 @@ export class ProductComponent implements OnInit {
   }
 
   loadProduct(productId: string) {
+    // Load frontend product (static from CDN)
     this.productService.getProductById(productId).subscribe({
       next: (product) => {
         if (product) {
           this.product = product;
           this.loadRelatedProducts(product.category, product.id);
+          
+          // Map frontend product to backend product using code
+          this.productIntegrationService.mapFrontendToBackendProduct(product).subscribe({
+            next: (backendProduct) => {
+              if (backendProduct) {
+                this.backendProduct = backendProduct;
+              } else {
+                console.warn('⚠️ [ProductComponent] No backend product found for frontend product:', product.name);
+                this.backendProduct = null;
+              }
+            },
+            error: (error) => {
+              console.error('❌ [ProductComponent] Error mapping to backend product:', error);
+              this.backendProduct = null;
+            }
+          });
         } else {
+          console.error('❌ [ProductComponent] Frontend product not found');
           this.error = true;
         }
         this.loading = false;
       },
       error: (error) => {
-        console.error('Error loading product:', error);
+        console.error('❌ [ProductComponent] Error loading frontend product:', error);
         this.error = true;
         this.loading = false;
       }
@@ -69,10 +96,8 @@ export class ProductComponent implements OnInit {
   }
 
   loadRelatedProducts(category: string, excludeProductId?: string) {
-    console.log('Loading related products for category:', category, 'excluding:', excludeProductId);
     this.productService.getRelatedProducts(category, excludeProductId).subscribe({
       next: (products) => {
-        console.log('Related products loaded:', products);
         this.relatedProducts = products;
       },
       error: (error) => {
@@ -170,6 +195,40 @@ export class ProductComponent implements OnInit {
         targetSection.style.display = 'block';
       }
     }
+  }
+
+  /**
+   * Check if backend product is available for this frontend product
+   */
+  isBackendProductAvailable(): boolean {
+    return this.backendProduct !== null;
+  }
+
+  /**
+   * Get backend product details for logging
+   */
+  getBackendProductDetails(): any {
+    if (!this.backendProduct) {
+      return null;
+    }
+    
+    return {
+      id: this.backendProduct.id,
+      name: this.backendProduct.name,
+      price: this.backendProduct.price,
+      stockType: this.backendProduct.stockType,
+      notAvailable: this.backendProduct.notAvailable,
+      categories: this.backendProduct.categories,
+      brand: this.backendProduct.brand,
+      summary: this.backendProduct.summary
+    };
+  }
+
+  /**
+   * Log integration status
+   */
+  logIntegrationStatus(): void {
+    // Removed verbose logging - only keep essential warnings/errors
   }
 
   private initializeProductFunctionality() {
