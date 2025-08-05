@@ -80,6 +80,18 @@
               <span>Price:</span>
               <span class="product-price">{{ product?.price }}</span>
             </p>
+            
+            <!-- Stock Status Display -->
+            <div class="stock-status" *ngIf="backendProduct">
+              <span>Stock Status:</span>
+              <span [class]="getStockStatusClass()" class="stock-indicator">
+                <i *ngIf="stockLoading" class="fas fa-spinner fa-spin"></i>
+                <i *ngIf="!stockLoading && isInStock" class="fas fa-check-circle"></i>
+                <i *ngIf="!stockLoading && !isInStock" class="fas fa-times-circle"></i>
+                {{ getStockStatusText() }}
+              </span>
+            </div>
+            
             <div class="countaty-value">
               <span>Quantity:</span>
               <div class="quantity-selector">
@@ -91,6 +103,12 @@
                   <i class="fas fa-plus"></i>
                 </button>
               </div>
+              <div class="stock-warning" *ngIf="backendProduct && availableStock > 0 && quantity > availableStock">
+                <small class="text-warning">
+                  <i class="fas fa-exclamation-triangle"></i>
+                  Only {{ availableStock }} available
+                </small>
+              </div>
             </div>
           </div>
           
@@ -98,13 +116,15 @@
             <a href="#" class="btn" style="background: var(--gradient-primary); color: white; border: none;">Buy Now</a>
             <button class="btn" 
                     (click)="addToCart()" 
+                    [disabled]="backendProduct && !isInStock"
                     [class.btn-success]="isAddedToCart"
-                    [class.btn-outline-primary]="!isAddedToCart"
+                    [class.btn-outline-primary]="!isAddedToCart && (!backendProduct || isInStock)"
+                    [class.btn-outline-secondary]="backendProduct && !isInStock"
                     [style.color]="!isAddedToCart ? 'var(--primary)' : 'white'"
                     [style.border-color]="!isAddedToCart ? 'var(--primary)' : 'transparent'"
                     [style.background]="isAddedToCart ? 'var(--success)' : 'transparent'">
               <i [class]="isAddedToCart ? 'fas fa-check me-2' : 'fas fa-cart-plus me-2'"></i>
-              {{ isAddedToCart ? 'Added to Cart' : 'Add to Cart' }}
+              {{ isAddedToCart ? 'Added to Cart' : (backendProduct && !isInStock ? 'Out of Stock' : 'Add to Cart') }}
             </button>
           </div>
           

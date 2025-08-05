@@ -27,6 +27,12 @@ export class ProductComponent implements OnInit {
   selectedPackaging: string = '';
   quantity: number = 1;
   isAddedToCart = false;
+  
+  // Stock checking properties
+  stockInfo: any = null;
+  availableStock: number = 0;
+  isInStock: boolean = false;
+  stockLoading: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -71,14 +77,20 @@ export class ProductComponent implements OnInit {
             next: (backendProduct) => {
               if (backendProduct) {
                 this.backendProduct = backendProduct;
+                // Check stock for the backend product
+                this.checkProductStock();
               } else {
                 console.warn('⚠️ [ProductComponent] No backend product found for frontend product:', product.name);
                 this.backendProduct = null;
+                this.isInStock = false;
+                this.availableStock = 0;
               }
             },
             error: (error) => {
               console.error('❌ [ProductComponent] Error mapping to backend product:', error);
               this.backendProduct = null;
+              this.isInStock = false;
+              this.availableStock = 0;
             }
           });
         } else {
@@ -139,6 +151,20 @@ export class ProductComponent implements OnInit {
   addToCart(): void {
     if (!this.product) return;
 
+    // Check if product is in stock before adding to cart
+    if (this.backendProduct && !this.isInStock) {
+      console.warn('⚠️ [ProductComponent] Cannot add to cart - product is out of stock');
+      // You can show a toast notification here
+      return;
+    }
+
+    // Check if requested quantity is available
+    if (this.backendProduct && this.availableStock > 0 && this.quantity > this.availableStock) {
+      console.warn('⚠️ [ProductComponent] Requested quantity exceeds available stock');
+      // You can show a toast notification here
+      return;
+    }
+
     // Get selected variations
     const size = this.selectedSize || (this.product.size.length > 0 ? this.product.size[0] : undefined);
     const color = this.selectedColor || (this.product.colors.length > 0 ? this.product.colors[0] : undefined);
@@ -174,6 +200,11 @@ export class ProductComponent implements OnInit {
   updateQuantity(change: number): void {
     const newQuantity = this.quantity + change;
     if (newQuantity >= 1) {
+      // Check if the new quantity doesn't exceed available stock
+      if (this.backendProduct && this.availableStock > 0 && newQuantity > this.availableStock) {
+        console.warn('⚠️ [ProductComponent] Cannot increase quantity - exceeds available stock');
+        return;
+      }
       this.quantity = newQuantity;
     }
   }
@@ -229,6 +260,88 @@ export class ProductComponent implements OnInit {
    */
   logIntegrationStatus(): void {
     // Removed verbose logging - only keep essential warnings/errors
+  }
+
+  /**
+   * Check stock for the current product
+   */
+  checkProductStock(): void {
+    if (!this.backendProduct) {
+      console.warn('⚠️ [ProductComponent] No backend product available for stock check');
+      this.isInStock = false;
+      this.availableStock = 0;
+      return;
+    }
+
+    this.stockLoading = true;
+    
+    // Check stock using the integration service
+    this.productIntegrationService.checkStockForBackendProduct(this.backendProduct).subscribe({
+      next: (stockInfo) => {
+        this.stockInfo = stockInfo;
+        
+        if (stockInfo) {
+          // Calculate available stock
+          this.availableStock = stockInfo.ready + stockInfo.active - stockInfo.locked - stockInfo.addedToCart;
+          this.availableStock = Math.max(0, this.availableStock);
+          this.isInStock = this.availableStock > 0;
+          
+          console.log('✅ [ProductComponent] Stock check completed:', {
+            productId: this.backendProduct?.id,
+            productName: this.backendProduct?.name,
+            stockInfo: stockInfo,
+            availableStock: this.availableStock,
+            isInStock: this.isInStock
+          });
+        } else {
+          this.availableStock = 0;
+          this.isInStock = false;
+          console.warn('⚠️ [ProductComponent] No stock information found for product:', this.backendProduct?.name);
+        }
+        
+        this.stockLoading = false;
+      },
+      error: (error) => {
+        console.error('❌ [ProductComponent] Error checking stock:', error);
+        this.availableStock = 0;
+        this.isInStock = false;
+        this.stockLoading = false;
+      }
+    });
+  }
+
+  /**
+   * Get stock status text
+   */
+  getStockStatusText(): string {
+    if (this.stockLoading) {
+      return 'Checking stock...';
+    }
+    
+    if (!this.backendProduct) {
+      return 'Stock information not available';
+    }
+    
+    if (this.isInStock) {
+      return `In Stock (${this.availableStock} available)`;
+    } else {
+      return 'Out of Stock';
+    }
+  }
+
+  /**
+   * Get stock status CSS class
+   */
+  getStockStatusClass(): string {
+    if (this.stockLoading) {
+      return 'stock-loading';
+    }
+    
+    if (!this.backendProduct) {
+      return 'stock-unavailable';
+    }
+    
+    return this.isInStock ? 'stock-available' : 'stock-unavailable';
   }
 
   private initializeProductFunctionality() {
