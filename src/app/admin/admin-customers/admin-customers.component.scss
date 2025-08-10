@@ -75,19 +75,19 @@
 // Pagination styles
 .pagination {
   .page-link {
-    color: #4074FF;
+    color: #065baa;
     border-color: #e3e6f0;
 
     &:hover {
-      background-color: #4074FF;
-      border-color: #4074FF;
+      background-color: #065baa;
+      border-color: #065baa;
       color: white;
     }
   }
 
   .page-item.active .page-link {
-    background-color: #4074FF;
-    border-color: #4074FF;
+    background-color: #065baa;
+    border-color: #065baa;
   }
 
   .page-item.disabled .page-link {
@@ -116,8 +116,8 @@ select {
   border: 1px solid #e3e6f0 !important;
   
   &:focus {
-    border-color: #4074FF !important;
-    box-shadow: 0 0 0 0.2rem rgba(64, 116, 255, 0.25) !important;
+    border-color: #065baa !important;
+    box-shadow: 0 0 0 0.2rem rgba(6, 91, 170, 0.25) !important;
     outline: none !important;
   }
 }

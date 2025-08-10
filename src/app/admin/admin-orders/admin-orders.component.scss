@@ -1,26 +1,26 @@
 // Panel title styling
 .panel-title {
-  color: #4074FF;
+  color: #065baa;
   font-weight: 600;
 }
 
 // Button styling to match admin theme
 .btn-primary {
-  background: linear-gradient(135deg, #4074FF, #1e40af);
+  background: linear-gradient(135deg, #065baa, #054a8a);
   border: none;
   
   &:hover {
-    background: linear-gradient(135deg, #1e40af, #4074FF);
+    background: linear-gradient(135deg, #054a8a, #065baa);
   }
 }
 
 .btn-outline-primary {
-  border-color: #4074FF;
-  color: #4074FF;
+  border-color: #065baa;
+  color: #065baa;
   
   &:hover {
-    background-color: #4074FF;
-    border-color: #4074FF;
+    background-color: #065baa;
+    border-color: #065baa;
   }
 }
 
@@ -54,7 +54,7 @@
 }
 
 .text-primary, .bg-primary {
-  color: #4074FF !important;
+  color: #065baa !important;
 }
 
 .text-muted {

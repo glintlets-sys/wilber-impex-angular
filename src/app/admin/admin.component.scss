@@ -4,7 +4,7 @@
 }
 
 .admin-header {
-  background: linear-gradient(135deg, #4074FF, #1e40af) !important;
+  background: linear-gradient(135deg, #065baa, #054a8a) !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
@@ -37,7 +37,7 @@
 
     &:hover {
       background-color: #e9ecef;
-      color: #4074FF;
+      color: #065baa;
     }
 
     i:last-child {
@@ -64,15 +64,15 @@
         
         &:hover:not(:disabled) {
           background-color: #f8f9fa;
-          color: #4074FF;
+          color: #065baa;
           padding-left: 45px;
         }
 
         &.active {
-          background: linear-gradient(135deg, #4074FF, #1e40af);
+          background: linear-gradient(135deg, #065baa, #054a8a);
           color: white;
           font-weight: 500;
-          border-left: 4px solid #4074FF;
+          border-left: 4px solid #065baa;
         }
 
         &:disabled {

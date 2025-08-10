@@ -48,8 +48,8 @@
     border-color: #e3e6f0;
 
     &:focus {
-      border-color: var(--primary-color, #4074FF);
-      box-shadow: 0 0 0 0.2rem rgba(64, 116, 255, 0.25);
+      border-color: var(--primary-color, #065baa);
+      box-shadow: 0 0 0 0.2rem rgba(6, 91, 170, 0.25);
     }
   }
 }
@@ -58,8 +58,8 @@
   border-color: #e3e6f0;
 
   &:focus {
-    border-color: var(--primary-color, #4074FF);
-    box-shadow: 0 0 0 0.2rem rgba(64, 116, 255, 0.25);
+    border-color: var(--primary-color, #065baa);
+    box-shadow: 0 0 0 0.2rem rgba(6, 91, 170, 0.25);
   }
 }
 
@@ -92,14 +92,14 @@
 }
 
 .btn-primary {
-  background: linear-gradient(135deg, #4074FF, #1e40af);
+  background: linear-gradient(135deg, #065baa, #054a8a);
   border: none;
   color: white;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 
   &:hover {
-    background: linear-gradient(135deg, #1e40af, #4074FF);
+    background: linear-gradient(135deg, #054a8a, #065baa);
     transform: translateY(-1px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
   }
@@ -111,7 +111,7 @@
 }
 
 .panel-title {
-  color: #4074FF;
+  color: #065baa;
   font-weight: 600;
 }
 
