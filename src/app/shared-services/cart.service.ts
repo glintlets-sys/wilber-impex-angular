@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators';
 import { ToasterService } from './toaster.service';
 import { ToastType } from './toaster';
 import { OfflineCartService } from './offline-cart.service';
-import { Variation } from '@popperjs/core';
+// import { Variation } from '@popperjs/core'; // Removed incorrect import
 
 const SERVICE_URL = environment.serviceURL;
 @Injectable({
