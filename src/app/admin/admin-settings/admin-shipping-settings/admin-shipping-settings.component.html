@@ -1,0 +1,166 @@
+<div class="shipping-settings">
+  <div class="card shadow">
+    <div class="card-header">
+      <h4 class="mb-0">
+        <i class="fas fa-shipping-fast me-2"></i>Shipping Provider Settings
+      </h4>
+      <p class="text-muted mb-0">Configure shipping provider integrations and credentials</p>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="saveShippingSettings()">
+        <!-- Shipping Provider Selection -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="shippingProvider" class="form-label">
+                <i class="fas fa-truck me-1"></i>Shipping Provider
+              </label>
+              <select 
+                class="form-select" 
+                id="shippingProvider"
+                name="shippingProvider"
+                [(ngModel)]="selectedShippingProvider" 
+                (change)="changeSelectedShipping($event)">
+                <option *ngFor="let provider of shippingProviders" [value]="provider">{{ provider }}</option>
+              </select>
+              <div class="form-text">
+                Select the shipping provider you want to configure
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ShipRocket Settings -->
+        <div *ngIf="selectedShippingProvider === 'ShipRocket'" class="shiprocket-settings">
+          <h5 class="mb-3">
+            <i class="fas fa-rocket me-2"></i>ShipRocket Configuration
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="apiUserName" class="form-label">API Username</label>
+                <input 
+                  type="text" 
+                  id="apiUserName"
+                  name="apiUserName"
+                  class="form-control" 
+                  placeholder="Enter API Username"
+                  [(ngModel)]="shipRocketConfiguration.apiUserName">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input 
+                  type="password" 
+                  id="password"
+                  name="password"
+                  class="form-control" 
+                  placeholder="Enter Password"
+                  [(ngModel)]="shipRocketConfiguration.password">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="channelId" class="form-label">Channel ID</label>
+                <input 
+                  type="text" 
+                  id="channelId"
+                  name="channelId"
+                  class="form-control" 
+                  placeholder="Enter Channel ID"
+                  [(ngModel)]="shipRocketConfiguration.channelId">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="pickupLocation" class="form-label">Pickup Location</label>
+                <input 
+                  type="text" 
+                  id="pickupLocation"
+                  name="pickupLocation"
+                  class="form-control" 
+                  placeholder="Enter Pickup Location"
+                  [(ngModel)]="shipRocketConfiguration.pickupLocation">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="authenticationId" class="form-label">Authentication ID</label>
+                <input 
+                  type="text" 
+                  id="authenticationId"
+                  name="authenticationId"
+                  class="form-control" 
+                  placeholder="Authentication ID"
+                  [(ngModel)]="shipRocketConfiguration.authenticationid"
+                  disabled>
+                <div class="form-text">
+                  Auto-generated after authentication
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="lastAuthenticated" class="form-label">Last Authenticated</label>
+                <input 
+                  type="text" 
+                  id="lastAuthenticated"
+                  name="lastAuthenticated"
+                  class="form-control" 
+                  [value]="shipRocketConfiguration.lastAuthenticatedon | date:'medium'"
+                  disabled>
+                <div class="form-text">
+                  Last successful authentication date
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="isLoading">
+                <i class="fas fa-save me-2" [class.fa-spin]="isLoading"></i>
+                {{ isLoading ? 'Saving...' : 'Save Settings' }}
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-info"
+                (click)="testShippingConnection()"
+                [disabled]="isLoading">
+                <i class="fas fa-plug me-2"></i>Test Connection
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-warning"
+                (click)="authenticateShipping()"
+                [disabled]="isLoading">
+                <i class="fas fa-key me-2"></i>Authenticate
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary"
+                (click)="loadShippingSettings()"
+                [disabled]="isLoading">
+                <i class="fas fa-refresh me-2"></i>Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

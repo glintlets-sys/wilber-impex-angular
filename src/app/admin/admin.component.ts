@@ -7,6 +7,7 @@ import { AdminProductsComponent } from './admin-products/admin-products.componen
 import { AdminCategoriesComponent } from './admin-categories/admin-categories.component';
 import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { AdminCustomersComponent } from './admin-customers/admin-customers.component';
+import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
 
 @Component({
   selector: 'app-admin',
@@ -19,7 +20,8 @@ import { AdminCustomersComponent } from './admin-customers/admin-customers.compo
     AdminProductsComponent,
     AdminCategoriesComponent,
     AdminOrdersComponent,
-    AdminCustomersComponent
+    AdminCustomersComponent,
+    AdminSettingsComponent
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'

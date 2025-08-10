@@ -8,6 +8,8 @@ import { AuthenticationService } from '../../shared-services/authentication.serv
 import { ToasterService } from '../../shared-services/toaster.service';
 import { ToastType } from '../../shared-services/toaster';
 import { HttpResponse } from '@angular/common/http';
+import { DispatchService } from '../../shared-services/dispatch.service';
+import { DispatchSummary } from '../../shared-services/dispatchSummary';
 
 @Component({
   selector: 'app-admin-orders',
@@ -41,7 +43,8 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
   constructor(
     private orderService: OrderService,
     private authService: AuthenticationService,
-    private toasterService: ToasterService
+    private toasterService: ToasterService,
+    private dispatchService: DispatchService
   ) { }
 
   ngOnInit(): void {
@@ -192,7 +195,8 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
   }
 
   hasSentToShippingProvider(order: OrderDTO): boolean {
-    return !!(order.dispatchSummary && order.dispatchSummary.shipmentId);
+    // Return true if order has NOT been sent to shipping provider (no shipment ID)
+    return !(order.dispatchSummary?.shipmentId);
   }
 
   navigateToInvoice(order: OrderDTO): void {
@@ -201,8 +205,42 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
   }
 
   sendToShippingProvider(order: OrderDTO): void {
-    console.log('Send order to shipping provider:', order.id);
-    // Implementation for shipping provider integration
+    console.log('🚚 [AdminOrders] Sending order to shipping provider:', order.id);
+    
+    // Show loading state
+    this.isLoading = true;
+    
+    const dispatchSub = this.dispatchService.sendToShippingProvider(order).subscribe({
+      next: (dispatchSummary: DispatchSummary) => {
+        console.log('✅ [AdminOrders] Order sent to shipping provider successfully:', dispatchSummary);
+        
+        // Update the order with the new dispatch summary
+        order.dispatchSummary = dispatchSummary;
+        
+        // Show shipment details
+        order.showShipmentDetails = true;
+        
+        // Show success message
+        this.toasterService.showToast(
+          `Order has been sent to shipping service. Shipping ID: ${dispatchSummary.shipmentId}`, 
+          ToastType.Success, 
+          5000
+        );
+        
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('❌ [AdminOrders] Error sending order to shipping provider:', error);
+        this.toasterService.showToast(
+          'Error sending order to shipping provider. Please try again.', 
+          ToastType.Error, 
+          3000
+        );
+        this.isLoading = false;
+      }
+    });
+    
+    this.subscriptions.push(dispatchSub);
   }
 
   loadPreviousPage(): void {

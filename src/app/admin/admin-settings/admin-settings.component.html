@@ -1,0 +1,73 @@
+<div class="admin-settings-container">
+  <!-- Header -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h3 class="text-primary">
+      <i class="fas fa-cogs me-2"></i>Configuration Settings
+    </h3>
+  </div>
+
+  <!-- Settings Navigation Tabs -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" 
+                  [class.active]="activeSettingsView === 'platform'"
+                  (click)="setActiveView('platform')"
+                  type="button" 
+                  role="tab">
+            <i class="fas fa-server me-2"></i>Platform Settings
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" 
+                  [class.active]="activeSettingsView === 'payment'"
+                  (click)="setActiveView('payment')"
+                  type="button" 
+                  role="tab">
+            <i class="fas fa-credit-card me-2"></i>Payment Settings
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" 
+                  [class.active]="activeSettingsView === 'shipping'"
+                  (click)="setActiveView('shipping')"
+                  type="button" 
+                  role="tab">
+            <i class="fas fa-shipping-fast me-2"></i>Shipping Settings
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" 
+                  [class.active]="activeSettingsView === 'sms'"
+                  (click)="setActiveView('sms')"
+                  type="button" 
+                  role="tab">
+            <i class="fas fa-sms me-2"></i>SMS Settings
+          </button>
+        </li>
+      </ul>
+    </div>
+    <div class="card-body">
+      <!-- Platform Settings -->
+      <div *ngIf="activeSettingsView === 'platform'" class="tab-content">
+        <app-admin-platform-settings></app-admin-platform-settings>
+      </div>
+
+      <!-- Payment Settings -->
+      <div *ngIf="activeSettingsView === 'payment'" class="tab-content">
+        <app-admin-payment-settings></app-admin-payment-settings>
+      </div>
+
+      <!-- Shipping Settings -->
+      <div *ngIf="activeSettingsView === 'shipping'" class="tab-content">
+        <app-admin-shipping-settings></app-admin-shipping-settings>
+      </div>
+
+      <!-- SMS Settings -->
+      <div *ngIf="activeSettingsView === 'sms'" class="tab-content">
+        <app-admin-sms-settings></app-admin-sms-settings>
+      </div>
+    </div>
+  </div>
+</div>

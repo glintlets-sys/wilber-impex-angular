@@ -1,0 +1,220 @@
+<div class="sms-settings">
+  <div class="card shadow">
+    <div class="card-header">
+      <h4 class="mb-0">
+        <i class="fas fa-sms me-2"></i>SMS Provider Settings
+      </h4>
+      <p class="text-muted mb-0">Configure SMS gateway integrations and credentials</p>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="saveSmsSettings()">
+        <!-- SMS Provider Selection -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="smsProvider" class="form-label">
+                <i class="fas fa-mobile-alt me-1"></i>SMS Provider
+              </label>
+              <select 
+                class="form-select" 
+                id="smsProvider"
+                name="smsProvider"
+                [(ngModel)]="selectedSmsProvider" 
+                (change)="changeSelectedSms($event)">
+                <option *ngFor="let provider of smsProviders" [value]="provider">{{ provider }}</option>
+              </select>
+              <div class="form-text">
+                Select the SMS provider you want to configure
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Twilio Settings -->
+        <div *ngIf="selectedSmsProvider === 'Twilio'" class="twilio-settings">
+          <h5 class="mb-3">
+            <i class="fas fa-comment me-2"></i>Twilio Configuration
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="accountSid" class="form-label">Account SID</label>
+                <input 
+                  type="text" 
+                  id="accountSid"
+                  name="accountSid"
+                  class="form-control" 
+                  placeholder="Enter Account SID"
+                  [(ngModel)]="twilioConfiguration.accountSid">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="authToken" class="form-label">Auth Token</label>
+                <input 
+                  type="password" 
+                  id="authToken"
+                  name="authToken"
+                  class="form-control" 
+                  placeholder="Enter Auth Token"
+                  [(ngModel)]="twilioConfiguration.authToken">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="phoneNumber" class="form-label">Phone Number</label>
+                <input 
+                  type="tel" 
+                  id="phoneNumber"
+                  name="phoneNumber"
+                  class="form-control" 
+                  placeholder="Enter Twilio Phone Number"
+                  [(ngModel)]="twilioConfiguration.phoneNumber">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- MSG91 Settings -->
+        <div *ngIf="selectedSmsProvider === 'MSG91'" class="msg91-settings">
+          <h5 class="mb-3">
+            <i class="fas fa-comment-dots me-2"></i>MSG91 Configuration
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="msg91ApiKey" class="form-label">API Key</label>
+                <input 
+                  type="password" 
+                  id="msg91ApiKey"
+                  name="msg91ApiKey"
+                  class="form-control" 
+                  placeholder="Enter API Key"
+                  [(ngModel)]="msg91Configuration.apiKey">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="senderId" class="form-label">Sender ID</label>
+                <input 
+                  type="text" 
+                  id="senderId"
+                  name="senderId"
+                  class="form-control" 
+                  placeholder="Enter Sender ID"
+                  [(ngModel)]="msg91Configuration.senderId">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="templateId" class="form-label">Template ID</label>
+                <input 
+                  type="text" 
+                  id="templateId"
+                  name="templateId"
+                  class="form-control" 
+                  placeholder="Enter Template ID"
+                  [(ngModel)]="msg91Configuration.templateId">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fast2SMS Settings -->
+        <div *ngIf="selectedSmsProvider === 'Fast2SMS'" class="fast2sms-settings">
+          <h5 class="mb-3">
+            <i class="fas fa-bolt me-2"></i>Fast2SMS Configuration
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="fast2smsApiKey" class="form-label">API Key</label>
+                <input 
+                  type="password" 
+                  id="fast2smsApiKey"
+                  name="fast2smsApiKey"
+                  class="form-control" 
+                  placeholder="Enter API Key"
+                  [(ngModel)]="fast2SmsConfiguration.apiKey">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="fast2smsSenderId" class="form-label">Sender ID</label>
+                <input 
+                  type="text" 
+                  id="fast2smsSenderId"
+                  name="fast2smsSenderId"
+                  class="form-control" 
+                  placeholder="Enter Sender ID"
+                  [(ngModel)]="fast2SmsConfiguration.senderId">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="route" class="form-label">Route</label>
+                <select 
+                  id="route"
+                  name="route"
+                  class="form-select" 
+                  [(ngModel)]="fast2SmsConfiguration.route">
+                  <option value="">Select Route</option>
+                  <option value="p">Promotional</option>
+                  <option value="t">Transactional</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="isLoading">
+                <i class="fas fa-save me-2" [class.fa-spin]="isLoading"></i>
+                {{ isLoading ? 'Saving...' : 'Save Settings' }}
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-info"
+                (click)="testSmsConnection()"
+                [disabled]="isLoading">
+                <i class="fas fa-plug me-2"></i>Test Connection
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-success"
+                (click)="sendTestSms()"
+                [disabled]="isLoading">
+                <i class="fas fa-paper-plane me-2"></i>Send Test SMS
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary"
+                (click)="loadSmsSettings()"
+                [disabled]="isLoading">
+                <i class="fas fa-refresh me-2"></i>Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,186 @@
+<div class="payment-settings">
+  <div class="card shadow">
+    <div class="card-header">
+      <h4 class="mb-0">
+        <i class="fas fa-credit-card me-2"></i>Payment Gateway Settings
+      </h4>
+      <p class="text-muted mb-0">Configure payment gateway integrations and credentials</p>
+    </div>
+    <div class="card-body">
+      <form (ngSubmit)="savePaymentSettings()">
+        <!-- Payment Provider Selection -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="paymentProvider" class="form-label">
+                <i class="fas fa-credit-card me-1"></i>Payment Gateway
+              </label>
+              <select 
+                class="form-select" 
+                id="paymentProvider"
+                name="paymentProvider"
+                [(ngModel)]="selectedPaymentProvider" 
+                (change)="changeSelectedPayment($event)">
+                <option *ngFor="let type of payment_Types" [value]="type">{{ type }}</option>
+              </select>
+              <div class="form-text">
+                Select the payment gateway you want to configure
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CCAvenue Settings -->
+        <div *ngIf="selectedPaymentProvider === 'CCAvenueSettings'" class="ccavenue-settings">
+          <h5 class="mb-3">
+            <i class="fas fa-university me-2"></i>CCAvenue Configuration
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="merchantId" class="form-label">Merchant ID</label>
+                <input 
+                  type="text" 
+                  id="merchantId"
+                  name="merchantId"
+                  class="form-control" 
+                  placeholder="Enter Merchant ID"
+                  [(ngModel)]="ccAvenueConfiguration.merchant_id">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="accessCode" class="form-label">Access Code</label>
+                <input 
+                  type="text" 
+                  id="accessCode"
+                  name="accessCode"
+                  class="form-control" 
+                  placeholder="Enter Access Code"
+                  [(ngModel)]="ccAvenueConfiguration.access_code">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="workingKey" class="form-label">Working Key</label>
+                <input 
+                  type="password" 
+                  id="workingKey"
+                  name="workingKey"
+                  class="form-control" 
+                  placeholder="Enter Working Key"
+                  [(ngModel)]="ccAvenueConfiguration.working_key">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="redirectUrl" class="form-label">Redirect URL</label>
+                <input 
+                  type="url" 
+                  id="redirectUrl"
+                  name="redirectUrl"
+                  class="form-control" 
+                  placeholder="Enter Redirect URL"
+                  [(ngModel)]="ccAvenueConfiguration.redirect_url">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- PhonePe Settings -->
+        <div *ngIf="selectedPaymentProvider === 'PhonePeSettings'" class="phonepe-settings">
+          <h5 class="mb-3">
+            <i class="fas fa-mobile-alt me-2"></i>PhonePe Configuration
+          </h5>
+          
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="phonepeMerchantId" class="form-label">Merchant ID</label>
+                <input 
+                  type="text" 
+                  id="phonepeMerchantId"
+                  name="phonepeMerchantId"
+                  class="form-control" 
+                  placeholder="Enter Merchant ID"
+                  [(ngModel)]="phonePeConfiguration.merchant_id">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="saltKey" class="form-label">Salt Key</label>
+                <input 
+                  type="password" 
+                  id="saltKey"
+                  name="saltKey"
+                  class="form-control" 
+                  placeholder="Enter Salt Key"
+                  [(ngModel)]="phonePeConfiguration.salt_key">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="saltIndex" class="form-label">Salt Index</label>
+                <input 
+                  type="text" 
+                  id="saltIndex"
+                  name="saltIndex"
+                  class="form-control" 
+                  placeholder="Enter Salt Index"
+                  [(ngModel)]="phonePeConfiguration.salt_index">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group mb-3">
+                <label for="phonepeRedirectUrl" class="form-label">Redirect URL</label>
+                <input 
+                  type="url" 
+                  id="phonepeRedirectUrl"
+                  name="phonepeRedirectUrl"
+                  class="form-control" 
+                  placeholder="Enter Redirect URL"
+                  [(ngModel)]="phonePeConfiguration.redirect_url">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="row">
+          <div class="col-12">
+            <div class="d-flex gap-2">
+              <button 
+                type="submit" 
+                class="btn btn-primary"
+                [disabled]="isLoading">
+                <i class="fas fa-save me-2" [class.fa-spin]="isLoading"></i>
+                {{ isLoading ? 'Saving...' : 'Save Settings' }}
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-info"
+                (click)="testPaymentConnection()"
+                [disabled]="isLoading">
+                <i class="fas fa-plug me-2"></i>Test Connection
+              </button>
+              <button 
+                type="button" 
+                class="btn btn-outline-secondary"
+                (click)="loadPaymentSettings()"
+                [disabled]="isLoading">
+                <i class="fas fa-refresh me-2"></i>Reset
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
