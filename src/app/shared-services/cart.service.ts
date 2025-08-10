@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, BehaviorSubject, timer, Subscription, forkJoin } from 'rxjs';
-import { tap, map, switchMap } from 'rxjs/operators';
+import { tap, map, switchMap, take } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { AuthenticationService } from './authentication.service';
 import { environment } from '../../environments/environment';
@@ -16,7 +16,7 @@ const SERVICE_URL = environment.serviceURL;
 @Injectable({
   providedIn: 'root'
 })
-export class CartService {
+export class CartService implements OnDestroy {
 
 
   private cartApiUrl = SERVICE_URL + 'cart/users';
@@ -36,6 +36,7 @@ export class CartService {
   }
 
   offlineSubs: Subscription | undefined;
+  private userDetailsSubscription: Subscription | undefined;
   
   private loadOfflineCart() {
     this.offlineCartService.getOfflineCart().subscribe(cart => {
@@ -71,7 +72,12 @@ export class CartService {
   }
 
   public initCartForLoggedInUser() {
-    this.authService.userDetails.subscribe((val) => {
+    // Unsubscribe from previous subscription to prevent duplicates
+    if (this.userDetailsSubscription) {
+      this.userDetailsSubscription.unsubscribe();
+    }
+    
+    this.userDetailsSubscription = this.authService.userDetails.subscribe((val) => {
       // console.log("Subscription called: " + JSON.stringify(val));
       let id = val.userId;//JSON.parse(val).userId;
       this.user = val;
@@ -81,9 +87,10 @@ export class CartService {
         return; // Exit if the ID is not valid
       } 
       // console.log("API getting called for user ID:", id);
-      timer(500) // Starts a timer that emits after 2 seconds
+      timer(500) // Starts a timer that emits after 500ms
         .pipe(
           switchMap(() => this.http.get<Cart>(`${this.cartApiUrl}/${id}`)),
+          take(1), // Ensure only one API call per user change
           tap((cart: Cart) => {
             this.cart = cart;
             // console.log("Cart received from backend:" + JSON.stringify(cart));
@@ -102,16 +109,46 @@ export class CartService {
 
   refreshCart()
   {
-    timer(500) // Starts a timer that emits after 2 seconds
+    console.log('🔄 [CartService] refreshCart() - Starting cart refresh');
+    
+    if (!this.user || !this.user.userId) {
+      console.error("❌ [CartService] refreshCart() - Cannot refresh cart: user not available:", {
+        userExists: !!this.user,
+        userId: this.user?.userId
+      });
+      return;
+    }
+    
+    console.log('👤 [CartService] refreshCart() - User validated, making API call for userId:', this.user.userId);
+    
+    timer(500) // Starts a timer that emits after 500ms
     .pipe(
-      switchMap(() => this.http.get<Cart>(`${this.cartApiUrl}/${this.user.id}`)),
+      switchMap(() => {
+        const apiUrl = `${this.cartApiUrl}/${this.user.userId}`;
+        console.log('🌐 [CartService] refreshCart() - Making HTTP GET request to:', apiUrl);
+        return this.http.get<Cart>(apiUrl);
+      }),
+      take(1), // Ensure only one API call
       tap((cart: Cart) => {
+        console.log('📦 [CartService] refreshCart() - Received cart from backend:', {
+          cartId: cart?.id,
+          itemCount: cart?.items?.length || 0,
+          items: cart?.items?.map(item => ({
+            itemId: item.itemId,
+            name: item.name,
+            quantity: item.quantity
+          })) || []
+        });
         this.cart = cart;
-        // console.log("Cart received from backend:" + JSON.stringify(cart));
       })
     ).subscribe({
-      next: (cart) => this.cartSubject.next(cart),
-      error: (err) => console.error("Failed to load cart:", err)
+      next: (cart) => {
+        console.log('✅ [CartService] refreshCart() - Broadcasting updated cart to subscribers');
+        this.cartSubject.next(cart);
+      },
+      error: (err) => {
+        console.error("❌ [CartService] refreshCart() - Failed to load cart:", err);
+      }
     });
   }
 
@@ -284,6 +321,16 @@ export class CartService {
   // private saveCartToStorage(): void {
   //   localStorage.setItem('cart', JSON.stringify(this.cart));
   // }
+
+  ngOnDestroy(): void {
+    // Clean up subscriptions to prevent memory leaks
+    if (this.userDetailsSubscription) {
+      this.userDetailsSubscription.unsubscribe();
+    }
+    if (this.offlineSubs) {
+      this.offlineSubs.unsubscribe();
+    }
+  }
 }
 
 export interface CartItem {

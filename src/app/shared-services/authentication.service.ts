@@ -159,4 +159,9 @@ export class AuthenticationService {
     return this.http.get<boolean>(url);
   }
 
+  // Public method to refresh user data from localStorage
+  public refreshUserData(): void {
+    this.initializeUserLogin();
+  }
+
 }

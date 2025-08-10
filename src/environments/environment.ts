@@ -19,15 +19,18 @@ export const environment = {
   number: '5',
   templateId: '66b5e298d6fc0513db1d1b42',
 
-  // Phone pe integration 
-  phonePeMerchantId: 'KRISHNONLINE',
-  phonePeRedirectUrl: 'https://www.colourcubs.com/myaccount/orderSuccess',
-  phonePeRedirectMode: 'REDIRECT',
+  // Phone pe integration - Updated to latest working test credentials
+  phonePeMerchantId: 'PGTESTPAYUAT86', // Latest working test merchant ID
+  phonePeRedirectUrl: 'http://localhost:4200/payment-response',
+  phonePeRedirectMode: 'POST',
   phonePeCallbackUrl: 'https://api.glintcloudshops.com/api/phonepe/callback',
   phonePePaymentInstrumentType: 'PAY_PAGE',
-  phonepeSaltKey: 'eae2fe40-a801-4e4c-9b8e-aee00723e132',
-  phonepeSaltIndex: '2',
-  phonepePaymentGateway:'https://api.phonepe.com/apis/hermes',
+  phonepeSaltKey: '96434309-7796-489d-8924-ab56988a6076', // Latest working test salt key
+  phonepeSaltIndex: '1', // Test salt index
+  phonepePaymentGateway:'https://api-preprod.phonepe.com/apis/pg-sandbox', // Test gateway
+  
+  // Development flags - PhonePe sandbox is currently broken
+  enablePhonePeMockMode: true, // Enable mock mode for development until PhonePe provides working test credentials
 
   // Local storage keys
   USER_DETAILS: 'userDetails',

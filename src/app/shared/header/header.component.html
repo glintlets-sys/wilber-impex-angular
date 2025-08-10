@@ -65,7 +65,7 @@
                                     (click)="toggleUserDropdown()"
                                     [attr.aria-expanded]="isUserDropdownOpen">
                                 <i class="fa-solid fa-user-circle me-1"></i>
-                                {{ currentUser.name || 'User' }}
+                                {{ getUserDisplayName() }}
                             </button>
                             <ul class="dropdown-menu" [class.show]="isUserDropdownOpen">
                                 <li><a class="dropdown-item" routerLink="/account" routerLinkActive="active" (click)="closeUserDropdown()">
@@ -73,6 +73,9 @@
                                 </a></li>
                                 <li><a class="dropdown-item" routerLink="/account" routerLinkActive="active" (click)="closeUserDropdown()">
                                     <i class="fas fa-shopping-bag me-2"></i>My Orders
+                                </a></li>
+                                <li *ngIf="isAdmin"><a class="dropdown-item" routerLink="/admin" routerLinkActive="active" (click)="closeUserDropdown()">
+                                    <i class="fas fa-cogs me-2"></i>Admin Panel
                                 </a></li>
                                 <li><hr class="dropdown-divider"></li>
                                 <li><a class="dropdown-item text-danger" (click)="logout(); closeUserDropdown()">

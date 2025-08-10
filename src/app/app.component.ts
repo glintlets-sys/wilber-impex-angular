@@ -1,11 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+import { ToasterComponent } from './shared/toaster/toaster.component';
+import { ToasterService } from './shared-services/toaster.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, ToasterComponent],
+  providers: [ToasterService],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss'
 })

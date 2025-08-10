@@ -15,6 +15,7 @@ export class User {
   public state: string;
   public city: string;
   public profiles: Profile[];
+  public isAdmin: boolean;
 
   constructor(
     id: number,

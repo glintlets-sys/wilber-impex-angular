@@ -33,18 +33,21 @@ export interface PaymentFields {
 
 export interface PhonePePaymentFields {
   merchantId: string;
-  merchantTransactionId: string,
-  amount: number,
-  merchantUserId: string,
-  redirectUrl: string,
-  redirectMode: string,
-  callbackUrl: string,
+  merchantTransactionId: string;
+  amount: number;
+  merchantUserId: string;
+  redirectUrl: string;
+  redirectMode: string;
+  callbackUrl: string;
   paymentInstrument: {
-    type: string,
-    order_id: string,
-    tenant_id: string
-  },
-  mobileNumber: string
+    type: string;
+    order_id?: string;
+    tenant_id?: string;
+  };
+  mobileNumber?: string;
+  merchantOrderId?: string;
+  email?: string;
+  message?: string;
 }
 
 

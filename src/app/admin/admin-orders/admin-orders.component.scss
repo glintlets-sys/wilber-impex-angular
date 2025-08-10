@@ -1,0 +1,324 @@
+// Panel title styling
+.panel-title {
+  color: #4074FF;
+  font-weight: 600;
+}
+
+// Button styling to match admin theme
+.btn-primary {
+  background: linear-gradient(135deg, #4074FF, #1e40af);
+  border: none;
+  
+  &:hover {
+    background: linear-gradient(135deg, #1e40af, #4074FF);
+  }
+}
+
+.btn-outline-primary {
+  border-color: #4074FF;
+  color: #4074FF;
+  
+  &:hover {
+    background-color: #4074FF;
+    border-color: #4074FF;
+  }
+}
+
+// Cards styling
+.card {
+  border: 1px solid #e3e6f0;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  transition: box-shadow 0.3s ease;
+  
+  &:hover {
+    box-shadow: 0 0.25rem 2rem 0 rgba(58, 59, 69, 0.2);
+  }
+}
+
+// Status colors
+.text-success, .bg-success {
+  color: #28a745 !important;
+}
+
+.text-danger, .bg-danger {
+  color: #dc3545 !important;
+}
+
+.text-warning, .bg-warning {
+  color: #ffc107 !important;
+}
+
+.text-info, .bg-info {
+  color: #17a2b8 !important;
+}
+
+.text-primary, .bg-primary {
+  color: #4074FF !important;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+// Table styling
+.table {
+  th {
+    background-color: #f8f9fc;
+    border-bottom: 2px solid #e3e6f0;
+    font-weight: 600;
+    color: #5a5c69;
+    font-size: 0.875rem;
+  }
+
+  td {
+    vertical-align: middle;
+    border-top: 1px solid #e3e6f0;
+    padding: 0.75rem;
+  }
+
+  .table-active {
+    background-color: rgba(64, 116, 255, 0.05);
+  }
+}
+
+// Expandable details row
+.details-row {
+  td {
+    background-color: #f8f9fc !important;
+    border-top: none;
+  }
+}
+
+.details-container {
+  padding: 1.5rem;
+  background-color: white !important;
+  border-radius: 0.5rem;
+  margin: 1rem;
+  border: 1px solid #e3e6f0;
+}
+
+.details-section {
+  .section-title {
+    color: #4074FF;
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #e3e6f0;
+  }
+}
+
+// Order items styling
+.items-list {
+  .item-card {
+    background-color: #f8f9fc;
+    border: 1px solid #e3e6f0;
+    border-radius: 0.375rem;
+    padding: 0.75rem;
+    margin-bottom: 0.5rem;
+
+    .item-name {
+      color: #5a5c69;
+      font-size: 0.925rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .item-details {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.25rem;
+
+      .badge {
+        font-size: 0.75rem;
+      }
+
+      .price {
+        color: #4074FF;
+        font-weight: 600;
+      }
+    }
+
+    .item-total {
+      color: #28a745;
+      font-weight: 700;
+      font-size: 1rem;
+    }
+  }
+}
+
+// Address and customer info styling
+.address-card {
+  background-color: #ffffff !important;
+  border: 1px solid #e3e6f0;
+  border-radius: 0.375rem;
+  padding: 1rem;
+
+  .customer-info {
+    margin-bottom: 0.75rem;
+    background-color: transparent !important;
+
+    strong {
+      color: #5a5c69 !important;
+      font-size: 1rem;
+      background-color: transparent !important;
+    }
+
+    .contact-info {
+      margin-top: 0.5rem;
+      background-color: transparent !important;
+      
+      div {
+        color: #6c757d !important;
+        font-size: 0.875rem;
+        margin-bottom: 0.25rem;
+        background-color: transparent !important;
+
+        i {
+          color: #4074FF !important;
+          width: 1rem;
+          background-color: transparent !important;
+        }
+      }
+    }
+  }
+
+  .address-details {
+    background-color: transparent !important;
+    
+    address {
+      font-style: normal;
+      line-height: 1.4;
+      white-space: pre-line;
+      color: #5a5c69 !important;
+      margin: 0;
+      background-color: transparent !important;
+    }
+  }
+
+  // Override any inherited styles
+  * {
+    background-color: transparent !important;
+  }
+}
+
+// Shipment info styling
+.shipment-info {
+  background-color: #f8f9fc;
+  border: 1px solid #e3e6f0;
+  border-radius: 0.375rem;
+  padding: 1rem;
+
+  .row > div {
+    margin-bottom: 0.75rem;
+
+    strong {
+      color: #5a5c69;
+      display: block;
+      margin-bottom: 0.25rem;
+    }
+
+    .text-muted {
+      font-size: 0.875rem;
+    }
+  }
+}
+
+// Badge styling
+.badge {
+  font-size: 0.75rem;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.375rem;
+  font-weight: 600;
+}
+
+// Form styling
+.form-label {
+  font-weight: 600;
+  color: #5a5c69;
+  font-size: 0.875rem;
+}
+
+.form-control, .form-select {
+  border: 1px solid #d1d3e2;
+  border-radius: 0.375rem;
+  
+  &:focus {
+    border-color: #4074FF;
+    box-shadow: 0 0 0 0.2rem rgba(64, 116, 255, 0.25);
+  }
+}
+
+// Button groups
+.btn-group {
+  .btn {
+    border-radius: 0.375rem;
+    
+    &:not(:last-child) {
+      margin-right: 0.25rem;
+    }
+  }
+}
+
+// Pagination styling
+.btn-group .btn {
+  &.disabled {
+    background-color: #f8f9fa;
+    border-color: #dee2e6;
+    color: #6c757d;
+  }
+}
+
+// Loading state
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .details-container {
+    margin: 0.5rem;
+    padding: 1rem;
+  }
+
+  .table-responsive {
+    font-size: 0.875rem;
+  }
+
+  .btn-group .btn {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+  .details-section .section-title {
+    font-size: 0.925rem;
+  }
+
+  .item-card {
+    .item-name {
+      font-size: 0.875rem;
+    }
+    
+    .item-total {
+      font-size: 0.925rem;
+    }
+  }
+}
+
+// Gap utility for newer Bootstrap versions
+.gap-2 > * + * {
+  margin-left: 0.5rem;
+}
+
+.gap-3 > * + * {
+  margin-left: 1rem;
+}
+
+// Ensure proper spacing in form rows
+.g-3 {
+  --bs-gutter-x: 1rem;
+  --bs-gutter-y: 1rem;
+}

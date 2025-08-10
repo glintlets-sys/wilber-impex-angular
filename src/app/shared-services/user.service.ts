@@ -16,7 +16,10 @@ export class UserService {
 
   private baseUrl = SERVICE_URL + 'users';
 
-  constructor(private http: HttpClient, private authenticService: AuthenticationService) { }
+  constructor(private http: HttpClient, private authenticService: AuthenticationService) { 
+    console.log('🔍 [UserService] SERVICE_URL:', SERVICE_URL);
+    console.log('🔍 [UserService] baseUrl:', this.baseUrl);
+  }
 
   getUserByUsername(username: string): Observable<User> {
     const url = `${this.baseUrl}/${username}`;
@@ -29,7 +32,9 @@ export class UserService {
   }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl + '/');
+    const url = this.baseUrl + '/';
+    console.log('🔍 [UserService] Making request to:', url);
+    return this.http.get<User[]>(url);
   }
 
 

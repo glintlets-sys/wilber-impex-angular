@@ -10,6 +10,8 @@ import { ProductComponent } from './product/product.component';
 import { CheckoutComponent } from './checkout/checkout.component';
 import { LoginComponent } from './login/login.component';
 import { AccountComponent } from './account/account.component';
+import { PaymentResponseComponent } from './payment-response/payment-response.component';
+import { AdminComponent } from './admin/admin.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -24,5 +26,8 @@ export const routes: Routes = [
   { path: 'checkout', component: CheckoutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'account', component: AccountComponent },
+  { path: 'orders', component: AccountComponent },
+  { path: 'admin', component: AdminComponent },
+  { path: 'payment-response', component: PaymentResponseComponent },
   { path: '**', redirectTo: '' }
 ];

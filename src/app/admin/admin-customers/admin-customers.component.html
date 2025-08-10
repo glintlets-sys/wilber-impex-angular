@@ -1,0 +1,230 @@
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="text-primary">
+    <i class="fas fa-users me-2"></i>Customer Management
+  </h3>
+  <div class="d-flex gap-2">
+    <button type="button" class="btn btn-primary" (click)="refreshCustomers()" [disabled]="isLoading">
+      <i class="fas fa-sync me-1" [class.fa-spin]="isLoading"></i>Refresh
+    </button>
+    <button type="button" class="btn btn-outline-primary" (click)="exportCustomers()">
+      <i class="fas fa-download me-1"></i>Export
+    </button>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div *ngIf="isLoading" class="text-center py-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="sr-only">Loading customers...</span>
+  </div>
+  <p class="mt-2 text-muted">Loading customer data...</p>
+</div>
+
+<!-- Customer Statistics -->
+<div *ngIf="!isLoading" class="row mb-4">
+  <div class="col-md-3">
+    <div class="card text-center stats-card">
+      <div class="card-body">
+        <h5 class="card-title text-primary">{{ filteredCustomers.length }}</h5>
+        <p class="card-text">Total Customers</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center stats-card">
+      <div class="card-body">
+        <h5 class="card-title text-info">{{ getGenderStats().male }}</h5>
+        <p class="card-text">Male Customers</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center stats-card">
+      <div class="card-body">
+        <h5 class="card-title text-danger">{{ getGenderStats().female }}</h5>
+        <p class="card-text">Female Customers</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card text-center stats-card">
+      <div class="card-body">
+        <h5 class="card-title text-warning">{{ getGenderStats().other }}</h5>
+        <p class="card-text">Other</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Filters -->
+<div *ngIf="!isLoading" class="card mb-4">
+  <div class="card-header">
+    <h6 class="mb-0">
+      <i class="fas fa-filter me-2"></i>Search & Filters
+    </h6>
+  </div>
+  <div class="card-body">
+    <div class="row g-3">
+      <div class="col-md-4">
+        <label class="form-label">Search Customers</label>
+        <input type="text" class="form-control" [(ngModel)]="searchTerm" (input)="applyFilters()" 
+               placeholder="Name, email, mobile, username...">
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">City</label>
+        <select class="form-select" [(ngModel)]="selectedCity" (change)="applyFilters()">
+          <option value="">All Cities</option>
+          <option *ngFor="let city of getUniqueValues('city')" [value]="city">{{ city }}</option>
+        </select>
+      </div>
+      <div class="col-md-3">
+        <label class="form-label">State</label>
+        <select class="form-select" [(ngModel)]="selectedState" (change)="applyFilters()">
+          <option value="">All States</option>
+          <option *ngFor="let state of getUniqueValues('state')" [value]="state">{{ state }}</option>
+        </select>
+      </div>
+      <div class="col-md-2">
+        <label class="form-label">Actions</label>
+        <button class="btn btn-outline-secondary w-100" (click)="clearFilters()">
+          <i class="fas fa-times me-1"></i>Clear
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Customers Table -->
+<div *ngIf="!isLoading" class="card">
+  <div class="card-header">
+    <h6 class="mb-0">
+      <i class="fas fa-table me-2"></i>Customer List
+      <span class="badge bg-primary ms-2">{{ filteredCustomers.length }} customers</span>
+    </h6>
+  </div>
+  <div class="card-body">
+    <!-- Empty State -->
+    <div *ngIf="filteredCustomers.length === 0" class="text-center py-5">
+      <i class="fas fa-users fa-3x text-muted mb-3"></i>
+      <p class="text-muted">No customers found</p>
+      <button class="btn btn-primary" (click)="refreshCustomers()">
+        <i class="fas fa-sync me-1"></i>Refresh Data
+      </button>
+    </div>
+
+    <!-- Table -->
+    <div *ngIf="filteredCustomers.length > 0" class="table-responsive">
+      <table class="table table-hover">
+        <thead class="table-light">
+          <tr>
+            <th (click)="sortBy('name')" style="cursor: pointer;">
+              <i class="fas fa-sort me-1"></i>Name
+              <i [class]="getSortIcon('name')" class="ms-1"></i>
+            </th>
+            <th (click)="sortBy('email')" style="cursor: pointer;">
+              <i class="fas fa-sort me-1"></i>Email
+              <i [class]="getSortIcon('email')" class="ms-1"></i>
+            </th>
+            <th>Mobile</th>
+            <th>Location</th>
+            <th (click)="sortBy('creationDate')" style="cursor: pointer;">
+              <i class="fas fa-sort me-1"></i>Registered
+              <i [class]="getSortIcon('creationDate')" class="ms-1"></i>
+            </th>
+            <th>Status</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let customer of getPaginatedCustomers()">
+            <td>
+              <div class="d-flex align-items-center">
+                <div class="avatar-sm bg-light rounded-circle d-flex align-items-center justify-content-center me-2">
+                  <i [class]="getGenderIcon(customer.sex)" class="text-muted"></i>
+                </div>
+                <div>
+                  <strong>{{ customer.name }}</strong>
+                  <br>
+                  <small class="text-muted">{{ customer.username || 'no-username' }}</small>
+                </div>
+              </div>
+            </td>
+            <td>
+              <a href="mailto:{{ customer.email }}" class="text-decoration-none">
+                {{ customer.email }}
+              </a>
+            </td>
+            <td>
+              <a href="tel:{{ customer.mobileNumber }}" class="text-decoration-none">
+                {{ customer.mobileNumber || 'N/A' }}
+              </a>
+            </td>
+            <td>
+              <small>{{ getCustomerLocation(customer) }}</small>
+            </td>
+            <td>
+              <div>
+                <strong>{{ formatDate(customer.creationDate) }}</strong>
+                <br>
+                <small class="text-muted">{{ formatDateTime(customer.creationDate) }}</small>
+              </div>
+            </td>
+            <td>
+              <span class="badge bg-success" *ngIf="!customer.isAdmin">Customer</span>
+              <span class="badge bg-warning" *ngIf="customer.isAdmin">Admin</span>
+            </td>
+            <td>
+              <div class="btn-group" role="group">
+                <button class="btn btn-sm btn-outline-primary" (click)="viewCustomerDetails(customer)" title="View Details">
+                  <i class="fas fa-eye"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-info" (click)="editCustomer(customer)" title="Edit Customer">
+                  <i class="fas fa-edit"></i>
+                </button>
+                <button class="btn btn-sm btn-outline-warning" (click)="toggleCustomerStatus(customer)" title="Toggle Status">
+                  <i class="fas fa-toggle-on"></i>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    <div *ngIf="filteredCustomers.length > 0" class="d-flex justify-content-between align-items-center mt-3">
+      <div class="text-muted">
+        Showing {{ (currentPage * itemsPerPage) + 1 }} to {{ getEndIndex() }} 
+        of {{ filteredCustomers.length }} customers
+      </div>
+      <nav>
+        <ul class="pagination pagination-sm mb-0">
+          <li class="page-item" [class.disabled]="currentPage === 0">
+            <button class="page-link" (click)="goToFirstPage()" [disabled]="currentPage === 0">
+              <i class="fas fa-angle-double-left"></i>
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === 0">
+            <button class="page-link" (click)="goToPreviousPage()" [disabled]="currentPage === 0">
+              <i class="fas fa-angle-left"></i>
+            </button>
+          </li>
+          <li class="page-item active">
+            <span class="page-link">{{ currentPage + 1 }} of {{ totalPages }}</span>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage >= totalPages - 1">
+            <button class="page-link" (click)="goToNextPage()" [disabled]="currentPage >= totalPages - 1">
+              <i class="fas fa-angle-right"></i>
+            </button>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage >= totalPages - 1">
+            <button class="page-link" (click)="goToLastPage()" [disabled]="currentPage >= totalPages - 1">
+              <i class="fas fa-angle-double-right"></i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</div>

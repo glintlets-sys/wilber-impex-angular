@@ -1,14 +1,16 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthenticationService } from '../shared-services/authentication.service';
 import { AddressService, Address } from '../shared-services/address.service';
 import { UserService } from '../shared-services/user.service';
 import { User } from '../shared-services/user';
 import { OrderDTO } from '../shared-services/order';
+import { OrderService } from '../shared-services/order.service';
 import { HeaderComponent } from '../shared/header/header.component';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-account',
@@ -22,6 +24,7 @@ export class AccountComponent implements OnInit, OnDestroy {
   currentUser: User | null = null;
   addresses: Address[] = [];
   orders: OrderDTO[] = [];
+  displayOrders: any[] = []; // Transformed orders for display
   
   // Profile form
   profileForm = {
@@ -55,15 +58,24 @@ export class AccountComponent implements OnInit, OnDestroy {
   successMessage = '';
   
   private userSubscription: Subscription | null = null;
+  
+  @ViewChild(HeaderComponent) headerComponent!: HeaderComponent;
 
   constructor(
     private authService: AuthenticationService,
     private addressService: AddressService,
     private userService: UserService,
-    private router: Router
+    private orderService: OrderService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // Check if accessing via /orders route and switch to orders tab
+    if (this.router.url.includes('/orders')) {
+      this.activeTab = 'orders';
+    }
+    
     // Check if user is logged in
     this.authService.isUserLoggedIn.subscribe(isLoggedIn => {
       if (isLoggedIn !== 'true') {
@@ -150,7 +162,27 @@ export class AccountComponent implements OnInit, OnDestroy {
             this.currentUser.name = `${this.profileForm.firstName} ${this.profileForm.lastName}`.trim();
             this.currentUser.email = this.profileForm.email;
             this.currentUser.mobileNumber = this.profileForm.mobile;
-            // Don't call updateUserDetails here to avoid infinite loop
+            
+            // Update global user details in AuthenticationService so header gets updated
+            const updatedUserForAuth = {
+              ...this.currentUser,
+              name: this.currentUser.name,
+              email: this.currentUser.email,
+              mobileNumber: this.currentUser.mobileNumber,
+              firstName: this.profileForm.firstName,
+              lastName: this.profileForm.lastName
+            };
+            
+            // Update localStorage and notify AuthenticationService
+            this.updateUserDetailsInLocalStorage(updatedUserForAuth);
+            
+            // Force header component to refresh user data from UserService
+            // This will update the navbar with the latest user data
+            setTimeout(() => {
+              if (this.headerComponent) {
+                this.headerComponent.refreshUserData();
+              }
+            }, 100);
           }
         },
         error: (error) => {
@@ -273,27 +305,163 @@ export class AccountComponent implements OnInit, OnDestroy {
   }
 
   private loadOrders(): void {
+    if (!this.currentUser?.id) {
+      console.error('No user ID available to load orders');
+      return;
+    }
+
     this.loading = true;
-    // Stub orders data since backup doesn't have getUserOrders method
-    const stubOrders: OrderDTO[] = [
-      {
-        id: 1,
-        username: this.currentUser?.name || '',
-        userId: this.currentUser?.id?.toString() || '',
-        paymentStatus: 2, // PAYMENTSUCCESS
-        purchaseSummary: 'Cement Cleaner - 2 units',
-        showDetails: false,
-        showShipmentDetails: false,
-        showItemsTable: false,
-        dispatchSummary: null,
-        creationDate: new Date('2024-01-15')
+    this.orderService.getOrders(this.currentUser.id.toString()).subscribe({
+      next: (orders) => {
+        this.orders = orders;
+        this.displayOrders = this.transformOrdersForDisplay(orders);
+        this.loading = false;
+        console.log('✅ [AccountComponent] Loaded orders:', orders);
+        console.log('✅ [AccountComponent] Transformed orders:', this.displayOrders);
+      },
+      error: (error) => {
+        console.error('❌ [AccountComponent] Error loading orders:', error);
+        this.loading = false;
+        this.errorMessage = 'Failed to load orders. Please try again later.';
+        
+        // Fallback to show empty state rather than stub data
+        this.orders = [];
+        this.displayOrders = [];
       }
-    ];
-    
-    setTimeout(() => {
-      this.orders = stubOrders;
-      this.loading = false;
-    }, 500);
+    });
+  }
+
+  /**
+   * Transform OrderDTO from backend to format expected by template
+   */
+  private transformOrdersForDisplay(orders: OrderDTO[]): any[] {
+    return orders.map(order => {
+      let items: any[] = [];
+      let totalAmount = 0;
+      let shippingAddress: any = {
+        fullName: 'Customer Name',
+        addressLine1: 'Address details not available',
+        addressLine2: '',
+        city: 'City',
+        state: 'State',
+        pincode: '000000'
+      };
+      
+      console.log('🔍 [ORDER ADDRESS] Raw order data for order ID:', order.id);
+      console.log('🔍 [ORDER ADDRESS] Full order object:', order);
+      
+      // Parse purchaseSummary to extract items, total, and address
+      if (order.purchaseSummary) {
+        try {
+          const purchaseData = JSON.parse(order.purchaseSummary);
+          console.log('🔍 [ORDER ADDRESS] Parsed purchaseSummary:', purchaseData);
+          
+          // Extract items from cartSummary
+          if (purchaseData.cartSummary?.items) {
+            items = purchaseData.cartSummary.items.map((item: any) => ({
+              productName: item.name || item.itemName || 'Unknown Product',
+              quantity: item.quantity || 1,
+              price: item.price?.amount || item.price || 0,
+              size: item.size || null,
+              packagingType: item.packagingType || null
+            }));
+          }
+          
+          // Extract total amount
+          totalAmount = purchaseData.cartSummary?.totalAmount || 
+                       purchaseData.totalAmount || 
+                       items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+          
+          // 🔍 Check for address information in different possible locations
+          console.log('🔍 [ORDER ADDRESS] Looking for address in purchaseData...');
+          
+          // Check common address field names
+          const possibleAddressFields = [
+            'shippingAddress', 'deliveryAddress', 'address', 'billingAddress',
+            'customerAddress', 'userAddress', 'addressDetails', 'delivery',
+            'shipping', 'addressInfo', 'contactInfo'
+          ];
+          
+          possibleAddressFields.forEach(field => {
+            if (purchaseData[field]) {
+              console.log(`🔍 [ORDER ADDRESS] Found address data in ${field}:`, purchaseData[field]);
+            }
+          });
+          
+          // Check in cartSummary for address
+          if (purchaseData.cartSummary) {
+            console.log('🔍 [ORDER ADDRESS] CartSummary contents:', Object.keys(purchaseData.cartSummary));
+            possibleAddressFields.forEach(field => {
+              if (purchaseData.cartSummary[field]) {
+                console.log(`🔍 [ORDER ADDRESS] Found address data in cartSummary.${field}:`, purchaseData.cartSummary[field]);
+              }
+            });
+          }
+          
+          // Try to extract address from any found location
+          const foundAddress = purchaseData.shippingAddress || 
+                              purchaseData.deliveryAddress || 
+                              purchaseData.address ||
+                              purchaseData.cartSummary?.shippingAddress ||
+                              purchaseData.cartSummary?.deliveryAddress ||
+                              purchaseData.cartSummary?.address;
+          
+          if (foundAddress) {
+            console.log('✅ [ORDER ADDRESS] Found address data:', foundAddress);
+            shippingAddress = {
+              fullName: foundAddress.fullName || foundAddress.name || foundAddress.customerName || 'Customer Name',
+              addressLine1: foundAddress.addressLine1 || foundAddress.address1 || foundAddress.street || foundAddress.firstLine || 'Address not available',
+              addressLine2: foundAddress.addressLine2 || foundAddress.address2 || foundAddress.secondLine || '',
+              city: foundAddress.city || 'City',
+              state: foundAddress.state || 'State',
+              pincode: foundAddress.pincode || foundAddress.zipCode || foundAddress.zip || '000000'
+            };
+          } else {
+            console.log('❌ [ORDER ADDRESS] No address data found in order');
+          }
+          
+        } catch (e) {
+          console.error('❌ [ORDER ADDRESS] Error parsing purchaseSummary:', e);
+          items = [{
+            productName: 'Order Details Unavailable',
+            quantity: 1,
+            price: 0
+          }];
+        }
+      } else {
+        console.log('❌ [ORDER ADDRESS] No purchaseSummary found in order');
+      }
+
+      const transformedOrder = {
+        id: order.id,
+        orderNumber: `ORD-${order.id}`,
+        orderDate: order.creationDate || new Date(),
+        status: this.mapPaymentStatusToOrderStatus(order.paymentStatus),
+        totalAmount: totalAmount,
+        items: items,
+        shippingAddress: shippingAddress,
+        invoiceUrl: null // Set to actual URL if available
+      };
+      
+      console.log('✅ [ORDER ADDRESS] Final transformed order:', transformedOrder);
+      return transformedOrder;
+    });
+  }
+
+  /**
+   * Map PaymentStatus enum to user-friendly order status
+   */
+  private mapPaymentStatusToOrderStatus(paymentStatus: any): string {
+    switch (paymentStatus) {
+      case 0: // PAYMENTINITIATED
+        return 'pending';
+      case 1: // PAYMENTFAILED
+        return 'cancelled';
+      case 2: // PAYMENTSUCCESS
+        return 'confirmed';
+      default:
+        return 'pending';
+    }
   }
 
   // Tab navigation
@@ -304,6 +472,8 @@ export class AccountComponent implements OnInit, OnDestroy {
     
     if (tab === 'addresses') {
       this.refreshAddresses();
+    } else if (tab === 'orders') {
+      this.loadOrders(); // ✅ Now OrderService is properly used when orders tab is clicked
     }
   }
 

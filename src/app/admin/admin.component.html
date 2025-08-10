@@ -1,0 +1,210 @@
+<app-header></app-header>
+
+<div class="admin-container">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Admin Header -->
+      <div class="col-12">
+        <div class="admin-header d-flex align-items-center px-4 py-3">
+          <h2 class="text-white mb-0">Administration Panel</h2>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <!-- Left Sidebar Navigation -->
+      <nav class="col-md-3 col-lg-2 d-md-block sidebar collapse">
+        <div class="position-sticky pt-3">
+          <div class="admin-sidebar">
+            
+            <!-- Dashboard Section -->
+            <div class="sidebar-section">
+              <div class="sidebar-header" (click)="toggleSection('dashboard')">
+                <i class="fas fa-tachometer-alt me-2"></i>
+                Dashboard
+                <i class="fas" [class.fa-chevron-down]="sections.dashboard" [class.fa-chevron-right]="!sections.dashboard"></i>
+              </div>
+              <ul class="sidebar-menu" *ngIf="sections.dashboard">
+                <li>
+                  <button class="sidebar-item" [class.active]="activeView === 'dashboard'" (click)="showDashboard()">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Overview
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Products Section -->
+            <div class="sidebar-section">
+              <div class="sidebar-header" (click)="toggleSection('products')">
+                <i class="fas fa-box me-2"></i>
+                Products
+                <i class="fas" [class.fa-chevron-down]="sections.products" [class.fa-chevron-right]="!sections.products"></i>
+              </div>
+              <ul class="sidebar-menu" *ngIf="sections.products">
+                <li>
+                  <button class="sidebar-item" [class.active]="activeView === 'products'" (click)="showProducts()">
+                    <i class="fas fa-list me-2"></i>
+                    Manage Products
+                  </button>
+                </li>
+                <li>
+                  <button class="sidebar-item" [class.active]="activeView === 'categories'" (click)="showCategories()">
+                    <i class="fas fa-tags me-2"></i>
+                    Categories
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Orders Section -->
+            <div class="sidebar-section">
+              <div class="sidebar-header" (click)="toggleSection('orders')">
+                <i class="fas fa-shopping-cart me-2"></i>
+                Orders
+                <i class="fas" [class.fa-chevron-down]="sections.orders" [class.fa-chevron-right]="!sections.orders"></i>
+              </div>
+              <ul class="sidebar-menu" *ngIf="sections.orders">
+                <li>
+                  <button class="sidebar-item" [class.active]="activeView === 'orders'" (click)="showOrders()">
+                    <i class="fas fa-clipboard-list me-2"></i>
+                    All Orders
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Customers Section -->
+            <div class="sidebar-section">
+              <div class="sidebar-header" (click)="toggleSection('customers')">
+                <i class="fas fa-users me-2"></i>
+                Customers
+                <i class="fas" [class.fa-chevron-down]="sections.customers" [class.fa-chevron-right]="!sections.customers"></i>
+              </div>
+              <ul class="sidebar-menu" *ngIf="sections.customers">
+                <li>
+                  <button class="sidebar-item" [class.active]="activeView === 'customers'" (click)="showCustomers()">
+                    <i class="fas fa-user-friends me-2"></i>
+                    Manage Customers
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Content Management Section -->
+            <div class="sidebar-section">
+              <div class="sidebar-header" (click)="toggleSection('content')">
+                <i class="fas fa-edit me-2"></i>
+                Content
+                <i class="fas" [class.fa-chevron-down]="sections.content" [class.fa-chevron-right]="!sections.content"></i>
+              </div>
+              <ul class="sidebar-menu" *ngIf="sections.content">
+                <li>
+                  <button class="sidebar-item" disabled>
+                    <i class="fas fa-blog me-2"></i>
+                    Blogs
+                  </button>
+                </li>
+                <li>
+                  <button class="sidebar-item" disabled>
+                    <i class="fas fa-envelope me-2"></i>
+                    Newsletters
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Settings Section -->
+            <div class="sidebar-section">
+              <div class="sidebar-header" (click)="toggleSection('settings')">
+                <i class="fas fa-cog me-2"></i>
+                Settings
+                <i class="fas" [class.fa-chevron-down]="sections.settings" [class.fa-chevron-right]="!sections.settings"></i>
+              </div>
+              <ul class="sidebar-menu" *ngIf="sections.settings">
+                <li>
+                  <button class="sidebar-item" [class.active]="activeView === 'settings'" (click)="showSettings()">
+                    <i class="fas fa-tools me-2"></i>
+                    General Settings
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </nav>
+
+      <!-- Main Content Area -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content">
+        
+        <!-- Dashboard View -->
+        <div *ngIf="activeView === 'dashboard'" class="content-section">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Dashboard</h1>
+          </div>
+          <app-admin-dashboard></app-admin-dashboard>
+        </div>
+
+        <!-- Products View -->
+        <div *ngIf="activeView === 'products'" class="content-section">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Manage Products</h1>
+            <button class="btn btn-primary">
+              <i class="fas fa-plus me-2"></i>
+              Add Product
+            </button>
+          </div>
+          <app-admin-products></app-admin-products>
+        </div>
+
+        <!-- Categories View -->
+        <div *ngIf="activeView === 'categories'" class="content-section">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Categories</h1>
+            <button class="btn btn-primary">
+              <i class="fas fa-plus me-2"></i>
+              Add Category
+            </button>
+          </div>
+          <app-admin-categories></app-admin-categories>
+        </div>
+
+        <!-- Orders View -->
+        <div *ngIf="activeView === 'orders'" class="content-section">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Orders Management</h1>
+          </div>
+          <app-admin-orders></app-admin-orders>
+        </div>
+
+        <!-- Customers View -->
+        <div *ngIf="activeView === 'customers'" class="content-section">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Customer Management</h1>
+          </div>
+          <app-admin-customers></app-admin-customers>
+        </div>
+
+        <!-- Settings View -->
+        <div *ngIf="activeView === 'settings'" class="content-section">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Settings</h1>
+          </div>
+          <div class="card">
+            <div class="card-header" style="background: var(--gradient-primary); color: white;">
+              <h6 class="mb-0">
+                <i class="fas fa-cogs me-2"></i>
+                General Settings
+              </h6>
+            </div>
+            <div class="card-body">
+              <p>Settings management will be implemented here.</p>
+            </div>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,143 @@
+<!-- Header -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3 class="panel-title">
+    <i class="fas fa-boxes me-2"></i>Products Management
+  </h3>
+  <span class="pull-right">
+    <button type="button" class="btn btn-primary me-2" (click)="exportProducts()">
+      <i class="fas fa-download me-1"></i>Export Products
+    </button>
+    <button type="button" class="btn btn-primary me-2" (click)="importProducts()">
+      <i class="fas fa-upload me-1"></i>Import
+    </button>
+    <button type="button" class="btn btn-primary me-2" (click)="refreshData()" [disabled]="isLoading">
+      <i class="fas fa-sync me-1" [class.fa-spin]="isLoading"></i>Refresh
+    </button>
+    <button type="button" class="btn btn-primary" (click)="addNewProduct()">
+      <i class="fas fa-plus me-1"></i>Add Product
+    </button>
+  </span>
+</div>
+
+<!-- Search and Filters -->
+<div class="row mb-3">
+  <div class="col-md-6">
+    <input 
+      type="text" 
+      class="form-control" 
+      placeholder="Search products..." 
+      [(ngModel)]="searchTerm" 
+      (keyup)="applyFilters()">
+  </div>
+  <div class="col-md-3">
+    <select 
+      class="form-control" 
+      [(ngModel)]="selectedStatus" 
+      (change)="applyFilters()">
+      <option value="">All Status</option>
+      <option value="active">Active</option>
+      <option value="inactive">Inactive</option>
+    </select>
+  </div>
+  <div class="col-md-3">
+    <span class="item_count">Total: {{ count }} products</span>
+  </div>
+</div>
+
+<!-- Loading State -->
+<div *ngIf="isLoading" class="row mb-3">
+  <div class="col-12">
+    <div class="alert alert-primary">
+      <i class="fas fa-spinner fa-spin me-2"></i>
+      Loading products from backend...
+    </div>
+  </div>
+</div>
+
+<!-- Products Table -->
+<table class="table table-bordered">
+  <thead class="table-light">
+    <tr>
+      <th>Image</th>
+      <th>Name</th>
+      <th>Code</th>
+      <th>Brand</th>
+      <th>Price</th>
+      <th>Stock Information</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let product of filteredProducts">
+      <td>
+        <img 
+          [src]="getProductThumbnail(product)" 
+          [alt]="getProductName(product)" 
+          class="img-thumbnail product-image"
+          style="width: 50px; height: 50px; object-fit: cover;">
+      </td>
+      <td>
+        <strong>{{ getProductName(product) }}</strong>
+        <br>
+        <small class="text-muted" *ngIf="getProductDescription(product) && getProductDescription(product).trim().length > 0">
+          {{ getProductDescription(product).length > 50 ? (getProductDescription(product) | slice:0:50) + '...' : getProductDescription(product) }}
+        </small>
+        <small class="text-muted" *ngIf="!getProductDescription(product) || getProductDescription(product).trim().length === 0">
+          No description available
+        </small>
+      </td>
+      <td>{{ product.code || 'N/A' }}</td>
+      <td>{{ product.brand || 'N/A' }}</td>
+      <td>
+        <strong>₹{{ product.price?.amount || 0 }}</strong>
+        <span *ngIf="product.discount && product.discount.discountPercent > 0" class="text-success">
+          <br><small>{{ product.discount.discountPercent }}% off</small>
+        </span>
+      </td>
+      <td>
+        <div [class]="getStockStatusClass(product.id)">
+          <small>{{ getStockDisplay(product.id) }}</small>
+        </div>
+      </td>
+      <td>
+        <div class="form-check form-switch d-flex justify-content-center">
+          <input 
+            class="form-check-input status-toggle" 
+            type="checkbox" 
+            [checked]="product.notAvailable"
+            (change)="toggleProductAvailability(product)"
+            [id]="'toggle-' + product.id"
+            [class.toggle-active]="product.notAvailable"
+            [class.toggle-inactive]="!product.notAvailable"
+            title="Click to toggle availability">
+        </div>
+      </td>
+      <td>
+        <div class="btn-group" role="group">
+          <button class="btn btn-sm btn-outline-info" type="button" (click)="viewProductDetails(product)" title="View Details">
+            <i class="fa fa-eye"></i>
+          </button>
+          <button class="btn btn-sm btn-outline-primary" type="button" (click)="editProduct(product)" title="Edit Product">
+            <i class="fa fa-edit"></i>
+          </button>
+          <button class="btn btn-sm btn-outline-danger" type="button" (click)="deleteProduct(product)" title="Delete Product">
+            <i class="fa fa-trash"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Empty State -->
+<div *ngIf="filteredProducts.length === 0 && !isLoading" class="text-center py-5">
+  <div class="no-record-found">
+    <i class="fas fa-search fa-3x mb-3 text-muted"></i>
+    <h5>No Products Found</h5>
+    <p class="text-muted">
+      <span *ngIf="searchTerm || selectedStatus">Try adjusting your search filters.</span>
+      <span *ngIf="!searchTerm && !selectedStatus">No products available in the backend.</span>
+    </p>
+  </div>
+</div>

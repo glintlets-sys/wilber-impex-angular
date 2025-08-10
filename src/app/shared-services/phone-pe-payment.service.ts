@@ -41,6 +41,7 @@ export class PhonePePaymentService {
   let roundedAmountInRupees = Math.round(amountInRupees); // Round to nearest rupee
   let amountInPaise = roundedAmountInRupees * 100;
 
+    // Updated payload structure for latest PhonePe API v4
     let phonepePaymentFields : PhonePePaymentFields = {
       merchantId: environment.phonePeMerchantId,
 
@@ -74,36 +75,100 @@ export class PhonePePaymentService {
   }
 
   public makePaymentThroughBackend(orderId: string): void {
-
-    
+    console.log('💳 [PhonePePaymentService] makePaymentThroughBackend() - Starting payment for orderId:', orderId);
 
     const paymentFieldsGeneral: PhonePePaymentFields = this.constructPaymentFields(orderId);
+    console.log('📋 [PhonePePaymentService] makePaymentThroughBackend() - Constructed payment fields:', {
+      merchantId: paymentFieldsGeneral.merchantId,
+      merchantTransactionId: paymentFieldsGeneral.merchantTransactionId,
+      amount: paymentFieldsGeneral.amount,
+      merchantUserId: paymentFieldsGeneral.merchantUserId,
+      mobileNumber: paymentFieldsGeneral.mobileNumber
+    });
+    
     const path = '/pg/v1/pay';
     const saltKey = environment.phonepeSaltKey;
     const saltIndex = environment.phonepeSaltIndex;
-    let paymentFields: PhonePeBackendPaymentFields ={
+    
+    // Encode the payment payload to Base64
+    const payloadBase64 = btoa(JSON.stringify(paymentFieldsGeneral));
+    
+    // Generate checksum for security
+    const stringToHash = payloadBase64 + path + saltKey;
+    const xVerify = sha256(stringToHash) + '###' + saltIndex;
+    
+    let paymentFields: PhonePeBackendPaymentFields = {
       orderId: orderId,
       amount: paymentFieldsGeneral.amount,
       payload: JSON.stringify({
-        'request': btoa(JSON.stringify(paymentFieldsGeneral))
+        'request': payloadBase64
       }),
-      xVerify: sha256(btoa(JSON.stringify(paymentFieldsGeneral)) + path + saltKey) + '###' + saltIndex,
+      xVerify: xVerify,
       paymentGatewayUrl: environment.phonepePaymentGateway + path,
       saltKey: environment.phonepeSaltKey,
       saltIndex: environment.phonepeSaltIndex
     };
-    this.initiatePayment(paymentFields).subscribe(
-      (response: any) => {
+    
+    console.log('🔐 [PhonePePaymentService] makePaymentThroughBackend() - Backend payment fields prepared:', {
+      orderId: paymentFields.orderId,
+      amount: paymentFields.amount,
+      paymentGatewayUrl: paymentFields.paymentGatewayUrl,
+      xVerifyLength: paymentFields.xVerify?.length || 0,
+      merchantTransactionId: paymentFieldsGeneral.merchantTransactionId
+    });
+    
+    console.log('🌐 [PhonePePaymentService] makePaymentThroughBackend() - Calling payment API');
+
+    // Use test payment API if mock mode is enabled
+    const paymentObservable = environment.enablePhonePeMockMode 
+      ? this.initiateTestPayment(paymentFields) 
+      : this.initiatePayment(paymentFields);
+
+    paymentObservable.subscribe({
+      next: (response: any) => {
+        console.log('📥 [PhonePePaymentService] makePaymentThroughBackend() - Received response:', response);
+        
+        // Handle mock mode response
+        if (environment.enablePhonePeMockMode) {
+          console.log('🎭 [PhonePePaymentService] Mock mode - simulating successful payment');
+          this.toasterService.showToast('🎭 Mock Payment: Processing test payment...', ToastType.Info, 2000);
+          
+          // Simulate redirect to payment response page with mock success
+          setTimeout(() => {
+            const mockTransactionId = paymentFieldsGeneral.merchantTransactionId;
+            const redirectUrl = `${window.location.origin}/payment-response?merchantTransactionId=${mockTransactionId}&orderId=${orderId}&mock=true&status=PAYMENT_SUCCESS`;
+            console.log('🎭 [PhonePePaymentService] Mock mode - redirecting to:', redirectUrl);
+            window.location.href = redirectUrl;
+          }, 1500);
+          return;
+        }
+        
+        // Handle real PhonePe response structures
         if (response && response.redirectUrl) {
-          window.location.href = response.redirectUrl; // Redirect to the URL
+          console.log('🚀 [PhonePePaymentService] makePaymentThroughBackend() - Redirecting to:', response.redirectUrl);
+          window.location.href = response.redirectUrl;
+        } else if (response && response.data && response.data.instrumentResponse && response.data.instrumentResponse.redirectInfo) {
+          const redirectUrl = response.data.instrumentResponse.redirectInfo.url;
+          console.log('🚀 [PhonePePaymentService] makePaymentThroughBackend() - Redirecting to (nested):', redirectUrl);
+          window.location.href = redirectUrl;
         } else {
-          this.toasterService.showToast('Something went wrong while redirecting to payment gateway. Please retry!',ToastType.Error, 3000 );
+          console.error('❌ [PhonePePaymentService] makePaymentThroughBackend() - No redirectUrl in response:', response);
+          this.toasterService.showToast('Payment initiation failed. Please try again!', ToastType.Error, 3000);
         }
       },
-      (error) => {
-        this.toasterService.showToast('Something went wrong. Unable to reach payment server!',ToastType.Error, 3000);
+      error: (error) => {
+        console.error('❌ [PhonePePaymentService] makePaymentThroughBackend() - Error during payment initiation:', error);
+        let errorMessage = 'Unable to reach payment server. Please try again!';
+        
+        if (error.error && error.error.message) {
+          errorMessage = error.error.message;
+        } else if (error.message) {
+          errorMessage = error.message;
+        }
+        
+        this.toasterService.showToast(errorMessage, ToastType.Error, 5000);
       }
-    );
+    });
   }
 
   private sendPhonePePaymentRequest(paymentFields: PhonePePaymentFields) {
@@ -140,6 +205,44 @@ export class PhonePePaymentService {
     return this.http.post(paymentgateway + path, JSON.stringify(request), { headers });
   }
 
+  // Method to verify payment status using PhonePe's status API
+  public verifyPaymentStatus(merchantTransactionId: string): Observable<any> {
+    if (!this.isSiteEnabled) {
+      this.toasterService.showToast("Sorry! We are currently under maintenance. Please try after sometime.", ToastType.Error, 5000);
+      return of(false);
+    }
+
+    const url = `${environment.serviceURL}api/phonepe/status/${merchantTransactionId}`;
+    return this.http.get(url);
+  }
+
+  // Method to check payment status and handle the response
+  public checkPaymentStatus(merchantTransactionId: string): void {
+    console.log('🔍 [PhonePePaymentService] checkPaymentStatus() - Checking status for:', merchantTransactionId);
+
+    this.verifyPaymentStatus(merchantTransactionId).subscribe({
+      next: (response: any) => {
+        console.log('📥 [PhonePePaymentService] checkPaymentStatus() - Received status response:', response);
+        
+        if (response && response.success) {
+          if (response.data && response.data.state === 'COMPLETED') {
+            this.toasterService.showToast('Payment completed successfully!', ToastType.Success, 5000);
+          } else if (response.data && response.data.state === 'FAILED') {
+            this.toasterService.showToast('Payment failed. Please try again.', ToastType.Error, 5000);
+          } else {
+            this.toasterService.showToast('Payment is still being processed.', ToastType.Warn, 5000);
+          }
+        } else {
+          this.toasterService.showToast('Unable to verify payment status.', ToastType.Error, 3000);
+        }
+      },
+      error: (error) => {
+        console.error('❌ [PhonePePaymentService] checkPaymentStatus() - Error checking status:', error);
+        this.toasterService.showToast('Error checking payment status.', ToastType.Error, 3000);
+      }
+    });
+  }
+
   // Handling payment gateway initialization from front end. 
   // As of now not being used. Keeping code, incase required in future. 
 
@@ -158,12 +261,24 @@ export class PhonePePaymentService {
         }
     }, error => {
         this.toasterService.showToast("Something went wrong. Unable to reach payment server!", ToastType.Error, 3000);
-    });
+        });
 }
 
+  /**
+   * Calls the backend initiateTestPayment API for mock payments
+   */
+  private initiateTestPayment(paymentFields: any): Observable<any> {
+    const url = `${environment.serviceURL}api/phonepe/initiateTestPayment`;
+    
+    console.log('🎭 [PhonePePaymentService] initiateTestPayment() - Calling:', url);
+    
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    
+    return this.http.post(url, paymentFields, { headers });
+  }
 
- 
-  
 }
 
 

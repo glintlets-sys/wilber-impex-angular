@@ -1,0 +1,134 @@
+.stats-card {
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+  transition: all 0.3s;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.25rem 2rem 0 rgba(58, 59, 69, 0.2);
+  }
+
+  &.border-left-primary {
+    border-left: 0.25rem solid #4074FF;
+  }
+
+  &.border-left-success {
+    border-left: 0.25rem solid #1cc88a;
+  }
+
+  &.border-left-info {
+    border-left: 0.25rem solid #36b9cc;
+  }
+
+  &.border-left-warning {
+    border-left: 0.25rem solid #f6c23e;
+  }
+
+  .text-xs {
+    font-size: 0.7rem;
+  }
+
+  .text-primary {
+    color: #4074FF !important;
+  }
+
+  .text-success {
+    color: #1cc88a !important;
+  }
+
+  .text-info {
+    color: #36b9cc !important;
+  }
+
+  .text-warning {
+    color: #f6c23e !important;
+  }
+
+  .text-gray-800 {
+    color: #5a5c69 !important;
+  }
+
+  .text-gray-300 {
+    color: #dddfeb !important;
+  }
+
+  .font-weight-bold {
+    font-weight: 700;
+  }
+}
+
+.card.shadow {
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.table {
+  th {
+    background-color: #f8f9fc;
+    border-color: #e3e6f0;
+    font-weight: 600;
+    color: #5a5c69;
+  }
+
+  td {
+    border-color: #e3e6f0;
+    color: #5a5c69;
+  }
+
+  .btn {
+    border-radius: 0.25rem;
+    transition: all 0.15s ease-in-out;
+
+    &:hover {
+      transform: translateY(-1px);
+    }
+  }
+}
+
+.badge {
+  font-size: 0.75em;
+  font-weight: 600;
+  padding: 0.4em 0.8em;
+}
+
+// Clickable card styles
+.clickable-card {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 0.5rem 2rem 0 rgba(58, 59, 69, 0.25);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(64, 116, 255, 0.05), rgba(30, 64, 175, 0.05));
+      pointer-events: none;
+    }
+  }
+
+  &:active {
+    transform: translateY(-1px);
+  }
+
+  // Add a subtle indicator that it's clickable
+  &::after {
+    content: '→';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #4074FF;
+    font-weight: bold;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  &:hover::after {
+    opacity: 1;
+  }
+}
