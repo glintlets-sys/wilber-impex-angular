@@ -23,6 +23,11 @@ export class BlogDataService {
   getBlogById(id: number): Observable<Blog> {
     return this.http.get<Blog>(`${this.apiUrl}/${id}`);
   }
+
+  // Fetch external HTML content from URL
+  getExternalContent(url: string): Observable<string> {
+    return this.http.get(url, { responseType: 'text' });
+  }
   /*
   getAllBlogs(): Blog[] {
     return this.blogs;
@@ -41,5 +46,9 @@ export interface Blog {
   author?: string;
   authorTitle?: string;
   authorPic?: string;
-  readTime?:number;
+  readTime?: number;
+  externalUrl?: string; // URL to fetch HTML content from
+  publishDate?: string;
+  category?: string;
+  tags?: string[];
 }

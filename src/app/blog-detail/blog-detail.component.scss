@@ -74,6 +74,63 @@
     margin-bottom: 15px;
 }
 
+/* External Content Loading States */
+.loading-external-content {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--gray);
+}
+
+.loading-external-content .spinner-border {
+    width: 3rem;
+    height: 3rem;
+}
+
+.error-loading-content {
+    margin-bottom: 30px;
+}
+
+.error-loading-content .alert {
+    border-radius: 8px;
+    border: none;
+    background-color: #fff3cd;
+    color: #856404;
+    border-left: 4px solid #ffc107;
+}
+
+.external-content {
+    // Styles for external content
+    img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 8px;
+        margin: 20px 0;
+    }
+    
+    h1, h2, h3, h4, h5, h6 {
+        color: var(--dark);
+        margin-top: 30px;
+        margin-bottom: 15px;
+    }
+    
+    p {
+        margin-bottom: 1.5rem;
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--gray);
+    }
+    
+    ul, ol {
+        margin-bottom: 1.5rem;
+        padding-left: 20px;
+    }
+    
+    li {
+        margin-bottom: 0.5rem;
+        color: var(--gray);
+    }
+}
+
 /* Related Posts Section */
 .related-posts {
     padding: 80px 0;

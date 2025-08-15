@@ -11,8 +11,8 @@
 .sidebar {
   background-color: #fff;
   box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
-  height: calc(100vh - 120px);
-  overflow-y: auto;
+  min-height: calc(100vh - 120px);
+  overflow-y: visible;
 }
 
 .admin-sidebar {

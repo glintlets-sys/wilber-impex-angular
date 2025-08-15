@@ -16,6 +16,10 @@ export class StockConsignmentService {
     return this.http.get<StockConsignment[]>(this.apiUrl + '/');
   }
 
+  createStockConsignment(stockConsignment: StockConsignment): Observable<StockConsignment> {
+    return this.http.post<StockConsignment>(`${this.apiUrl}/`, stockConsignment);
+  }
+
   deleteStockConsignment(id: number): Observable<void> {
     const url = `${this.apiUrl}/${id}`;
     return this.http.delete<void>(url);
@@ -26,8 +30,8 @@ export class StockConsignmentService {
     return this.http.put<StockConsignment>(url, stockConsignment);
   }
 
-  generateStocks(stocksId: StockConsignment): Observable<StockConsignment[]> {
-    return this.http.get<StockConsignment[]>(this.apiUrl + '/generateStock/' + stocksId);
+  generateStocks(consignmentId: number): Observable<boolean> {
+    return this.http.get<boolean>(this.apiUrl + '/generateStock/' + consignmentId);
   }
 
 }

@@ -8,6 +8,8 @@ import { AdminCategoriesComponent } from './admin-categories/admin-categories.co
 import { AdminOrdersComponent } from './admin-orders/admin-orders.component';
 import { AdminCustomersComponent } from './admin-customers/admin-customers.component';
 import { AdminSettingsComponent } from './admin-settings/admin-settings.component';
+import { AdminStockConsignmentComponent } from './admin-stock-consignment/admin-stock-consignment.component';
+import { AdminBlogsComponent } from './admin-blogs/admin-blogs.component';
 
 @Component({
   selector: 'app-admin',
@@ -21,7 +23,9 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
     AdminCategoriesComponent,
     AdminOrdersComponent,
     AdminCustomersComponent,
-    AdminSettingsComponent
+    AdminSettingsComponent,
+    AdminStockConsignmentComponent,
+    AdminBlogsComponent
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
@@ -36,7 +40,8 @@ export class AdminComponent implements OnInit {
     orders: true,
     customers: true,
     content: true,
-    settings: false
+    settings: true,
+    stock: true
   };
 
   constructor(private router: Router, private route: ActivatedRoute) {}
@@ -54,7 +59,9 @@ export class AdminComponent implements OnInit {
 
   // Function to toggle sections
   public toggleSection(section: string): void {
+    console.log('🔄 [Admin] Toggling section:', section, 'Current state:', this.sections[section]);
     this.sections[section] = !this.sections[section];
+    console.log('🔄 [Admin] New state:', this.sections[section]);
   }
 
   // Reset all views
@@ -93,6 +100,23 @@ export class AdminComponent implements OnInit {
     this.activeView = 'settings';
   }
 
+  showBlogs() {
+    this.reset();
+    this.activeView = 'blogs';
+  }
+
+  addBlog() {
+    // TODO: Implement add blog functionality
+    console.log('🔄 [Admin] Add blog clicked');
+  }
+
+  showStockConsignment() {
+    console.log('🔄 [Admin] Showing stock consignment view');
+    this.reset();
+    this.activeView = 'stock-consignment';
+    console.log('🔄 [Admin] Active view set to:', this.activeView);
+  }
+
   // Navigate to section based on parameter
   private navigateToSection(section: string): void {
     console.log('🔄 [Admin] Navigating to section:', section);
@@ -114,6 +138,14 @@ export class AdminComponent implements OnInit {
         break;
       case 'settings':
         this.showSettings();
+        break;
+      case 'blogs':
+        this.showBlogs();
+        break;
+      case 'stock-consignment':
+      case 'stockconsignment':
+      case 'stock':
+        this.showStockConsignment();
         break;
       default:
         console.warn('⚠️ [Admin] Unknown section:', section);

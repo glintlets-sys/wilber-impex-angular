@@ -1,0 +1,208 @@
+<div class="import-review-overlay" *ngIf="showModal">
+  <div class="import-review-modal">
+    <div class="import-review-header">
+      <h3>Review Import Data</h3>
+      <div class="header-actions">
+        <button class="btn btn-outline-light btn-sm" (click)="toggleEdit()">
+          <i class="fas" [class.fa-edit]="!isEditing" [class.fa-eye]="isEditing"></i>
+          {{ isEditing ? 'Preview' : 'Edit' }}
+        </button>
+        <button class="btn-close" (click)="onCancel()">&times;</button>
+      </div>
+    </div>
+    
+    <div class="import-review-body">
+      <!-- Validation Errors Summary -->
+      <div class="validation-summary" *ngIf="hasValidationErrors">
+        <div class="alert alert-danger">
+          <h5><i class="fas fa-exclamation-triangle"></i> Please fix the following errors:</h5>
+          <ul>
+            <li *ngFor="let error of validationErrors | keyvalue">{{ error.value }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="file-info">
+        <strong>File:</strong> {{ importFileName }}
+      </div>
+      
+             <div class="dealer-info">
+         <h4>Consignment Information <span class="text-danger">*</span> = Required</h4>
+         <div class="info-grid">
+           <div class="info-item" [class.has-error]="hasError('dealerName')">
+             <label>Consignment Name <span class="text-danger">*</span>:</label>
+             <div class="field-content">
+               <span *ngIf="!isEditing">{{ parsedConsignment?.dealer?.dealerName || 'N/A' }}</span>
+               <input *ngIf="isEditing" 
+                      type="text" 
+                      class="form-control" 
+                      [value]="parsedConsignment?.dealer?.dealerName || ''"
+                      (input)="updateField('dealerName', $event.target.value)"
+                      [class.is-invalid]="hasError('dealerName')">
+               <div class="error-message" *ngIf="hasError('dealerName')">{{ getError('dealerName') }}</div>
+             </div>
+           </div>
+           
+                       <div class="info-item" *ngIf="isEditing">
+              <label>Purchase Date:</label>
+              <div class="field-content">
+                <input type="date" 
+                       class="form-control" 
+                       [value]="parsedConsignment?.purchaseDate || ''"
+                       (input)="updateField('purchaseDate', $event.target.value)">
+              </div>
+            </div>
+            
+            <div class="info-item" *ngIf="isEditing">
+              <label>City:</label>
+              <div class="field-content">
+                <input type="text" 
+                       class="form-control" 
+                       [value]="parsedConsignment?.dealer?.address?.city || ''"
+                       (input)="updateField('city', $event.target.value)">
+              </div>
+            </div>
+            
+            <div class="info-item" *ngIf="isEditing">
+              <label>State:</label>
+              <div class="field-content">
+                <input type="text" 
+                       class="form-control" 
+                       [value]="parsedConsignment?.dealer?.address?.state || ''"
+                       (input)="updateField('state', $event.target.value)">
+              </div>
+            </div>
+            
+            <div class="info-item" *ngIf="isEditing">
+              <label>Country:</label>
+              <div class="field-content">
+                <input type="text" 
+                       class="form-control" 
+                       [value]="parsedConsignment?.dealer?.address?.country || ''"
+                       (input)="updateField('country', $event.target.value)">
+              </div>
+            </div>
+            
+            <div class="info-item" *ngIf="isEditing">
+              <label>Pincode:</label>
+              <div class="field-content">
+                <input type="text" 
+                       class="form-control" 
+                       [value]="parsedConsignment?.dealer?.address?.pincode || ''"
+                       (input)="updateField('pincode', $event.target.value)">
+              </div>
+            </div>
+            
+            <div class="info-item" *ngIf="isEditing">
+              <label>Mobile:</label>
+              <div class="field-content">
+                <input type="text" 
+                       class="form-control" 
+                       [value]="parsedConsignment?.dealer?.address?.mobileNumber || ''"
+                       (input)="updateField('mobileNumber', $event.target.value)">
+              </div>
+            </div>
+            
+            <div class="info-item" *ngIf="isEditing">
+              <label>Email:</label>
+              <div class="field-content">
+                <input type="email" 
+                       class="form-control" 
+                       [value]="parsedConsignment?.dealer?.address?.emailAddress || ''"
+                       (input)="updateField('emailAddress', $event.target.value)">
+              </div>
+            </div>
+           
+            <div class="info-item" *ngIf="isEditing">
+              <label>Consignment Cost:</label>
+              <div class="field-content">
+                <input type="number" 
+                       class="form-control" 
+                       [value]="parsedConsignment?.consignmentCost?.amount || 0"
+                       (input)="updateField('consignmentCost', $event.target.value)">
+              </div>
+            </div>
+        </div>
+      </div>
+      
+      <div class="consignment-items">
+        <div class="section-header">
+          <h4>Consignment Items <span class="text-danger">*</span> ({{ parsedConsignment?.consignmentItem?.length || 0 }} items)</h4>
+          <button *ngIf="isEditing" class="btn btn-sm btn-primary" (click)="addItem()">
+            <i class="fas fa-plus"></i> Add Item
+          </button>
+        </div>
+        
+        <div class="table-responsive" *ngIf="parsedConsignment?.consignmentItem?.length > 0">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Item ID</th>
+                <th>Item Name <span class="text-danger">*</span></th>
+                <th>Variation ID</th>
+                <th>Purchase Price <span class="text-danger">*</span></th>
+                <th>Quantity <span class="text-danger">*</span></th>
+                <th *ngIf="isEditing">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of parsedConsignment?.consignmentItem; let i = index" 
+                  [class.has-error]="hasError('itemName_' + i) || hasError('quantity_' + i) || hasError('purchasePrice_' + i)">
+                <td>{{ item.itemId }}</td>
+                <td>
+                  <span *ngIf="!isEditing">{{ item.itemName }}</span>
+                  <input *ngIf="isEditing" 
+                         type="text" 
+                         class="form-control" 
+                         [value]="item.itemName || ''"
+                         (input)="updateItemField(i, 'itemName', $event.target.value)"
+                         [class.is-invalid]="hasError('itemName_' + i)">
+                  <div class="error-message" *ngIf="hasError('itemName_' + i)">{{ getError('itemName_' + i) }}</div>
+                </td>
+                <td>{{ item.variationId || 'N/A' }}</td>
+                <td>
+                  <span *ngIf="!isEditing">{{ formatCurrency(item.purchasePrice) }}</span>
+                  <input *ngIf="isEditing" 
+                         type="number" 
+                         class="form-control" 
+                         [value]="item.purchasePrice?.amount || 0"
+                         (input)="updateItemField(i, 'purchasePrice', $event.target.value)"
+                         [class.is-invalid]="hasError('purchasePrice_' + i)">
+                  <div class="error-message" *ngIf="hasError('purchasePrice_' + i)">{{ getError('purchasePrice_' + i) }}</div>
+                </td>
+                <td>
+                  <span *ngIf="!isEditing">{{ item.quantity }}</span>
+                  <input *ngIf="isEditing" 
+                         type="number" 
+                         class="form-control" 
+                         [value]="item.quantity || 0"
+                         (input)="updateItemField(i, 'quantity', $event.target.value)"
+                         [class.is-invalid]="hasError('quantity_' + i)">
+                  <div class="error-message" *ngIf="hasError('quantity_' + i)">{{ getError('quantity_' + i) }}</div>
+                </td>
+                <td *ngIf="isEditing">
+                  <button class="btn btn-sm btn-danger" (click)="removeItem(i)" title="Remove Item">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <div class="no-items" *ngIf="!parsedConsignment?.consignmentItem?.length">
+          <p>No items found in the Excel file.</p>
+          <div class="error-message" *ngIf="hasError('consignmentItems')">{{ getError('consignmentItems') }}</div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="import-review-footer">
+      <button class="btn btn-secondary" (click)="onCancel()">Cancel</button>
+      <button class="btn btn-primary" (click)="onConfirm()" 
+              [disabled]="!isDataValid()">
+        Confirm Import
+      </button>
+    </div>
+  </div>
+</div>

@@ -4,6 +4,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { HeaderComponent } from '../shared/header/header.component';
 import { FooterComponent } from '../shared/footer/footer.component';
+import { BlogDataService, Blog } from '../shared-services/blog-data.service';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 // Blog data interface
 interface BlogPost {
@@ -18,6 +20,7 @@ interface BlogPost {
   image: string;
   readTime: string;
   tags: string[];
+  externalUrl?: string; // URL to fetch HTML content from
 }
 
 // Sample blog data
@@ -27,6 +30,7 @@ const BLOG_POSTS: BlogPost[] = [
     slug: 'engineered-wood-flooring',
     title: 'How to Install Engineered Wood Flooring',
     excerpt: 'Learn the step-by-step process of installing engineered wood flooring for a beautiful and durable result in your home or commercial space.',
+    externalUrl: 'https://example.com/blog-content/engineered-wood-flooring.html', // Example external URL
     content: `
       <p>Engineered wood flooring is a popular choice for homeowners and commercial spaces due to its durability, versatility, and beautiful appearance. Unlike solid hardwood, engineered wood consists of multiple layers that provide enhanced stability and resistance to moisture.</p>
       
@@ -464,9 +468,14 @@ export class BlogDetailComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private title = inject(Title);
   private meta = inject(Meta);
+  private blogDataService = inject(BlogDataService);
+  private sanitizer = inject(DomSanitizer);
 
   blogPost: BlogPost | null = null;
   relatedPosts: BlogPost[] = [];
+  externalContent: SafeHtml | null = null;
+  loadingExternalContent = false;
+  errorLoadingContent = false;
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -476,10 +485,31 @@ export class BlogDetailComponent implements OnInit, AfterViewInit {
       if (this.blogPost) {
         this.setMetaTags();
         this.getRelatedPosts();
+        this.loadExternalContent();
       } else {
         this.router.navigate(['/blogs']);
       }
     });
+  }
+
+  private loadExternalContent() {
+    if (this.blogPost && this.blogPost.externalUrl) {
+      this.loadingExternalContent = true;
+      this.errorLoadingContent = false;
+      
+      this.blogDataService.getExternalContent(this.blogPost.externalUrl).subscribe({
+        next: (htmlContent: string) => {
+          // Sanitize the HTML content for security
+          this.externalContent = this.sanitizer.bypassSecurityTrustHtml(htmlContent);
+          this.loadingExternalContent = false;
+        },
+        error: (error) => {
+          console.error('Error loading external content:', error);
+          this.errorLoadingContent = true;
+          this.loadingExternalContent = false;
+        }
+      });
+    }
   }
 
   private setMetaTags() {

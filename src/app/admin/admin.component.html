@@ -74,6 +74,23 @@
               </ul>
             </div>
 
+            <!-- Stock Management Section -->
+            <div class="sidebar-section">
+              <div class="sidebar-header" (click)="toggleSection('stock')">
+                <i class="fas fa-boxes me-2"></i>
+                Stock Management
+                <i class="fas" [class.fa-chevron-down]="sections.stock" [class.fa-chevron-right]="!sections.stock"></i>
+              </div>
+              <ul class="sidebar-menu" *ngIf="sections.stock">
+                <li>
+                  <button class="sidebar-item" [class.active]="activeView === 'stock-consignment'" (click)="showStockConsignment()">
+                    <i class="fas fa-truck me-2"></i>
+                    Stock Consignments
+                  </button>
+                </li>
+              </ul>
+            </div>
+
             <!-- Customers Section -->
             <div class="sidebar-section">
               <div class="sidebar-header" (click)="toggleSection('customers')">
@@ -100,7 +117,7 @@
               </div>
               <ul class="sidebar-menu" *ngIf="sections.content">
                 <li>
-                  <button class="sidebar-item" disabled>
+                  <button class="sidebar-item" [class.active]="activeView === 'blogs'" (click)="showBlogs()">
                     <i class="fas fa-blog me-2"></i>
                     Blogs
                   </button>
@@ -189,6 +206,23 @@
         <!-- Settings View -->
         <div *ngIf="activeView === 'settings'" class="content-section">
           <app-admin-settings></app-admin-settings>
+        </div>
+
+        <!-- Stock Consignment View -->
+        <div *ngIf="activeView === 'stock-consignment'" class="content-section">
+          <app-admin-stock-consignment></app-admin-stock-consignment>
+        </div>
+
+        <!-- Blogs View -->
+        <div *ngIf="activeView === 'blogs'" class="content-section">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Blog Management</h1>
+            <button class="btn btn-primary" (click)="addBlog()">
+              <i class="fas fa-plus me-2"></i>
+              Add Blog
+            </button>
+          </div>
+          <app-admin-blogs></app-admin-blogs>
         </div>
 
       </main>

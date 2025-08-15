@@ -1,0 +1,188 @@
+<!-- Import Review Modal -->
+<app-stock-import-review
+  [showModal]="showImportReview"
+  [parsedConsignment]="parsedConsignment"
+  [importFileName]="importFileName"
+  (confirmImport)="confirmImport()"
+  (cancelImport)="cancelImportReview()">
+</app-stock-import-review>
+
+<!-- Main Content -->
+<div class="stock-consignment-container">
+  <!-- Header Section -->
+  <div class="header-section">
+    <div class="header-content">
+      <h1>Stock Consignments</h1>
+      <p>Manage stock consignments and inventory</p>
+    </div>
+    <div class="header-actions">
+      <button class="btn btn-primary stock-action-btn" (click)="exportStock()">
+        <i class="fas fa-download me-2"></i>
+        Export Stock
+      </button>
+      <button class="btn btn-primary stock-action-btn" (click)="importStock()">
+        <i class="fas fa-upload me-2"></i>
+        Import Stock
+      </button>
+
+      <button class="btn btn-primary stock-action-btn" (click)="addStockConsignment()">
+        <i class="fas fa-plus"></i>
+        Add Stock
+      </button>
+    </div>
+  </div>
+
+  <!-- Statistics Cards -->
+  <div class="stats-section">
+    <div class="stat-card">
+      <div class="stat-icon pending">
+        <i class="fas fa-clock"></i>
+      </div>
+      <div class="stat-content">
+        <h3>{{ pendingCount }}</h3>
+        <p>Pending Activation</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon active">
+        <i class="fas fa-check-circle"></i>
+      </div>
+      <div class="stat-content">
+        <h3>{{ activatedCount }}</h3>
+        <p>Activated</p>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-icon total">
+        <i class="fas fa-boxes"></i>
+      </div>
+      <div class="stat-content">
+        <h3>{{ totalCount }}</h3>
+        <p>Total Consignments</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search Section -->
+  <div class="search-section">
+    <div class="search-input">
+      <i class="fas fa-search"></i>
+      <input 
+        type="text" 
+        placeholder="Search by dealer name or invoice number..." 
+        [(ngModel)]="searchConsignment"
+        (input)="filterData()"
+      >
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-section" *ngIf="loading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <p>Loading stock consignments...</p>
+  </div>
+
+  <!-- Data Table -->
+  <div class="data-section" *ngIf="!loading">
+    <div class="table-responsive" *ngIf="paginatedConsignments.length > 0">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Dealer</th>
+            <th>Purchase Date</th>
+            <th>Status</th>
+            <th>Stock Created On</th>
+            <th>Activate</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let consignment of paginatedConsignments">
+            <td>{{ consignment.id }}</td>
+            <td>{{ consignment.dealer?.dealerName || 'N/A' }}</td>
+            <td>{{ formatDate(consignment.purchaseDate) }}</td>
+            <td>
+              <span class="badge" [class]="getStatusBadgeClass(consignment)">
+                {{ getStatusText(consignment) }}
+              </span>
+            </td>
+            <td>{{ consignment.stockCreatedOn ? formatDate(consignment.stockCreatedOn) : 'N/A' }}</td>
+            <td class="activate-column">
+              <button 
+                *ngIf="!consignment.stockCreated"
+                class="btn btn-sm btn-success" 
+                (click)="activateStock(consignment)"
+                title="Activate Stock"
+              >
+                <i class="fas fa-check"></i>
+                Activate
+              </button>
+              <span *ngIf="consignment.stockCreated" class="text-success">
+                <i class="fas fa-check-circle"></i>
+                Activated
+              </span>
+            </td>
+            <td class="actions">
+              <button 
+                class="btn btn-sm btn-primary" 
+                (click)="editStockConsignment(consignment)"
+                [disabled]="consignment.stockCreated"
+                title="Edit"
+              >
+                <i class="fas fa-edit"></i>
+              </button>
+              <button 
+                class="btn btn-sm btn-danger" 
+                (click)="deleteStockConsignment(consignment)"
+                [disabled]="consignment.stockCreated"
+                title="Delete"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Empty State -->
+    <div class="empty-state" *ngIf="paginatedConsignments.length === 0">
+      <div class="empty-icon">
+        <i class="fas fa-box-open"></i>
+      </div>
+      <h3>No Stock Consignments Found</h3>
+      <p>Get started by importing stock data or adding a new consignment.</p>
+      <button class="btn btn-primary" (click)="importStock()">
+        <i class="fas fa-upload"></i>
+        Import Stock
+      </button>
+    </div>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination-section" *ngIf="totalPages > 1">
+    <nav>
+      <ul class="pagination">
+        <li class="page-item" [class.disabled]="currentPage === 1">
+          <a class="page-link" (click)="onPageChange(currentPage - 1)" *ngIf="currentPage > 1">
+            Previous
+          </a>
+        </li>
+        
+        <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" 
+            [class.active]="currentPage === i + 1">
+          <a class="page-link" (click)="onPageChange(i + 1)">{{ i + 1 }}</a>
+        </li>
+        
+        <li class="page-item" [class.disabled]="currentPage === totalPages">
+          <a class="page-link" (click)="onPageChange(currentPage + 1)" *ngIf="currentPage < totalPages">
+            Next
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>

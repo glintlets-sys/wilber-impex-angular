@@ -1,0 +1,347 @@
+<!-- Blog Management Dashboard -->
+<div class="blog-dashboard">
+  <!-- Statistics Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="card-title text-muted">Total Blogs</h6>
+              <h3 class="mb-0">{{ blogs.length }}</h3>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-blog text-primary"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="card-title text-muted">Published</h6>
+              <h3 class="mb-0">{{ publishedCount }}</h3>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-check-circle text-success"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="card-title text-muted">External Content</h6>
+              <h3 class="mb-0">{{ externalContentCount }}</h3>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-external-link-alt text-info"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="card stat-card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h6 class="card-title text-muted">Categories</h6>
+              <h3 class="mb-0">{{ uniqueCategoriesCount }}</h3>
+            </div>
+            <div class="stat-icon">
+              <i class="fas fa-tags text-warning"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Search and Filters -->
+  <div class="card mb-4">
+    <div class="card-header">
+      <h6 class="mb-0">
+        <i class="fas fa-filter me-2"></i>Search & Filters
+      </h6>
+    </div>
+    <div class="card-body">
+             <div class="row g-3">
+         <div class="col-md-8">
+           <div class="d-flex flex-column">
+             <label class="form-label">Search Blogs</label>
+             <input 
+               type="text" 
+               class="form-control" 
+               placeholder="Search by title, author, or category..."
+               [(ngModel)]="searchBlog"
+               (input)="filterData()"
+             >
+           </div>
+         </div>
+         <div class="col-md-4">
+           <div class="d-flex flex-column justify-content-end h-100">
+             <button class="btn btn-primary w-100" (click)="addBlog()">
+               <i class="fas fa-plus me-2"></i>
+               Add New Blog
+             </button>
+           </div>
+         </div>
+       </div>
+    </div>
+  </div>
+
+  <!-- Blogs Table -->
+  <div class="card">
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Image</th>
+              <th>Title</th>
+              <th>Author</th>
+              <th>Category</th>
+              <th>Publish Date</th>
+              <th>External URL</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngIf="loading">
+              <td colspan="8" class="text-center py-4">
+                <div class="spinner-border text-primary" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="!loading && paginatedBlogs.length === 0">
+              <td colspan="8" class="text-center py-4">
+                <div class="empty-state">
+                  <i class="fas fa-blog fa-3x text-muted mb-3"></i>
+                  <h5>No blogs found</h5>
+                  <p class="text-muted">Start by adding your first blog post.</p>
+                  <button class="btn btn-primary" (click)="addBlog()">
+                    <i class="fas fa-plus me-2"></i>
+                    Add Blog
+                  </button>
+                </div>
+              </td>
+            </tr>
+            <tr *ngFor="let blog of paginatedBlogs">
+              <td>
+                <img 
+                  [src]="blog.imageUrl || 'assets/images/placeholder-blog.jpg'" 
+                  [alt]="blog.title"
+                  class="blog-thumbnail"
+                  (error)="$event.target.src='assets/images/placeholder-blog.jpg'"
+                >
+              </td>
+              <td>
+                <div class="blog-title">
+                  <strong>{{ blog.title }}</strong>
+                  <small class="text-muted d-block">{{ blog.shortContent }}</small>
+                </div>
+              </td>
+              <td>
+                <div class="author-info">
+                  <div>{{ blog.author }}</div>
+                  <small class="text-muted">{{ blog.authorTitle }}</small>
+                </div>
+              </td>
+              <td>
+                <span class="badge bg-secondary">{{ blog.category || 'Uncategorized' }}</span>
+              </td>
+              <td>{{ formatDate(blog.publishDate) }}</td>
+              <td>
+                <span *ngIf="blog.externalUrl" class="badge bg-info">
+                  <i class="fas fa-external-link-alt me-1"></i>
+                  External
+                </span>
+                <span *ngIf="!blog.externalUrl" class="text-muted">-</span>
+              </td>
+              <td>
+                <span class="badge" [class]="getStatusBadgeClass(blog)">
+                  {{ getStatusText(blog) }}
+                </span>
+              </td>
+              <td>
+                <div class="btn-group" role="group">
+                  <button class="btn btn-sm btn-outline-primary" (click)="editBlog(blog)" title="Edit">
+                    <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn btn-sm btn-outline-danger" (click)="deleteBlog(blog)" title="Delete">
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Pagination -->
+      <div class="d-flex justify-content-between align-items-center mt-4" *ngIf="totalPages > 1">
+        <div class="text-muted">
+          Showing {{ (currentPage - 1) * itemsPerPage + 1 }} to {{ Math.min(currentPage * itemsPerPage, totalItems) }} of {{ totalItems }} blogs
+        </div>
+        <nav>
+          <ul class="pagination mb-0">
+            <li class="page-item" [class.disabled]="currentPage === 1">
+              <button class="page-link" (click)="onPageChange(currentPage - 1)" [disabled]="currentPage === 1">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+            </li>
+            <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" 
+                [class.active]="currentPage === i + 1">
+              <button class="page-link" (click)="onPageChange(i + 1)">{{ i + 1 }}</button>
+            </li>
+            <li class="page-item" [class.disabled]="currentPage === totalPages">
+              <button class="page-link" (click)="onPageChange(currentPage + 1)" [disabled]="currentPage === totalPages">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Add/Edit Blog Modal -->
+<div class="modal fade" [class.show]="showBlogModal" [style.display]="showBlogModal ? 'block' : 'none'" tabindex="-1">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-blog me-2"></i>
+          {{ editingBlog ? 'Edit Blog' : 'Add New Blog' }}
+        </h5>
+        <button type="button" class="btn-close" (click)="closeBlogModal()"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="row">
+            <div class="col-md-8">
+              <div class="mb-3">
+                <label for="title" class="form-label">Title *</label>
+                <input type="text" class="form-control" id="title" [(ngModel)]="newBlog.title" name="title" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="mb-3">
+                <label for="category" class="form-label">Category</label>
+                <select class="form-select" id="category" [(ngModel)]="newBlog.category" name="category">
+                  <option value="">Select Category</option>
+                  <option value="Industrial Solutions">Industrial Solutions</option>
+                  <option value="Stone Care">Stone Care</option>
+                  <option value="Flooring">Flooring</option>
+                  <option value="Cleaning">Cleaning</option>
+                  <option value="Maintenance">Maintenance</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="author" class="form-label">Author</label>
+                <input type="text" class="form-control" id="author" [(ngModel)]="newBlog.author" name="author">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="authorTitle" class="form-label">Author Title</label>
+                <input type="text" class="form-control" id="authorTitle" [(ngModel)]="newBlog.authorTitle" name="authorTitle">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="imageUrl" class="form-label">Image URL</label>
+                <input type="url" class="form-control" id="imageUrl" [(ngModel)]="newBlog.imageUrl" name="imageUrl">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="publishDate" class="form-label">Publish Date</label>
+                <input type="date" class="form-control" id="publishDate" [(ngModel)]="newBlog.publishDate" name="publishDate">
+              </div>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="externalUrl" class="form-label">
+              <i class="fas fa-external-link-alt me-1"></i>
+              External Content URL
+            </label>
+            <input type="url" class="form-control" id="externalUrl" [(ngModel)]="newBlog.externalUrl" name="externalUrl" 
+                   placeholder="https://example.com/blog-content.html">
+            <div class="form-text">
+              If provided, this URL will be used to fetch and inject HTML content instead of the local content below.
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="shortContent" class="form-label">Short Description</label>
+            <textarea class="form-control" id="shortContent" rows="2" [(ngModel)]="newBlog.shortContent" name="shortContent"></textarea>
+          </div>
+
+          <div class="mb-3">
+            <label for="content" class="form-label">Content *</label>
+            <textarea class="form-control" id="content" rows="8" [(ngModel)]="newBlog.content" name="content" required></textarea>
+            <div class="form-text">
+              This content will be used as fallback if external URL is not available or fails to load.
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="readTime" class="form-label">Read Time (minutes)</label>
+                <input type="number" class="form-control" id="readTime" [(ngModel)]="newBlog.readTime" name="readTime" min="0">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="mb-3">
+                <label for="tagInput" class="form-label">Tags</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="tagInput" placeholder="Add a tag">
+                  <button class="btn btn-outline-secondary" type="button" (click)="addTag()">
+                    <i class="fas fa-plus"></i>
+                  </button>
+                </div>
+                <div class="mt-2" *ngIf="newBlog.tags && newBlog.tags.length > 0">
+                  <span class="badge bg-primary me-1 mb-1" *ngFor="let tag of newBlog.tags">
+                    {{ tag }}
+                    <i class="fas fa-times ms-1" (click)="removeTag(tag)" style="cursor: pointer;"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="closeBlogModal()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="saveBlog()">
+          <i class="fas fa-save me-2"></i>
+          {{ editingBlog ? 'Update' : 'Save' }} Blog
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Backdrop -->
+<div class="modal-backdrop fade show" *ngIf="showBlogModal"></div>
