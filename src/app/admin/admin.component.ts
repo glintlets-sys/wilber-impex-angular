@@ -11,6 +11,7 @@ import { AdminSettingsComponent } from './admin-settings/admin-settings.componen
 import { AdminStockConsignmentComponent } from './admin-stock-consignment/admin-stock-consignment.component';
 import { AdminBlogsComponent } from './admin-blogs/admin-blogs.component';
 import { AdminRecommendationsComponent } from './admin-recommendations/admin-recommendations.component';
+import { AdminUsersComponent } from './admin-users/admin-users.component';
 
 @Component({
   selector: 'app-admin',
@@ -27,7 +28,8 @@ import { AdminRecommendationsComponent } from './admin-recommendations/admin-rec
     AdminSettingsComponent,
     AdminStockConsignmentComponent,
     AdminBlogsComponent,
-    AdminRecommendationsComponent
+    AdminRecommendationsComponent,
+    AdminUsersComponent
   ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss'
@@ -112,6 +114,11 @@ export class AdminComponent implements OnInit {
     this.activeView = 'recommendations';
   }
 
+  showAdminUsers() {
+    this.reset();
+    this.activeView = 'admin-users';
+  }
+
   addBlog() {
     // TODO: Implement add blog functionality
     console.log('🔄 [Admin] Add blog clicked');
@@ -151,6 +158,9 @@ export class AdminComponent implements OnInit {
         break;
       case 'recommendations':
         this.showRecommendations();
+        break;
+      case 'admin-users':
+        this.showAdminUsers();
         break;
       case 'stock-consignment':
       case 'stockconsignment':

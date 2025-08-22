@@ -24,14 +24,20 @@
                 Dashboard
                 <i class="fas" [class.fa-chevron-down]="sections.dashboard" [class.fa-chevron-right]="!sections.dashboard"></i>
               </div>
-              <ul class="sidebar-menu" *ngIf="sections.dashboard">
-                <li>
-                  <button class="sidebar-item" [class.active]="activeView === 'dashboard'" (click)="showDashboard()">
-                    <i class="fas fa-chart-line me-2"></i>
-                    Overview
-                  </button>
-                </li>
-              </ul>
+                             <ul class="sidebar-menu" *ngIf="sections.dashboard">
+                 <li>
+                   <button class="sidebar-item" [class.active]="activeView === 'dashboard'" (click)="showDashboard()">
+                     <i class="fas fa-chart-line me-2"></i>
+                     Overview
+                   </button>
+                 </li>
+                 <li>
+                   <button class="sidebar-item" [class.active]="activeView === 'admin-users'" (click)="showAdminUsers()">
+                     <i class="fas fa-users-cog me-2"></i>
+                     Manage Users
+                   </button>
+                 </li>
+               </ul>
             </div>
 
             <!-- Products Section -->
@@ -231,6 +237,14 @@
             <h1 class="h2">Product Recommendations</h1>
           </div>
           <app-admin-recommendations></app-admin-recommendations>
+        </div>
+
+        <!-- Admin Users View -->
+        <div *ngIf="activeView === 'admin-users'" class="content-section">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Admin Users Management</h1>
+          </div>
+          <app-admin-users></app-admin-users>
         </div>
 
       </main>
