@@ -90,24 +90,17 @@ export class HoverCartComponent implements OnInit, OnDestroy {
   }
 
   private loadCartData(): void {
-    // Load cart data once without subscribing to updates
+    // Subscribe to cart updates
     this.cartSubscription = this.cartIntegrationService.getCart().subscribe(cart => {
-      console.log('🛒 [HoverCartComponent] Initial cart load - Items:', cart.items.length, 'Total:', cart.totalPrice);
+      console.log('🛒 [HoverCartComponent] Cart update received - Items:', cart.items.length, 'Total:', cart.totalPrice);
       this.updateCartDisplay(cart);
-      // Unsubscribe immediately to prevent infinite loops
-      if (this.cartSubscription) {
-        this.cartSubscription.unsubscribe();
-        this.cartSubscription = null;
-      }
     });
   }
 
   private refreshCartData(): void {
-    // Refresh cart data when hover cart is opened
-    this.cartIntegrationService.getCart().subscribe(cart => {
-      console.log('🛒 [HoverCartComponent] Refreshing cart data - Items:', cart.items.length, 'Total:', cart.totalPrice);
-      this.updateCartDisplay(cart);
-    });
+    // The cart data is already being updated through the subscription
+    // This method is no longer needed as we're continuously subscribed
+    console.log('🛒 [HoverCartComponent] Cart refresh requested - data will update automatically');
   }
 
   private loadCatalogData(): void {

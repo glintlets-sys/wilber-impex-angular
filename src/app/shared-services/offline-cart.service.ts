@@ -19,7 +19,17 @@ export class OfflineCartService {
     const savedCart = localStorage.getItem(LOCAL_STORAGE_CART_KEY);
     console.log('🛒 [OfflineCartService] Loading cart from localStorage:', savedCart);
     if (savedCart) {
-      this.offlineCartSubject.next(JSON.parse(savedCart));
+      try {
+        const parsedCart = JSON.parse(savedCart);
+        console.log('🛒 [OfflineCartService] Parsed cart:', parsedCart);
+        this.offlineCartSubject.next(parsedCart);
+      } catch (error) {
+        console.error('🛒 [OfflineCartService] Error parsing saved cart:', error);
+        // Clear corrupted cart data
+        this.clearOfflineCart();
+      }
+    } else {
+      console.log('🛒 [OfflineCartService] No saved cart found in localStorage');
     }
   }
 
@@ -37,14 +47,19 @@ export class OfflineCartService {
     const currentCart = this.offlineCartSubject.value;
     console.log('🛒 [OfflineCartService] Current cart before adding:', currentCart);
     
-    let existingItem = currentCart.items?.find(cartItem => (cartItem.itemId === item.itemId)&&(cartItem.variationId === item.variationId));
+    // Ensure items array exists
+    if (!currentCart.items) {
+      currentCart.items = [];
+    }
+    
+    let existingItem = currentCart.items.find(cartItem => (cartItem.itemId === item.itemId) && (cartItem.variationId === item.variationId));
 
     if (existingItem) {
       console.log('🛒 [OfflineCartService] Updating existing item quantity');
       existingItem.quantity = item.quantity;
     } else {
       console.log('🛒 [OfflineCartService] Adding new item to cart');
-      currentCart.items?.push(item);
+      currentCart.items.push(item);
     }
 
     console.log('🛒 [OfflineCartService] Cart after adding item:', currentCart);
@@ -55,9 +70,11 @@ export class OfflineCartService {
 
   public deleteFromOfflineCart(itemId: number, variationId: number): void {
     const currentCart = this.offlineCartSubject.value;
-    currentCart.items = currentCart.items?.filter(item => item.itemId !== itemId || item.variationId !== variationId);
-    this.offlineCartSubject.next(currentCart);
-    this.saveCartToLocalStorage(currentCart);
+    if (currentCart.items) {
+      currentCart.items = currentCart.items.filter(item => item.itemId !== itemId || item.variationId !== variationId);
+      this.offlineCartSubject.next(currentCart);
+      this.saveCartToLocalStorage(currentCart);
+    }
   }
 
   public clearOfflineCart(): void {

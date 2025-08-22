@@ -53,20 +53,38 @@ export class CartService implements OnDestroy {
   }
 
   private addOfflineItemsToOnlineCart(userId: number, offlineItems: CartItem[], onlineCart: Cart): Observable<Cart> {
+    console.log('🔄 [CartService] Starting cart merge for user:', userId);
+    console.log('🔄 [CartService] Offline items to merge:', offlineItems);
+    console.log('🔄 [CartService] Current online cart:', onlineCart);
+    
+    if (!offlineItems || offlineItems.length === 0) {
+      console.log('🔄 [CartService] No offline items to merge');
+      return of(onlineCart);
+    }
+
     const updateObservables = offlineItems.map(item => {
       const existingItem = onlineCart.items?.find(cartItem => cartItem.itemId === item.itemId);
       if (existingItem) {
+        console.log('🔄 [CartService] Updating existing item:', existingItem.name, 'with quantity:', item.quantity);
         existingItem.quantity = existingItem.quantity ? existingItem.quantity + (item.quantity ?? 0) : item.quantity;
         return this.updateCartItem(userId, existingItem);
       } else {
+        console.log('🔄 [CartService] Creating new item:', item.name, 'with quantity:', item.quantity);
         return this.createCartItem(userId, item);
       }
     });
 
     return forkJoin(updateObservables).pipe(
       map(() => {
+        console.log('🔄 [CartService] Cart merge completed, clearing offline cart');
         this.offlineCartService.clearOfflineCart();
+        // Refresh the cart after merge
+        this.refreshCart();
         return onlineCart;
+      }),
+      catchError(error => {
+        console.error('❌ [CartService] Error during cart merge:', error);
+        return of(onlineCart);
       })
     );
   }

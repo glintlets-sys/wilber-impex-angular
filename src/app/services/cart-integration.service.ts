@@ -220,30 +220,7 @@ export class CartIntegrationService {
     });
   }
 
-  public removeFromCart(itemIndex: number): void {
-    const currentMode = this.cartModeSubject.value;
-    
-    if (currentMode === 'offline') {
-      // For offline cart, we need to get the item first
-      const offlineItems = this.offlineCartService.getOfflineCartItems();
-      if (offlineItems[itemIndex]) {
-        const item = offlineItems[itemIndex];
-        this.offlineCartService.deleteFromOfflineCart(item.itemId, item.variationId || 0);
-      }
-    } else {
-      // Handle online cart removal
-      const userId = this.authService.getUserId();
-      if (userId) {
-        // Get cart once and remove directly without triggering additional subscriptions
-        this.cartService.getCart().pipe(take(1)).subscribe(cart => {
-          if (cart.items[itemIndex]) {
-            const item = cart.items[itemIndex];
-            this.cartService.removeFromCart(userId, item).subscribe();
-          }
-        });
-      }
-    }
-  }
+
 
   public updateQuantity(itemIndex: number, quantity: number): void {
     const currentMode = this.cartModeSubject.value;
@@ -284,47 +261,58 @@ export class CartIntegrationService {
 
   public getCart(): Observable<LocalCart> {
     const currentMode = this.cartModeSubject.value;
+    console.log('🛒 [CartIntegrationService] getCart() called, current mode:', currentMode);
     
-                         if (currentMode === 'offline') {
-           return this.offlineCartService.getOfflineCart().pipe(
-             map(cart => ({
-               items: cart.items.map(item => ({
-                 product: { 
-                   id: item.itemId.toString(),
-                   name: item.name, 
-                   price: `₹${(item.price?.amount || item.price)}`, 
-                   image: '' 
-                 },
-                 quantity: item.quantity,
-                 size: '',
-                 color: '',
-                 packagingType: '',
-                 selectedPrice: `₹${(item.price?.amount || item.price)}`
-               })),
-              totalItems: cart.items.reduce((total, item) => total + item.quantity, 0),
-              totalPrice: cart.items.reduce((total, item) => total + ((item.price?.amount || item.price) * item.quantity), 0)
-            }))
-          );
-                     } else {
-         return this.cartService.getCart().pipe(
-           map(cart => ({
-             items: cart.items.map(item => ({
-               product: { 
-                 id: item.itemId.toString(),
-                 name: item.name, 
-                 price: `₹${(item.price?.amount || item.price)}`, 
-                 image: '' 
-               },
-               quantity: item.quantity,
-               size: '',
-               color: '',
-               packagingType: '',
-               selectedPrice: `₹${(item.price?.amount || item.price)}`
-             })),
-            totalItems: cart.items.reduce((total, item) => total + item.quantity, 0),
-            totalPrice: cart.items.reduce((total, item) => total + ((item.price?.amount || item.price) * item.quantity), 0)
-          }))
-        );
+    if (currentMode === 'offline') {
+      return this.offlineCartService.getOfflineCart().pipe(
+        map(cart => {
+          console.log('🛒 [CartIntegrationService] Offline cart data:', cart);
+          const localCart: LocalCart = {
+            items: (cart.items || []).map(item => ({
+              product: { 
+                id: item.itemId.toString(),
+                name: item.name, 
+                price: `₹${(item.price?.amount || item.price)}`, 
+                image: '' 
+              },
+              quantity: item.quantity || 0,
+              size: '',
+              color: '',
+              packagingType: '',
+              selectedPrice: `₹${(item.price?.amount || item.price)}`
+            })),
+            totalItems: (cart.items || []).reduce((total, item) => total + (item.quantity || 0), 0),
+            totalPrice: (cart.items || []).reduce((total, item) => total + ((item.price?.amount || item.price) * (item.quantity || 0)), 0)
+          };
+          console.log('🛒 [CartIntegrationService] Mapped offline cart:', localCart);
+          return localCart;
+        })
+      );
+    } else {
+      return this.cartService.getCart().pipe(
+        map(cart => {
+          console.log('🛒 [CartIntegrationService] Online cart data:', cart);
+          const localCart: LocalCart = {
+            items: (cart.items || []).map(item => ({
+              product: { 
+                id: item.itemId.toString(),
+                name: item.name, 
+                price: `₹${(item.price?.amount || item.price)}`, 
+                image: '' 
+              },
+              quantity: item.quantity || 0,
+              size: '',
+              color: '',
+              packagingType: '',
+              selectedPrice: `₹${(item.price?.amount || item.price)}`
+            })),
+            totalItems: (cart.items || []).reduce((total, item) => total + (item.quantity || 0), 0),
+            totalPrice: (cart.items || []).reduce((total, item) => total + ((item.price?.amount || item.price) * (item.quantity || 0)), 0)
+          };
+          console.log('🛒 [CartIntegrationService] Mapped online cart:', localCart);
+          return localCart;
+        })
+      );
     }
   }
 
@@ -360,17 +348,67 @@ export class CartIntegrationService {
     return this.cartModeSubject.value === 'online';
   }
 
+  public removeFromCart(itemIndex: number): void {
+    const currentMode = this.cartModeSubject.value;
+    console.log('🗑️ [CartIntegrationService] Removing item at index:', itemIndex, 'Mode:', currentMode);
+    
+    if (currentMode === 'offline') {
+      // For offline cart, we need to get the current cart and remove the item
+      const offlineItems = this.offlineCartService.getOfflineCartItems();
+      if (itemIndex >= 0 && itemIndex < offlineItems.length) {
+        const itemToRemove = offlineItems[itemIndex];
+        console.log('🗑️ [CartIntegrationService] Removing offline item:', itemToRemove);
+        this.offlineCartService.deleteFromOfflineCart(itemToRemove.itemId, itemToRemove.variationId || 0);
+        this.toasterService.showToast('Item removed from cart', ToastType.Success, 2000);
+      }
+    } else {
+      // Handle online cart removal
+      const userId = this.authService.getUserId();
+      if (userId) {
+        console.log('🗑️ [CartIntegrationService] Removing online item for user:', userId, 'at index:', itemIndex);
+        // Get cart once and remove directly without triggering additional subscriptions
+        this.cartService.getCart().pipe(take(1)).subscribe(cart => {
+          if (cart.items && cart.items[itemIndex]) {
+            const item = cart.items[itemIndex];
+            console.log('🗑️ [CartIntegrationService] Removing online item:', item);
+            this.cartService.removeFromCart(userId, item).subscribe({
+              next: (success) => {
+                if (success) {
+                  this.toasterService.showToast('Item removed from cart', ToastType.Success, 2000);
+                } else {
+                  this.toasterService.showToast('Failed to remove item from cart', ToastType.Error, 3000);
+                }
+              },
+              error: (error) => {
+                console.error('❌ [CartIntegrationService] Error removing online item:', error);
+                this.toasterService.showToast('Failed to remove item from cart', ToastType.Error, 3000);
+              }
+            });
+          } else {
+            console.error('❌ [CartIntegrationService] Item not found at index:', itemIndex);
+            this.toasterService.showToast('Item not found in cart', ToastType.Error, 3000);
+          }
+        });
+      } else {
+        console.error('❌ [CartIntegrationService] No user ID available for online cart removal');
+        this.toasterService.showToast('User not logged in', ToastType.Error, 3000);
+      }
+    }
+  }
+
   public clearCart(): void {
     const currentMode = this.cartModeSubject.value;
     
     if (currentMode === 'offline') {
       this.offlineCartService.clearOfflineCart();
+      this.toasterService.showToast('Cart cleared', ToastType.Success, 2000);
     } else {
       // Clear online cart - this would need to be implemented
       const userId = this.authService.getUserId();
       if (userId) {
         // Implementation would depend on the backend API
         console.log('Clearing online cart for user:', userId);
+        this.toasterService.showToast('Cart cleared', ToastType.Success, 2000);
       }
     }
   }
