@@ -138,11 +138,33 @@ export class CartIntegrationService {
                  if (currentMode === 'offline') {
            // Add to offline cart using the offline cart service
            console.log('📦 [CartIntegrationService] Adding to offline cart');
+           
+           // Extract price amount from product for offline cart
+           let priceAmount = 0;
+           if (product.price) {
+             if (typeof product.price === 'object' && product.price.amount !== undefined) {
+               priceAmount = product.price.amount;
+             } else if (typeof product.price === 'object' && product.price.value !== undefined) {
+               priceAmount = product.price.value;
+             } else if (typeof product.price === 'number') {
+               priceAmount = product.price;
+             } else if (typeof product.price === 'string') {
+               // Remove currency symbols and parse
+               priceAmount = parseFloat(product.price.replace(/[₹,]/g, '')) || 0;
+             }
+           }
+           
+           console.log('💰 [CartIntegrationService] Price extraction for offline cart:', {
+             originalPrice: product.price,
+             extractedAmount: priceAmount,
+             productName: product.name
+           });
+           
            const cartItem: CartItem = {
              id: undefined, // Use undefined for new items (matches backup)
              itemId: backendProduct.id,
              name: product.name,
-             price: { amount: product.price.amount, currency: 'INR' }, // Hardcode to INR
+             price: { amount: priceAmount, currency: 'INR' }, // Use extracted amount
              tax: 18, // Use 18% tax (matches backup)
              quantity: quantity,
              discount: product.discount?.discountPercent || 0, // Include discount if available
