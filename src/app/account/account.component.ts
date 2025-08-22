@@ -436,7 +436,8 @@ export class AccountComponent implements OnInit, OnDestroy {
         id: order.id,
         orderNumber: `ORD-${order.id}`,
         orderDate: order.creationDate || new Date(),
-        status: this.mapPaymentStatusToOrderStatus(order.paymentStatus),
+        paymentStatus: this.mapPaymentStatusToOrderStatus(order.paymentStatus),
+        shippingStatus: this.mapShippingStatusToOrderStatus(order.dispatchSummary?.shipmentStatus),
         totalAmount: totalAmount,
         items: items,
         shippingAddress: shippingAddress,
@@ -452,15 +453,42 @@ export class AccountComponent implements OnInit, OnDestroy {
    * Map PaymentStatus enum to user-friendly order status
    */
   private mapPaymentStatusToOrderStatus(paymentStatus: any): string {
-    switch (paymentStatus) {
-      case 0: // PAYMENTINITIATED
+    // Handle both numeric and string values
+    const status = paymentStatus?.toString().toUpperCase();
+    
+    switch (status) {
+      case '0':
+      case 'PAYMENTINITIATED':
         return 'pending';
-      case 1: // PAYMENTFAILED
+      case '1':
+      case 'PAYMENTFAILED':
         return 'cancelled';
-      case 2: // PAYMENTSUCCESS
+      case '2':
+      case 'PAYMENTSUCCESS':
         return 'confirmed';
       default:
+        console.warn('⚠️ [AccountComponent] Unknown payment status:', paymentStatus);
         return 'pending';
+    }
+  }
+
+  /**
+   * Map shipping status to user-friendly order status
+   */
+  private mapShippingStatusToOrderStatus(shipmentStatus: any): string {
+    if (!shipmentStatus) {
+      return 'not_dispatched';
+    }
+    
+    switch (shipmentStatus) {
+      case 'READYTODISPATCH':
+        return 'ready_to_dispatch';
+      case 'DISPATCHED':
+        return 'dispatched';
+      case 'DELIVERED':
+        return 'delivered';
+      default:
+        return 'not_dispatched';
     }
   }
 
@@ -607,19 +635,42 @@ export class AccountComponent implements OnInit, OnDestroy {
     }, 500);
   }
 
-  getOrderStatusClass(status: string): string {
+  getPaymentStatusClass(status: string): string {
     switch (status) {
-      case 'pending': return 'badge bg-warning';
-      case 'confirmed': return 'badge bg-info';
-      case 'shipped': return 'badge bg-primary';
-      case 'delivered': return 'badge bg-success';
+      case 'pending': return 'badge bg-warning text-dark';
+      case 'confirmed': return 'badge bg-success';
       case 'cancelled': return 'badge bg-danger';
       default: return 'badge bg-secondary';
     }
   }
 
-  getOrderStatusText(status: string): string {
-    return status.charAt(0).toUpperCase() + status.slice(1);
+  getPaymentStatusText(status: string): string {
+    switch (status) {
+      case 'pending': return 'Payment Pending';
+      case 'confirmed': return 'Payment Completed';
+      case 'cancelled': return 'Payment Failed';
+      default: return 'Payment Unknown';
+    }
+  }
+
+  getShippingStatusClass(status: string): string {
+    switch (status) {
+      case 'not_dispatched': return 'badge bg-secondary';
+      case 'ready_to_dispatch': return 'badge bg-info text-dark';
+      case 'dispatched': return 'badge bg-primary';
+      case 'delivered': return 'badge bg-success';
+      default: return 'badge bg-secondary';
+    }
+  }
+
+  getShippingStatusText(status: string): string {
+    switch (status) {
+      case 'not_dispatched': return 'Not Dispatched';
+      case 'ready_to_dispatch': return 'Ready to Dispatch';
+      case 'dispatched': return 'Dispatched';
+      case 'delivered': return 'Delivered';
+      default: return 'Status Unknown';
+    }
   }
 
   logout(): void {

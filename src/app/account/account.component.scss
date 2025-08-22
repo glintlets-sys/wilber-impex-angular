@@ -243,4 +243,26 @@
     padding: 0.5rem 1rem;
     font-size: 0.9rem;
   }
+}
+
+// Enhanced status badge styling
+.order-card {
+  .badge {
+    font-weight: 500;
+    letter-spacing: 0.5px;
+  }
+  
+  // Status summary section styling
+  .bg-light.rounded {
+    border: 1px solid #e9ecef;
+    
+    .text-muted {
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    
+    .fw-bold {
+      color: var(--dark);
+    }
+  }
 } 
