@@ -28,12 +28,17 @@ export class DispatchService{
     private toaster: ToasterService) {
       
       this.configurationService.userSelectionsObservable$.subscribe((val: UserSelections)=>{
+        console.log('🔧 [DispatchService] Received user selections:', val);
         this.userSelections = val;
         if((this.userSelections!= null) && (this.userSelections.primaryShippingProvder!="")) {
-          console.log("Dispatch Service initialzied with shippign provider : " + this.userSelections.primaryShippingProvder)
+          console.log("✅ [DispatchService] Initialized with shipping provider: " + this.userSelections.primaryShippingProvder);
           this.selectedShippingProvider = this.userSelections.primaryShippingProvder;
+        } else {
+          console.warn('⚠️ [DispatchService] User selections received but primaryShippingProvder is empty or null');
         }
-      })
+      }, (error) => {
+        console.error('❌ [DispatchService] Error loading user selections:', error);
+      });
 
     }
 
@@ -48,28 +53,54 @@ export class DispatchService{
   }
 
 
+  // Check if configuration is ready
+  isConfigurationReady(): boolean {
+    return !!(this.userSelections && this.userSelections.primaryShippingProvder);
+  }
+
+  // Get configuration status for debugging
+  getConfigurationStatus(): any {
+    return {
+      userSelectionsLoaded: !!this.userSelections,
+      primaryShippingProvider: this.userSelections?.primaryShippingProvder || 'NOT_SET',
+      selectedShippingProvider: this.selectedShippingProvider || 'NOT_SET'
+    };
+  }
+
   sendToShippingProvider(order: OrderDTO): Observable<any> {
-    if (this.userSelections.primaryShippingProvder != "") {
-      if (this.userSelections.primaryShippingProvder == ShippingProviders.ShipRocket) {
-        return this.sendToShipRocket(order).pipe(
-          switchMap((specificResponse: SR_CustomOrderResponse) => {
-            // Use switchMap to chain another Observable operation
-            return this.saveTheShipRocketResponseToDispatchDetails(specificResponse, order);
-          }),
-          catchError(error => {
-            // Handle any errors that might occur during the save operation
-            console.error('Error saving dispatch details', error);
-            return throwError(() => new Error('Error saving dispatch details'));
-          })
-        );
-      } else {
-        this.toaster.showToast("Invalid configuration for shipping provider. Please contact support", ToastType.Error,3000);
-        // Returning an error Observable if the condition is not met
-        return throwError(() => new Error("Invalid configuration for shipping provider."));
-      }
+    console.log('🚚 [DispatchService] Attempting to send order to shipping provider. Configuration status:', this.getConfigurationStatus());
+    
+    // Check if userSelections is null or undefined
+    if (!this.userSelections) {
+      console.error('❌ [DispatchService] userSelections is null or undefined');
+      this.toaster.showToast("Shipping configuration not loaded. Please wait a moment and try again, or refresh the page.", ToastType.Error, 5000);
+      return throwError(() => new Error("Shipping configuration not loaded"));
+    }
+
+    // Check if primaryShippingProvder is null, undefined, or empty
+    if (!this.userSelections.primaryShippingProvder || this.userSelections.primaryShippingProvder === "") {
+      console.error('❌ [DispatchService] primaryShippingProvder is not configured:', this.userSelections.primaryShippingProvder);
+      this.toaster.showToast("Shipping provider not configured. Please contact support to configure shipping settings.", ToastType.Error, 5000);
+      return throwError(() => new Error("Shipping provider not configured"));
+    }
+
+    if (this.userSelections.primaryShippingProvder == ShippingProviders.ShipRocket) {
+      console.log('✅ [DispatchService] Sending order to ShipRocket');
+      return this.sendToShipRocket(order).pipe(
+        switchMap((specificResponse: SR_CustomOrderResponse) => {
+          // Use switchMap to chain another Observable operation
+          return this.saveTheShipRocketResponseToDispatchDetails(specificResponse, order);
+        }),
+        catchError(error => {
+          // Handle any errors that might occur during the save operation
+          console.error('❌ [DispatchService] Error saving dispatch details', error);
+          return throwError(() => new Error('Error saving dispatch details'));
+        })
+      );
     } else {
-      // This else block seems redundant, as the same check and error handling are done above.
-      this.toaster.showToast("Invalid configuration for shipping provider. Please contact support", ToastType.Error,3000);
+      console.error('❌ [DispatchService] Invalid shipping provider:', this.userSelections.primaryShippingProvder);
+      this.toaster.showToast("Invalid configuration for shipping provider. Please contact support", ToastType.Error, 5000);
+      // Returning an error Observable if the condition is not met
       return throwError(() => new Error("Invalid configuration for shipping provider."));
     }
   }

@@ -9,7 +9,8 @@ import { ToasterService } from '../../shared-services/toaster.service';
 import { ToastType } from '../../shared-services/toaster';
 import { HttpResponse } from '@angular/common/http';
 import { DispatchService } from '../../shared-services/dispatch.service';
-import { DispatchSummary } from '../../shared-services/dispatchSummary';
+import { DispatchSummary, SHIPMENTSTATUS } from '../../shared-services/dispatchSummary';
+import { ShiprocketService } from '../../shared-services/shiprocket/shiprocket.service';
 
 @Component({
   selector: 'app-admin-orders',
@@ -39,20 +40,33 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
   selectedShipmentStatus: string = '';
   dateFrom: string = '';
   dateTo: string = '';
+  
+  // Shipment status options
+  shipmentStatusOptions: SHIPMENTSTATUS[] = Object.values(SHIPMENTSTATUS);
+  
+  // ShipRocket tracking data
+  shipRocketTrackingData: { [key: string]: any } = {};
+  isShipRocketIntegration: boolean = false;
 
   constructor(
     private orderService: OrderService,
     private authService: AuthenticationService,
     private toasterService: ToasterService,
-    private dispatchService: DispatchService
+    private dispatchService: DispatchService,
+    private shipRocketService: ShiprocketService
   ) { }
 
   ngOnInit(): void {
     this.loadOrders();
+    
+    // Add click outside handler to close dropdowns
+    document.addEventListener('click', this.handleClickOutside.bind(this));
   }
 
   ngOnDestroy(): void {
     this.subscriptions.forEach(sub => sub.unsubscribe());
+    // Remove click outside handler
+    document.removeEventListener('click', this.handleClickOutside.bind(this));
   }
 
   loadOrders(): void {
@@ -214,6 +228,7 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
 
   hasSentToShippingProvider(order: OrderDTO): boolean {
     // Return true if order has NOT been sent to shipping provider (no shipment ID)
+    // Following backup application logic: only check if shipmentId exists
     return !(order.dispatchSummary?.shipmentId);
   }
 
@@ -222,8 +237,19 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
     // Implementation for invoice navigation
   }
 
-  sendToShippingProvider(order: OrderDTO): void {
+    sendToShippingProvider(order: OrderDTO): void {
     console.log('🚚 [AdminOrders] Sending order to shipping provider:', order.id);
+    
+    // Check if configuration is ready before proceeding
+    if (!this.dispatchService.isConfigurationReady()) {
+      console.warn('⚠️ [AdminOrders] Configuration not ready. Status:', this.dispatchService.getConfigurationStatus());
+      this.toasterService.showToast(
+        'Shipping configuration is not ready. Please wait a moment and try again.', 
+        ToastType.Warn, 
+        3000
+      );
+      return;
+    }
     
     // Show loading state
     this.isLoading = true;
@@ -234,9 +260,6 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
         
         // Update the order with the new dispatch summary
         order.dispatchSummary = dispatchSummary;
-        
-        // Show shipment details
-        order.showShipmentDetails = true;
         
         // Show success message
         this.toasterService.showToast(
@@ -249,11 +272,25 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         console.error('❌ [AdminOrders] Error sending order to shipping provider:', error);
-        this.toasterService.showToast(
-          'Error sending order to shipping provider. Please try again.', 
-          ToastType.Error, 
-          3000
-        );
+        
+        // Show specific error message based on error type
+        let errorMessage = 'Error sending order to shipping provider. Please try again.';
+        
+        if (error?.error?.message) {
+          errorMessage = error.error.message;
+        } else if (error?.message) {
+          errorMessage = error.message;
+        } else if (error?.status === 0) {
+          errorMessage = 'Network error. Please check your connection and try again.';
+        } else if (error?.status === 401) {
+          errorMessage = 'Authentication error. Please login again.';
+        } else if (error?.status === 403) {
+          errorMessage = 'Access denied. You do not have permission to perform this action.';
+        } else if (error?.status === 500) {
+          errorMessage = 'Server error. Please try again later.';
+        }
+        
+        this.toasterService.showToast(errorMessage, ToastType.Error, 5000);
         this.isLoading = false;
       }
     });
@@ -401,5 +438,145 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
   exportOrders(): void {
     console.log('Export orders functionality');
     this.toasterService.showToast('Export functionality coming soon', ToastType.Info, 3000);
+  }
+
+  // Shipment status update methods
+  updateShipmentStatus(order: OrderDTO, newStatus: SHIPMENTSTATUS): void {
+    console.log('🔄 [AdminOrders] Updating shipment status for order:', order.id, 'to:', newStatus);
+    
+    if (!order.dispatchSummary) {
+      this.toasterService.showToast('No dispatch summary found for this order', ToastType.Error, 3000);
+      return;
+    }
+
+    // Close the dropdown immediately
+    order.showStatusDropdown = false;
+
+    // Show loading state
+    this.isLoading = true;
+    
+    // Update the local dispatch summary
+    const updatedDispatchSummary: DispatchSummary = {
+      ...order.dispatchSummary,
+      shipmentStatus: newStatus
+    };
+
+    // Call the service to update the dispatch summary
+    const updateSub = this.dispatchService.updateDispatchSummary(updatedDispatchSummary).subscribe({
+      next: (response: DispatchSummary) => {
+        console.log('✅ [AdminOrders] Shipment status updated successfully:', response);
+        
+        // Update the order's dispatch summary
+        order.dispatchSummary = response;
+        
+        // Show success message
+        this.toasterService.showToast(
+          `Shipment status updated to ${this.getStatusDisplayName(newStatus)}`, 
+          ToastType.Success, 
+          3000
+        );
+        
+        this.isLoading = false;
+      },
+      error: (error) => {
+        console.error('❌ [AdminOrders] Error updating shipment status:', error);
+        this.toasterService.showToast(
+          'Error updating shipment status. Please try again.', 
+          ToastType.Error, 
+          3000
+        );
+        this.isLoading = false;
+      }
+    });
+    
+    this.subscriptions.push(updateSub);
+  }
+
+  getStatusDisplayName(status: SHIPMENTSTATUS): string {
+    switch (status) {
+      case SHIPMENTSTATUS.READYTODISPATCH: return 'Ready to Dispatch';
+      case SHIPMENTSTATUS.DISPATCHED: return 'Dispatched';
+      case SHIPMENTSTATUS.DELIVERED: return 'Delivered';
+      default: return status;
+    }
+  }
+
+  getStatusIconClass(status: SHIPMENTSTATUS): string {
+    switch (status) {
+      case SHIPMENTSTATUS.READYTODISPATCH: return 'text-info';
+      case SHIPMENTSTATUS.DISPATCHED: return 'text-primary';
+      case SHIPMENTSTATUS.DELIVERED: return 'text-success';
+      default: return 'text-warning';
+    }
+  }
+
+  // Dropdown management methods
+  toggleStatusDropdown(order: OrderDTO): void {
+    // Close all other dropdowns first
+    this.orders.forEach(o => {
+      if (o !== order) {
+        o.showStatusDropdown = false;
+      }
+    });
+    
+    // Toggle the clicked dropdown
+    order.showStatusDropdown = !order.showStatusDropdown;
+  }
+
+  handleClickOutside(event: Event): void {
+    const target = event.target as HTMLElement;
+    
+    // Check if click is outside dropdown
+    if (!target.closest('.dropdown-menu') && !target.closest('.dropdown-toggle')) {
+      this.orders.forEach(order => {
+        order.showStatusDropdown = false;
+      });
+    }
+  }
+
+  // ShipRocket tracking methods
+  loadShipRocketTrackingData(order: OrderDTO): void {
+    if (!order.dispatchSummary?.shipmentId) {
+      return;
+    }
+
+    const shipmentId = order.dispatchSummary.shipmentId;
+    
+    // Check if we already have tracking data for this shipment
+    if (this.shipRocketTrackingData[shipmentId]) {
+      return;
+    }
+
+    console.log('🚚 [AdminOrders] Loading ShipRocket tracking data for shipment:', shipmentId);
+    
+    const trackingSub = this.shipRocketService.getTrackingDataForShippingId(shipmentId).subscribe({
+      next: (response: any) => {
+        console.log('✅ [AdminOrders] ShipRocket tracking data loaded:', response);
+        this.shipRocketTrackingData[shipmentId] = response.tracking_data;
+      },
+      error: (error) => {
+        console.error('❌ [AdminOrders] Error loading ShipRocket tracking data:', error);
+        this.shipRocketTrackingData[shipmentId] = null;
+      }
+    });
+    
+    this.subscriptions.push(trackingSub);
+  }
+
+  getShipRocketTrackingData(order: OrderDTO): any {
+    if (!order.dispatchSummary?.shipmentId) {
+      return null;
+    }
+    return this.shipRocketTrackingData[order.dispatchSummary.shipmentId];
+  }
+
+  hasShipRocketTrackingData(order: OrderDTO): boolean {
+    const trackingData = this.getShipRocketTrackingData(order);
+    return trackingData && trackingData.shipment_track && trackingData.shipment_track.length > 0;
+  }
+
+  getShipRocketTrackUrl(order: OrderDTO): string {
+    const trackingData = this.getShipRocketTrackingData(order);
+    return trackingData?.track_url || '';
   }
 }

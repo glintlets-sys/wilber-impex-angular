@@ -7,6 +7,7 @@ export class OrderDTO {
   showDetails: boolean;
   showShipmentDetails: boolean;
   showItemsTable: boolean = false;
+  showStatusDropdown: boolean = false;
   dispatchSummary: any;
   creationDate?: Date;
 }
