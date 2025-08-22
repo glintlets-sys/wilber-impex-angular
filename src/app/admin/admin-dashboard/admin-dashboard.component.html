@@ -203,7 +203,7 @@
             <tbody>
               <tr *ngFor="let order of recentOrders">
                 <td>
-                  <strong class="text-primary">{{ order.id }}</strong>
+                  <strong class="text-primary">#{{ order.id }}</strong>
                 </td>
                 <td>
                   <div class="d-flex align-items-center">
@@ -211,26 +211,26 @@
                       <i class="fas fa-user text-muted"></i>
                     </div>
                     <div>
-                      <strong>{{ order.customer }}</strong>
+                      <strong>{{ getCustomerName(order) }}</strong>
                     </div>
                   </div>
                 </td>
                 <td>
-                  <strong class="text-success">{{ formatCurrency(order.amount) }}</strong>
+                  <strong class="text-success">{{ formatCurrency(getTotalAmount(order)) }}</strong>
                 </td>
                 <td>
-                  <span [class]="getPaymentStatusClass(order.orderId)">
-                    {{ getPaymentStatusForOrder(order.orderId) }}
+                  <span [class]="getPaymentStatusClass(order.id)">
+                    {{ getPaymentStatus(order) }}
                   </span>
                 </td>
                 <td>
-                  <span [class]="getStatusClass(order.status)">{{ order.status }}</span>
+                  <span [class]="getOrderStatusClass(order)">{{ getOrderStatus(order) }}</span>
                 </td>
                 <td>
                   <div>
-                    <strong>{{ order.date | date:'MMM dd, yyyy' }}</strong>
+                    <strong>{{ order.creationDate | date:'MMM dd, yyyy' }}</strong>
                     <br>
-                    <small class="text-muted">{{ order.date | date:'hh:mm a' }}</small>
+                    <small class="text-muted">{{ order.creationDate | date:'hh:mm a' }}</small>
                   </div>
                 </td>
                 <td>

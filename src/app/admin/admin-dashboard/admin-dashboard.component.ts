@@ -236,17 +236,8 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       })
       .slice(0, 5);
 
-    this.recentOrders = sortedOrders.map(order => {
-      const summary = this.getPurchaseSummary(order);
-      return {
-        id: `#${order.id}`,
-        customer: this.getCustomerName(order),
-        amount: summary.billSummary?.totalPrice || summary.totalAmount || 0,
-        status: this.getOrderStatus(order),
-        date: new Date(order.creationDate || new Date()),
-        orderId: order.id
-      };
-    });
+    // Store the actual OrderDTO objects for accurate status display
+    this.recentOrders = sortedOrders;
 
     console.log('📋 [AdminDashboard] Recent orders prepared:', this.recentOrders);
   }
@@ -272,20 +263,43 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
            `Customer #${order.userId}`;
   }
 
+  getTotalAmount(order: OrderDTO): number {
+    try {
+      const summary = this.getPurchaseSummary(order);
+      return summary.billSummary?.totalPrice || summary.totalAmount || 0;
+    } catch (error) {
+      console.warn('⚠️ [AdminDashboard] Error getting total amount for order:', order.id, error);
+      return 0;
+    }
+  }
+
   getOrderStatus(order: OrderDTO): string {
-    // Check dispatch summary or other status fields in the order
-    if (order.dispatchSummary) {
-      return 'Dispatched';
+    // Use the same logic as admin-orders component for accurate dispatch status
+    if (!order.dispatchSummary) {
+      // No dispatch summary - check payment status
+      const paymentStatus = this.getPaymentStatus(order);
+      if (paymentStatus === 'Payment Success') {
+        return 'Confirmed';
+      }
+      if (paymentStatus === 'Payment Failed') {
+        return 'Failed';
+      }
+      return 'Pending';
     }
-    // Default based on payment status
-    const paymentStatus = this.getPaymentStatus(order);
-    if (paymentStatus === 'Payment Success') {
-      return 'Confirmed';
+    
+    // Has dispatch summary - show shipment status
+    const status = order.dispatchSummary.shipmentStatus;
+    
+    switch (status) {
+      case 'READYTODISPATCH': 
+        return 'Ready to Dispatch';
+      case 'DISPATCHED': 
+        return 'Dispatched';
+      case 'DELIVERED': 
+        return 'Delivered';
+      default: 
+        return status || 'Pending';
     }
-    if (paymentStatus === 'Payment Failed') {
-      return 'Failed';
-    }
-    return 'Pending';
   }
 
   getPaymentStatus(order: OrderDTO): string {
@@ -319,6 +333,35 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       return 'badge bg-danger';
     }
     return 'badge bg-secondary';
+  }
+
+  getOrderStatusClass(order: OrderDTO): string {
+    // Use the same logic as admin-orders component for accurate status classes
+    if (!order.dispatchSummary) {
+      // No dispatch summary - use payment status
+      const paymentStatus = this.getPaymentStatus(order);
+      if (paymentStatus === 'Payment Success') {
+        return 'badge bg-success';
+      }
+      if (paymentStatus === 'Payment Failed') {
+        return 'badge bg-danger';
+      }
+      return 'badge bg-warning';
+    }
+    
+    // Has dispatch summary - use shipment status
+    const status = order.dispatchSummary.shipmentStatus;
+    
+    switch (status) {
+      case 'READYTODISPATCH': 
+        return 'badge bg-warning';
+      case 'DISPATCHED': 
+        return 'badge bg-info';
+      case 'DELIVERED': 
+        return 'badge bg-success';
+      default: 
+        return 'badge bg-secondary';
+    }
   }
 
   // Currency formatting
@@ -380,7 +423,10 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   }
 
   getPaymentStatusClass(orderId: number): string {
-    const paymentStatus = this.getPaymentStatusForOrder(orderId);
+    const order = this.orders.find(o => o.id === orderId);
+    if (!order) return 'badge bg-secondary';
+    
+    const paymentStatus = this.getPaymentStatus(order);
     return this.getStatusClass(paymentStatus);
   }
 
