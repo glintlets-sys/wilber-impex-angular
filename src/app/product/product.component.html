@@ -375,37 +375,57 @@
   </div>
 </section>
 
+<!-- Similar Products Section (Hidden) -->
+<!-- <section class="related-products" *ngIf="similarProducts.length >= 4">
+  <div class="container">
+    <h2 class="related-title">Similar Products</h2>
+    <div class="products-grid">
+      <div class="product-card" *ngFor="let similarProduct of similarProducts" (click)="navigateToSimilarProduct(similarProduct.id)">
+        <div class="product-card-image">
+          <img [src]="getSimilarProductImage(similarProduct)" 
+               [alt]="similarProduct.name"
+               (error)="$event.target.src='assets/images/image_empty.jpg'">
+          <div class="product-badge" *ngIf="similarProduct.brand && similarProduct.brand !== ''" 
+               style="background-color: var(--primary)">
+            {{ similarProduct.brand }}
+          </div>
+        </div>
+        <div class="product-card-content">
+          <h3 class="product-card-title">{{ similarProduct.name }}</h3>
+          <p class="product-card-description">{{ similarProduct.summary || 'Product description not available' }}</p>
+          <div class="product-card-price" *ngIf="similarProduct.price && similarProduct.price.amount">
+            <span class="price-amount">₹{{ similarProduct.price.amount }}</span>
+            <span class="price-currency">{{ similarProduct.price.currency }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section> -->
+
 <!-- Related Products Section -->
 <section class="related-products" *ngIf="relatedProducts.length > 0">
   <div class="container">
     <h2 class="related-title">Related Products from {{ product?.categoryName }}</h2>
-    <!-- Slider main container -->
-    <div class="swiper related-PRoduct">
-      <!-- Additional required wrapper -->
-      <div class="swiper-wrapper">
-        <!-- Slides -->
-        <div class="swiper-slide" *ngFor="let relatedProduct of relatedProducts">
-          <div class="product-card" (click)="navigateToProduct(relatedProduct.id)">
-            <div class="product-card-image">
-              <img [src]="relatedProduct.image" [alt]="relatedProduct.name">
-              <div class="product-badge" *ngIf="relatedProduct.badge" 
-                   [style.background-color]="relatedProduct.badge === 'Bestseller' ? 'var(--success)' : 'var(--primary)'">
-                {{ relatedProduct.badge }}
-              </div>
-            </div>
-            <div class="product-card-content">
-              <h3 class="product-card-title">{{ relatedProduct.name }}</h3>
-              <p class="product-card-description">{{ relatedProduct.description }}</p>
-              <div class="product-card-rating">
-                <i *ngFor="let star of getStars(relatedProduct.rating)" 
-                   [class]="star === 1 ? 'fas fa-star text-warning' : star === 0.5 ? 'fas fa-star-half-alt text-warning' : 'far fa-star text-warning'"></i>
-                <span class="ms-1">({{ relatedProduct.rating }})</span>
-              </div>
-            </div>
+    <div class="products-grid">
+      <div class="product-card" *ngFor="let relatedProduct of relatedProducts" (click)="navigateToProduct(relatedProduct.id)">
+        <div class="product-card-image">
+          <img [src]="relatedProduct.image" [alt]="relatedProduct.name">
+          <div class="product-badge" *ngIf="relatedProduct.badge" 
+               [style.background-color]="relatedProduct.badge === 'Bestseller' ? 'var(--success)' : 'var(--primary)'">
+            {{ relatedProduct.badge }}
+          </div>
+        </div>
+        <div class="product-card-content">
+          <h3 class="product-card-title">{{ relatedProduct.name }}</h3>
+          <p class="product-card-description">{{ relatedProduct.description }}</p>
+          <div class="product-card-rating">
+            <i *ngFor="let star of getStars(relatedProduct.rating)" 
+               [class]="star === 1 ? 'fas fa-star text-warning' : star === 0.5 ? 'fas fa-star-half-alt text-warning' : 'far fa-star text-warning'"></i>
+            <span class="ms-1">({{ relatedProduct.rating }})</span>
           </div>
         </div>
       </div>
-      <div class="swiper-pagination"></div>
     </div>
   </div>
 </section>

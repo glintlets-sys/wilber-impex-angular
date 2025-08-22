@@ -8,6 +8,8 @@ import { ProductService, Product } from '../services/product.service';
 import { CartIntegrationService } from '../services/cart-integration.service';
 import { ProductIntegrationService } from '../services/product-integration.service';
 import { Toy } from '../shared-services/toy';
+import { ItemRecommendationService } from '../shared-services/item-recommendation.service';
+import { ToyService } from '../shared-services/toy.service';
 
 @Component({
   selector: 'app-product',
@@ -20,6 +22,7 @@ export class ProductComponent implements OnInit {
   product: Product | null = null;
   backendProduct: Toy | null = null;
   relatedProducts: Product[] = [];
+  similarProducts: Toy[] = []; // Backend similar products
   loading = true;
   error = false;
   selectedSize: string = '';
@@ -39,7 +42,9 @@ export class ProductComponent implements OnInit {
     private router: Router,
     private productService: ProductService,
     private cartIntegrationService: CartIntegrationService,
-    private productIntegrationService: ProductIntegrationService
+    private productIntegrationService: ProductIntegrationService,
+    private itemRecommendationService: ItemRecommendationService,
+    private toyService: ToyService
   ) {}
 
   ngOnInit() {
@@ -79,6 +84,8 @@ export class ProductComponent implements OnInit {
                 this.backendProduct = backendProduct;
                 // Check stock for the backend product
                 this.checkProductStock();
+                // Load similar products from backend
+                this.loadSimilarProducts(backendProduct.id);
               } else {
                 console.warn('⚠️ [ProductComponent] No backend product found for frontend product:', product.name);
                 this.backendProduct = null;
@@ -119,6 +126,34 @@ export class ProductComponent implements OnInit {
     });
   }
 
+  loadSimilarProducts(backendProductId: number) {
+    // Load similar products from backend API
+    this.itemRecommendationService.getAllRelatedItems(backendProductId, 'SIMILAR').subscribe({
+      next: (similarProducts) => {
+        // Only show similar products if we have 4 or more for seamless carousel experience
+        if (similarProducts && similarProducts.length >= 4) {
+          // Map backend products to frontend products to get proper images and details
+          this.mapSimilarProductsToFrontend(similarProducts);
+          console.log('✅ [ProductComponent] Loaded similar products:', this.similarProducts.length);
+        } else {
+          this.similarProducts = [];
+          console.log('⚠️ [ProductComponent] Not enough similar products for carousel (need 4+, got ' + (similarProducts?.length || 0) + ')');
+        }
+      },
+      error: (error) => {
+        console.error('❌ [ProductComponent] Error loading similar products:', error);
+        this.similarProducts = [];
+      }
+    });
+  }
+
+  mapSimilarProductsToFrontend(backendSimilarProducts: Toy[]) {
+    // Use backend products directly - they already have all the data we need
+    this.similarProducts = backendSimilarProducts;
+    console.log('✅ [ProductComponent] Loaded similar products from backend:', this.similarProducts.length);
+    console.log('📦 [ProductComponent] Similar products data:', this.similarProducts);
+  }
+
   getStars(rating: number): number[] {
     const stars = [];
     const fullStars = Math.floor(rating);
@@ -146,6 +181,28 @@ export class ProductComponent implements OnInit {
 
   navigateToCategory(category: string) {
     this.router.navigate(['/stone-solution', category]);
+  }
+
+  navigateToSimilarProduct(productId: number) {
+    // Navigate to the product page using the backend product ID
+    this.router.navigate(['/product', productId.toString()]);
+  }
+
+  getSimilarProductImage(similarProduct: Toy): string {
+    // Priority order for image sources:
+    // 1. Backend thumbnail (primary image)
+    // 2. First photo link from backend
+    // 3. Fallback image
+    
+    if (similarProduct.thumbnail && similarProduct.thumbnail !== '') {
+      return similarProduct.thumbnail;
+    }
+    
+    if (similarProduct.photoLinks && similarProduct.photoLinks.length > 0) {
+      return similarProduct.photoLinks[0];
+    }
+    
+    return 'assets/images/image_empty.jpg';
   }
 
   addToCart(): void {
