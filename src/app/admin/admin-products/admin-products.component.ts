@@ -165,7 +165,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
       }
     }
     
-    return 'assets/images/placeholder-product.png';
+    return 'assets/images/image_empty.jpg';
   }
 
   getProductStatus(product: Toy): string {

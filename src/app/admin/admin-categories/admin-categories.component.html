@@ -4,8 +4,20 @@
     <span class="align-text-top">Category List</span>
   </h3>
   <span class="pull-right">
-    <button type="button" class="btn btn-primary" (click)="refreshCategories()" [disabled]="isLoading">
+    <button type="button" class="btn btn-primary me-2" (click)="refreshCategories()" [disabled]="isLoading">
       <i class="fas fa-sync me-1" [class.fa-spin]="isLoading"></i>Refresh Categories
+    </button>
+    <button type="button" class="btn btn-primary btn-with-icon" (click)="openAddEditPopupForCategory('')">
+      <svg style="width: 13px" id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <defs>
+          <style>
+            .cls-1 {
+              fill: #fff;
+            }
+          </style>
+        </defs>
+        <path class="cls-1" d="M96.09,46.09H53.91V3.91a3.91,3.91,0,1,0-7.82,0V46.09H3.91a3.91,3.91,0,1,0,0,7.82H46.09V96.09a3.91,3.91,0,0,0,7.82,0V53.91H96.09a3.91,3.91,0,0,0,0-7.82Z" />
+      </svg>&nbsp;Add Category
     </button>
   </span>
 </div>
@@ -15,7 +27,7 @@
   <div class="col-12">
     <div class="alert alert-primary">
       <i class="fas fa-spinner fa-spin me-2"></i>
-      Loading categories from product data...
+      Loading categories from backend...
     </div>
   </div>
 </div>
@@ -27,7 +39,7 @@
   </div>
 
   <div class="col-md-5">
-    <span class="item_count">Total: {{ count }} categories (extracted from {{ products.length }} products)</span>
+    <span class="item_count">Total: {{ count }} categories</span>
   </div>
 </div>
 
@@ -38,22 +50,41 @@
       <th>ID</th>
       <th>Image</th>
       <th>Category Name</th>
+      <th>Type</th>
       <th>Parent Category</th>
       <th>Description</th>
       <th>Product Count</th>
+      <th>Actions</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let category of filteredCategories">
       <td>{{ category.id }}</td>
       <td>
-        <img [src]="category.image || 'assets/images/placeholder-product.png'" width="60" height="60" class="img-thumbnail">
+        <img [src]="category.image || 'assets/images/image_empty.jpg'" 
+             (error)="$event.target.src='assets/images/image_empty.jpg'"
+             width="60" height="60" class="img-thumbnail">
       </td>
       <td>{{ category.name }}</td>
+      <td>
+        <span class="badge" [ngClass]="getTypeBadgeClass(category.type)">
+          {{ category.type || 'Standard' }}
+        </span>
+      </td>
       <td>{{ getParentCategory(category) }}</td>
       <td>{{ category.description }}</td>
       <td>
-        <span class="badge bg-info text-white">{{ category.productCount }}</span>
+        <span class="badge bg-info text-white">{{ category.toys?.length || 0 }}</span>
+      </td>
+      <td class="text-center">
+        <span>
+          <a (click)="openAddEditPopupForCategory(category)" class="cursor_pointer me-2">
+            <i class="fas fa-edit text-primary"></i>
+          </a>
+          <a (click)="deleteCategory(category.id)" class="cursor_pointer">
+            <i class="fas fa-trash text-danger"></i>
+          </a>
+        </span>
       </td>
     </tr>
   </tbody>
@@ -68,5 +99,16 @@
 <div *ngIf="filteredCategories.length > 0" class="d-flex justify-content-center" style="padding: 15px">
   <div class="item_count">
     Total Items: {{ count }}
+  </div>
+</div>
+
+<!-- Add/Edit Category Modal -->
+<div *ngIf="showAddEditModal" class="modal-overlay" (click)="closeModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <app-add-edit-category 
+      [editCategoryData]="selectedCategory"
+      (closePopup)="closeModal()"
+      (saveCategory)="onSaveCategory($event)">
+    </app-add-edit-category>
   </div>
 </div>

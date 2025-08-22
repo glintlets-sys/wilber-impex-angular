@@ -1,0 +1,110 @@
+<div class="modal-header">
+  <h3 class="panel-title">
+    <span *ngIf="!editCategoryData?.id">Add Category</span>
+    <span *ngIf="editCategoryData?.id">Edit Category</span>
+  </h3>
+  <button type="button" class="btn-close" (click)="onCancel()" aria-label="Close">
+    <i class="fas fa-times"></i>
+  </button>
+</div>
+
+<div class="modal-body">
+  <section>
+    <div class="container">
+      <form>
+        <!-- Category Name -->
+        <div class="form-group">
+          <label for="categoryName" class="control-label">Category Name *</label>
+          <input type="text" 
+                 name="categoryName" 
+                 id="categoryName"
+                 class="form-control"
+                 placeholder="Enter category name" 
+                 [(ngModel)]="category.name" 
+                 required />
+        </div>
+
+        <!-- Parent Category -->
+        <div class="form-group">
+          <label for="parentCategory" class="control-label">Parent Category</label>
+          <select class="form-control" 
+                  name="parentCategory" 
+                  id="parentCategory" 
+                  [(ngModel)]="category.parentId">
+            <option [value]="null">No Parent (Root Category)</option>
+            <option *ngFor="let parentCat of parentCategories" 
+                    [value]="parentCat.id"
+                    [disabled]="editCategoryData?.id === parentCat.id">
+              {{ parentCat.name }} (ID: {{ parentCat.id }})
+            </option>
+          </select>
+          <small class="form-text text-muted">
+            Select a parent category to create a sub-category, or leave as "No Parent" for a root category.
+          </small>
+        </div>
+
+        <!-- Category Type -->
+        <div class="form-group">
+          <label for="categorytype" class="control-label">Category Type</label>
+          <select class="form-control" name="categorytype" id="categorytype" [(ngModel)]="category.type">
+            <option *ngFor="let selectType of categoryTypes" [value]="selectType">{{ selectType }}</option>
+          </select>
+        </div>
+
+        <!-- Category Description -->
+        <div class="form-group">
+          <label for="categoryDescription" class="control-label">Description *</label>
+          <textarea name="categoryDescription" 
+                    id="categoryDescription"
+                    class="form-control" 
+                    rows="4"
+                    placeholder="Enter category description" 
+                    [(ngModel)]="category.description"
+                    required></textarea>
+        </div>
+
+        <!-- Category Image -->
+        <div class="form-group">
+          <label class="control-label">Category Image</label>
+          <div class="image-upload-container">
+            <img [src]="category.image || 'assets/images/image_empty.jpg'" 
+                 (error)="$event.target.src='assets/images/image_empty.jpg'"
+                 alt="Category Image" 
+                 class="category-preview-image" 
+                 (click)="triggerFileInput()"
+                 title="Click to upload image">
+            <input type="file" 
+                   id="categoryImage" 
+                   class="d-none" 
+                   accept="image/*" 
+                   (change)="onImageUpload($event)">
+            <button type="button" class="btn btn-outline-primary" (click)="triggerFileInput()">
+              <i class="fas fa-upload"></i>Upload Image
+            </button>
+          </div>
+        </div>
+
+        <!-- Save and Cancel Buttons -->
+        <div class="form-group" style="margin-top: 2rem;">
+          <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-white" type="button" (click)="onCancel()">
+              <i class="fas fa-times me-1"></i>Cancel
+            </button>
+            <button type="button" 
+                    *ngIf="!editCategoryData?.id" 
+                    (click)="onSave()"
+                    class="btn btn-primary">
+              <i class="fas fa-save me-1"></i>Save Category
+            </button>
+            <button type="button" 
+                    *ngIf="editCategoryData?.id" 
+                    (click)="onSave()"
+                    class="btn btn-primary">
+              <i class="fas fa-edit me-1"></i>Update Category
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+</div>

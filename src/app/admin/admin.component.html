@@ -122,12 +122,12 @@
                     Blogs
                   </button>
                 </li>
-                <li>
+                <!-- <li>
                   <button class="sidebar-item" disabled>
                     <i class="fas fa-envelope me-2"></i>
                     Newsletters
                   </button>
-                </li>
+                </li> -->
               </ul>
             </div>
 
@@ -177,13 +177,7 @@
 
         <!-- Categories View -->
         <div *ngIf="activeView === 'categories'" class="content-section">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2">Categories</h1>
-            <button class="btn btn-primary">
-              <i class="fas fa-plus me-2"></i>
-              Add Category
-            </button>
-          </div>
+          
           <app-admin-categories></app-admin-categories>
         </div>
 
