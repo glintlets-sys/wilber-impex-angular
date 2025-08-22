@@ -335,7 +335,19 @@ export class AccountComponent implements OnInit, OnDestroy {
    * Transform OrderDTO from backend to format expected by template
    */
   private transformOrdersForDisplay(orders: OrderDTO[]): any[] {
-    return orders.map(order => {
+    // Sort orders by creation date (latest first) before transforming
+    const sortedOrders = orders.sort((a, b) => {
+      const dateA = new Date(a.creationDate || 0);
+      const dateB = new Date(b.creationDate || 0);
+      return dateB.getTime() - dateA.getTime(); // Descending order (latest first)
+    });
+    
+    console.log('📅 [AccountComponent] Orders sorted by date (latest first):', sortedOrders.map(o => ({
+      id: o.id,
+      creationDate: o.creationDate
+    })));
+    
+    return sortedOrders.map(order => {
       let items: any[] = [];
       let totalAmount = 0;
       let shippingAddress: any = {
