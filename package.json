@@ -19,6 +19,7 @@
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
     "@fortawesome/fontawesome-free": "^6.7.2",
+    "@ng-bootstrap/ng-bootstrap": "^18.0.0",
     "@types/crypto-js": "^4.2.2",
     "abab": "^2.0.6",
     "animate.css": "^4.1.1",

@@ -122,6 +122,12 @@
                     Blogs
                   </button>
                 </li>
+                <li>
+                  <button class="sidebar-item" [class.active]="activeView === 'recommendations'" (click)="showRecommendations()">
+                    <i class="fas fa-thumbs-up me-2"></i>
+                    Product Recommendations
+                  </button>
+                </li>
                 <!-- <li>
                   <button class="sidebar-item" disabled>
                     <i class="fas fa-envelope me-2"></i>
@@ -217,6 +223,14 @@
             </button>
           </div>
           <app-admin-blogs></app-admin-blogs>
+        </div>
+
+        <!-- Recommendations View -->
+        <div *ngIf="activeView === 'recommendations'" class="content-section">
+          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Product Recommendations</h1>
+          </div>
+          <app-admin-recommendations></app-admin-recommendations>
         </div>
 
       </main>
