@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AuthenticationService } from '../../shared-services/authentication.service';
 import { UserService } from '../../shared-services/user.service';
+import { RolePermissionsService } from '../../shared-services/role-permissions.service';
 import { AddEditAdminUserComponent } from './add-edit-admin-user/add-edit-admin-user.component';
 
 @Component({
@@ -25,7 +26,8 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(
     private authService: AuthenticationService,
-    private userService: UserService
+    private userService: UserService,
+    private rolePermissionsService: RolePermissionsService
   ) { }
 
   ngOnInit() {
@@ -117,17 +119,27 @@ export class AdminUsersComponent implements OnInit {
   }
 
   getRoleBadgeClass(role: string): string {
-    switch (role) {
-      case 'ADMIN':
-        return 'bg-primary';
-      case 'SUPER_ADMIN':
-        return 'bg-danger';
-      case 'USER':
-        return 'bg-secondary';
-      case 'ACCOUNTS':
-        return 'bg-info';
-      default:
-        return 'bg-warning';
+    // Use role permissions service to get consistent styling
+    const roleInfo = this.rolePermissionsService.getRoleInfo(role);
+    if (roleInfo) {
+      // Map roles to badge colors
+      switch (role) {
+        case 'SUPER_ADMIN':
+          return 'bg-danger';
+        case 'ADMIN':
+          return 'bg-primary';
+        case 'STORE_MANAGER':
+          return 'bg-success';
+        case 'FINANCE_MANAGER':
+          return 'bg-warning';
+        case 'ACCOUNTS':
+          return 'bg-info';
+        case 'USER':
+          return 'bg-secondary';
+        default:
+          return 'bg-warning';
+      }
     }
+    return 'bg-warning'; // Default for unknown roles
   }
 }

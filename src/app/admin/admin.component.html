@@ -6,7 +6,13 @@
       <!-- Admin Header -->
       <div class="col-12">
         <div class="admin-header d-flex align-items-center px-4 py-3">
-          <h2 class="text-white mb-0">Administration Panel</h2>
+          <div class="d-flex align-items-center">
+            <h2 class="text-white mb-0 me-3">Administration Panel</h2>
+            <span class="badge bg-light text-dark">
+              <i class="fas fa-user-shield me-1"></i>
+              {{ getRoleDisplayName() }}
+            </span>
+          </div>
         </div>
       </div>
     </div>
@@ -18,43 +24,43 @@
           <div class="admin-sidebar">
             
             <!-- Dashboard Section -->
-            <div class="sidebar-section">
+            <div class="sidebar-section" *ngIf="canAccessSection('dashboard')">
               <div class="sidebar-header" (click)="toggleSection('dashboard')">
                 <i class="fas fa-tachometer-alt me-2"></i>
                 Dashboard
                 <i class="fas" [class.fa-chevron-down]="sections.dashboard" [class.fa-chevron-right]="!sections.dashboard"></i>
               </div>
-                             <ul class="sidebar-menu" *ngIf="sections.dashboard">
-                 <li>
-                   <button class="sidebar-item" [class.active]="activeView === 'dashboard'" (click)="showDashboard()">
-                     <i class="fas fa-chart-line me-2"></i>
-                     Overview
-                   </button>
-                 </li>
-                 <li>
-                   <button class="sidebar-item" [class.active]="activeView === 'admin-users'" (click)="showAdminUsers()">
-                     <i class="fas fa-users-cog me-2"></i>
-                     Manage Users
-                   </button>
-                 </li>
-               </ul>
+              <ul class="sidebar-menu" *ngIf="sections.dashboard">
+                <li>
+                  <button class="sidebar-item" [class.active]="activeView === 'dashboard'" (click)="showDashboard()">
+                    <i class="fas fa-chart-line me-2"></i>
+                    Overview
+                  </button>
+                </li>
+                <li *ngIf="canAccessSection('admin-users')">
+                  <button class="sidebar-item" [class.active]="activeView === 'admin-users'" (click)="showAdminUsers()">
+                    <i class="fas fa-users-cog me-2"></i>
+                    Manage Users
+                  </button>
+                </li>
+              </ul>
             </div>
 
             <!-- Products Section -->
-            <div class="sidebar-section">
+            <div class="sidebar-section" *ngIf="canAccessSection('products') || canAccessSection('categories')">
               <div class="sidebar-header" (click)="toggleSection('products')">
                 <i class="fas fa-box me-2"></i>
                 Products
                 <i class="fas" [class.fa-chevron-down]="sections.products" [class.fa-chevron-right]="!sections.products"></i>
               </div>
               <ul class="sidebar-menu" *ngIf="sections.products">
-                <li>
+                <li *ngIf="canAccessSection('products')">
                   <button class="sidebar-item" [class.active]="activeView === 'products'" (click)="showProducts()">
                     <i class="fas fa-list me-2"></i>
                     Manage Products
                   </button>
                 </li>
-                <li>
+                <li *ngIf="canAccessSection('categories')">
                   <button class="sidebar-item" [class.active]="activeView === 'categories'" (click)="showCategories()">
                     <i class="fas fa-tags me-2"></i>
                     Categories
@@ -64,7 +70,7 @@
             </div>
 
             <!-- Orders Section -->
-            <div class="sidebar-section">
+            <div class="sidebar-section" *ngIf="canAccessSection('orders')">
               <div class="sidebar-header" (click)="toggleSection('orders')">
                 <i class="fas fa-shopping-cart me-2"></i>
                 Orders
@@ -81,7 +87,7 @@
             </div>
 
             <!-- Stock Management Section -->
-            <div class="sidebar-section">
+            <div class="sidebar-section" *ngIf="canAccessSection('stock')">
               <div class="sidebar-header" (click)="toggleSection('stock')">
                 <i class="fas fa-boxes me-2"></i>
                 Stock Management
@@ -98,7 +104,7 @@
             </div>
 
             <!-- Customers Section -->
-            <div class="sidebar-section">
+            <div class="sidebar-section" *ngIf="canAccessSection('customers')">
               <div class="sidebar-header" (click)="toggleSection('customers')">
                 <i class="fas fa-users me-2"></i>
                 Customers
@@ -115,20 +121,20 @@
             </div>
 
             <!-- Content Management Section -->
-            <div class="sidebar-section">
+            <div class="sidebar-section" *ngIf="canAccessSection('content')">
               <div class="sidebar-header" (click)="toggleSection('content')">
                 <i class="fas fa-edit me-2"></i>
                 Content
                 <i class="fas" [class.fa-chevron-down]="sections.content" [class.fa-chevron-right]="!sections.content"></i>
               </div>
               <ul class="sidebar-menu" *ngIf="sections.content">
-                <li>
+                <li *ngIf="canAccessFeature('manage_blogs')">
                   <button class="sidebar-item" [class.active]="activeView === 'blogs'" (click)="showBlogs()">
                     <i class="fas fa-blog me-2"></i>
                     Blogs
                   </button>
                 </li>
-                <li>
+                <li *ngIf="canAccessFeature('manage_recommendations')">
                   <button class="sidebar-item" [class.active]="activeView === 'recommendations'" (click)="showRecommendations()">
                     <i class="fas fa-thumbs-up me-2"></i>
                     Product Recommendations
@@ -144,7 +150,7 @@
             </div>
 
             <!-- Settings Section -->
-            <div class="sidebar-section">
+            <div class="sidebar-section" *ngIf="canAccessSection('settings')">
               <div class="sidebar-header" (click)="toggleSection('settings')">
                 <i class="fas fa-cog me-2"></i>
                 Settings
@@ -179,7 +185,7 @@
         <div *ngIf="activeView === 'products'" class="content-section">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Manage Products</h1>
-            <button class="btn btn-primary">
+            <button class="btn btn-primary" *ngIf="canAccessFeature('add_product')">
               <i class="fas fa-plus me-2"></i>
               Add Product
             </button>
@@ -223,7 +229,7 @@
         <div *ngIf="activeView === 'blogs'" class="content-section">
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Blog Management</h1>
-            <button class="btn btn-primary" (click)="addBlog()">
+            <button class="btn btn-primary" (click)="addBlog()" *ngIf="canAccessFeature('manage_blogs')">
               <i class="fas fa-plus me-2"></i>
               Add Blog
             </button>
@@ -244,6 +250,88 @@
           <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Admin Users Management</h1>
           </div>
+          
+          <!-- Role Information Section -->
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="card">
+                <div class="card-header bg-primary text-white">
+                  <h5 class="mb-0">
+                    <i class="fas fa-info-circle me-2"></i>
+                    Understanding User Roles
+                  </h5>
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-6">
+                      <h6 class="text-primary mb-3">Available Roles:</h6>
+                      <div class="role-info-list">
+                        <div class="role-item mb-3">
+                          <span class="badge bg-danger me-2">Super Admin</span>
+                          <small class="text-muted">Full access to all system features and user management</small>
+                        </div>
+                        <div class="role-item mb-3">
+                          <span class="badge bg-primary me-2">Admin</span>
+                          <small class="text-muted">Access to products, pricing, discounts, and general management</small>
+                        </div>
+                        <div class="role-item mb-3">
+                          <span class="badge bg-success me-2">Store Manager</span>
+                          <small class="text-muted">Operational access for store management, stock, and orders</small>
+                        </div>
+                        <div class="role-item mb-3">
+                          <span class="badge bg-warning me-2">Finance Manager</span>
+                          <small class="text-muted">Access to financial information, pricing, and tax data</small>
+                        </div>
+                        <div class="role-item mb-3">
+                          <span class="badge bg-info me-2">Accounts</span>
+                          <small class="text-muted">Access to order processing and customer accounts</small>
+                        </div>
+                        <div class="role-item mb-3">
+                          <span class="badge bg-secondary me-2">User</span>
+                          <small class="text-muted">Basic user access with limited functionality</small>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <h6 class="text-primary mb-3">Role Selection Guidelines:</h6>
+                      <ul class="list-unstyled">
+                        <li class="mb-2">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          <strong>Super Admin:</strong> Choose for system administrators who need full control
+                        </li>
+                        <li class="mb-2">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          <strong>Admin:</strong> Choose for department heads who manage products and content
+                        </li>
+                        <li class="mb-2">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          <strong>Store Manager:</strong> Choose for staff who handle daily operations and orders
+                        </li>
+                        <li class="mb-2">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          <strong>Finance Manager:</strong> Choose for staff who handle pricing and financial data
+                        </li>
+                        <li class="mb-2">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          <strong>Accounts:</strong> Choose for staff who process orders and manage customer accounts
+                        </li>
+                        <li class="mb-2">
+                          <i class="fas fa-check-circle text-success me-2"></i>
+                          <strong>User:</strong> Choose for basic users with minimal access
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                  
+                  <div class="alert alert-info mt-3">
+                    <i class="fas fa-lightbulb me-2"></i>
+                    <strong>Tip:</strong> Start with lower-level roles and upgrade as needed. You can always change a user's role later.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
           <app-admin-users></app-admin-users>
         </div>
 

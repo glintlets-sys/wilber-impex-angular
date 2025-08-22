@@ -37,29 +37,47 @@
           </div>
         </div>
 
-        <!-- Role Selection -->
-        <div class="col-md-12 mb-3">
-          <div class="form-group row clearfix">
-            <div class="col-md-3">
-              <label for="role" class="control-label">
-                {{ editUser ? 'Change Role:' : 'Select Role:' }}
-              </label>
-            </div>
-            <div class="col-sm-8">
-              <select name="role" 
-                      class="form-control" 
-                      [(ngModel)]="selectedUser.role.role_name">
-                <option value="">-- Select a Role --</option>
-                <option *ngFor="let role of userRoles" [value]="role.role">
-                  {{ role.role }}
-                </option>
-              </select>
-              <small *ngIf="editUser" class="form-text text-muted">
-                Current role: <strong>{{ editUser.role }}</strong>
-              </small>
-            </div>
-          </div>
-        </div>
+                 <!-- Role Selection -->
+         <div class="col-md-12 mb-3">
+           <div class="form-group row clearfix">
+             <div class="col-md-3">
+               <label for="role" class="control-label">
+                 {{ editUser ? 'Change Role:' : 'Select Role:' }}
+               </label>
+             </div>
+             <div class="col-sm-8">
+               <select name="role" 
+                       class="form-control" 
+                       [(ngModel)]="selectedUser.role.role_name">
+                 <option value="">-- Select a Role --</option>
+                 <option *ngFor="let role of userRoles" [value]="role.role">
+                   {{ role.displayName || role.role }}
+                 </option>
+               </select>
+               <small *ngIf="editUser" class="form-text text-muted">
+                 Current role: <strong>{{ editUser.role }}</strong>
+               </small>
+               
+               <!-- Role Help Text -->
+               <div class="mt-2">
+                 <small class="text-muted">
+                   <i class="fas fa-info-circle me-1"></i>
+                   <strong>Quick Guide:</strong>
+                 </small>
+                 <div class="mt-1">
+                   <small class="text-muted">
+                     • <strong>Super Admin:</strong> Full system access<br>
+                     • <strong>Admin:</strong> Product & content management<br>
+                     • <strong>Store Manager:</strong> Operations & orders<br>
+                     • <strong>Finance Manager:</strong> Pricing & financial data<br>
+                     • <strong>Accounts:</strong> Order processing & customers<br>
+                     • <strong>User:</strong> Basic access only
+                   </small>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
 
         <!-- Selected User Info (for edit mode) -->
         <div *ngIf="editUser" class="col-md-12 mb-3">

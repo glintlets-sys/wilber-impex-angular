@@ -12,6 +12,8 @@ import { AdminStockConsignmentComponent } from './admin-stock-consignment/admin-
 import { AdminBlogsComponent } from './admin-blogs/admin-blogs.component';
 import { AdminRecommendationsComponent } from './admin-recommendations/admin-recommendations.component';
 import { AdminUsersComponent } from './admin-users/admin-users.component';
+import { AuthenticationService } from '../shared-services/authentication.service';
+import { RolePermissionsService } from '../shared-services/role-permissions.service';
 
 @Component({
   selector: 'app-admin',
@@ -36,6 +38,8 @@ import { AdminUsersComponent } from './admin-users/admin-users.component';
 })
 export class AdminComponent implements OnInit {
   activeView = 'dashboard';
+  currentUserRole: string = '';
+  accessibleSections: string[] = [];
 
   // Object to keep track of which sections are open
   public sections = {
@@ -48,9 +52,17 @@ export class AdminComponent implements OnInit {
     stock: true
   };
 
-  constructor(private router: Router, private route: ActivatedRoute) {}
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute,
+    private authService: AuthenticationService,
+    private rolePermissionsService: RolePermissionsService
+  ) {}
 
   ngOnInit(): void {
+    // Initialize role-based access control
+    this.initializeRoleBasedAccess();
+    
     // Check for query parameters to set the active view
     this.route.queryParams.subscribe(params => {
       const section = params['section'];
@@ -59,6 +71,43 @@ export class AdminComponent implements OnInit {
         this.navigateToSection(section);
       }
     });
+  }
+
+  /**
+   * Initialize role-based access control
+   */
+  private initializeRoleBasedAccess(): void {
+    this.currentUserRole = this.authService.getUserRole() || '';
+    this.accessibleSections = this.rolePermissionsService.getAccessibleSections(this.currentUserRole);
+    
+    console.log('🔐 [Admin] Current user role:', this.currentUserRole);
+    console.log('🔐 [Admin] Accessible sections:', this.accessibleSections);
+    
+    // Set default view to first accessible section if current view is not accessible
+    if (this.accessibleSections.length > 0 && !this.accessibleSections.includes(this.activeView)) {
+      this.activeView = this.accessibleSections[0];
+    }
+  }
+
+  /**
+   * Check if user can access a specific section
+   */
+  public canAccessSection(section: string): boolean {
+    return this.rolePermissionsService.canAccessSection(this.currentUserRole, section);
+  }
+
+  /**
+   * Check if user can access a specific feature
+   */
+  public canAccessFeature(feature: string): boolean {
+    return this.rolePermissionsService.canAccessFeature(this.currentUserRole, feature);
+  }
+
+  /**
+   * Get role display name
+   */
+  public getRoleDisplayName(): string {
+    return this.rolePermissionsService.getRoleDisplayName(this.currentUserRole);
   }
 
   // Function to toggle sections

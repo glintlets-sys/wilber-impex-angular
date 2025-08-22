@@ -66,6 +66,8 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
         // Debug payment status for each order
         this.orders.forEach((order, index) => {
           console.log(`🔍 [AdminOrders] Order ${index + 1} - ID: ${order.id}, Payment Status:`, order.paymentStatus, 'Type:', typeof order.paymentStatus);
+          console.log(`🔍 [AdminOrders] Order ${index + 1} - dispatchSummary:`, order.dispatchSummary);
+          console.log(`🔍 [AdminOrders] Order ${index + 1} - Full order object:`, order);
         });
         
         // Parse pagination headers
@@ -171,14 +173,30 @@ export class AdminOrdersComponent implements OnInit, OnDestroy {
   }
 
   getShipmentStatus(order: OrderDTO): string {
-    if (!order.dispatchSummary) return 'Not Dispatched';
+    console.log('🔍 [AdminOrders] getShipmentStatus called for order:', order.id);
+    console.log('🔍 [AdminOrders] dispatchSummary:', order.dispatchSummary);
+    
+    if (!order.dispatchSummary) {
+      console.log('🔍 [AdminOrders] No dispatchSummary, returning "Not Dispatched"');
+      return 'Not Dispatched';
+    }
     
     const status = order.dispatchSummary.shipmentStatus;
+    console.log('🔍 [AdminOrders] Raw shipment status:', status);
+    
     switch (status) {
-      case 'READYTODISPATCH': return 'Ready to Dispatch';
-      case 'DISPATCHED': return 'Dispatched';
-      case 'DELIVERED': return 'Delivered';
-      default: return status || 'Pending';
+      case 'READYTODISPATCH': 
+        console.log('🔍 [AdminOrders] Returning "Ready to Dispatch"');
+        return 'Ready to Dispatch';
+      case 'DISPATCHED': 
+        console.log('🔍 [AdminOrders] Returning "Dispatched"');
+        return 'Dispatched';
+      case 'DELIVERED': 
+        console.log('🔍 [AdminOrders] Returning "Delivered"');
+        return 'Delivered';
+      default: 
+        console.log('🔍 [AdminOrders] Default case, returning:', status || 'Pending');
+        return status || 'Pending';
     }
   }
 

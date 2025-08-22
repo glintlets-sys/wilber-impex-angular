@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../shared-services/user.service';
+import { RolePermissionsService } from '../../../shared-services/role-permissions.service';
 
 @Component({
   selector: 'app-add-edit-admin-user',
@@ -22,7 +23,10 @@ export class AddEditAdminUserComponent implements OnInit {
   tempUsers: any[] = [];
   isLoading: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(
+    private userService: UserService,
+    private rolePermissionsService: RolePermissionsService
+  ) { }
 
   ngOnInit(): void {
     this.loadUserRoles();
@@ -69,39 +73,73 @@ export class AddEditAdminUserComponent implements OnInit {
   }
 
   loadUserRoles() {
-    console.log('🔍 [AddEditAdminUser] Loading user roles...');
+    console.log('🔍 [AddEditAdminUser] Loading user roles with backend mapping...');
+    
+    // First try to get roles from the API
     this.userService.getUsersRole().subscribe({
       next: (val) => {
-        console.log('🔍 [AddEditAdminUser] Raw roles response:', val);
-        // Ensure val is an array before mapping
-        const rolesArray = Array.isArray(val) ? val : [];
-        console.log('🔍 [AddEditAdminUser] Roles array:', rolesArray);
+        console.log('🔍 [AddEditAdminUser] API roles response:', val);
+        const apiRoles = Array.isArray(val) ? val : [];
         
-        // If no roles from API, use default roles
-        if (rolesArray.length === 0) {
-          console.log('⚠️ [AddEditAdminUser] No roles from API, using default roles');
-          this.userRoles = [
-            { id: 1, role: 'USER' },
-            { id: 2, role: 'ADMIN' },
-            { id: 3, role: 'SUPER_ADMIN' }
-          ];
+        if (apiRoles.length > 0) {
+          // Use API roles and map them to display names
+          this.userRoles = apiRoles.map((role, index) => ({
+            id: index + 1,
+            role: role,
+            displayName: this.getDisplayNameForBackendRole(role),
+            description: this.getDescriptionForBackendRole(role)
+          }));
         } else {
-          this.userRoles = rolesArray.map((element, index) => ({ id: index + 1, role: element }));
+          // Fallback to default backend-supported roles
+          this.userRoles = this.getDefaultBackendRoles();
         }
         
         console.log('✅ [AddEditAdminUser] Loaded user roles:', this.userRoles);
       },
       error: (error) => {
-        console.error('❌ [AddEditAdminUser] Error loading user roles:', error);
-        // Fallback to default roles on error
-        console.log('⚠️ [AddEditAdminUser] Using fallback roles due to error');
-        this.userRoles = [
-          { id: 1, role: 'USER' },
-          { id: 2, role: 'ADMIN' },
-          { id: 3, role: 'SUPER_ADMIN' }
-        ];
+        console.error('❌ [AddEditAdminUser] Error loading roles from API:', error);
+        // Fallback to default backend-supported roles
+        this.userRoles = this.getDefaultBackendRoles();
+        console.log('✅ [AddEditAdminUser] Using fallback roles:', this.userRoles);
       }
     });
+  }
+
+  private getDefaultBackendRoles() {
+    // Default backend-supported roles with mapping to display names
+    const backendRoles = ['USER', 'ADMIN', 'SUPER_ADMIN', 'ACCOUNTS'];
+    return backendRoles.map((role, index) => ({
+      id: index + 1,
+      role: role,
+      displayName: this.getDisplayNameForBackendRole(role),
+      description: this.getDescriptionForBackendRole(role)
+    }));
+  }
+
+  private getDisplayNameForBackendRole(backendRole: string): string {
+    // Map backend roles to display names
+    const roleMapping: { [key: string]: string } = {
+      'USER': 'User',
+      'ADMIN': 'Admin',
+      'SUPER_ADMIN': 'Super Admin',
+      'ACCOUNTS': 'Accounts',
+      'STORE_MANAGER': 'Store Manager',
+      'FINANCE_MANAGER': 'Finance Manager'
+    };
+    return roleMapping[backendRole] || backendRole;
+  }
+
+  private getDescriptionForBackendRole(backendRole: string): string {
+    // Map backend roles to descriptions
+    const descriptionMapping: { [key: string]: string } = {
+      'USER': 'Basic user access with limited functionality',
+      'ADMIN': 'Access to products, pricing, discounts, and general management',
+      'SUPER_ADMIN': 'Full access to all system features and user management',
+      'ACCOUNTS': 'Access to order processing and customer accounts',
+      'STORE_MANAGER': 'Operational access for store management, stock, and orders',
+      'FINANCE_MANAGER': 'Access to financial information, pricing, and tax data'
+    };
+    return descriptionMapping[backendRole] || '';
   }
 
   changeUser(event: any): void {
