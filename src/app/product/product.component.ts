@@ -309,6 +309,19 @@ export class ProductComponent implements OnInit {
       return;
     }
 
+    // First check if the product is active/available
+    if (this.backendProduct.notAvailable === false) {
+      console.log('🚫 [ProductComponent] Product is marked as not available:', {
+        productId: this.backendProduct.id,
+        productName: this.backendProduct.name,
+        notAvailable: this.backendProduct.notAvailable
+      });
+      this.isInStock = false;
+      this.availableStock = 0;
+      this.stockLoading = false;
+      return;
+    }
+
     this.stockLoading = true;
     
     // Check stock using the integration service
@@ -327,7 +340,8 @@ export class ProductComponent implements OnInit {
             productName: this.backendProduct?.name,
             stockInfo: stockInfo,
             availableStock: this.availableStock,
-            isInStock: this.isInStock
+            isInStock: this.isInStock,
+            notAvailable: this.backendProduct?.notAvailable
           });
         } else {
           this.availableStock = 0;
@@ -356,6 +370,11 @@ export class ProductComponent implements OnInit {
     
     if (!this.backendProduct) {
       return 'Stock information not available';
+    }
+    
+    // Check if product is inactive first
+    if (this.backendProduct.notAvailable === false) {
+      return 'Product Inactive';
     }
     
     if (this.isInStock) {

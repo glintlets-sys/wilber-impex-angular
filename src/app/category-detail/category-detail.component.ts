@@ -181,6 +181,19 @@ export class CategoryDetailComponent implements OnInit {
     this.productIntegrationService.mapFrontendToBackendProduct(product).subscribe({
       next: (backendProduct) => {
         if (backendProduct) {
+                     // First check if the product is active/available
+           if (backendProduct.notAvailable === false) {
+             console.log('🚫 [CategoryDetailComponent] Product is marked as not available:', {
+               productId: backendProduct.id,
+               productName: backendProduct.name,
+               notAvailable: backendProduct.notAvailable
+             });
+             this.availableStock[product.id] = 0;
+             this.isInStock[product.id] = false;
+             this.stockLoading[product.id] = false;
+             return;
+           }
+
           // Check stock for the backend product
           this.productIntegrationService.checkStockForBackendProduct(backendProduct).subscribe({
             next: (stockInfo) => {

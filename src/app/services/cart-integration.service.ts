@@ -109,6 +109,17 @@ export class CartIntegrationService {
       return;
     }
 
+    // First check if the product is active/available
+    if (backendProduct.notAvailable === false) {
+      console.log('🚫 [CartIntegrationService] Product is marked as not available:', {
+        productId: backendProduct.id,
+        productName: backendProduct.name,
+        notAvailable: backendProduct.notAvailable
+      });
+      this.toasterService.showToast('Product is currently inactive and not available for purchase', ToastType.Warn, 4000);
+      return;
+    }
+
     // Check stock availability
     this.productIntegrationService.checkStockForBackendProduct(backendProduct).subscribe({
       next: (stockInfo) => {
