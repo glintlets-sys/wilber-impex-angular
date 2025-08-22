@@ -30,6 +30,7 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
   tableSize = 10;
   page = 1;
   count = 0;
+  paginatedProducts: Toy[] = [];
   
   // Loading states
   isLoading = false;
@@ -108,10 +109,53 @@ export class AdminProductsComponent implements OnInit, OnDestroy {
     });
     
     this.count = this.filteredProducts.length;
+    this.updatePagination();
   }
 
   applyFilters(): void {
     this.updateFilters();
+  }
+
+  updatePagination(): void {
+    const startIndex = (this.page - 1) * this.tableSize;
+    const endIndex = startIndex + this.tableSize;
+    this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
+  }
+
+  onTableDataChange(event: number): void {
+    this.page = event;
+    this.updatePagination();
+  }
+
+  onTableSizeChange(event: any): void {
+    this.tableSize = event.target.value;
+    this.page = 1;
+    this.updatePagination();
+  }
+
+  getTotalPages(): number {
+    return Math.ceil(this.count / this.tableSize);
+  }
+
+  getPageNumbers(): number[] {
+    const totalPages = this.getTotalPages();
+    const currentPage = this.page;
+    const pages: number[] = [];
+    
+    // Show up to 5 page numbers around current page
+    const start = Math.max(1, currentPage - 2);
+    const end = Math.min(totalPages, currentPage + 2);
+    
+    for (let i = start; i <= end; i++) {
+      pages.push(i);
+    }
+    
+    return pages;
+  }
+
+  // Helper method for template
+  get Math() {
+    return Math;
   }
 
   getStockForProduct(productId: number): ItemStock | undefined {

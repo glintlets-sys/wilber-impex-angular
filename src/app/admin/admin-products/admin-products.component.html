@@ -36,7 +36,7 @@
 
 <!-- Search and Filters -->
 <div class="row mb-3">
-  <div class="col-md-6">
+  <div class="col-md-4">
     <input 
       type="text" 
       class="form-control" 
@@ -44,7 +44,7 @@
       [(ngModel)]="searchTerm" 
       (keyup)="applyFilters()">
   </div>
-  <div class="col-md-3">
+  <div class="col-md-2">
     <select 
       class="form-control" 
       [(ngModel)]="selectedStatus" 
@@ -54,7 +54,17 @@
       <option value="inactive">Inactive</option>
     </select>
   </div>
-  <div class="col-md-3">
+  <div class="col-md-2">
+    <select 
+      class="form-control" 
+      (change)="onTableSizeChange($event)">
+      <option [value]="5">5 per page</option>
+      <option [value]="10" selected>10 per page</option>
+      <option [value]="20">20 per page</option>
+      <option [value]="50">50 per page</option>
+    </select>
+  </div>
+  <div class="col-md-4">
     <span class="item_count">Total: {{ count }} products</span>
   </div>
 </div>
@@ -84,7 +94,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let product of filteredProducts">
+    <tr *ngFor="let product of paginatedProducts">
       <td>
         <img 
           [src]="getProductThumbnail(product)" 
@@ -156,4 +166,38 @@
       <span *ngIf="!searchTerm && !selectedStatus">No products available in the backend.</span>
     </p>
   </div>
+</div>
+
+<!-- Pagination -->
+<div *ngIf="filteredProducts.length > 0" class="d-flex justify-content-between align-items-center mt-4">
+  <div class="pagination-info">
+    <small class="text-muted">
+      Showing {{ (page - 1) * tableSize + 1 }} to {{ Math.min(page * tableSize, count) }} of {{ count }} products
+    </small>
+  </div>
+  
+  <nav aria-label="Products pagination">
+    <ul class="pagination pagination-sm mb-0">
+      <!-- Previous button -->
+      <li class="page-item" [class.disabled]="page === 1">
+        <button class="page-link" (click)="onTableDataChange(page - 1)" [disabled]="page === 1">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+      </li>
+      
+      <!-- Page numbers -->
+      <li class="page-item" *ngFor="let pageNum of getPageNumbers()" [class.active]="pageNum === page">
+        <button class="page-link" (click)="onTableDataChange(pageNum)">
+          {{ pageNum }}
+        </button>
+      </li>
+      
+      <!-- Next button -->
+      <li class="page-item" [class.disabled]="page >= getTotalPages()">
+        <button class="page-link" (click)="onTableDataChange(page + 1)" [disabled]="page >= getTotalPages()">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
 </div>
